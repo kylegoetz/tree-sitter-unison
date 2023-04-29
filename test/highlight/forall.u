@@ -1,0 +1,2 @@
+sumUpTo : Nat -> Nat
+sumUpTo n = 5
