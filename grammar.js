@@ -7,7 +7,6 @@ module.exports = grammar({
       choice(
         $.term_declaration,
         $.comment,
-        // $._reserved_kw,
       ),
     ),
     
