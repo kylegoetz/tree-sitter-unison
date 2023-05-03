@@ -1,0 +1,170 @@
+===
+text literal
+===
+x = "Test"
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (literal_text))))
+===
+Nat
+===
+x = 18446744073709551
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (literal_nat))))
+===
+Int
+===
+x = -9223372036854775808
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (literal_int))))
+===
+Float
+===
+x = 1.6777216
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (literal_float))))
+===
+Char
+===
+x = ?a
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (literal_char))))
+===
+Boolean
+===
+x = true
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (literal_boolean))))
+===
+Byte
+===
+x = 0xsdeadbeef
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (literal_byte))))
+===
+hash literal
+===
+x = #a0v829
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (literal_hash))))
+===
+list literal
+===
+x = [1, 2, 3]
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (literal_list
+                (literal_nat)
+                (literal_nat)
+                (literal_nat)))))
+===
+function literal
+===
+y = x -> x Nat.+ 2
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (literal_function
+                (regular_identifier)
+                (type_arrow)
+                (regular_identifier)
+                (operator)
+                (literal_nat)))))
+===
+tuple literal
+===
+x = (true, true, false)
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (literal_tuple
+                (literal_boolean)
+                (literal_boolean)
+                (literal_boolean)))))
+===
+unit tuple literal
+===
+x = ()
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (literal_tuple))))
+===
+termLink literal
+===
+x = termLink aUnisonTerm
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (literal_termlink
+                (kw_termlink)
+                (term)))))
+===
+typeLink literal
+===
+x = typeLink Optional
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (literal_typelink
+                (kw_typelink)
+                (type
+                    (type_name))))))

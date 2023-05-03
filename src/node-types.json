@@ -1,11 +1,21 @@
 [
   {
-    "type": "comment",
+    "type": "comment_documentation_block",
     "named": true,
     "fields": {}
   },
   {
-    "type": "expression",
+    "type": "comment_fold",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "comment_line",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "comment_multiline",
     "named": true,
     "fields": {}
   },
@@ -20,7 +30,217 @@
     "fields": {}
   },
   {
+    "type": "literal_boolean",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "literal_function",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "literal_boolean",
+          "named": true
+        },
+        {
+          "type": "literal_byte",
+          "named": true
+        },
+        {
+          "type": "literal_char",
+          "named": true
+        },
+        {
+          "type": "literal_float",
+          "named": true
+        },
+        {
+          "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_int",
+          "named": true
+        },
+        {
+          "type": "literal_list",
+          "named": true
+        },
+        {
+          "type": "literal_nat",
+          "named": true
+        },
+        {
+          "type": "literal_text",
+          "named": true
+        },
+        {
+          "type": "literal_tuple",
+          "named": true
+        },
+        {
+          "type": "literal_typelink",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
+          "type": "type_arrow",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "literal_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "literal_boolean",
+          "named": true
+        },
+        {
+          "type": "literal_byte",
+          "named": true
+        },
+        {
+          "type": "literal_char",
+          "named": true
+        },
+        {
+          "type": "literal_float",
+          "named": true
+        },
+        {
+          "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_int",
+          "named": true
+        },
+        {
+          "type": "literal_list",
+          "named": true
+        },
+        {
+          "type": "literal_nat",
+          "named": true
+        },
+        {
+          "type": "literal_text",
+          "named": true
+        },
+        {
+          "type": "literal_tuple",
+          "named": true
+        },
+        {
+          "type": "literal_typelink",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "literal_tuple",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "literal_boolean",
+          "named": true
+        },
+        {
+          "type": "literal_byte",
+          "named": true
+        },
+        {
+          "type": "literal_char",
+          "named": true
+        },
+        {
+          "type": "literal_float",
+          "named": true
+        },
+        {
+          "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_int",
+          "named": true
+        },
+        {
+          "type": "literal_list",
+          "named": true
+        },
+        {
+          "type": "literal_nat",
+          "named": true
+        },
+        {
+          "type": "literal_text",
+          "named": true
+        },
+        {
+          "type": "literal_tuple",
+          "named": true
+        },
+        {
+          "type": "literal_typelink",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "literal_typelink",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "kw_typelink",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "name",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "namespace",
     "named": true,
     "fields": {}
   },
@@ -57,15 +277,59 @@
       "required": true,
       "types": [
         {
-          "type": "expression",
-          "named": true
-        },
-        {
           "type": "kw_equals",
           "named": true
         },
         {
+          "type": "literal_boolean",
+          "named": true
+        },
+        {
+          "type": "literal_byte",
+          "named": true
+        },
+        {
+          "type": "literal_char",
+          "named": true
+        },
+        {
+          "type": "literal_float",
+          "named": true
+        },
+        {
+          "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_int",
+          "named": true
+        },
+        {
+          "type": "literal_list",
+          "named": true
+        },
+        {
+          "type": "literal_nat",
+          "named": true
+        },
+        {
+          "type": "literal_text",
+          "named": true
+        },
+        {
+          "type": "literal_tuple",
+          "named": true
+        },
+        {
+          "type": "literal_typelink",
+          "named": true
+        },
+        {
           "type": "name",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
           "named": true
         },
         {
@@ -154,11 +418,42 @@
       "required": true,
       "types": [
         {
-          "type": "comment",
+          "type": "comment_documentation_block",
+          "named": true
+        },
+        {
+          "type": "comment_fold",
+          "named": true
+        },
+        {
+          "type": "comment_line",
+          "named": true
+        },
+        {
+          "type": "comment_multiline",
           "named": true
         },
         {
           "type": "term_declaration",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "use_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "namespace",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
           "named": true
         }
       ]
@@ -177,11 +472,31 @@
     "named": false
   },
   {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
+  },
+  {
+    "type": ",",
+    "named": false
+  },
+  {
     "type": "--",
     "named": false
   },
   {
+    "type": "---",
+    "named": false
+  },
+  {
     "type": "->",
+    "named": false
+  },
+  {
+    "type": "-}",
     "named": false
   },
   {
@@ -194,6 +509,14 @@
   },
   {
     "type": "=",
+    "named": false
+  },
+  {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
     "named": false
   },
   {
@@ -237,8 +560,40 @@
     "named": false
   },
   {
+    "type": "kw_termlink",
+    "named": true
+  },
+  {
+    "type": "kw_typelink",
+    "named": true
+  },
+  {
     "type": "let",
     "named": false
+  },
+  {
+    "type": "literal_byte",
+    "named": true
+  },
+  {
+    "type": "literal_char",
+    "named": true
+  },
+  {
+    "type": "literal_float",
+    "named": true
+  },
+  {
+    "type": "literal_int",
+    "named": true
+  },
+  {
+    "type": "literal_nat",
+    "named": true
+  },
+  {
+    "type": "literal_text",
+    "named": true
   },
   {
     "type": "match",
@@ -253,10 +608,6 @@
     "named": false
   },
   {
-    "type": "termLink",
-    "named": false
-  },
-  {
     "type": "then",
     "named": false
   },
@@ -266,10 +617,6 @@
   },
   {
     "type": "type",
-    "named": false
-  },
-  {
-    "type": "typeLink",
     "named": false
   },
   {
@@ -289,11 +636,23 @@
     "named": false
   },
   {
+    "type": "{-",
+    "named": false
+  },
+  {
+    "type": "{{",
+    "named": false
+  },
+  {
     "type": "|",
     "named": false
   },
   {
     "type": "||",
+    "named": false
+  },
+  {
+    "type": "}}",
     "named": false
   },
   {

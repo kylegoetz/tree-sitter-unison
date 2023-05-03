@@ -1,0 +1,43 @@
+===
+documentation block
+===
+{{Maya Angelou was an acclaimed poet, director, essayist, and novelist.}}
+poet = "Maya Angelou"
+---
+(unison
+    (comment_documentation_block)
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (expression))))
+
+===
+line comment
+===
+
+-- a comment
+
+---
+(unison
+    (comment_line))
+===
+multiline comment
+===
+{-
+    this is a multiline comment
+-}
+---
+(unison
+    (comment_multiline))
+    
+===
+fold
+===
+
+---
+x = 5
+
+---
+(unison
+    (comment_fold))

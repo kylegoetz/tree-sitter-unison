@@ -17,4 +17,4 @@ sumUpTo x = x
             (name)
             (type_variable)
             (kw_equals)
-            (expression))))
+            (regular_identifier))))
