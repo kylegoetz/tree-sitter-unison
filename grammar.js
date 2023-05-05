@@ -2,21 +2,34 @@ const { sep } = require('./grammar/util')
 const misc = require('./grammar/misc')
 const comments = require('./grammar/comments')
 const expressions = require('./grammar/expression')
+const blocks = require('./grammar/blocks')
+const stmt = require('./grammar/statement')
 
 module.exports = grammar({
   name: 'unison',
   precedences: $ => [
-    ['literal_function', '_expression'],
+    ['_expression'],
+    ['literal_function'],
   ],
   conflicts: $ => [
     // [$.block, $.statement],
     // [$.block, $.term_definition],
-    // [$._expression, $.literal_function],
+    [$._expression, $.literal_function],
+    // [$._expression, $.functional_expression],
+    [$.functional_expression],
   ],
   externals: $ => [
     $._layout_semicolon,
     $._layout_start,
     $._layout_end,
+    $._dot,
+    $._where,
+    $._varsym,
+    $._comment,
+    $._comma,
+    $._in,
+    $._indent,
+    $._empty,
   ],
   rules: {
     unison: $ => seq(
@@ -31,7 +44,9 @@ module.exports = grammar({
     
     ...misc,
     ...comments,
+    ...blocks,
     ...expressions,
+    ...stmt,
     
     // comment: $ => seq('--', /.+/, $._eol),
     
@@ -109,7 +124,7 @@ module.exports = grammar({
       'type',
       'ability',
       'alias',
-      'let',
+      $.kw_let,
       'namespace',
       'cases',
       'match',
