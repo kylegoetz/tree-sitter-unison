@@ -58,6 +58,7 @@ typedef enum {
     WHERE,
     VARSYM,
     COMMENT,
+    FOLD,
     COMMA,
     IN,
     INDENT,
@@ -74,10 +75,12 @@ static char *sym_names[] = {
     "where",
     "varsym",
     "comment",
+    "fold",
     "comma",
     "in",
     "indent",
     "empty",
+    "fail",
 };
 #endif
 
@@ -171,6 +174,7 @@ static void debug_indents(indent_vec *indents) {
 void debug_state(State *state) {
   DEBUG_PRINTF("State { syms = ");
   debug_valid(state->symbols);
+  DEBUG_PRINTF("col = %d", state->lexer->get_column(state->lexer));
   DEBUG_PRINTF(", indents = ");
   debug_indents(state->indents);
   DEBUG_PRINTF(" }\n");
@@ -407,8 +411,11 @@ typedef struct {
 #ifdef DEBUG
 void debug_result(Result res) {
   DEBUG_PRINTF("Result { finished = %d", res.finished);
-  if (res.finished)
+  if (res.finished) {
     DEBUG_PRINTF(", result = %s }\n", sym_names[res.sym]);
+  }
+  else
+    DEBUG_PRINTF(" }\n");
 }
 #endif
 
@@ -595,6 +602,16 @@ static Result dot(State *state) {
   return res_cont;
 }
  
+ static Result fold(State *state) {
+   DEBUG_PRINTF("->fold\n");
+   if (seq("---", state)) {
+     while(!is_eof(state)) S_ADVANCE;
+     MARK("fold", false, state);
+     return finish(FOLD, "fold");
+   }
+   return res_cont;
+ }
+ 
 /**
  * End a layout by removing an indentation from the stack, but only if the current column (which should be in the next
  * line after skipping whitespace) is smaller than the layout indent.
@@ -699,14 +716,27 @@ inline_comment_after_skip:
  * Parse an inline comment if the next chars are two or more minuses and the char after the last minus is not
  * symbolic.
  *
- * To be called when it is certain that two minuses cannot succeed as a symbolic operator.
+ * To be called when it is certain that two (or three!) minuses cannot succeed as a symbolic operator.
  * Those cases are:
  *   - `START` is valid
  *   - Operator matching was done already
  */
 static Result minus(State *state) {
+  DEBUG_PRINTF("->minus\n");
   if (!seq("--", state)) return res_cont;
-  while (PEEK == '-')  S_ADVANCE;
+  if(SYM(FOLD)) {
+    if (PEEK == '-') {
+      S_ADVANCE;
+      if (is_newline(PEEK)) {
+        while(!is_eof(state)) S_ADVANCE;
+        MARK("minus", false, state);
+        return finish(FOLD, "fold");
+      } else {
+        return res_fail;
+      }
+    } 
+  }
+  while (PEEK == '-') S_ADVANCE;
   if (symbolic(PEEK)) return res_fail;
   return inline_comment(state);
 }
@@ -775,6 +805,7 @@ static Result brace(State *state) {
  * Parse either inline or block comments.
  */
 static Result comment(State *state) {
+  DEBUG_PRINTF("->comment w/ PEEK = %c\n", PEEK);
   switch (PEEK) {
     case '-': {
       Result res = minus(state);
@@ -935,7 +966,6 @@ static Result repeat_end(uint32_t column, State *state) {
  * Rules that decide based on the indent of the next line.
  */
 static Result newline_indent(uint32_t indent, State *state) {
-  DEBUG_PRINTF("->newline_indent");
   Result res = dedent(indent, state);
   SHORT_SCANNER;
   res = close_layout_in_list(state);
@@ -947,6 +977,10 @@ static Result newline_indent(uint32_t indent, State *state) {
  * Rules that decide based on the first token on the next line.
  */
 static Result newline_token(uint32_t indent, State *state) {
+  DEBUG_PRINTF("->newline_token\n");
+  if (PEEK == '-') {
+    return minus(state);
+  }
   switch (PEEK) {
     SYMBOLIC_CASES:
     case '`': {
@@ -967,7 +1001,7 @@ static Result newline_token(uint32_t indent, State *state) {
  * To be called after parsing a newline, with the indent of the next line as argument.
  */
 static Result newline(uint32_t indent, State *state) {
-  DEBUG_PRINTF("->newline");
+  DEBUG_PRINTF("->newline\n");
   Result res = eof(state);
   SHORT_SCANNER;
   // res = initialize(indent, state);
@@ -1006,18 +1040,27 @@ static Result immediate(uint32_t column, State *state) {
  *   - Error check
  *   - Indent stack initialization
  *   - Qualified module dot (leading whitespace would mean it would be `(.)`)
- 
- 
+ *   - Fold
  */
 static Result init(State *state) {
+  DEBUG_PRINTF("->init\n");
   Result res = eof(state);
+  debug_result(res);
   SHORT_SCANNER;
-  res = after_error(state) ? res_fail : res_cont;
-  SHORT_SCANNER;
+  // res = after_error(state) ? res_fail : res_cont;
+  // debug_result(res);
+  // SHORT_SCANNER;
   // res = initialize_init(state);
   // SHORT_SCANNER;
   res = dot(state);
-  SHORT_SCANNER;
+  debug_result(res);
+  SHORT_SCANNER;  
+  debug_state(state);
+  if (SYM(FOLD)) {
+    res = fold(state);
+    SHORT_SCANNER;
+  }
+  
   // res = cpp(state);
   // SHORT_SCANNER;
   // if (state->symbols[QQ_BODY]) {
@@ -1030,14 +1073,13 @@ static Result init(State *state) {
  * The main parser checks whether the first non-space character is a newline and delegates accordingly.
  */
 static Result scan_main(State *state) {
-  DEBUG_PRINTF("->scan_main\n");
+  DEBUG_PRINTF("->scan_main w/PEEK = %c\n", PEEK);
   debug_state(state);
   skipspace(state);
   Result res = eof(state);
   SHORT_SCANNER;
-  DEBUG_PRINTF("Not eof");
+  DEBUG_PRINTF("Not eof\n");
   MARK("main", false, state);
-  DEBUG_PRINTF((char*)&PEEK);
   if (is_newline(PEEK)) {
     DEBUG_PRINTF("is newline\n");
     S_SKIP;
@@ -1052,7 +1094,11 @@ static Result scan_main(State *state) {
  * The entry point to the parser.
  */
 static Result scan_all(State *state) {
+  // DEBUG_PRINTF("->scan_all\n");
   Result res = init(state);
+  // if (res.finished) {
+    // DEBUG_PRINTF("after init, scan_all is: %s\n", sym_names[res.sym]);
+  // }
   SHORT_SCANNER;
   return scan_main(state);
 }
@@ -1137,8 +1183,10 @@ bool tree_sitter_unison_external_scanner_scan(void *indents_v, TSLexer *lexer, c
     .symbols = syms,
     .indents = indents
   };
+  DEBUG_PRINTF("===================\nBeginning scanner\n");
 #ifdef DEBUG
   debug_state(&state);
+  DEBUG_PRINTF("PEEK: %c\n", state.lexer->lookahead);
   if (state.needs_free) free(state.marked_by);
 #endif
   return eval(scan_all, &state);
