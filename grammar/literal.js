@@ -43,14 +43,14 @@ module.exports = {
   literal_list: $ => seq('[', sep(',', $._expression), ']'),
   
   // myFn p1 p2 p3 -> exp
-  func_name: $ => $._regular_identifier,
-  func_param: $ => $._regular_identifier,
-  // literal_function: $ => prec.left(seq(
-  //   $.func_name, // func name
-  //   repeat($.func_param), // func args
-  //   $.type_arrow, 
-  //   $._expression // func body
-  // )),
+  func_name: $ => prec.right($._regular_identifier),
+  func_param: $ => prec.left($._regular_identifier),
+  literal_function: $ => prec.right(seq(
+    prec.left($.func_name), // func name
+    repeat($.func_param), // func args
+    $.type_arrow, 
+    $._expression // func body
+  )),
   
   
   literal_tuple: $ => seq('(', sep(',', $._expression), ')'),

@@ -4,6 +4,9 @@ const comments = require('./grammar/comments')
 const expressions = require('./grammar/expression')
 const blocks = require('./grammar/blocks')
 const stmt = require('./grammar/statement')
+const literals = require('./grammar/literal')
+
+const IDENTIFIER_REGEX = /[a-zA-Z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*/u
 
 module.exports = grammar({
   name: 'unison',
@@ -12,11 +15,13 @@ module.exports = grammar({
     ['literal_function'],
   ],
   conflicts: $ => [
-    // [$.block, $.statement],
-    // [$.block, $.term_definition],
-    [$._expression, $.literal_function],
-    // [$._expression, $.functional_expression],
-    [$.functional_expression],
+
+    [$.func_name, $._function_application, $.regular_identifier],
+    // ['function_application', '_expression'],
+  //   [$._expression, $.literal_function],
+  //   [$.function_application],
+  //   [$.exp_if, $.function_application],
+  //   [$._expression, $.function_name]
   ],
   externals: $ => [
     $._layout_semicolon,
@@ -83,9 +88,12 @@ module.exports = grammar({
     ),
     
     _lowercase_regular_identifier: $ => /[a-z]+/,
-    regular_identifier: $ => $._regular_identifier,
-    _regular_identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
+    regular_identifier: $ => prec.left($._regular_identifier),
     
+    _regular_identifier: $ => IDENTIFIER_REGEX,
+    // // operator: $ => /[!$%^&*-=+<>.~\/|:]+/,
+    operator: $ => '+',
+    // identifier: $ => seq(choice($._regular_identifier,$.operator), optional($.literal_hash)),
     
     type_variable: $ => $._lowercase_regular_identifier,
     type_arrow: $ => '->',
