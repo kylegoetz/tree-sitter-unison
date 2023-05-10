@@ -86,8 +86,8 @@ module.exports = grammar({
     regular_identifier: $ => $._regular_identifier,
     _regular_identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
     
-    type_variable: $ => $._lowercase_regular_identifier,
     
+    type_variable: $ => $._lowercase_regular_identifier,
     type_arrow: $ => '->',
     
     type: $ => seq(
