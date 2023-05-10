@@ -25,47 +25,47 @@ module.exports = grammar({
     $._dot,
     $._where,
     $._varsym,
-    $._comment,
+    $.comment,
+    $.fold,
     $._comma,
     $._in,
     $._indent,
     $._empty,
   ],
   rules: {
-    unison: $ => seq(
+    unison: $ => repeat(
       choice(
         $.term_declaration,
-        $.comment_line,
-        $.comment_fold,
-        $.comment_multiline,
-        $.comment_documentation_block,
+        // $.inline_comment,
+        $.fold,
+        // seq(/(\r)?\n/, $.fold),
       ),
     ),
     
-    ...misc,
-    ...comments,
+    ...literals,
+    // ...misc,
+    // ...comments,
     ...blocks,
     ...expressions,
     ...stmt,
     
-    // comment: $ => seq('--', /.+/, $._eol),
-    
+    // fold: $ => $._fold,
     kw_forall: $ => choice("forall", "∀"),
     kw_equals: $ => '=',
     
     type_signature_colon: $ => ':',
-    
+    term_name: $ => $._regular_identifier,
     type_signature: $ => seq(
-      $.regular_identifier,
+      $.term_name,
       $.type_signature_colon,
       $.type,
-      $._eol,
+      // $._eol,
     ),
     
     type_name: $ => $._regular_identifier,
     
     name: $ => $._regular_identifier,
-    //expression: $ => /.+/,
+    // _term_rhs: $ => $._expression,
     
     term_definition: $ => seq(
       $.name,

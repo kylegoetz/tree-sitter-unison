@@ -490,11 +490,11 @@ static Result layout_end(char *desc, State *state) {
 /**
  * Convenience parser, since those two are often used together.
  */
-// static Result end_or_semicolon(char *desc, State *state) {
-//   Result res = layout_end(desc, state);
-//   SHORT_SCANNER;
-//   return finish_if_valid(SEMICOLON, desc, state);
-// }
+static Result end_or_semicolon(char *desc, State *state) {
+  Result res = layout_end(desc, state);
+  SHORT_SCANNER;
+  return finish_if_valid(SEMICOLON, desc, state);
+}
 
 // --------------------------------------------------------------------------------------------------------
 // Logic
@@ -545,10 +545,10 @@ static Result eof(State *state) {
     if (SYM(EMPTY)) {
       return finish(EMPTY, "eof");
     }
-    // Result res = end_or_semicolon("eof", state);
-    return layout_end("eof", state);
-    // SHORT_SCANNER;
-    // return res_fail;
+    Result res = end_or_semicolon("eof", state);
+    // return layout_end("eof", state);
+    SHORT_SCANNER;
+    return res_fail;
   }
   return res_cont;
 }
@@ -603,9 +603,11 @@ static Result dot(State *state) {
 }
  
  static Result fold(State *state) {
-   DEBUG_PRINTF("->fold\n");
+   DEBUG_PRINTF("->fold with PEEK =%c@%u\n", PEEK, column(state));
    if (seq("---", state)) {
+     DEBUG_PRINTF("--- and PEEK is %c@%u\n", PEEK, column(state));
      while(!is_eof(state)) S_ADVANCE;
+     DEBUG_PRINTF("after advancing, PEEK is %c and should be EOF: %s\n", PEEK, is_eof(state) ? "true" : "false");
      MARK("fold", false, state);
      return finish(FOLD, "fold");
    }
@@ -696,7 +698,9 @@ static Result else_(State *state) {
  * Consume all characters up to the end of line and succeed with `syms::commment`.
  */
 static Result inline_comment(State *state) {
+  DEBUG_PRINTF("->inline comment\n");
   for (;;) {
+    DEBUG_PRINTF("Examining if still same line: %c\n", PEEK);
     switch (PEEK) {
       NEWLINE_CASES:
       case 0:
@@ -724,20 +728,22 @@ inline_comment_after_skip:
 static Result minus(State *state) {
   DEBUG_PRINTF("->minus\n");
   if (!seq("--", state)) return res_cont;
-  if(SYM(FOLD)) {
-    if (PEEK == '-') {
+  DEBUG_PRINTF("Col: %u; Peek: %c\n", column(state), PEEK);
+  if (PEEK == '-') {
+    // if (SYM(FOLD)) {
       S_ADVANCE;
-      if (is_newline(PEEK)) {
+      DEBUG_PRINTF("After advancing, PEEK: %c\n", PEEK);
+      if (is_eof(state) || is_newline(PEEK)) {
         while(!is_eof(state)) S_ADVANCE;
         MARK("minus", false, state);
         return finish(FOLD, "fold");
       } else {
         return res_fail;
       }
-    } 
-  }
-  while (PEEK == '-') S_ADVANCE;
-  if (symbolic(PEEK)) return res_fail;
+    // }
+  } 
+  // while (PEEK == '-') S_ADVANCE;
+  // if (symbolic(PEEK)) return res_fail;
   return inline_comment(state);
 }
 
@@ -802,7 +808,7 @@ static Result brace(State *state) {
 
 
 /**
- * Parse either inline or block comments.
+ * Parse either inline or block comments. (or fold)
  */
 static Result comment(State *state) {
   DEBUG_PRINTF("->comment w/ PEEK = %c\n", PEEK);
@@ -947,6 +953,7 @@ static Result layout_start(uint32_t column, State *state) {
  * semicolon. Since `f` is on the same indent as the outer `do`'s layout, this parser matches.
  */
 static Result post_end_semicolon(uint32_t column, State *state) {
+  DEBUG_PRINTF("->post end semicolon\n");
   return SYM(SEMICOLON) && indent_lesseq(column, state)
     ? finish(SEMICOLON, "post_end_semicolon")
     : res_cont;
@@ -1001,7 +1008,7 @@ static Result newline_token(uint32_t indent, State *state) {
  * To be called after parsing a newline, with the indent of the next line as argument.
  */
 static Result newline(uint32_t indent, State *state) {
-  DEBUG_PRINTF("->newline\n");
+  DEBUG_PRINTF("->newline(%u)\n", indent);
   Result res = eof(state);
   SHORT_SCANNER;
   // res = initialize(indent, state);
@@ -1045,17 +1052,16 @@ static Result immediate(uint32_t column, State *state) {
 static Result init(State *state) {
   DEBUG_PRINTF("->init\n");
   Result res = eof(state);
-  debug_result(res);
   SHORT_SCANNER;
-  // res = after_error(state) ? res_fail : res_cont;
-  // debug_result(res);
-  // SHORT_SCANNER;
+  res = after_error(state) ? res_fail : res_cont;
+  #ifdef DEBUG
+  debug_result(res);
+  #endif
+  SHORT_SCANNER;
   // res = initialize_init(state);
   // SHORT_SCANNER;
   res = dot(state);
-  debug_result(res);
   SHORT_SCANNER;  
-  debug_state(state);
   if (SYM(FOLD)) {
     res = fold(state);
     SHORT_SCANNER;
@@ -1073,8 +1079,7 @@ static Result init(State *state) {
  * The main parser checks whether the first non-space character is a newline and delegates accordingly.
  */
 static Result scan_main(State *state) {
-  DEBUG_PRINTF("->scan_main w/PEEK = %c\n", PEEK);
-  debug_state(state);
+  DEBUG_PRINTF("->scan_main w/PEEK = %c (%d)\n", PEEK, PEEK);
   skipspace(state);
   Result res = eof(state);
   SHORT_SCANNER;
@@ -1156,6 +1161,7 @@ static bool eval(Result (*chk)(State *state), State *state) {
     }
 #endif
     state->lexer->result_symbol = result.sym;
+    DEBUG_PRINTF("Lexer result: %s", sym_names[state->lexer->result_symbol]);
     return true;
   } else return false;
 }
@@ -1189,7 +1195,9 @@ bool tree_sitter_unison_external_scanner_scan(void *indents_v, TSLexer *lexer, c
   DEBUG_PRINTF("PEEK: %c\n", state.lexer->lookahead);
   if (state.needs_free) free(state.marked_by);
 #endif
-  return eval(scan_all, &state);
+  bool res = eval(scan_all, &state);
+  DEBUG_PRINTF("End scanner with %s and symbol %s\n", res ? "success" : "failure", state.lexer->result_symbol ? sym_names[state.lexer->result_symbol] : "(none)");
+  return res;
 }
 
 /**

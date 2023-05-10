@@ -1,20 +1,20 @@
 const literals = require('./literal')
+const _let = require('./let')
 
 module.exports = {
-    
-  assignment: $ => seq($.regular_identifier, $.kw_equals, $._literal),
-  _expression: $ => prec('_expression', choice(
+  _expression: $ => prec.left(choice(
     $.exp_let,
-    $.functional_expression,
-    // $.assignment,
+    // prec('exp_if', $.exp_if),
+    $.function_application,
+    // $._infix_op_application,
     $._literal,
     $.regular_identifier,
   )),
-  ...literals,
+  // ...literals,
+  ..._let,
   
   
   namespace: $ => $._regular_identifier,
   use_clause: $ => 'TODO',
   // use_clause: $ => seq('use', $.namespace, repeat($.regular_identifier)),
-  
 }
