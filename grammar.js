@@ -40,6 +40,7 @@ module.exports = grammar({
         $.fold,
         $.comment_multiline,
         $.comment,
+        $.comment_documentation_block,
         // seq(/(\r)?\n/, $.fold),
       ),
     ),

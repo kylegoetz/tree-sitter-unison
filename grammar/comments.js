@@ -5,5 +5,6 @@ module.exports = {
   comment_multiline: $ => seq('{-', /.*/m, '-}'),
   
   // TODO can this appear anywhere?
-  comment_documentation_block: $ => seq('{{', /.*/, '}}'),
+  // comment_documentation_block: $ => seq('{{', /.*/m, '}}'),
+  comment_documentation_block: $ => /\{\{.*}}/m,
 }
