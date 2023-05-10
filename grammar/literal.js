@@ -13,7 +13,7 @@ module.exports = {
     $.literal_list,
     $.literal_function,
     $.literal_tuple,
-    //$.literal_termlink,
+    $.literal_termlink,
     $.literal_typelink,
   ),
   literal_text: $ => /".+?"/,
@@ -54,6 +54,7 @@ module.exports = {
   
   
   literal_tuple: $ => seq('(', sep(',', $._expression), ')'),
-  // literal_termlink: $ => seq($.kw_termlink, $.term),
+  term: $ => $._regular_identifier,
+  literal_termlink: $ => seq($.kw_termlink, $.term),
   literal_typelink: $ => seq($.kw_typelink, $.type),
 }
