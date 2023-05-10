@@ -12,7 +12,7 @@ x = "Test"
 ===
 Nat
 ===
-x = 18446744073709551
+x = 123
 ---
 (unison
     (term_declaration
