@@ -38,3 +38,15 @@ unique type UserId = Phone Nat | Email Text
             (type_name)
             (data_constructor
                 (type_name)))))
+===
+type tag (no type constructor)
+===
+unique type Foo =
+---
+(unison
+    (type_declaration
+        (unique_kw)
+        (type_kw)
+        (type_constructor
+            (type_name))
+        (kw_equals)))

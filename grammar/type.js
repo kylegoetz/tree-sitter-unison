@@ -1,10 +1,10 @@
 const { sep } = require('./util')
 
 module.exports = {
-  type_declaration: $ => prec.left(seq(
+  type_declaration: $ => prec.right(seq(
     $._type_lhs,
     $.kw_equals,
-    $._type_rhs
+    optional($._type_rhs),
   )),
   
   structural_kw: $ => 'structural',
@@ -30,7 +30,5 @@ module.exports = {
     $.type_constructor
   ),
   
-  _type_rhs: $ => seq(
-    sep1($.pipe, $.data_constructor),
-  ),
+  _type_rhs: $ => sep1($.pipe, $.data_constructor),
 }
