@@ -5,6 +5,7 @@ const expressions = require('./grammar/expression')
 const blocks = require('./grammar/blocks')
 const stmt = require('./grammar/statement')
 const literals = require('./grammar/literal')
+const types = require('./grammar/type')
 
 const IDENTIFIER_REGEX = /[a-zA-Z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*/u
 
@@ -37,9 +38,21 @@ module.exports = grammar({
     $._indent,
     $._empty,
   ],
+  /** 
+    * Be judicious using this. Even an empty array changes how whitespace
+    * is parsed. $ => [] screws up existing, working grammar.
+   **/
+  extras: $ => [
+    /\\?\s/,
+    $.fold,
+    $.comment,
+    // $.comment_line,
+    $.comment_multiline,
+  ],
   rules: {
     unison: $ => repeat(
       choice(
+        $.type_declaration,
         $.term_declaration,
         // $.inline_comment,
         $.fold,
@@ -50,6 +63,7 @@ module.exports = grammar({
       ),
     ),
     
+    ...types,
     ...literals,
     // ...misc,
     ...comments,

@@ -20,9 +20,11 @@
     "web-tree-sitter": "^0.20.8"
   },
   "scripts": {
+    "start": "tree-sitter generate",
     "test": "tree-sitter test",
     "examples": "script/parse-examples",
-    "examples-wasm": "script/parse-examples wasm"
+    "examples-wasm": "script/parse-examples wasm",
+    "scratch": "tree-sitter parse test/highlight/scratch.u"
   },
   "tree-sitter": [
     {

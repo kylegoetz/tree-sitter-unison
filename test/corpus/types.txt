@@ -1,0 +1,40 @@
+===
+structural type
+===
+structural type Optional a = Some a | None
+---
+(unison
+    (type_declaration
+        (structural_kw)
+        (type_kw)
+        (type_constructor
+            (type_name)
+            (type_argument))
+        (kw_equals)
+        (data_constructor
+            (type_name)
+            (type_argument))
+        (pipe)
+        (data_constructor
+            (type_name))))
+===
+unique type
+===
+unique type UserId = Phone Nat | Email Text
+---
+(unison
+    (type_declaration
+        (unique_kw)
+        (type_kw)
+        (type_constructor
+            (type_name))
+        (kw_equals)
+        (data_constructor
+            (type_name)
+            (data_constructor
+                (type_name)))
+        (pipe)
+        (data_constructor
+            (type_name)
+            (data_constructor
+                (type_name)))))
