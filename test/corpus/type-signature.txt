@@ -7,7 +7,7 @@ sumUpTo x = x
 (unison
     (term_declaration
         (type_signature
-            (regular_identifier)
+            (term_name)
             (type_signature_colon)
             (type
                 (type_name)

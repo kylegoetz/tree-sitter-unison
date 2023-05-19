@@ -50,3 +50,20 @@ unique type Foo =
         (type_constructor
             (type_name))
         (kw_equals)))
+===
+type name with namespace/qualifier
+===
+unique type controlFlow.Color = RGB Nat Nat Nat
+---
+(unison
+    (type_declaration
+        (unique_kw)
+        (type_kw)
+        (type_constructor
+            (varid))
+        (kw_equals)
+        (data_constructor
+            (type_name)
+            (type_argument)
+            (type_argument)
+            (type_argument))))
