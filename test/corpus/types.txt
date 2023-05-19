@@ -8,7 +8,7 @@ structural type Optional a = Some a | None
         (structural_kw)
         (type_kw)
         (type_constructor
-            (type_name)
+            (varid)
             (type_argument))
         (kw_equals)
         (data_constructor
@@ -27,17 +27,15 @@ unique type UserId = Phone Nat | Email Text
         (unique_kw)
         (type_kw)
         (type_constructor
-            (type_name))
+            (varid))
         (kw_equals)
         (data_constructor
             (type_name)
-            (data_constructor
-                (type_name)))
+            (type_argument))
         (pipe)
         (data_constructor
             (type_name)
-            (data_constructor
-                (type_name)))))
+            (type_argument))))
 ===
 type tag (no type constructor)
 ===
@@ -48,7 +46,7 @@ unique type Foo =
         (unique_kw)
         (type_kw)
         (type_constructor
-            (type_name))
+            (varid))
         (kw_equals)))
 ===
 type name with namespace/qualifier
