@@ -44,7 +44,6 @@ module.exports = grammar({
    **/
   extras: $ => [
     /\\?\s/,
-    $.fold,
     $.comment,
     // $.comment_line,
     $.comment_multiline,
