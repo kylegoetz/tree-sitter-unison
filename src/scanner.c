@@ -11,7 +11,26 @@
 #include <string.h>
 #include <wctype.h>
 #include <stdlib.h>
+#include <math.h>
+#include <ctype.h>
+#include "maybe.c"
 
+#define ASCII_OFFSET 48
+#define NAT_MIN 0
+#define NAT_MAX 18446744073709551615u
+#define INT_MIN 9223372036854775808u
+#define INT_MAX 9223372036854775807
+#define NUMERIC_CASES \
+  case '0': \
+  case '1': \
+  case '2': \
+  case '3': \
+  case '4': \
+  case '5': \
+  case '6': \
+  case '7': \
+  case '8': \
+  case '9'
 
 // Short circuit
 #define SHORT_SCANNER if (res.finished) return res;
@@ -20,6 +39,13 @@
 #define S_ADVANCE state->lexer->advance(state->lexer, false)
 #define S_SKIP state->lexer->advance(state->lexer, true)
 #define SYM(s) (state->symbols[s])
+
+#define LOG(level, format, ...) \
+  do { \
+    if ((level) <= LOG_LEVEL) { \
+      fprintf(stderr, format, ##__VA_ARGS__); \
+    } \
+  } while(0)
 
 #ifdef DEBUG
 #define DEBUG_PRINTF(...) do{ fprintf( stderr, __VA_ARGS__ ); } while( false )
@@ -63,6 +89,10 @@ typedef enum {
     IN,
     INDENT,
     EMPTY,
+    NAT,
+    INT,
+    FLOAT,
+    SYMOP,
     FAIL, // always last in list
 } Sym;
 
@@ -80,6 +110,10 @@ static char *sym_names[] = {
     "in",
     "indent",
     "empty",
+    "nat",
+    "int",
+    "float",
+    "symop",
     "fail",
 };
 #endif
@@ -350,24 +384,21 @@ static bool after_error(State *state) { return all_syms(state->symbols); }
 
 #define SYMBOLICS_WITHOUT_BAR \
     case '!': \
-    case '#': \
     case '$': \
     case '%': \
+    case '^': \
     case '&': \
     case '*': \
+    case '-': \
+    case '=': \
     case '+': \
-    case '.': \
-    case '/': \
     case '<': \
     case '>': \
-    case '?': \
-    case '^': \
-    case ':': \
-    case '=': \
-    case '-': \
+    case '.': \
     case '~': \
-    case '@': \
-    case '\\'
+    case '\\': \
+    case '/': \
+    case ':'
 
 #define SYMBOLIC_CASES \
     SYMBOLICS_WITHOUT_BAR: \
@@ -848,6 +879,123 @@ static Result close_layout_in_list(State *state) {
     }
   }
   return res_cont;
+}
+
+static void * get_fractional(State *state) {
+  DEBUG_PRINTF("->get_fractional, %c\n", PEEK);
+  double val = 0;
+  while (!is_eof(state) && isdigit(PEEK)) {
+    double new_val = (val + PEEK - ASCII_OFFSET) * .1;
+    if (new_val * 10 + ASCII_OFFSET - PEEK != val) {
+      return &nothing;
+    }
+    val = new_val;
+    S_ADVANCE;
+  }
+  if (!is_eof(state) && !isws(PEEK)) return &nothing;
+  return justDouble(val);
+}
+
+static void * get_whole(State *state) {
+  DEBUG_PRINTF("->get_whole, %c\n", PEEK);
+  long val = 0;
+  
+  while (!is_eof(state) && (isdigit(PEEK) || PEEK == '.')) {
+    DEBUG_PRINTF("\tget_whole, %lu\n", val);
+    if (isdigit(PEEK)) {
+      long new_val = val * 10 + PEEK - ASCII_OFFSET;
+      DEBUG_PRINTF("\t\tnew_val = %lu; val = %lu; comp = %lu\n", new_val, val, (new_val + ASCII_OFFSET - PEEK) / 10);
+      if ((new_val + ASCII_OFFSET - PEEK) / 10 != val) return &nothing;
+      DEBUG_PRINTF("\t\tit's a match\n");
+      val = new_val;
+      S_ADVANCE;
+    } else if(PEEK == '.') {
+      return justLong(val);
+    } else {
+      return &nothing;
+    }
+  }
+  DEBUG_PRINTF("\tDone reading whole number: %lu\n; next char is %c", val, PEEK);
+  if(isws(PEEK) || is_eof(state)) {
+    DEBUG_PRINTF("\tReturning with success\n");
+    return justLong(val);
+  }
+  return &nothing;
+}
+
+/**
+ * Detect operators.
+ * Cannot run before determining DOT is not an absolute qualifier.
+ */
+static Result operator(State *state) {
+  if (!SYM(SYMOP)) return res_cont;
+  DEBUG_PRINTF("->operator, %c\n", PEEK);
+  if (!symbolic(PEEK)) return res_cont;
+  while (!is_eof(state)) {
+    LOG(VERBOSE, "[operator] Looping with PEEK = %c\n", PEEK);
+    if (symbolic(PEEK)) {
+      S_ADVANCE;
+      MARK("operator", false, state);
+    } else {
+      return finish(SYMOP, "symbolic operator");
+    }
+  }
+  return finish(SYMOP, "symbolic operator");
+}
+
+/**
+ * Parse things that begin with `-`. This is 
+ * 1. symops
+ * 2. negative numbers
+ * Note: I do not think comments are implicated here.
+ */
+static Result handle_negative(State *state) {
+  LOG(VERBOSE, "->handle_negative; PEEK = %c\n", PEEK);
+  if (PEEK != '-' && PEEK != '+') return res_cont;
+  S_ADVANCE;
+  if (isws(PEEK) || is_eof(state)) { // found - or + by itself
+    MARK("handle_negative", false, state);
+    return finish(SYMOP, "+/-");
+  }
+  if (PEEK == '.') { // either -.123123 or -.(symbols) a symop
+    S_ADVANCE;
+    if (isdigit(PEEK)) { // check for FLOAT
+      Maybe * val = (Maybe *)get_fractional(state);
+      if(val->has_value) {
+        MARK("handle_negative", false, state);
+        return finish(FLOAT, "float");
+      }
+    } else if (symbolic(PEEK)) { // CHECK FOR SYMOP
+      return operator(state);
+    }
+    return res_fail;
+  } else if (isdigit(PEEK)) { // check for -a.b FLOAT or -a INT
+    DEBUG_PRINTF("\t2b. handle_negative >= 1, %c\n", PEEK);
+    Maybe * whole = (Maybe *)get_whole(state);
+    if (whole->has_value) {
+      DEBUG_PRINTF("\t3. whole has value\n");
+      if (PEEK == '.') {
+        S_ADVANCE;
+        Maybe *fractional = (Maybe *)get_fractional(state);
+        if (fractional->has_value) {
+          // double total = *(double *)fractional->value + *(long *)whole->value;
+          // TODO check bounds
+          MARK("handle_negative", false, state);
+          return finish(FLOAT, "float");
+        }
+      } else if (isws(PEEK) || is_eof(state)) {
+        MARK("handle_negative", false, state);
+        return finish(INT, "int");
+      }
+      return res_fail;
+    }
+  } else {
+    DEBUG_PRINTF("non-dot symbolic PEEK %c\n", PEEK);
+    Result res = operator(state);
+    LOG(VERBOSE, "Result of operator: %s\n", sym_names[res.sym]);
+    SHORT_SCANNER;
+  }
+  return res_fail;
 }
 
 /** Parse special tokens before the first newline that can't be reliably detected by tree-sitter:

@@ -6,14 +6,19 @@ const blocks = require('./grammar/blocks')
 const stmt = require('./grammar/statement')
 const literals = require('./grammar/literal')
 const types = require('./grammar/type')
+const identifiers = require('./grammar/identifier')
+const term = require('./grammar/term')
 
 const IDENTIFIER_REGEX = /[a-zA-Z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*/u
 
 module.exports = grammar({
   name: 'unison',
   precedences: $ => [
-    ['_expression'],
-    ['literal_function'],
+    ['keyword', 'varid', '_regular_identifier'],
+    ['keyword', '_expression'],
+    ['function_application', 'operator'], // `myFn a b + c` is equivalent to `((myFn a) b) + c`
+    ['_function_application', 'func_name', 'varid', 'regular_identifier'],
+    ['_prefix_function_application', '_infix_op_application'],
   ],
   conflicts: $ => [
 
@@ -37,6 +42,10 @@ module.exports = grammar({
     $._in,
     $._indent,
     $._empty,
+    $.nat,
+    $.int,
+    $.float,
+    $.operator,
   ],
   /** 
     * Be judicious using this. Even an empty array changes how whitespace
@@ -58,17 +67,18 @@ module.exports = grammar({
         $.comment_multiline,
         $.comment,
         $.comment_documentation_block,
-        // seq(/(\r)?\n/, $.fold),
       ),
     ),
     
+    ...identifiers,
     ...types,
     ...literals,
-    // ...misc,
+    ...misc,
     ...comments,
     ...blocks,
     ...expressions,
     ...stmt,
+    ...term,
     
     // fold: $ => $._fold,
     kw_forall: $ => choice("forall", "∀"),
@@ -100,13 +110,10 @@ module.exports = grammar({
       $.term_definition
     ),
     
-    _lowercase_regular_identifier: $ => /[a-z]+/,
+    _lowercase_regular_identifier: $ => LOWERCASE_IDENTIFIER_REGEX,
     regular_identifier: $ => prec.left($._regular_identifier),
     
-    _regular_identifier: $ => IDENTIFIER_REGEX,
-    // // operator: $ => /[!$%^&*-=+<>.~\/|:]+/,
-    operator: $ => '+',
-    // identifier: $ => seq(choice($._regular_identifier,$.operator), optional($.literal_hash)),
+    _regular_identifier: $ => prec.left(IDENTIFIER_REGEX),
     
     type_variable: $ => $._lowercase_regular_identifier,
     type_arrow: $ => '->',

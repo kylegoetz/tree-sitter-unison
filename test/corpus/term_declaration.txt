@@ -1,0 +1,31 @@
+===
+simple term declaration
+===
+x = 5
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (literal_nat))))     
+===
+Term declaration
+===
+sumUpTo : Nat -> Nat
+sumUpTo x = x
+---
+(unison
+    (term_declaration
+        (type_signature
+            (term_name)
+            (type_signature_colon)
+            (type
+                (type_name)
+                (type_arrow)
+                (type_name)))
+        (term_definition
+            (name)
+            (type_variable)
+            (kw_equals)
+            (regular_identifier))))

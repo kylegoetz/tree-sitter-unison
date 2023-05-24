@@ -103,7 +103,7 @@ x = [1, 2, 3]
 ===
 function literal
 ===
-y = x -> x Nat.+ 2
+y = x -> x + 2
 ---
 (unison
     (term_declaration
@@ -111,11 +111,12 @@ y = x -> x Nat.+ 2
             (name)
             (kw_equals)
             (literal_function
-                (regular_identifier)
+                (func_name)
                 (type_arrow)
-                (regular_identifier)
-                (operator)
-                (literal_nat)))))
+                (function_application
+                    (regular_identifier)
+                    (operator)
+                    (literal_nat))))))
 ===
 tuple literal
 ===
