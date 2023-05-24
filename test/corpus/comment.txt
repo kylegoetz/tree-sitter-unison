@@ -10,17 +10,23 @@ poet = "Maya Angelou"
         (term_definition
             (name)
             (kw_equals)
-            (expression))))
+            (literal_text))))
 
 ===
 line comment
 ===
 
+x = 5 
 -- a comment
 
 ---
 (unison
-    (comment_line))
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (literal_nat)))
+    (comment))
 ===
 multiline comment
 ===
@@ -40,4 +46,4 @@ x = 5
 
 ---
 (unison
-    (comment_fold))
+    (fold))

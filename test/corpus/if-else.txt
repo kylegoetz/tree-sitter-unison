@@ -1,0 +1,61 @@
+===
+simple one line if/else with no complex expressions
+===
+y = if x then 5 else 6
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (exp_if
+                (kw_if)
+                (regular_identifier)
+                (kw_then)
+                (literal_nat)
+                (kw_else)
+                (literal_nat)))))
+===
+one line if/else
+===
+mySimpleTerm = if elem 5 myList then "high five" else "no five found"
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (exp_if
+                (kw_if)
+                (functional_expression
+                    (regular_identifier)
+                    (literal_nat)
+                    (regular_identifier))
+                (then)
+                (lit_text)
+                (else)
+                (lit_text)))))
+===
+if/then/else
+===
+mySimpleTerm = if elem 5 myList
+               then "high five"
+               else "no five found"
+---
+(unison
+    (term_declaration
+        (term_definition
+            (name)
+            (kw_equals)
+            (if_exp
+                (kw_if)
+                (if_clause
+                    (function_application
+                        (function_name)
+                        (function_param
+                            (literal_nat)
+                            (regular_identifier))))
+                (then_clause
+                    (literal_text))
+                (else_clause
+                    (literal_text))))))         

@@ -1,0 +1,9 @@
+===
+simplest use clause
+===
+use base.List
+---
+(unison
+    (use_clause
+        (use_kw)
+        (namespace)))

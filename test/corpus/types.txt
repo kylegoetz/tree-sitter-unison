@@ -65,3 +65,42 @@ unique type controlFlow.Color = RGB Nat Nat Nat
             (type_argument)
             (type_argument)
             (type_argument))))
+===
+Record type
+===
+unique type Point2 = { x : Nat, y : Nat }
+---
+(unison
+    (type_declaration
+        (unique_kw)
+        (type_kw)
+        (type_constructor
+            (varid))
+        (kw_equals)
+        (record_type_constructor)))
+===
+Record type, multiline
+===
+unique type Point2 = {
+    x : Nat,
+    y : Nat,
+}
+---
+(unison
+    (type_declaration
+        (unique_kw)
+        (type_kw)
+        (type_constructor
+            (varid))
+        (kw_equals)
+        (record_type_constructor)))
+===
+type with complex abilities clause
+===
+store.stopIfTrue : (a -> Boolean) -> a ->{Abort, Store a} a
+---
+(unison
+    (type_declaration
+        (varid)
+        ()))
+    

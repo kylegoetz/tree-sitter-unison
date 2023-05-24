@@ -1,0 +1,37 @@
+===
+one line structural ability
+===
+structural ability Throw e where throw : e ->{Throw e} a
+---
+(unison
+    (ability_declaration
+        (structural)
+        (ability)
+        (type_constructor
+            (varid)
+            (type_parameter))
+        (where)
+        (request_operation
+            (request)
+            (type))))
+===
+unique ability
+===
+structural ability Store a where
+  put : a ->{Store a} ()
+  get : {Store a} a
+---
+(unison
+    (ability_declaration
+        (structural)
+        (ability)
+        (type_constructor
+            (varid)
+            (type_parameter))
+        (where)
+        (request_operation
+            (request)
+            (type))
+        (request_operation
+            (request)
+            (type))))
