@@ -1,11 +1,9 @@
 ===
-use
+simplest use clause
 ===
-use Foo.Bar + blah
+use base.List
 ---
 (unison
-    (import
-        (use)
-        (namespace)
-        (operator)
-        (wordy_id)))
+    (use_clause
+        (use_kw)
+        (namespace)))

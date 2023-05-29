@@ -1,0 +1,35 @@
+===
+relative
+===
+x = foo.bar.baz
+---
+(unison
+    (term_declaration
+        (term_definition
+            (varid)
+            (equals)
+            (relative_identifier
+                (relative_path)
+                (wordy_id)))))
+===
+varid
+===
+x = baz
+---
+(unison
+    (term_declaration
+        (term_definition
+            (varid)
+            (equals)
+            (wordy_id))))
+===
+symop
+===
+x = -
+---
+(unison
+    (term_declaration
+        (term_definition
+            (varid)
+            (equals)
+            (symbol_id))))
