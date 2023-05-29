@@ -3,10 +3,20 @@
  */
 #define DEBUG 1
 
+#define LOG_LEVEL VERBOSE
+typedef enum {
+  VERBOSE,
+  INFO,
+  WARN,
+  ERROR,
+  NONE,
+} LogLevel;
+
 #include "tree_sitter/parser.h"
 #include <assert.h>
 #ifdef DEBUG
 #include <stdio.h>
+#include <assert.h>
 #endif
 #include <string.h>
 #include <wctype.h>
@@ -381,7 +391,7 @@ static bool is_newline(uint32_t c) {
  * Require that the parser determined an error in the previous step (see `all_syms`).
  */
 static bool after_error(State *state) { return all_syms(state->symbols); }
-
+// !$%^&*-=+<>.~\\/|:
 #define SYMBOLICS_WITHOUT_BAR \
     case '!': \
     case '$': \
@@ -1030,6 +1040,11 @@ static Result inline_tokens(State *state) {
       SHORT_SCANNER;
       return res_fail;
     }
+    SYMBOLIC_CASES: {
+      Result res = operator(state);
+      SHORT_SCANNER;
+      return res_fail;
+    }
     // TODO(414owen) does this clash with inline comments '--'?
     // I'm not sure why there's a `symbolic::comment` and a `COMMENT`...
     // SYMBOLICS_WITHOUT_BAR: {
@@ -1101,7 +1116,7 @@ static Result layout_start(uint32_t column, State *state) {
  * semicolon. Since `f` is on the same indent as the outer `do`'s layout, this parser matches.
  */
 static Result post_end_semicolon(uint32_t column, State *state) {
-  DEBUG_PRINTF("->post end semicolon\n");
+  LOG(INFO, "->post_end_semicolon(%u, %c)\n", column, PEEK);
   return SYM(SEMICOLON) && indent_lesseq(column, state)
     ? finish(SEMICOLON, "post_end_semicolon")
     : res_cont;
@@ -1111,6 +1126,7 @@ static Result post_end_semicolon(uint32_t column, State *state) {
  * Like `post_end_semicolon`, but for layout end.
  */
 static Result repeat_end(uint32_t column, State *state) {
+  LOG(INFO, "->repeat_end(%u, %c)\n", column, PEEK);
   if (state->symbols[END] && smaller_indent(column, state)) {
     return layout_end("repeat_end", state);
   }
@@ -1157,6 +1173,7 @@ static Result newline_token(uint32_t indent, State *state) {
  */
 static Result newline(uint32_t indent, State *state) {
   DEBUG_PRINTF("->newline(%u)\n", indent);
+  LOG(VERBOSE, "->newline(%u)\n", indent);
   Result res = eof(state);
   SHORT_SCANNER;
   // res = initialize(indent, state);
@@ -1169,13 +1186,50 @@ static Result newline(uint32_t indent, State *state) {
   SHORT_SCANNER;
   return newline_indent(indent, state);
 }
- 
+
+
+
+/**
+ * Parser for Nat. Only digits.
+ */
+ static Result detect_nat(State *state) {
+  Maybe *whole = (Maybe *)get_whole(state);
+  if (whole->has_value) {
+    MARK("detect_nat", false, state);
+    return finish(NAT, "nat");
+  }
+  return res_fail;
+}
+
+/**
+ * Parser for numbers and symops. JS grammar is detecting zero-length nat for some reason.
+ * - Nat
+ * - Int
+ * - Float
+ * Parser must fail if it detects a non-number that begins with digit/decimal,
+ * or if it detects a number out of range of permissible values.
+ */
+static Result numeric(State *state) {
+  LOG(INFO, "->numeric, %c\n", PEEK);
+  if (isdigit(PEEK) || PEEK == '.' || PEEK == '-' || PEEK == '+') {
+    if (PEEK == '-' || PEEK == '+') {
+      Result res = handle_negative(state);
+      LOG(VERBOSE, "Result of handle_negative: %s\n", sym_names[res.sym]);
+      SHORT_SCANNER;
+    } else if(isdigit(PEEK)) {
+      Result res = detect_nat(state);
+      SHORT_SCANNER;
+    }
+  }
+  return res_cont;
+}
+      
 /**
  * Parsers that have to run when the next non-space character is not a newline:
  *
  *   - Layout start
  *   - ending nested layouts at the same position
- *   - symbolic operators
+ *   - numeric literals + symops
  *   - Tokens `where`, `in`, `$`, `)`, `]`, `,`
  *   - comments
  */
@@ -1185,6 +1239,8 @@ static Result immediate(uint32_t column, State *state) {
   res = post_end_semicolon(column, state);
   SHORT_SCANNER;
   res = repeat_end(column, state);
+  SHORT_SCANNER;
+  res = numeric(state);
   SHORT_SCANNER;
   return inline_tokens(state);
 }
@@ -1299,9 +1355,9 @@ static bool eval(Result (*chk)(State *state), State *state) {
   debug_lookahead(state);
 #endif
   if (result.finished && result.sym != FAIL) {
+  LOG(VERBOSE, "result: %s, ", sym_names[result.sym]);
 #ifdef DEBUG
     // TODO(414owen) can names[] fail?
-    DEBUG_PRINTF("result: %s, ", sym_names[result.sym]);
     if (state->marked == -1) {
       DEBUG_PRINTF("%d\n", column(state));
     } else {
@@ -1331,6 +1387,8 @@ void *tree_sitter_unison_external_scanner_create() {
  * Since the state is a singular vector, it can just be cast and used directly.
  */
 bool tree_sitter_unison_external_scanner_scan(void *indents_v, TSLexer *lexer, const bool *syms) {
+  LOG(VERBOSE, "->scan\n");
+  
   indent_vec *indents = (indent_vec*) indents_v;
   State state = {
     .lexer = lexer,
@@ -1385,3 +1443,10 @@ void tree_sitter_unison_external_scanner_destroy(void *indents_v) {
   indent_vec *indents = (indent_vec*) indents_v;
   VEC_FREE(indents);
 }
+
+// For unit tests
+// int main(int argc, char *arvg[]) {
+  // #ifdef DEBUG
+  // assert()
+  // #endif
+// } 
