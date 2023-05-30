@@ -1,4 +1,5 @@
 const { sep } = require('./util')
+const regex = require('./regex')
 
 const varid_pattern = /[a-zA-Z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*/u
 const lowercase_varid_pattern = /[a-z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*/u
@@ -54,8 +55,12 @@ module.exports = {
   //   optional($.literal_hash),
   // ),
   
-  // TODO break this up into namespace and name eventually
-  identifier: $ => varid,
+  identifier: $ => choice(
+    seq(new RegExp(`${regex.varid}\\.`, 'u'), token.immediate(regex.varid)),
+    regex.varid,
+  ),
+  
+  namespace: $ => regex.namespace,
   
   // identifier: $ => choice(
     // $._namespace_qualified,

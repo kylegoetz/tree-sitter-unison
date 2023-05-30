@@ -24,10 +24,12 @@ module.exports = {
     $._expression
   ),
   
+  _semi: $ => choice(';', $._layout_semicolon),
+  
   _block: $ => seq(
     $._layout_start,
-    optional(sep1(choice(';', $._layout_semicolon), $._statement)),
-    $.expression,
+    optional(seq(sep1($._semi, $._statement), $._semi)),
+    $._expression,
     $._layout_end,
   ),
 }

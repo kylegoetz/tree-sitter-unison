@@ -98,22 +98,7 @@ module.exports = grammar({
     name: $ => $._regular_identifier,
     // _term_rhs: $ => $._expression,
     
-    term_definition: $ => seq(
-      $.name,
-      repeat($.type_variable),
-      $.kw_equals,
-      $._expression
-    ),
-    
-    term_declaration: $ => seq(
-      optional($.type_signature),
-      $.term_definition
-    ),
-    
-    _lowercase_regular_identifier: $ => LOWERCASE_IDENTIFIER_REGEX,
-    regular_identifier: $ => prec.left($._regular_identifier),
-    
-    _regular_identifier: $ => prec.left(IDENTIFIER_REGEX),
+    // _regular_identifier: $ => prec.left(IDENTIFIER_REGEX),
     
     type_variable: $ => $._lowercase_regular_identifier,
     type_arrow: $ => '->',
@@ -142,7 +127,7 @@ module.exports = grammar({
       'if',
       'then',
       'else',
-      $.kw_forall,
+      // $.kw_forall,
       'handle',
       'unique',
       'structural',
@@ -155,7 +140,7 @@ module.exports = grammar({
       'type',
       'ability',
       'alias',
-      $.kw_let,
+      // $.kw_let,
       'namespace',
       'cases',
       'match',

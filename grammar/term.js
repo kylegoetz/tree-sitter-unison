@@ -19,7 +19,6 @@ module.exports = {
   term_definition: $ => seq(
     choice($.varid, $._fn), // x OR myFun p1 p2
     $.kw_equals,
-    // $.nat,
-    $._expression,
+    $._block,
   ),
 }
