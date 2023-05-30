@@ -934,13 +934,37 @@ static void * get_whole(State *state) {
 }
 
 /**
+ * Handle an operator that begins with `=`. If it's a single `=` then fail
+ * and allow the JS to handle it instead. Without this, the JS often
+ * sees a term assignment as function application with operator `=` as
+ * discovered by the external scanner. This function exists to prevent
+ * this.
+ */
+static Result equals(State *state) {
+  LOG(INFO, "->equals (%u, %c)\n", COL, PEEK);
+  if (PEEK == '=') {
+    S_ADVANCE;
+    if (is_eof(state) || isws(PEEK) || !symbolic(PEEK)) {
+      return res_fail;
+    }
+  }
+  return res_cont;
+}
+
+/**
  * Detect operators.
  * Cannot run before determining DOT is not an absolute qualifier.
+ * Need to exclude certain symbols as solutions. The following cannot
+ * be considered operators: =, 
  */
 static Result operator(State *state) {
   if (!SYM(SYMOP)) return res_cont;
   DEBUG_PRINTF("->operator, %c\n", PEEK);
   if (!symbolic(PEEK)) return res_cont;
+  if (PEEK == '=') {
+    Result res = equals(state);
+    SHORT_SCANNER;
+  }
   while (!is_eof(state)) {
     LOG(VERBOSE, "[operator] Looping with PEEK = %c\n", PEEK);
     if (symbolic(PEEK)) {
