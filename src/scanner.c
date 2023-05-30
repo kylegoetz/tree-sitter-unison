@@ -737,6 +737,13 @@ static Result else_(State *state) {
 }
 
 /**
+ * A `then` token may end a layout opened in the body of an `if`.
+ */
+ static Result then(State *state) {
+   return token("then", state) ? layout_end("then", state) : res_cont;
+ }
+
+/**
  * Consume all characters up to the end of line and succeed with `syms::commment`.
  */
 static Result inline_comment(State *state) {
@@ -1059,6 +1066,11 @@ static Result inline_tokens(State *state) {
     }
     case 'e': {
       Result res = else_(state);
+      SHORT_SCANNER;
+      return res_fail;
+    }
+    case 't': {
+      Result res = then(state);
       SHORT_SCANNER;
       return res_fail;
     }
