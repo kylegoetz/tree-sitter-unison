@@ -3,7 +3,7 @@
  */
 #define DEBUG 1
 
-#define LOG_LEVEL VERBOSE
+#define LOG_LEVEL INFO
 typedef enum {
   VERBOSE,
   INFO,
@@ -45,6 +45,7 @@ typedef enum {
 // Short circuit
 #define SHORT_SCANNER if (res.finished) return res;
 #define PEEK state->lexer->lookahead
+#define COL state->lexer->get_column(state->lexer)
 // Move the parser position one character to the right.
 #define S_ADVANCE state->lexer->advance(state->lexer, false)
 #define S_SKIP state->lexer->advance(state->lexer, true)
@@ -475,7 +476,7 @@ static Result res_fail = {.sym = FAIL, .finished = true};
  * Parser that terminates the execution with the successful detection of the given symbol.
  */
 static Result finish(const Sym s, char *restrict desc) {
-  DEBUG_PRINTF("finish: %s\n", desc);
+  LOG(INFO, "finish: %s\n", desc);
   return res_finish(s);
 }
 
@@ -490,7 +491,7 @@ static Result finish_if_valid(const Sym s, char *restrict desc, State *state) {
  * Add one level of indentation to the stack, caused by starting a layout.
  */
 static void push(uint16_t ind, State *state) {
-  DEBUG_PRINTF("push: %d\n", ind);
+  LOG(VERBOSE, "push: %d\n", ind);
   VEC_PUSH(state->indents, ind);
 }
 
@@ -499,7 +500,7 @@ static void push(uint16_t ind, State *state) {
  */
 static void pop(State *state) {
   if (indent_exists(state)) {
-    DEBUG_PRINTF("pop\n");
+    LOG(VERBOSE, "pop\n");
     VEC_POP(state->indents);
   }
 }
@@ -644,11 +645,11 @@ static Result dot(State *state) {
 }
  
  static Result fold(State *state) {
-   DEBUG_PRINTF("->fold with PEEK =%c@%u\n", PEEK, column(state));
+   LOG(INFO, "->fold with PEEK =%c@%u\n", PEEK, column(state));
    if (seq("---", state)) {
-     DEBUG_PRINTF("--- and PEEK is %c@%u\n", PEEK, column(state));
+     LOG(VERBOSE, "--- and PEEK is %c@%u\n", PEEK, column(state));
      while(!is_eof(state)) S_ADVANCE;
-     DEBUG_PRINTF("after advancing, PEEK is %c and should be EOF: %s\n", PEEK, is_eof(state) ? "true" : "false");
+     LOG(VERBOSE, "after advancing, PEEK is %c and should be EOF: %s\n", PEEK, is_eof(state) ? "true" : "false");
      MARK("fold", false, state);
      return finish(FOLD, "fold");
    }
@@ -739,9 +740,9 @@ static Result else_(State *state) {
  * Consume all characters up to the end of line and succeed with `syms::commment`.
  */
 static Result inline_comment(State *state) {
-  DEBUG_PRINTF("->inline comment\n");
+  LOG(INFO, "->inline_comment: consume rest of line then succeed with COMMENT\n");
   for (;;) {
-    DEBUG_PRINTF("Examining if still same line: %c\n", PEEK);
+    LOG(VERBOSE, "Examining if still same line: %c\n", PEEK);
     switch (PEEK) {
       NEWLINE_CASES:
       case 0:
@@ -767,13 +768,13 @@ inline_comment_after_skip:
  *   - Operator matching was done already
  */
 static Result minus(State *state) {
-  DEBUG_PRINTF("->minus\n");
+  LOG(INFO, "->minus\n");
   if (!seq("--", state)) return res_cont;
-  DEBUG_PRINTF("Col: %u; Peek: %c\n", column(state), PEEK);
+  LOG(VERBOSE, "Col: %u; Peek: %c\n", column(state), PEEK);
   if (PEEK == '-') {
     // if (SYM(FOLD)) {
       S_ADVANCE;
-      DEBUG_PRINTF("After advancing, PEEK: %c\n", PEEK);
+      LOG(VERBOSE, "After advancing, PEEK: %c\n", PEEK);
       if (is_eof(state) || is_newline(PEEK)) {
         while(!is_eof(state)) S_ADVANCE;
         MARK("minus", false, state);
@@ -803,6 +804,7 @@ static Result multiline_comment_success(State *state) {
  * outermost comment isn't closed prematurely.
  */
 static Result multiline_comment(State *state) {
+  LOG(INFO, "->multiline_comment (col = %u, PEEK = %c)\n", state->lexer->get_column(state->lexer), PEEK);
   uint16_t level = 0;
   for (;;) {
     switch (PEEK) {
@@ -839,6 +841,7 @@ static Result multiline_comment(State *state) {
  * comment is parsed, otherwise parsing fails to delegate to the corresponding grammar rule.
  */
 static Result brace(State *state) {
+  LOG(INFO, "->brace\n");
   if (PEEK != '{') return res_fail;
   S_ADVANCE;
   if (PEEK != '-') return res_fail;
@@ -852,7 +855,7 @@ static Result brace(State *state) {
  * Parse either inline or block comments. (or fold)
  */
 static Result comment(State *state) {
-  DEBUG_PRINTF("->comment w/ PEEK = %c\n", PEEK);
+  LOG(INFO, "->comment (col = %u, PEEK = %c)\n", state->lexer->get_column(state->lexer), PEEK);
   switch (PEEK) {
     case '-': {
       Result res = minus(state);
@@ -958,8 +961,8 @@ static Result equals(State *state) {
  * be considered operators: =, 
  */
 static Result operator(State *state) {
+  LOG(INFO, "->operator (%u, %c)\n", COL, PEEK);
   if (!SYM(SYMOP)) return res_cont;
-  DEBUG_PRINTF("->operator, %c\n", PEEK);
   if (!symbolic(PEEK)) return res_cont;
   if (PEEK == '=') {
     Result res = equals(state);
@@ -1004,10 +1007,10 @@ static Result handle_negative(State *state) {
     }
     return res_fail;
   } else if (isdigit(PEEK)) { // check for -a.b FLOAT or -a INT
-    DEBUG_PRINTF("\t2b. handle_negative >= 1, %c\n", PEEK);
+    LOG(VERBOSE, "\t2b. handle_negative >= 1, %c\n", PEEK);
     Maybe * whole = (Maybe *)get_whole(state);
     if (whole->has_value) {
-      DEBUG_PRINTF("\t3. whole has value\n");
+      LOG(VERBOSE, "\t3. whole has value\n");
       if (PEEK == '.') {
         S_ADVANCE;
         Maybe *fractional = (Maybe *)get_fractional(state);
@@ -1024,7 +1027,7 @@ static Result handle_negative(State *state) {
       return res_fail;
     }
   } else {
-    DEBUG_PRINTF("non-dot symbolic PEEK %c\n", PEEK);
+    LOG(VERBOSE, "non-dot symbolic PEEK %c\n", PEEK);
     Result res = operator(state);
     LOG(VERBOSE, "Result of operator: %s\n", sym_names[res.sym]);
     SHORT_SCANNER;
@@ -1278,13 +1281,10 @@ static Result immediate(uint32_t column, State *state) {
  *   - Fold
  */
 static Result init(State *state) {
-  DEBUG_PRINTF("->init\n");
+  LOG(INFO, "->init (col = %u, PEEK = %c)\n", COL, PEEK);
   Result res = eof(state);
   SHORT_SCANNER;
   res = after_error(state) ? res_fail : res_cont;
-  #ifdef DEBUG
-  debug_result(res);
-  #endif
   SHORT_SCANNER;
   // res = initialize_init(state);
   // SHORT_SCANNER;
@@ -1307,14 +1307,13 @@ static Result init(State *state) {
  * The main parser checks whether the first non-space character is a newline and delegates accordingly.
  */
 static Result scan_main(State *state) {
-  DEBUG_PRINTF("->scan_main w/PEEK = %c (%d)\n", PEEK, PEEK);
+  LOG(INFO, "->scan_main (%u, %c)\n", COL, PEEK);
   skipspace(state);
   Result res = eof(state);
   SHORT_SCANNER;
-  DEBUG_PRINTF("Not eof\n");
   MARK("main", false, state);
   if (is_newline(PEEK)) {
-    DEBUG_PRINTF("is newline\n");
+    LOG(VERBOSE, "is newline\n");
     S_SKIP;
     uint32_t indent = count_indent(state);
     return newline(indent, state);
@@ -1327,11 +1326,8 @@ static Result scan_main(State *state) {
  * The entry point to the parser.
  */
 static Result scan_all(State *state) {
-  // DEBUG_PRINTF("->scan_all\n");
+  LOG(INFO, "->scan_all (%u, %c)\n", COL, PEEK);
   Result res = init(state);
-  // if (res.finished) {
-    // DEBUG_PRINTF("after init, scan_all is: %s\n", sym_names[res.sym]);
-  // }
   SHORT_SCANNER;
   return scan_main(state);
 }
