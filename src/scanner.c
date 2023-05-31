@@ -903,13 +903,19 @@ static Result close_layout_in_list(State *state) {
 
 static void * get_fractional(State *state) {
   DEBUG_PRINTF("->get_fractional, %c\n", PEEK);
+  char running_str[1024] = "";
   double val = 0;
+  bool non_zero = false;
   while (!is_eof(state) && isdigit(PEEK)) {
-    double new_val = (val + PEEK - ASCII_OFFSET) * .1;
-    if (new_val * 10 + ASCII_OFFSET - PEEK != val) {
+    if (PEEK != '0') {
+      non_zero = true;
+    }
+    const char a[2] = { PEEK, '\0' };
+    strcat(running_str, a);
+    val = atof(running_str);
+    if (non_zero && val == 0) { // i.e., we know `atof` failed
       return &nothing;
     }
-    val = new_val;
     S_ADVANCE;
   }
   if (!is_eof(state) && !isws(PEEK)) return &nothing;
@@ -929,7 +935,7 @@ static void * get_whole(State *state) {
       DEBUG_PRINTF("\t\tit's a match\n");
       val = new_val;
       S_ADVANCE;
-    } else if(PEEK == '.') {
+    } else if(PEEK == '.' || isws(PEEK)) {
       return justLong(val);
     } else {
       return &nothing;
@@ -1236,6 +1242,32 @@ static Result newline(uint32_t indent, State *state) {
   if (whole->has_value) {
     MARK("detect_nat", false, state);
     return finish(NAT, "nat");
+  }
+  return res_fail;
+}
+
+/**
+ * Parser for Nat and Float without sign prefix.
+ */
+static Result detect_nat_ufloat(State *state) {
+  LOG(INFO, "->detect_nat_ufloat (%u, %c)\n", COL, PEEK);
+  Maybe *whole = (Maybe *)get_whole(state);
+  if (whole->has_value) {
+    if (PEEK == '.') {
+      S_ADVANCE;
+      Maybe *fractional =(Maybe *)get_fractional(state);
+      if (fractional->has_value) {
+        LOG(VERBOSE, "fractional has value\n");
+        MARK("detect_nat_ufloat", false, state);
+        return finish(FLOAT, "float");
+      } else {
+        LOG(VERBOSE, "fractional does not have value\n");
+        return res_fail;
+      }
+    } else {
+      MARK("detect_nat_ufloat", false, state);
+      return finish(NAT, "nat");
+    }
   }
   return res_fail;
 }
