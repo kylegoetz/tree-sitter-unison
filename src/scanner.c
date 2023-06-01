@@ -998,7 +998,7 @@ static Result operator(State *state) {
    * scan until:
    * - if parenthesized and space, skip all succeeding spaces
    * - if parenthesized and `)`, return successful operator
-   * - if non-symbolic
+   * - if non-symbolic, succeed without advancing
    * 
    */
   while (!is_eof(state)) {
@@ -1011,6 +1011,8 @@ static Result operator(State *state) {
     } else if (parenthesized && PEEK == ')') {
       S_ADVANCE;
       MARK("operator", false, state);
+      return finish_if_valid(SYMOP, "symbolic operator", state);
+    } else {
       return finish_if_valid(SYMOP, "symbolic operator", state);
     }
   }
