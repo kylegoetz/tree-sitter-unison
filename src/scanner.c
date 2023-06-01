@@ -3,7 +3,7 @@
  */
 #define DEBUG 1
 
-#define LOG_LEVEL INFO
+#define LOG_LEVEL VERBOSE
 typedef enum {
   VERBOSE,
   INFO,
@@ -14,8 +14,8 @@ typedef enum {
 
 #include "tree_sitter/parser.h"
 #include <assert.h>
-#ifdef DEBUG
 #include <stdio.h>
+#ifdef DEBUG
 #include <assert.h>
 #endif
 #include <string.h>
@@ -53,7 +53,7 @@ typedef enum {
 
 #define LOG(level, format, ...) \
   do { \
-    if ((level) <= LOG_LEVEL) { \
+    if ((level) >= LOG_LEVEL) { \
       fprintf(stderr, format, ##__VA_ARGS__); \
     } \
   } while(0)
@@ -107,7 +107,7 @@ typedef enum {
     FAIL, // always last in list
 } Sym;
 
-#ifdef DEBUG
+// #ifdef DEBUG
 static char *sym_names[] = {
     "semicolon",
     "start",
@@ -127,7 +127,7 @@ static char *sym_names[] = {
     "symop",
     "fail",
 };
-#endif
+// #endif
 
 /**
  * The parser appears to call `scan` with all symbols declared as valid directly after it encountered an error, so
@@ -484,6 +484,7 @@ static Result finish(const Sym s, char *restrict desc) {
  * Parser that terminates the execution with the successful detection of the given symbol, but only if it is expected.
  */
 static Result finish_if_valid(const Sym s, char *restrict desc, State *state) {
+  LOG(INFO, "->finish_if_valid %s (%u, %c)\n", desc, COL, PEEK);
   return SYM(s) ? finish(s, desc) : res_cont;
 }
 
@@ -522,6 +523,7 @@ static void skipspace(State *state) {
 }
 
 static Result layout_end(char *desc, State *state) {
+  LOG(INFO, "->layout_end (%u, %c)\n", COL, PEEK);
     if(SYM(END)) {
         pop(state);
         return finish(END, desc);
@@ -533,6 +535,7 @@ static Result layout_end(char *desc, State *state) {
  * Convenience parser, since those two are often used together.
  */
 static Result end_or_semicolon(char *desc, State *state) {
+  LOG(INFO, "->end_or_semicolon (%u, %c)\n", COL, PEEK);
   Result res = layout_end(desc, state);
   SHORT_SCANNER;
   return finish_if_valid(SEMICOLON, desc, state);
@@ -583,6 +586,7 @@ static uint32_t count_indent(State *state) {
  * If those cases do not apply, parsing fails.
  */
 static Result eof(State *state) {
+  LOG(INFO, "->eof (%u, %c)\n", COL, PEEK);
   if (is_eof(state)) {
     if (SYM(EMPTY)) {
       return finish(EMPTY, "eof");
@@ -1097,6 +1101,7 @@ static Result handle_negative(State *state) {
  *
  *   - `where` here is just for the actual valid token
  *   - `in` closes a layout when inline
+ *   - `then` closes a layout when inline
  *   - `)` can end the layout of an `of`
  *   - symbolic operators are complicated to implement with regex
  *   - `$` can be a splice if not followed by whitespace
@@ -1104,6 +1109,7 @@ static Result handle_negative(State *state) {
  *   - '|' in a quasiquote, since it can be followed by symbolic operator characters, which would be consumed
  */
 static Result inline_tokens(State *state) {
+  LOG(INFO, "->inline_tokens (%u, %c)\n", COL, PEEK);
   switch (PEEK) {
     case 'w': {
       Result res = where(state);
@@ -1339,7 +1345,7 @@ static Result numeric(State *state) {
       LOG(VERBOSE, "Result of handle_negative: %s\n", sym_names[res.sym]);
       SHORT_SCANNER;
     } else if(isdigit(PEEK)) {
-      Result res = detect_nat(state);
+      Result res = detect_nat_ufloat(state);
       SHORT_SCANNER;
     }
   }
@@ -1379,19 +1385,21 @@ static Result init(State *state) {
   LOG(INFO, "->init (col = %u, PEEK = %c)\n", COL, PEEK);
   Result res = eof(state);
   SHORT_SCANNER;
+  
+  
   res = after_error(state) ? res_fail : res_cont;
   SHORT_SCANNER;
+  
+  
   // res = initialize_init(state);
   // SHORT_SCANNER;
-  res = dot(state);
-  SHORT_SCANNER;  
+  // res = dot(state);
+  // SHORT_SCANNER;  
   if (SYM(FOLD)) {
     res = fold(state);
     SHORT_SCANNER;
   }
   
-  // res = cpp(state);
-  // SHORT_SCANNER;
   // if (state->symbols[QQ_BODY]) {
     // return qq_body(state);
   // }
@@ -1470,7 +1478,6 @@ static bool eval(Result (*chk)(State *state), State *state) {
   debug_lookahead(state);
 #endif
   if (result.finished && result.sym != FAIL) {
-  LOG(VERBOSE, "result: %s, ", sym_names[result.sym]);
 #ifdef DEBUG
     // TODO(414owen) can names[] fail?
     if (state->marked == -1) {
@@ -1480,7 +1487,7 @@ static bool eval(Result (*chk)(State *state), State *state) {
     }
 #endif
     state->lexer->result_symbol = result.sym;
-    DEBUG_PRINTF("Lexer result: %s", sym_names[state->lexer->result_symbol]);
+    LOG(ERROR, "Lexer result: %s\n", sym_names[state->lexer->result_symbol]);
     return true;
   } else return false;
 }
@@ -1502,22 +1509,19 @@ void *tree_sitter_unison_external_scanner_create() {
  * Since the state is a singular vector, it can just be cast and used directly.
  */
 bool tree_sitter_unison_external_scanner_scan(void *indents_v, TSLexer *lexer, const bool *syms) {
-  LOG(VERBOSE, "->scan\n");
-  
   indent_vec *indents = (indent_vec*) indents_v;
   State state = {
     .lexer = lexer,
     .symbols = syms,
     .indents = indents
   };
-  DEBUG_PRINTF("===================\nBeginning scanner\n");
+  LOG(WARN, "===================\nBeginning scanner\n");
 #ifdef DEBUG
   debug_state(&state);
-  DEBUG_PRINTF("PEEK: %c\n", state.lexer->lookahead);
   if (state.needs_free) free(state.marked_by);
 #endif
   bool res = eval(scan_all, &state);
-  DEBUG_PRINTF("End scanner with %s and symbol %s\n", res ? "success" : "failure", state.lexer->result_symbol ? sym_names[state.lexer->result_symbol] : "(none)");
+  LOG(WARN, "End scanner with %s and symbol %s\n", res ? "success" : "failure", state.lexer->result_symbol ? sym_names[state.lexer->result_symbol] : "(none)");
   return res;
 }
 
