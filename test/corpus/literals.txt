@@ -6,7 +6,7 @@ x = "Test"
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
             (literal_text))))
 ===
@@ -17,9 +17,9 @@ x = 123
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
-            (literal_nat))))
+            (nat))))
 ===
 Int
 ===
@@ -28,9 +28,9 @@ x = -9223372036854775808
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
-            (literal_int))))
+            (int))))
 ===
 Float
 ===
@@ -39,9 +39,9 @@ x = 1.6777216
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
-            (literal_float))))
+            (float))))
 ===
 Char
 ===
@@ -50,7 +50,7 @@ x = ?a
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
             (literal_char))))
 ===
@@ -61,7 +61,7 @@ x = true
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
             (literal_boolean))))
 ===
@@ -72,7 +72,7 @@ x = 0xsdeadbeef
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
             (literal_byte))))
 ===
@@ -83,7 +83,7 @@ x = #a0v829
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
             (literal_hash))))
 ===
@@ -94,12 +94,12 @@ x = [1, 2, 3]
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
             (literal_list
-                (literal_nat)
-                (literal_nat)
-                (literal_nat)))))
+                (nat)
+                (nat)
+                (nat)))))
 ===
 function literal
 ===
@@ -108,15 +108,12 @@ y = x -> x + 2
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
-            (literal_function
-                (func_name)
-                (type_arrow)
-                (function_application
-                    (regular_identifier)
-                    (operator)
-                    (literal_nat))))))
+            (function_application
+                (identifier)
+                (operator)
+                (nat)))))
 ===
 tuple literal
 ===
@@ -125,7 +122,7 @@ x = (true, true, false)
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
             (literal_tuple
                 (literal_boolean)
@@ -139,7 +136,7 @@ x = ()
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
             (literal_tuple))))
 ===
@@ -150,11 +147,11 @@ x = termLink aUnisonTerm
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
             (literal_termlink
                 (kw_termlink)
-                (term)))))
+                (wordy_id)))))
 ===
 typeLink literal
 ===
@@ -163,10 +160,10 @@ x = typeLink Optional
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
             (literal_typelink
                 (kw_typelink)
                 (type
-                    (type_name))))))
+                    (wordy_id))))))
 ===
