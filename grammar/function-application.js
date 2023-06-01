@@ -1,10 +1,12 @@
 module.exports = {
-  function_param: $ => prec.left($._expression),
-  function_name: $ => $._varid,
+  function_param: $ => choice(
+    prec.left($._expression),
+    seq('(',$.operator,')'),
+  ),
   
-  function_name: $ => choice(
-    $._varid,
-    seq('(', $.operator, ')'),
+  _function_name: $ => choice(
+    $.identifier,
+    $.operator,
   ),
   
   /**
@@ -15,12 +17,16 @@ module.exports = {
    * This function name can be a `varid` or `(symop)`.
    */
   _prefix_function_application: $ => choice(
-    seq($.function_name, $.function_param),
+    seq($._function_name, $.function_param),
     seq(field('partially_applied', $.function_application), $.function_param),
   ),
   
   // p1 + p2
-  _infix_op_application: $ => prec.left(seq($._expression, $.operator, $._expression)),
+  _infix_op_application: $ => prec.right(seq(
+    $._expression, 
+    $.operator, 
+    $._expression,
+  )),
     
   function_application: $ => prec(10, choice(
     $._prefix_function_application,

@@ -8,26 +8,23 @@ const literals = require('./grammar/literal')
 const types = require('./grammar/type')
 const identifiers = require('./grammar/identifier')
 const term = require('./grammar/term')
+const regex = require('./grammar/regex')
+const effects = require('./grammar/effect')
 
-const IDENTIFIER_REGEX = /[a-zA-Z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*/u
 
 module.exports = grammar({
   name: 'unison',
   precedences: $ => [
-    ['keyword', 'varid', '_regular_identifier'],
+    ['term_definition', '_expression'],
     ['keyword', '_expression'],
     ['function_application', 'operator'], // `myFn a b + c` is equivalent to `((myFn a) b) + c`
-    ['_function_application', 'func_name', 'varid', 'regular_identifier'],
-    ['_prefix_function_application', '_infix_op_application'],
+    ['_infix_op_application', '_prefix_function_application'],
   ],
   conflicts: $ => [
-
-    [$.func_name, $._function_application, $.regular_identifier],
-    // ['function_application', '_expression'],
-  //   [$._expression, $.literal_function],
-  //   [$.function_application],
-  //   [$.exp_if, $.function_application],
-  //   [$._expression, $.function_name]
+    [$.function_param, $._function_name],
+    [$._function_name, $._expression],
+    [$.value_type],
+    [$.type2],
   ],
   externals: $ => [
     $._layout_semicolon,
@@ -47,14 +44,9 @@ module.exports = grammar({
     $.float,
     $.operator,
   ],
-  /** 
-    * Be judicious using this. Even an empty array changes how whitespace
-    * is parsed. $ => [] screws up existing, working grammar.
-   **/
   extras: $ => [
     /\\?\s/,
     $.comment,
-    // $.comment_line,
     $.comment_multiline,
   ],
   rules: {
@@ -62,14 +54,14 @@ module.exports = grammar({
       choice(
         $.type_declaration,
         $.term_declaration,
-        // $.inline_comment,
         $.fold,
-        $.comment_multiline,
-        $.comment,
         $.comment_documentation_block,
+        $.use_clause,
+        $.effect_declaration,
       ),
     ),
     
+    ...effects,
     ...identifiers,
     ...types,
     ...literals,
@@ -80,27 +72,17 @@ module.exports = grammar({
     ...stmt,
     ...term,
     
-    // fold: $ => $._fold,
     kw_forall: $ => choice("forall", "∀"),
     kw_equals: $ => '=',
     
     type_signature_colon: $ => ':',
-    term_name: $ => $._regular_identifier,
     type_signature: $ => seq(
-      $.term_name,
+      field('term_name', $.wordy_id),
       $.type_signature_colon,
       $.type,
-      // $._eol,
     ),
     
-    type_name: $ => $._regular_identifier,
-    
-    name: $ => $._regular_identifier,
-    // _term_rhs: $ => $._expression,
-    
-    // _regular_identifier: $ => prec.left(IDENTIFIER_REGEX),
-    
-    type_variable: $ => $._lowercase_regular_identifier,
+    type_variable: $ => regex.lowercase_varid,
     type_arrow: $ => '->',
     
     type: $ => seq(
@@ -109,7 +91,7 @@ module.exports = grammar({
         repeat1($.type_variable), 
         token.immediate('.')
       )), 
-      sep1($.type_arrow, $.type_name)
+      sep1($.type_arrow, field('type_name', $.wordy_id)),
     ),
     
     kw_termlink: $ => 'termLink',
@@ -140,13 +122,10 @@ module.exports = grammar({
       'type',
       'ability',
       'alias',
-      // $.kw_let,
       'namespace',
       'cases',
       'match',
       'with',
-      $.kw_termlink,
-      $.kw_typelink,
     )
   },
 })

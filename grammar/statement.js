@@ -1,7 +1,7 @@
 module.exports = {
   
   _statement: $ => prec.right(choice(
-    $.term_definition,
+    $.term_declaration,
     $._expression,
     $.use_clause
   )),
