@@ -44,6 +44,7 @@ layouted_without_end = ($, rule) => choice(
 
 module.exports = {
   layouted,
+  layouted_without_end,
   sep,
   sep1,
   sep2,
