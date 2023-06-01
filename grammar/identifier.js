@@ -15,22 +15,22 @@ const varid = /\.?([a-zA-Z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]
 
 
 module.exports = {
-  _varid: $ => varid,
+  // _varid: $ => varid,
   // _varid: $ => varid_pattern,
-  _lcase_varid: $ => lowercase_varid_pattern,
+  // _lcase_varid: $ => lowercase_varid_pattern,
   // _immediate_varid: $ => token.immediate(varid_pattern),
-  _immediate_varid: $ => token.immediate(varid),
-  _immediate_dot: $ => token.immediate('.'),
+  // _immediate_varid: $ => token.immediate(varid),
+  // _immediate_dot: $ => token.immediate('.'),
   
   // Foo.bar <-- Foo(ns) bar(name)
-  qualifier: $ => prec.right(seq(
-    optional($._immediate_dot),
-    $._varid,
-    optional(seq(
-      $._immediate_dot,
-      sep1(token.immediate('.'), $._immediate_varid)
-    )),
-  )),
+  // qualifier: $ => prec.right(seq(
+  //   optional($._immediate_dot),
+  //   $._varid,
+  //   optional(seq(
+  //     $._immediate_dot,
+  //     sep1(token.immediate('.'), $._immediate_varid)
+  //   )),
+  // )),
   
   // _namespace_qualified: $ => seq(
     // $.qualifier,
@@ -38,7 +38,7 @@ module.exports = {
     // choice($.regular_identifier, $.operator)
   // ),
   
-  varid: $ => $._varid,
+  // varid: $ => $._varid,
   
   // .Foo.bar <-- dot(abs qualifier) Foo(ns) bar(name)
   // _absolutely_qualified: $ => seq(
@@ -55,12 +55,30 @@ module.exports = {
   //   optional($.literal_hash),
   // ),
   
-  identifier: $ => choice(
-    seq(new RegExp(`${regex.varid}\\.`, 'u'), token.immediate(regex.varid)),
-    regex.varid,
-  ),
+  // identifier: $ => choice(
+  //   // 'y', 'z',
+  //   // seq(new RegExp(`${regex.varid}\\.`, 'u'), token.immediate(regex.varid)),
+  //   regex.varid,
+  // ),
+  wordy_id: $ => token(regex.varid),
+  symboly_id: $ => $.operator,
   
-  namespace: $ => regex.namespace,
+  /**
+   * Accounts for qualified, unqualified (and absolute) identfiers,
+   * wordy, and symboly.
+   * `foo`
+   * `++`
+   * `Nat.++`
+   * .Foo.bar`
+   */
+  identifier: $ => seq(
+    optional(field('namespace', regex.namespace)),
+    field('wordy_id', token.immediate(regex.varid)),
+  ),
+  // identifier: $ => 'foo.bar.baz',
+  // _identifier: $ => choice($._identifier, 'y', 'z'),
+    
+  namespace: $ => token(regex.namespace),
   
   // identifier: $ => choice(
     // $._namespace_qualified,
