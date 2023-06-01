@@ -6,30 +6,31 @@ x = foo.bar.baz
 (unison
     (term_declaration
         (term_definition
-            (varid)
-            (equals)
-            (relative_identifier
-                (relative_path)
-                (wordy_id)))))
+            (wordy_id)
+            (kw_equals)
+            (identifier))))
 ===
-varid
+wordy_id
 ===
 x = baz
 ---
 (unison
     (term_declaration
         (term_definition
-            (varid)
-            (equals)
-            (wordy_id))))
+            (wordy_id)
+            (kw_equals)
+            (identifier))))
 ===
 symop
 ===
-x = -
+x = 1 + 1
 ---
 (unison
     (term_declaration
         (term_definition
-            (varid)
-            (equals)
-            (symbol_id))))
+            (wordy_id)
+            (kw_equals)
+            (function_application
+                (nat)
+                (operator)
+                (nat)))))

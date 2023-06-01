@@ -8,19 +8,21 @@ x = let y = 5
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
-                (exp_let
-                    (kw_let)
+            (exp_let
+                (kw_let)
+                (term_declaration
                     (term_definition
-                        (name)
+                        (wordy_id)
                         (kw_equals)
-                        (literal_nat))
+                        (nat)))
+                (term_declaration
                     (term_definition
-                        (name)
+                        (wordy_id)
                         (kw_equals)
-                        (literal_nat))
-                    (function_application
-                        (regular_identifier)
-                        (operator)
-                        (regular_identifier))))))
+                        (nat)))
+                (function_application
+                    (wordy_id)
+                    (operator)
+                    (wordy_id))))))

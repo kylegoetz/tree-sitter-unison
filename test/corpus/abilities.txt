@@ -8,7 +8,7 @@ structural ability Throw e where throw : e ->{Throw e} a
         (structural)
         (ability)
         (type_constructor
-            (varid)
+            (wordy_id)
             (type_parameter))
         (where)
         (request_operation
@@ -26,7 +26,7 @@ structural ability Store a where
         (structural)
         (ability)
         (type_constructor
-            (varid)
+            (wordy_id)
             (type_parameter))
         (where)
         (request_operation

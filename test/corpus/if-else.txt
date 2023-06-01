@@ -6,15 +6,15 @@ y = if x then 5 else 6
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
             (exp_if
                 (kw_if)
-                (regular_identifier)
+                (identifier)
                 (kw_then)
-                (literal_nat)
+                (nat)
                 (kw_else)
-                (literal_nat)))))
+                (nat)))))
 ===
 one line if/else
 ===
@@ -45,16 +45,15 @@ mySimpleTerm = if elem 5 myList
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
             (if_exp
                 (kw_if)
-                (if_clause
-                    (function_application
-                        (function_name)
+                (function_application
+                        (identifier)
                         (function_param
-                            (literal_nat)
-                            (regular_identifier))))
+                            (nat)
+                            (regular_identifier)))
                 (then_clause
                     (literal_text))
                 (else_clause

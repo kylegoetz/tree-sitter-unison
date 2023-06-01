@@ -8,7 +8,7 @@ structural type Optional a = Some a | None
         (structural_kw)
         (type_kw)
         (type_constructor
-            (varid)
+            (wordy_id)
             (type_argument))
         (kw_equals)
         (data_constructor
@@ -27,7 +27,7 @@ unique type UserId = Phone Nat | Email Text
         (unique_kw)
         (type_kw)
         (type_constructor
-            (varid))
+            (wordy_id))
         (kw_equals)
         (data_constructor
             (type_name)
@@ -46,7 +46,8 @@ unique type Foo =
         (unique_kw)
         (type_kw)
         (type_constructor
-            (varid))
+            (type_name 
+                (wordy_id)))
         (kw_equals)))
 ===
 type name with namespace/qualifier
@@ -58,7 +59,7 @@ unique type controlFlow.Color = RGB Nat Nat Nat
         (unique_kw)
         (type_kw)
         (type_constructor
-            (varid))
+            (wordy_id))
         (kw_equals)
         (data_constructor
             (type_name)
@@ -75,7 +76,7 @@ unique type Point2 = { x : Nat, y : Nat }
         (unique_kw)
         (type_kw)
         (type_constructor
-            (varid))
+            (wordy_id))
         (kw_equals)
         (record_type_constructor)))
 ===
@@ -91,7 +92,7 @@ unique type Point2 = {
         (unique_kw)
         (type_kw)
         (type_constructor
-            (varid))
+            (wordy_id))
         (kw_equals)
         (record_type_constructor)))
 ===
@@ -101,6 +102,6 @@ store.stopIfTrue : (a -> Boolean) -> a ->{Abort, Store a} a
 ---
 (unison
     (type_declaration
-        (varid)
+        (wordy_id)
         ()))
     

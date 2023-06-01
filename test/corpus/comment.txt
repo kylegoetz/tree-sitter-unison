@@ -8,7 +8,7 @@ poet = "Maya Angelou"
     (comment_documentation_block)
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
             (literal_text))))
 
@@ -23,10 +23,10 @@ x = 5
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
-            (literal_nat)))
-    (comment))
+            (nat)
+            (comment))))
 ===
 multiline comment
 ===
@@ -47,3 +47,18 @@ x = 5
 ---
 (unison
     (fold))
+===
+nested multiline comment
+===
+x = 5 {- this is a
+    multiline {-
+comment with -} nesting
+-}
+---
+(unison
+    (term_declaration
+        (term_definition
+            (wordy_id)
+            (kw_equals)
+            (nat)
+            (comment_multiline))))
