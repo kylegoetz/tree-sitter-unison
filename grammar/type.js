@@ -1,4 +1,5 @@
 const { sep } = require('./util')
+const regex = require('./regex')
 
 module.exports = {
   type_declaration: $ => prec.right(seq(
@@ -11,13 +12,14 @@ module.exports = {
   unique_kw: $ => 'unique',
   type_kw: $ => 'type',
   pipe: $ => '|',
-  type_name: $ => $._varid,
+  type_name: $ => $.wordy_id,
   // type_argument: $ => $._lcase_varid,
-  type_argument: $ => $._varid, // TODO lowercase only?
+  type_argument: $ => token(regex.lowercase_varid), // TODO lowercase only?
   
   type_constructor: $ => prec.right(seq(
+    $.type_name,
     // /\.?([a-z]+\.)[a-z]+/,
-    $.varid,
+    // $.varid,
     // $.identifier,
     // optional(seq(sep1(token.immediate('.'), $._immediate_varid), $._immediate_dot)),
     // $.type_name,

@@ -1,4 +1,5 @@
 const { sep } = require('./util')
+const regex = require('./regex')
 
 module.exports = {
   _literal: $ => choice(
@@ -29,7 +30,7 @@ module.exports = {
   _cyclically_recursive_hash: $ => /#[0-9a-v]+\.[0-9a-v]+/,
   _data_constructor_hash: $ => /#[0-9a-v]+#[0-9a-v]+/,
   _cyclically_recursive_data_constructor_hash: $ => seq($._cyclically_recursive_hash, token.immediate(/#[0-9a-v]+/)),
-  _builtin_reference: $ => seq(/##/, $._regular_identifier),
+  _builtin_reference: $ => seq(/##/, token.immediate(regex.varid)),
   literal_hash: $ => choice(
     $._term_definition_hash,
     $._cyclically_recursive_hash,
@@ -40,10 +41,11 @@ module.exports = {
   literal_list: $ => seq('[', sep(',', $._expression), ']'),
   
   // myFn p1 p2 p3 -> exp
-  func_name: $ => prec.left($._regular_identifier),
-  func_param: $ => prec.left($._regular_identifier),
+  func_name: $ => prec.left(regex.varid),
+  func_param: $ => prec.left(regex.varid),
   literal_function: $ => prec.right(seq(
-    alias($._regular_identifier, $.func_name), // func name
+    field('func_name', regex.varid),
+    // alias($._regular_identifier, $.func_name), // func name
     // prec.left(repeat(prec.left(alias($._regular_identifier, $.func_param)))), // func args
     $.type_arrow, 
     $._expression // func body
@@ -51,7 +53,7 @@ module.exports = {
   
   
   literal_tuple: $ => seq('(', sep(',', $._expression), ')'),
-  term: $ => $._regular_identifier,
-  literal_termlink: $ => seq($.kw_termlink, $.term),
+  // term: $ => $._regular_identifier,
+  literal_termlink: $ => seq($.kw_termlink, field('term', $.wordy_id)),
   literal_typelink: $ => seq($.kw_typelink, $.type),
 }
