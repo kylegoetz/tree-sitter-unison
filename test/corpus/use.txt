@@ -5,5 +5,5 @@ use base.List
 ---
 (unison
     (use_clause
-        (use_kw)
+        (use)
         (namespace)))

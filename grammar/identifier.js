@@ -55,11 +55,6 @@ module.exports = {
   //   optional($.literal_hash),
   // ),
   
-  // identifier: $ => choice(
-  //   // 'y', 'z',
-  //   // seq(new RegExp(`${regex.varid}\\.`, 'u'), token.immediate(regex.varid)),
-  //   regex.varid,
-  // ),
   wordy_id: $ => token(regex.varid),
   symboly_id: $ => $.operator,
   
@@ -72,17 +67,10 @@ module.exports = {
    * .Foo.bar`
    */
   identifier: $ => seq(
-    optional(field('namespace', regex.namespace)),
+    optional(field('namespace', regex.path)),
     field('wordy_id', token.immediate(regex.varid)),
   ),
-  // identifier: $ => 'foo.bar.baz',
-  // _identifier: $ => choice($._identifier, 'y', 'z'),
     
   namespace: $ => token(regex.namespace),
   
-  // identifier: $ => choice(
-    // $._namespace_qualified,
-    // $._absolutely_qualified,
-    // optional($.literal_hash),
-  // ),
 }
