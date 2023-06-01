@@ -972,25 +972,70 @@ static Result equals(State *state) {
  * Cannot run before determining DOT is not an absolute qualifier.
  * Need to exclude certain symbols as solutions. The following cannot
  * be considered operators: =, 
+ *
+ * Needs to recognize `(OPERATOR)` as a parenthesized operator
  */
 static Result operator(State *state) {
   LOG(INFO, "->operator (%u, %c)\n", COL, PEEK);
-  if (!SYM(SYMOP)) return res_cont;
-  if (!symbolic(PEEK)) return res_cont;
+  // if (!SYM(SYMOP)) return res_cont;
+  
+  bool parenthesized = PEEK == '(';
+  if (parenthesized) {
+    S_ADVANCE;
+    skipspace(state);
+  }
+  
+  if (!symbolic(PEEK)) return parenthesized ? res_fail : res_cont;
   if (PEEK == '=') {
     Result res = equals(state);
     SHORT_SCANNER;
   }
+  /*
+   * scan until:
+   * - if parenthesized and space, skip all succeeding spaces
+   * - if parenthesized and `)`, return successful operator
+   * - if non-symbolic
+   * 
+   */
   while (!is_eof(state)) {
     LOG(VERBOSE, "[operator] Looping with PEEK = %c\n", PEEK);
     if (symbolic(PEEK)) {
       S_ADVANCE;
       MARK("operator", false, state);
-    } else {
-      return finish(SYMOP, "symbolic operator");
+    } else if (parenthesized && PEEK == ' ') { 
+      skipspace(state);
+    } else if (parenthesized && PEEK == ')') {
+      S_ADVANCE;
+      MARK("operator", false, state);
+      return finish_if_valid(SYMOP, "symbolic operator", state);
     }
   }
-  return finish(SYMOP, "symbolic operator");
+  S_ADVANCE;
+  MARK("operator", false, state);
+  return finish_if_valid(SYMOP, "symbolic operator", state);
+}
+
+/**
+ * Handles `(` in the case of a prefixed operator. JS grammar appears
+ * to have difficulty with `(+)` being seq('(', $.operator, ')') bc need
+ * to be able to token.immediate($.operator) but that is not possible.
+ */
+static Result open_paren(State *state) {
+  LOG(INFO, "->open_paren (%u, %c)\n", COL, PEEK);
+  if (PEEK != '(') {
+    return res_cont;
+  }
+  S_ADVANCE;
+  skipspace(state);
+  Result op_res = operator(state);
+  if (op_res.finished) {
+    skipspace(state);
+    if (PEEK == ')') {
+      MARK("open_paren", false, state);
+      return finish(SYMOP, "parenthesized operator");
+    }
+  }
+  return res_fail;
 }
 
 /**
@@ -1085,6 +1130,12 @@ static Result inline_tokens(State *state) {
       SHORT_SCANNER;
       return res_fail;
     }
+    // case '(': {
+    //   Result res = open_paren(state);
+    //   SHORT_SCANNER;
+    //   return res_fail;
+    // }
+    case '(':
     SYMBOLIC_CASES: {
       Result res = operator(state);
       SHORT_SCANNER;

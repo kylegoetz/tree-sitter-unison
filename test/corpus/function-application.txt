@@ -6,12 +6,12 @@ y = 5 + 2
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
             (function_application
-                (literal_nat)
+                (nat)
                 (operator)
-                (literal_nat)))))
+                (nat)))))
 ===
 prefix op
 ===
@@ -20,12 +20,15 @@ y = (+) 5 2
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
             (function_application
-                (operator)
-                (literal_nat)
-                (literal_nat)))))
+                (function_application
+                    (operator)
+                    (function_param
+                        (nat)))
+                (function_param
+                    (nat))))))
 ===
 regular function
 ===
@@ -34,14 +37,15 @@ x = myFunc 1 2
 (unison
     (term_declaration
         (term_definition
-            (name)
+            (wordy_id)
             (kw_equals)
             (function_application
-                (function_name)
+                (function_application
+                    (identifier)
+                    (function_param
+                        (nat)))
                 (function_param
-                    (literal_nat))
-                (function_param
-                    (literal_nat))))))
+                    (nat))))))
 ===
 infix operator function
 ===
@@ -50,7 +54,7 @@ x = 1 <<- 2
 (unison
     (term_declaration
         (term_definition
-            (varid)
+            (wordy_id)
             (kw_equals)
             (function_application
                 (nat)
