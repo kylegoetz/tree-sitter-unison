@@ -12,11 +12,11 @@ module.exports = {
         sep(',', alias($._value_type, $.effect)),
         $._layout_end,
     ),
-    effect_inline: $ => sep1(',', $._value_type),
+    _effect_inline: $ => sep1(',', alias($._value_type, $.effect)),
     
     _effect_list: $ => seq(
         '{',
-            optional($.effect_inline),
+            optional($._effect_inline),
         // optional(choice($.effect_inline, $._effect_block)),
         '}',
     ),
