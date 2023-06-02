@@ -66,7 +66,11 @@ module.exports = {
    * `Nat.++`
    * .Foo.bar`
    */
-  identifier: $ => seq(
+  identifier: $ => choice(
+    $.wordy_id,
+    $._identifier,
+  ),
+  _identifier: $ => seq(
     optional(field('namespace', regex.path)),
     field('wordy_id', token.immediate(regex.varid)),
   ),

@@ -2,36 +2,51 @@
 one line structural ability
 ===
 structural ability Throw e where throw : e ->{Throw e} a
+
 ---
 (unison
     (ability_declaration
         (structural)
         (ability)
-        (type_constructor
-            (wordy_id)
-            (type_parameter))
+        (identifier
+            (wordy_id))
+        (wordy_id)
         (where)
-        (request_operation
-            (request)
-            (type))))
+        (constructor
+            (wordy_id)
+            (wordy_id)
+            (arrow_symbol)
+            (effect
+                (wordy_id)
+                (wordy_id))
+            (wordy_id))))
 ===
 unique ability
 ===
-structural ability Store a where
+unique ability Store a where
   put : a ->{Store a} ()
   get : {Store a} a
 ---
 (unison
     (ability_declaration
-        (structural)
+        (unique)
         (ability)
-        (type_constructor
-            (wordy_id)
-            (type_parameter))
+        (identifier
+            (wordy_id))
+        (wordy_id)
         (where)
-        (request_operation
-            (request)
-            (type))
-        (request_operation
-            (request)
-            (type))))
+        (constructor
+            (wordy_id)
+            (wordy_id)
+            (arrow_symbol)
+            (effect
+                (wordy_id)
+                (wordy_id))
+            (unit))
+        (constructor
+            (wordy_id)
+            (effect
+                (wordy_id)
+                (wordy_id))
+            (wordy_id))))
+        

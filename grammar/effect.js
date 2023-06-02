@@ -1,105 +1,117 @@
 const { sep, sep1 } = require('./util')
 
 module.exports = {
+    structural: $ => 'structural',
+    unique: $ => 'unique',
+    ability: $ => 'ability',
+    where: $ => 'where',
+    
     // { E1, E2, ..., En }
-    effect_block: $ => seq(
+    _effect_block: $ => seq(
         $._layout_start,
-        sep(',', $.value_type),
+        sep(',', alias($._value_type, $.effect)),
         $._layout_end,
     ),
-    effect_inline: $ => sep1(',', $.value_type),
-    effect_list: $ => seq(
+    effect_inline: $ => sep1(',', $._value_type),
+    
+    _effect_list: $ => seq(
         '{',
-        optional(choice($.effect_block, $.effect_inline)),
+            optional($.effect_inline),
+        // optional(choice($.effect_inline, $._effect_block)),
         '}',
     ),
+    
     /** 
      * Cannot have effects except as the RHS of an arrow
      * Int
      * Text
      * value_type -> value_type
      * value_type -> {...} value_type
+     * value_type -> { ... } ()
      */
-    value_type: $ => choice(
-      // 'e ->{Throw e} a',
-      // 'e',
-      seq(optional($.kw_forall), $._type1),
-    ),
-    value_type_leaf: $ => choice(
-        seq('(', $.value_type, ')'),
-        $.type_atom,
+    _value_type: $ => seq(optional($.kw_forall), $._type1),
+    _value_type_leaf: $ => choice(
+        seq('(', $._value_type, ')'),
+        $._type_atom,
         $.sequence_type,
     ),
     // Optional, Optional#abc, woot, #abc
     immediate_hash: $ => token.immediate(/#[a-zA-Z0-9]+/),
-    type_atom: $ => choice(
+    unit: $ => '()',
+    
+    _type_atom: $ => choice(
         seq($.wordy_id, optional($.immediate_hash)),
         seq($.literal_hash),
+        $.unit,
     ),
     // [Int], [A -> B], etc.
     sequence_type: $ => seq(
         '[',
         choice(
-            seq($._layout_start, $.value_type, $._layout_end),
-            $.value_type,
+            seq($._layout_start, $._value_type, $._layout_end),
+            $._value_type,
         ),
         ']',
     ),
-    _type1: $ => choice($.arrow, $._type2a),
+    _type1: $ => choice($._arrow, $._type2a),
     _type2a: $ => choice($.delayed, $._type2),
     _type2: $ => seq(
-        $.value_type_leaf,
-        repeat(choice($.effect_list, $.value_type_leaf)),
+        $._value_type_leaf,
+        repeat(choice($._effect_list, $._value_type_leaf)),
     ),
     delayed: $ => seq(
         "'",
-        choice($.effect, $._type2a),
+        choice($._effect, $._type2a),
     ),
     arrow_symbol: $ => '->',
-    arrow: $ => 
-        // 'e ->{Throw e} a',
-        seq($.value_type, $.arrow_symbol, /*'{Throw e} a', */$.computation_type),
     
-    // arrow: $ => 'e ->{Throw e} a',
-
     // { E1, E2, ..., En } T
-    effect: $ => seq($.effect_list, $._type2),
+    _effect: $ => seq($._effect_list, $._type2),
     
-    computation_type: $ => prec.left(choice($.effect, $.value_type)),
+    // [{ E1, E2, ..., En }] T
+    _computation_type: $ => prec.left(choice($._effect, $._value_type)),
+    
+    // T -> [{ E1, E2 }] U
+    _arrow: $ => seq($._value_type, $.arrow_symbol, $._computation_type),
     
     /**
-     * Effect/ability declarations:
+     * body of an effect/ability declaration:
+     * INLINE: name [p1 p2 ... pn] where [constructor, constructor, ...]
+     * OR
+     * BLOCK: name [p1 p2 ... pn] where
+         [constructor]
+         [constructor]
+         ...
      */
-     // throw: $ => 'Throw',
-     where: $ => 'where',
     _ebody: $ => seq(
-        'Throw', //field('type_name', $.identifier),
-        'e', //field('type_args', repeat($.wordy_id)),
+        field('type_name', $.identifier),
+        repeat(field('type_arg', $.wordy_id)),
         $.where,
         choice(
+            seq($._layout_start, sep1($._layout_semicolon, $.constructor), $._layout_end),
             sep1(',', $.constructor),
-            seq($._layout_start, sep1($._semi, $.constructor), $._layout_end),
         ),
     ),
 
-    // constructor: $ => 'throw : e ->{Throw e} a',
+    /**
+     * Matches the following:
+     * - foo : { E1, E2 } T
+     * - foo : A -> { E1, E2 } T
+     */
     constructor: $ => seq(
         field('name', $.wordy_id),
         ':',
-        field('type', choice($.arrow, $.computation_type)),
-        // field('type', 'e ->{Throw e} a'),
+        field('type', choice($._arrow, $._computation_type)),
     ),
     
-    structural: $ => 'structural',
-    unique: $ => 'unique',
-    ability: $ => 'ability',
+    /**
+     * Top-level entity.
+     * unique ability Throw a where
+     *   throw: e ->{ Throw e } a
+     */
     effect_declaration: $ => seq(
         choice($.structural, $.unique),
         $.ability,
-        choice(
-          // 'Throw e where throw : e ->{Throw e} a',
-            // seq($._layout_start, $._ebody, $._layout_end),
-            $._ebody,
-        ),
+        $._ebody,
     )
 }

@@ -23,9 +23,10 @@ module.exports = grammar({
   conflicts: $ => [
     [$.function_param, $._function_name],
     [$._function_name, $._expression],
-    [$.value_type],
+    [$._value_type],
     [$._type2],
     [$._type1, $.constructor],
+    [$.identifier, $._lhs],
   ],
   externals: $ => [
     $._layout_semicolon,
@@ -58,7 +59,7 @@ module.exports = grammar({
         $.fold,
         $.comment_documentation_block,
         $.use_clause,
-        $.effect_declaration,
+        alias($.effect_declaration, $.ability_declaration),
       ),
     ),
     
