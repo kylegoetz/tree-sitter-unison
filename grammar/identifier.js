@@ -55,7 +55,7 @@ module.exports = {
   //   optional($.literal_hash),
   // ),
   
-  wordy_id: $ => token(regex.varid),
+  wordy_id: $ => regex.varid,
   symboly_id: $ => $.operator,
   
   /**

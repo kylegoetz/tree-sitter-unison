@@ -23,7 +23,7 @@ module.exports = {
     value_type: $ => choice(
       // 'e ->{Throw e} a',
       // 'e',
-      seq(optional($.kw_forall), $.type1),
+      seq(optional($.kw_forall), $._type1),
     ),
     value_type_leaf: $ => choice(
         seq('(', $.value_type, ')'),
@@ -45,15 +45,15 @@ module.exports = {
         ),
         ']',
     ),
-    type1: $ => choice($.arrow, $.type2a),
-    type2a: $ => choice($.delayed, $.type2),
-    type2: $ => seq(
+    _type1: $ => choice($.arrow, $._type2a),
+    _type2a: $ => choice($.delayed, $._type2),
+    _type2: $ => seq(
         $.value_type_leaf,
         repeat(choice($.effect_list, $.value_type_leaf)),
     ),
     delayed: $ => seq(
         "'",
-        choice($.effect, $.type2a),
+        choice($.effect, $._type2a),
     ),
     arrow_symbol: $ => '->',
     arrow: $ => 
@@ -63,7 +63,7 @@ module.exports = {
     // arrow: $ => 'e ->{Throw e} a',
 
     // { E1, E2, ..., En } T
-    effect: $ => seq($.effect_list, $.type2),
+    effect: $ => seq($.effect_list, $._type2),
     
     computation_type: $ => prec.left(choice($.effect, $.value_type)),
     
