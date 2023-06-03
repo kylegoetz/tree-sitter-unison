@@ -134,7 +134,7 @@ static char *sym_names[] = {
  * this function is used to detect them.
  */
 static bool all_syms(const bool *syms) {
-  for (int i = 0; i <= EMPTY; i++) {
+  for (int i = 0; i <= SYMOP; i++) {
     if (!syms[i]) return false;
   }
   return true;
@@ -151,7 +151,7 @@ static void debug_valid(const bool *syms) {
   }
   bool fst = true;
   DEBUG_PRINTF("\"");
-  for (Sym i = SEMICOLON; i <= EMPTY; i++) {
+  for (Sym i = SEMICOLON; i <= SYMOP; i++) {
     if (syms[i]) {
       if (!fst) DEBUG_PRINTF(",");
       DEBUG_PRINTF("%s", sym_names[i]);
@@ -910,7 +910,10 @@ static void * get_fractional(State *state) {
   char running_str[1024] = "";
   double val = 0;
   bool non_zero = false;
+  bool digit_found = false;
+  
   while (!is_eof(state) && isdigit(PEEK)) {
+    digit_found = true;
     if (PEEK != '0') {
       non_zero = true;
     }
@@ -922,35 +925,22 @@ static void * get_fractional(State *state) {
     }
     S_ADVANCE;
   }
-  if (!is_eof(state) && !isws(PEEK)) return &nothing;
-  return justDouble(val);
+  return digit_found ? justDouble(val) : &nothing;
 }
 
 static void * get_whole(State *state) {
-  DEBUG_PRINTF("->get_whole, %c\n", PEEK);
+  LOG(INFO, "->get_whole, %c\n", PEEK);
   long val = 0;
-  
-  while (!is_eof(state) && (isdigit(PEEK) || PEEK == '.')) {
-    DEBUG_PRINTF("\tget_whole, %lu\n", val);
-    if (isdigit(PEEK)) {
-      long new_val = val * 10 + PEEK - ASCII_OFFSET;
-      DEBUG_PRINTF("\t\tnew_val = %lu; val = %lu; comp = %lu\n", new_val, val, (new_val + ASCII_OFFSET - PEEK) / 10);
-      if ((new_val + ASCII_OFFSET - PEEK) / 10 != val) return &nothing;
-      DEBUG_PRINTF("\t\tit's a match\n");
-      val = new_val;
-      S_ADVANCE;
-    } else if(PEEK == '.' || isws(PEEK)) {
-      return justLong(val);
-    } else {
-      return &nothing;
-    }
+  bool digit_found = false;
+  while (!is_eof(state) && isdigit(PEEK)) {
+    digit_found = true;
+    // Test to see if new val will exceed permitted bounds
+    long new_val = val * 10 + PEEK - ASCII_OFFSET;
+    if ((new_val + ASCII_OFFSET - PEEK) / 10 != val) return &nothing;
+    val = new_val;
+    S_ADVANCE;
   }
-  DEBUG_PRINTF("\tDone reading whole number: %lu\n; next char is %c", val, PEEK);
-  if(isws(PEEK) || is_eof(state)) {
-    DEBUG_PRINTF("\tReturning with success\n");
-    return justLong(val);
-  }
-  return &nothing;
+  return digit_found ? justLong(val) : &nothing;
 }
 
 /**
@@ -1056,7 +1046,7 @@ static Result handle_negative(State *state) {
   S_ADVANCE;
   if (isws(PEEK) || is_eof(state)) { // found - or + by itself
     MARK("handle_negative", false, state);
-    return finish(SYMOP, "+/-");
+    return finish_if_valid(SYMOP, "+/-", state);
   }
   if (PEEK == '.') { // either -.123123 or -.(symbols) a symop
     S_ADVANCE;
@@ -1064,7 +1054,7 @@ static Result handle_negative(State *state) {
       Maybe * val = (Maybe *)get_fractional(state);
       if(val->has_value) {
         MARK("handle_negative", false, state);
-        return finish(FLOAT, "float");
+        return finish_if_valid(FLOAT, "float", state);
       }
     } else if (symbolic(PEEK)) { // CHECK FOR SYMOP
       return operator(state);
@@ -1082,13 +1072,13 @@ static Result handle_negative(State *state) {
           // double total = *(double *)fractional->value + *(long *)whole->value;
           // TODO check bounds
           MARK("handle_negative", false, state);
-          return finish(FLOAT, "float");
+          return finish_if_valid(FLOAT, "float", state);
         }
-      } else if (isws(PEEK) || is_eof(state)) {
+      } else {
         MARK("handle_negative", false, state);
-        return finish(INT, "int");
+        return finish_if_valid(INT, "int", state);
       }
-      return res_fail;
+      // return res_fail;
     }
   } else {
     LOG(VERBOSE, "non-dot symbolic PEEK %c\n", PEEK);
@@ -1318,14 +1308,14 @@ static Result detect_nat_ufloat(State *state) {
       if (fractional->has_value) {
         LOG(VERBOSE, "fractional has value\n");
         MARK("detect_nat_ufloat", false, state);
-        return finish(FLOAT, "float");
+        return finish_if_valid(FLOAT, "float", state);
       } else {
         LOG(VERBOSE, "fractional does not have value\n");
         return res_fail;
       }
     } else {
       MARK("detect_nat_ufloat", false, state);
-      return finish(NAT, "nat");
+      return finish_if_valid(NAT, "nat", state);
     }
   }
   return res_fail;
