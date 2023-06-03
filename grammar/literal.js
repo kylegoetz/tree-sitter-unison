@@ -25,7 +25,7 @@ module.exports = {
   
   literal_char: $ => /\?./,
   literal_boolean: $ => choice("true", "false"),
-  literal_byte: $ => /0xs[0-9abcdef]+/,
+  literal_byte: $ => /0xs[0-9a-fA-F]+/,
   _term_definition_hash: $ => /#[0-9a-v]+/,
   _cyclically_recursive_hash: $ => /#[0-9a-v]+\.[0-9a-v]+/,
   _data_constructor_hash: $ => /#[0-9a-v]+#[0-9a-v]+/,

@@ -1296,10 +1296,29 @@ static Result newline(uint32_t indent, State *state) {
 }
 
 /**
- * Parser for Nat and Float without sign prefix.
+ * Parse for byte literal. If detect "0x" then fail and let the JS grammar handle this.
+ */
+static Result byte_literal(State *state) {
+  LOG(INFO, "->byte_literal (col = %u, peek = %c)\n", COL, PEEK);
+  if (PEEK == '0') {
+    S_ADVANCE;
+    if (PEEK == 'x') {
+      return res_fail;
+    }
+  }
+  return res_cont;
+}
+
+/**
+ * Parse literals that begin with a digit. These are:
+ * - Nat
+ * - Float (in Unison, they are not required to begin with `+` if positive)
+ * - Byte (they begin with the token "0xs")
  */
 static Result detect_nat_ufloat(State *state) {
   LOG(INFO, "->detect_nat_ufloat (%u, %c)\n", COL, PEEK);
+  Result res = byte_literal(state);
+  SHORT_SCANNER;
   Maybe *whole = (Maybe *)get_whole(state);
   if (whole->has_value) {
     if (PEEK == '.') {
