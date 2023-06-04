@@ -770,34 +770,248 @@ inline_comment_after_skip:
 }
 
 /**
+ * Parse for byte literal. If detect "0x" then fail and let the JS grammar handle this.
+ */
+static Result byte_literal(State *state) {
+  LOG(INFO, "->byte_literal (col = %u, peek = %c)\n", COL, PEEK);
+  if (PEEK == '0') {
+    S_ADVANCE;
+    if (PEEK == 'x') {
+      return res_fail;
+    }
+  }
+  return res_cont;
+}
+
+static void * get_fractional(State *state) {
+  DEBUG_PRINTF("->get_fractional, %c\n", PEEK);
+  char running_str[1024] = "";
+  double val = 0;
+  bool non_zero = false;
+  bool digit_found = false;
+  
+  while (!is_eof(state) && isdigit(PEEK)) {
+    digit_found = true;
+    if (PEEK != '0') {
+      non_zero = true;
+    }
+    const char a[2] = { PEEK, '\0' };
+    strcat(running_str, a);
+    val = atof(running_str);
+    if (non_zero && val == 0) { // i.e., we know `atof` failed
+      return &nothing;
+    }
+    S_ADVANCE;
+  }
+  return digit_found ? justDouble(val) : &nothing;
+}
+
+static void * get_whole(State *state) {
+  LOG(INFO, "->get_whole, %c\n", PEEK);
+  long val = 0;
+  bool digit_found = false;
+  while (!is_eof(state) && isdigit(PEEK)) {
+    digit_found = true;
+    // Test to see if new val will exceed permitted bounds
+    long new_val = val * 10 + PEEK - ASCII_OFFSET;
+    if ((new_val + ASCII_OFFSET - PEEK) / 10 != val) return &nothing;
+    val = new_val;
+    S_ADVANCE;
+  }
+  return digit_found ? justLong(val) : &nothing;
+}
+
+/**
+ * Parse literals that begin with a digit. These are:
+ * - Nat
+ * - Float (in Unison, they are not required to begin with `+` if positive)
+ * - Byte (they begin with the token "0xs")
+ */
+static Result detect_nat_ufloat_byte(State *state) {
+  LOG(INFO, "->detect_nat_ufloat_byte (%u, %c)\n", COL, PEEK);
+  Result res = byte_literal(state);
+  SHORT_SCANNER;
+  Maybe *whole = (Maybe *)get_whole(state);
+  if (whole->has_value) {
+    if (PEEK == '.') {
+      S_ADVANCE;
+      Maybe *fractional =(Maybe *)get_fractional(state);
+      if (fractional->has_value) {
+        LOG(VERBOSE, "fractional has value\n");
+        MARK("detect_nat_ufloat_byte", false, state);
+        return finish_if_valid(FLOAT, "float", state);
+      } else {
+        LOG(VERBOSE, "fractional does not have value\n");
+        return res_fail;
+      }
+    } else {
+      MARK("detect_nat_ufloat_byte", false, state);
+      return finish_if_valid(NAT, "nat", state);
+    }
+  }
+  return res_fail;
+}
+
+/**
+ * Handle an operator that begins with `=`. If it's a single `=` then fail
+ * and allow the JS to handle it instead. Without this, the JS often
+ * sees a term assignment as function application with operator `=` as
+ * discovered by the external scanner. This function exists to prevent
+ * this.
+ */
+static Result equals(State *state) {
+  LOG(INFO, "->equals (%u, %c)\n", COL, PEEK);
+  if (PEEK == '=') {
+    S_ADVANCE;
+    if (is_eof(state) || isws(PEEK) || !symbolic(PEEK)) {
+      return res_fail;
+    }
+  }
+  return res_cont;
+}
+
+/**
+ * Detect operators.
+ * Cannot run before determining DOT is not an absolute qualifier.
+ * Need to exclude certain symbols as solutions. The following cannot
+ * be considered operators: =, 
+ *
+ * Needs to recognize `(OPERATOR)` as a parenthesized operator
+ */
+static Result operator(State *state) {
+  LOG(INFO, "->operator (%u, %c)\n", COL, PEEK);
+  // if (!SYM(SYMOP)) return res_cont;
+  
+  bool parenthesized = PEEK == '(';
+  if (parenthesized) {
+    S_ADVANCE;
+    skipspace(state);
+  }
+  
+  if (!symbolic(PEEK)) return parenthesized ? res_fail : res_cont;
+  if (PEEK == '=') {
+    Result res = equals(state);
+    SHORT_SCANNER;
+  }
+  /*
+   * scan until:
+   * - if parenthesized and space, skip all succeeding spaces
+   * - if parenthesized and `)`, return successful operator
+   * - if non-symbolic, succeed without advancing
+   * 
+   */
+  while (!is_eof(state)) {
+    LOG(VERBOSE, "[operator] Looping with PEEK = %c\n", PEEK);
+    if (symbolic(PEEK)) {
+      S_ADVANCE;
+      MARK("operator", false, state);
+    } else if (parenthesized && PEEK == ' ') { 
+      skipspace(state);
+    } else if (parenthesized && PEEK == ')') {
+      S_ADVANCE;
+      MARK("operator", false, state);
+      return finish_if_valid(SYMOP, "symbolic operator", state);
+    } else {
+      return finish_if_valid(SYMOP, "symbolic operator", state);
+    }
+  }
+  S_ADVANCE;
+  MARK("operator", false, state);
+  return finish_if_valid(SYMOP, "symbolic operator", state);
+}
+
+static Result post_pos_neg_sign(State *state, bool can_be_operator) {
+  LOG(INFO, "->post_pos_neg_sign; PEEK = %c\n", PEEK);
+  if (isws(PEEK) || is_eof(state)) { // found - or + by itself
+    MARK("post_pos_neg_sign", false, state);
+    return finish_if_valid(SYMOP, "+/-", state);
+  }
+  if (PEEK == '>') { // Either SYMOP or ->
+    S_ADVANCE;
+    if (!symbolic(PEEK)) {
+      return res_fail; // Fail on "->"
+    } else {
+      return operator(state);
+    }
+  } else if (PEEK == '.') { // either -.123123 or -.(symbols) a symop
+    S_ADVANCE;
+    if (isdigit(PEEK)) { // check for FLOAT
+      Maybe * val = (Maybe *)get_fractional(state);
+      if(val->has_value) {
+        MARK("handle_negative", false, state);
+        return finish_if_valid(FLOAT, "float", state);
+      }
+    } else if (symbolic(PEEK)) { // CHECK FOR SYMOP
+      return operator(state);
+    }
+    return res_fail;
+  } else if (isdigit(PEEK)) { // check for -a.b FLOAT or -a INT
+    LOG(VERBOSE, "\t2b. handle_negative >= 1, %c\n", PEEK);
+    Maybe * whole = (Maybe *)get_whole(state);
+    if (whole->has_value) {
+      LOG(VERBOSE, "\t3. whole has value\n");
+      if (PEEK == '.') {
+        S_ADVANCE;
+        Maybe *fractional = (Maybe *)get_fractional(state);
+        if (fractional->has_value) {
+          // double total = *(double *)fractional->value + *(long *)whole->value;
+          // TODO check bounds
+          MARK("handle_negative", false, state);
+          return finish_if_valid(FLOAT, "float", state);
+        }
+      } else {
+        MARK("handle_negative", false, state);
+        return finish_if_valid(INT, "int", state);
+      }
+      // return res_fail;
+    }
+  } else {
+    LOG(VERBOSE, "non-dot symbolic PEEK %c\n", PEEK);
+    Result res = operator(state);
+    LOG(VERBOSE, "Result of operator: %s\n", sym_names[res.sym]);
+    SHORT_SCANNER;
+  }
+  return res_fail;
+}
+
+/**
  * Parse an inline comment if the next chars are two or more minuses and the char after the last minus is not
  * symbolic.
  *
  * To be called when it is certain that two (or three!) minuses cannot succeed as a symbolic operator.
+ * Or when one cannot be.
  * Those cases are:
  *   - `START` is valid
  *   - Operator matching was done already
  */
 static Result minus(State *state) {
   LOG(INFO, "->minus\n");
-  if (!seq("--", state)) return res_cont;
-  LOG(VERBOSE, "Col: %u; Peek: %c\n", column(state), PEEK);
-  if (PEEK == '-') {
-    // if (SYM(FOLD)) {
+  if (PEEK != '-') return res_cont;
+  S_ADVANCE;
+  switch(PEEK) {
+    NUMERIC_CASES: // INT, FLOAT, 
+    case '.': {
+      return post_pos_neg_sign(state, false);
+    }
+    case '-': { // COMMENT, FOLD
       S_ADVANCE;
-      LOG(VERBOSE, "After advancing, PEEK: %c\n", PEEK);
-      if (is_eof(state) || is_newline(PEEK)) {
-        while(!is_eof(state)) S_ADVANCE;
-        MARK("minus", false, state);
-        return finish(FOLD, "fold");
-      } else {
-        return res_fail;
-      }
-    // }
-  } 
-  // while (PEEK == '-') S_ADVANCE;
-  // if (symbolic(PEEK)) return res_fail;
-  return inline_comment(state);
+      if (PEEK == '-') { // FOLD
+        S_ADVANCE;
+        LOG(VERBOSE, "After advancing, PEEK: %c\n", PEEK);
+        if (is_eof(state) || is_newline(PEEK)) {
+          while(!is_eof(state)) S_ADVANCE;
+          MARK("minus", false, state);
+          return finish_if_valid(FOLD, "fold", state);
+        } else {
+          return res_fail;
+        }
+      } 
+      // while (PEEK == '-') S_ADVANCE;
+      // if (symbolic(PEEK)) return res_fail;
+      return inline_comment(state);
+    } 
+  }
+  return res_cont;  
 }
 
 /**
@@ -905,112 +1119,6 @@ static Result close_layout_in_list(State *state) {
   return res_cont;
 }
 
-static void * get_fractional(State *state) {
-  DEBUG_PRINTF("->get_fractional, %c\n", PEEK);
-  char running_str[1024] = "";
-  double val = 0;
-  bool non_zero = false;
-  bool digit_found = false;
-  
-  while (!is_eof(state) && isdigit(PEEK)) {
-    digit_found = true;
-    if (PEEK != '0') {
-      non_zero = true;
-    }
-    const char a[2] = { PEEK, '\0' };
-    strcat(running_str, a);
-    val = atof(running_str);
-    if (non_zero && val == 0) { // i.e., we know `atof` failed
-      return &nothing;
-    }
-    S_ADVANCE;
-  }
-  return digit_found ? justDouble(val) : &nothing;
-}
-
-static void * get_whole(State *state) {
-  LOG(INFO, "->get_whole, %c\n", PEEK);
-  long val = 0;
-  bool digit_found = false;
-  while (!is_eof(state) && isdigit(PEEK)) {
-    digit_found = true;
-    // Test to see if new val will exceed permitted bounds
-    long new_val = val * 10 + PEEK - ASCII_OFFSET;
-    if ((new_val + ASCII_OFFSET - PEEK) / 10 != val) return &nothing;
-    val = new_val;
-    S_ADVANCE;
-  }
-  return digit_found ? justLong(val) : &nothing;
-}
-
-/**
- * Handle an operator that begins with `=`. If it's a single `=` then fail
- * and allow the JS to handle it instead. Without this, the JS often
- * sees a term assignment as function application with operator `=` as
- * discovered by the external scanner. This function exists to prevent
- * this.
- */
-static Result equals(State *state) {
-  LOG(INFO, "->equals (%u, %c)\n", COL, PEEK);
-  if (PEEK == '=') {
-    S_ADVANCE;
-    if (is_eof(state) || isws(PEEK) || !symbolic(PEEK)) {
-      return res_fail;
-    }
-  }
-  return res_cont;
-}
-
-/**
- * Detect operators.
- * Cannot run before determining DOT is not an absolute qualifier.
- * Need to exclude certain symbols as solutions. The following cannot
- * be considered operators: =, 
- *
- * Needs to recognize `(OPERATOR)` as a parenthesized operator
- */
-static Result operator(State *state) {
-  LOG(INFO, "->operator (%u, %c)\n", COL, PEEK);
-  // if (!SYM(SYMOP)) return res_cont;
-  
-  bool parenthesized = PEEK == '(';
-  if (parenthesized) {
-    S_ADVANCE;
-    skipspace(state);
-  }
-  
-  if (!symbolic(PEEK)) return parenthesized ? res_fail : res_cont;
-  if (PEEK == '=') {
-    Result res = equals(state);
-    SHORT_SCANNER;
-  }
-  /*
-   * scan until:
-   * - if parenthesized and space, skip all succeeding spaces
-   * - if parenthesized and `)`, return successful operator
-   * - if non-symbolic, succeed without advancing
-   * 
-   */
-  while (!is_eof(state)) {
-    LOG(VERBOSE, "[operator] Looping with PEEK = %c\n", PEEK);
-    if (symbolic(PEEK)) {
-      S_ADVANCE;
-      MARK("operator", false, state);
-    } else if (parenthesized && PEEK == ' ') { 
-      skipspace(state);
-    } else if (parenthesized && PEEK == ')') {
-      S_ADVANCE;
-      MARK("operator", false, state);
-      return finish_if_valid(SYMOP, "symbolic operator", state);
-    } else {
-      return finish_if_valid(SYMOP, "symbolic operator", state);
-    }
-  }
-  S_ADVANCE;
-  MARK("operator", false, state);
-  return finish_if_valid(SYMOP, "symbolic operator", state);
-}
-
 /**
  * Handles `(` in the case of a prefixed operator. JS grammar appears
  * to have difficulty with `(+)` being seq('(', $.operator, ')') bc need
@@ -1034,59 +1142,22 @@ static Result open_paren(State *state) {
   return res_fail;
 }
 
+
+
 /**
  * Parse things that begin with `-`. This is 
  * 1. symops
  * 2. negative numbers
+ * 3. inline comment (TODO)
+ * 4. fold (TODO)
  * Note: I do not think comments are implicated here.
+ * Note 2: Must fail for `->` so the JS grammar can take over and recognize the arrow.
  */
 static Result handle_negative(State *state) {
   LOG(VERBOSE, "->handle_negative; PEEK = %c\n", PEEK);
   if (PEEK != '-' && PEEK != '+') return res_cont;
   S_ADVANCE;
-  if (isws(PEEK) || is_eof(state)) { // found - or + by itself
-    MARK("handle_negative", false, state);
-    return finish_if_valid(SYMOP, "+/-", state);
-  }
-  if (PEEK == '.') { // either -.123123 or -.(symbols) a symop
-    S_ADVANCE;
-    if (isdigit(PEEK)) { // check for FLOAT
-      Maybe * val = (Maybe *)get_fractional(state);
-      if(val->has_value) {
-        MARK("handle_negative", false, state);
-        return finish_if_valid(FLOAT, "float", state);
-      }
-    } else if (symbolic(PEEK)) { // CHECK FOR SYMOP
-      return operator(state);
-    }
-    return res_fail;
-  } else if (isdigit(PEEK)) { // check for -a.b FLOAT or -a INT
-    LOG(VERBOSE, "\t2b. handle_negative >= 1, %c\n", PEEK);
-    Maybe * whole = (Maybe *)get_whole(state);
-    if (whole->has_value) {
-      LOG(VERBOSE, "\t3. whole has value\n");
-      if (PEEK == '.') {
-        S_ADVANCE;
-        Maybe *fractional = (Maybe *)get_fractional(state);
-        if (fractional->has_value) {
-          // double total = *(double *)fractional->value + *(long *)whole->value;
-          // TODO check bounds
-          MARK("handle_negative", false, state);
-          return finish_if_valid(FLOAT, "float", state);
-        }
-      } else {
-        MARK("handle_negative", false, state);
-        return finish_if_valid(INT, "int", state);
-      }
-      // return res_fail;
-    }
-  } else {
-    LOG(VERBOSE, "non-dot symbolic PEEK %c\n", PEEK);
-    Result res = operator(state);
-    LOG(VERBOSE, "Result of operator: %s\n", sym_names[res.sym]);
-    SHORT_SCANNER;
-  }
-  return res_fail;
+  return post_pos_neg_sign(state, true);
 }
 
 /** Parse special tokens before the first newline that can't be reliably detected by tree-sitter:
@@ -1237,9 +1308,38 @@ static Result newline_indent(uint32_t indent, State *state) {
   SHORT_SCANNER;
   return newline_semicolon(indent, state);
 }
+
+/**
+ * Parser for numbers and symops. JS grammar is detecting zero-length nat for some reason.
+ * - Nat
+ * - Int
+ * - Float
+ * - Byte
+ * Parser must fail if it detects a non-number/byte that begins with digit/decimal,
+ * or if it detects a number out of range of permissible values.
+ */
+static Result numeric(State *state) {
+  LOG(INFO, "->numeric, %c\n", PEEK);
+  if (isdigit(PEEK) || PEEK == '.' || PEEK == '-' || PEEK == '+') {
+    if (PEEK == '-' || PEEK == '+') {
+      Result res = handle_negative(state);
+      LOG(VERBOSE, "Result of handle_negative: %s\n", sym_names[res.sym]);
+      SHORT_SCANNER;
+    } else if(isdigit(PEEK)) {
+      Result res = detect_nat_ufloat_byte(state);
+      SHORT_SCANNER;
+    }
+  }
+  return res_cont;
+}
  
 /**
  * Rules that decide based on the first token on the next line.
+ * - starts with `-` (FLOAT, INT, COMMENT, FOLD)
+ * - starts with '+' (FLOAT, INT)
+ * - starts with `.` (FLOAT)
+ * - starts with number (NAT, FLOAT, BYTE)
+ * NOTE: not SYMOP because cannot begin a line with one.
  */
 static Result newline_token(uint32_t indent, State *state) {
   DEBUG_PRINTF("->newline_token\n");
@@ -1247,8 +1347,19 @@ static Result newline_token(uint32_t indent, State *state) {
     return minus(state);
   }
   switch (PEEK) {
+    NUMERIC_CASES: {
+      Result res = numeric(state);
+      SHORT_SCANNER;
+      break;
+    }
     SYMBOLIC_CASES:
     case '`': {
+      if (PEEK == '+') {
+        Result res = handle_negative(state);
+        SHORT_SCANNER;
+      } else if (PEEK == '.') {
+        Result res = detect_nat_ufloat_byte(state);
+      }
       // Symbolic s = read_symop(state);
       // Result res = newline_infix(indent, s, state);
       // SHORT_SCANNER;
@@ -1270,97 +1381,20 @@ static Result newline(uint32_t indent, State *state) {
   LOG(VERBOSE, "->newline(%u)\n", indent);
   Result res = eof(state);
   SHORT_SCANNER;
+  if(SYM(START)) {
+    Result res = layout_start(indent, state);
+    SHORT_SCANNER;
+  }
   // res = initialize(indent, state);
   // SHORT_SCANNER;
   // res = cpp(state);
   // SHORT_SCANNER;
   res = comment(state);
   SHORT_SCANNER;
-  res = newline_token(indent, state);
+  res = newline_indent(indent, state);
   SHORT_SCANNER;
-  return newline_indent(indent, state);
-}
-
-
-
-/**
- * Parser for Nat. Only digits.
- */
- static Result detect_nat(State *state) {
-  Maybe *whole = (Maybe *)get_whole(state);
-  if (whole->has_value) {
-    MARK("detect_nat", false, state);
-    return finish(NAT, "nat");
-  }
-  return res_fail;
-}
-
-/**
- * Parse for byte literal. If detect "0x" then fail and let the JS grammar handle this.
- */
-static Result byte_literal(State *state) {
-  LOG(INFO, "->byte_literal (col = %u, peek = %c)\n", COL, PEEK);
-  if (PEEK == '0') {
-    S_ADVANCE;
-    if (PEEK == 'x') {
-      return res_fail;
-    }
-  }
-  return res_cont;
-}
-
-/**
- * Parse literals that begin with a digit. These are:
- * - Nat
- * - Float (in Unison, they are not required to begin with `+` if positive)
- * - Byte (they begin with the token "0xs")
- */
-static Result detect_nat_ufloat(State *state) {
-  LOG(INFO, "->detect_nat_ufloat (%u, %c)\n", COL, PEEK);
-  Result res = byte_literal(state);
-  SHORT_SCANNER;
-  Maybe *whole = (Maybe *)get_whole(state);
-  if (whole->has_value) {
-    if (PEEK == '.') {
-      S_ADVANCE;
-      Maybe *fractional =(Maybe *)get_fractional(state);
-      if (fractional->has_value) {
-        LOG(VERBOSE, "fractional has value\n");
-        MARK("detect_nat_ufloat", false, state);
-        return finish_if_valid(FLOAT, "float", state);
-      } else {
-        LOG(VERBOSE, "fractional does not have value\n");
-        return res_fail;
-      }
-    } else {
-      MARK("detect_nat_ufloat", false, state);
-      return finish_if_valid(NAT, "nat", state);
-    }
-  }
-  return res_fail;
-}
-
-/**
- * Parser for numbers and symops. JS grammar is detecting zero-length nat for some reason.
- * - Nat
- * - Int
- * - Float
- * Parser must fail if it detects a non-number that begins with digit/decimal,
- * or if it detects a number out of range of permissible values.
- */
-static Result numeric(State *state) {
-  LOG(INFO, "->numeric, %c\n", PEEK);
-  if (isdigit(PEEK) || PEEK == '.' || PEEK == '-' || PEEK == '+') {
-    if (PEEK == '-' || PEEK == '+') {
-      Result res = handle_negative(state);
-      LOG(VERBOSE, "Result of handle_negative: %s\n", sym_names[res.sym]);
-      SHORT_SCANNER;
-    } else if(isdigit(PEEK)) {
-      Result res = detect_nat_ufloat(state);
-      SHORT_SCANNER;
-    }
-  }
-  return res_cont;
+  return newline_token(indent, state);
+  
 }
       
 /**

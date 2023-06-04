@@ -10,11 +10,13 @@ const identifiers = require('./grammar/identifier')
 const term = require('./grammar/term')
 const regex = require('./grammar/regex')
 const effects = require('./grammar/effect')
+const _let = require('./grammar/let')
 
 
 module.exports = grammar({
   name: 'unison',
   precedences: $ => [
+    ['_expression', 'identifier'],
     ['term_definition', '_expression'],
     ['keyword', '_expression'],
     ['function_application', 'operator'], // `myFn a b + c` is equivalent to `((myFn a) b) + c`
@@ -27,6 +29,10 @@ module.exports = grammar({
     [$._type2],
     [$._type1, $.constructor],
     [$.identifier, $._lhs],
+    [$.identifier, $.literal_function],
+    [$.wordy_id, $.literal_function],
+    [$.type],
+    [$._prefix_function_application, $.function_application],
   ],
   externals: $ => [
     $._layout_semicolon,
@@ -73,6 +79,7 @@ module.exports = grammar({
     ...expressions,
     ...stmt,
     ...term,
+    ..._let,
     
     kw_forall: $ => choice("forall", "∀"),
     kw_equals: $ => '=',

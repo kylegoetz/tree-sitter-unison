@@ -5,17 +5,6 @@ const { sep } = require('./util')
 module.exports = {
   ...funcApp,
   
-  /**
-   * Let:
-   * let [block]
-   * Examples:
-   * x = let y = 5
-   *         z = 1
-   *         y + z
-   */
-  kw_let: _ => 'let',
-  exp_let: $ => seq($.kw_let, $._block),
-  
   kw_if: $ => prec(KEYWORD, 'if'),
   kw_then: $ => prec(KEYWORD, 'then'),
   kw_else: $ => prec(KEYWORD, 'else'),
@@ -38,12 +27,15 @@ module.exports = {
     $._expression
   ),
   
-  _semi: $ => $._layout_semicolon,
+  // semi: $ => $._layout_semicolon,
+  // layout_start: $ => $._layout_start,
+  // layout_end: $ => $._layout_end,
+  // statement: $ => $._statement,
+  // expression: $ => $._expression,
   _multiline_block: $ => seq(
-    optional(seq(sep1($._semi, $._statement), $._semi)),
+    optional(seq(sep1($._layout_semicolon, $._statement))),
     $._expression,
   ),
-  
   _block: $ => seq(
     $._layout_start,
     $._multiline_block,
