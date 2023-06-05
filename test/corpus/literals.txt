@@ -46,13 +46,11 @@ x = 1.6777216
 [Literal] Char
 ===
 x = ?a
+x = ?\n
 ---
 (unison
-    (term_declaration
-        (term_definition
-            (wordy_id)
-            (kw_equals)
-            (literal_char))))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (literal_char)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (literal_char))))
 ===
 [Literal] Boolean
 ===
@@ -169,3 +167,71 @@ x = typeLink Optional
                 (kw_typelink)
                 (type
                     (wordy_id))))))
+===
+[Literal] Nat
+===
+x = 1
+---
+(unison
+    (term_declaration
+        (term_definition
+            (wordy_id)
+            (kw_equals)
+            (nat))))
+===
+[Literal] Float
+===
+x = 1.0
+x = +1
+x = -1
+x = +1.0
+x = -1.0
+x = 1e3
+x = 1e+3
+x = 1e-3
+x = +1e3
+x = +1e+3
+x = +1e-3
+x = -1e3
+x = -1e+3
+x = -1e-3
+x = 1.2e3
+x = 1.2e+3
+x = 1.2e-3
+x = +1.2e3
+x = +1.2e+3
+x = +1.2e-3
+x = -1.2e3
+x = -1.2e+3
+x = -1.2e-3
+---
+(unison 
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (float))))
+===
+[Literal] Unit
+===
+x = ()
+---
+(unison (term_declaration (term_definition (wordy_id) (kw_equals) (unit))))
