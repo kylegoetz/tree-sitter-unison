@@ -1,0 +1,20 @@
+===
+[Block] let
+===
+y = let x = 1
+            x
+y = let
+ x = 1
+ x
+z = let y = 1  
+        x = 1  
+        x + 1
+a = (let 
+      x = 23 + 42
+      x + 1)
+---
+(unison 
+    (term_declaration (term_definition (identifier) (kw_equals)))
+    (term_declaration (term_definition (identifier) (kw_equals)))
+    (term_declaration (term_definition (identifier) (kw_equals)))
+    (term_declaration (term_definition (identifier) (kw_equals))))
