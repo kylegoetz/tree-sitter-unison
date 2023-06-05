@@ -67,7 +67,7 @@ unique type controlFlow.Color = RGB Nat Nat Nat
             (type_argument)
             (type_argument))))
 ===
-Record type
+Record type, single line
 ===
 unique type Point2 = { x : Nat, y : Nat }
 ---
@@ -76,9 +76,16 @@ unique type Point2 = { x : Nat, y : Nat }
         (unique_kw)
         (type_kw)
         (type_constructor
-            (wordy_id))
+            (type_name
+                (wordy_id)))
         (kw_equals)
-        (record_type_constructor)))
+        (record
+            (record_field
+                (wordy_id)
+                (wordy_id))
+            (record_field
+                (wordy_id)
+                (wordy_id)))))
 ===
 Record type, multiline
 ===
@@ -92,9 +99,16 @@ unique type Point2 = {
         (unique_kw)
         (type_kw)
         (type_constructor
-            (wordy_id))
+            (type_name
+                (wordy_id)))
         (kw_equals)
-        (record_type_constructor)))
+        (record
+            (record_field
+                (wordy_id)
+                (wordy_id))
+            (record_field
+                (wordy_id)
+                (wordy_id)))))
 ===
 type with complex abilities clause
 ===

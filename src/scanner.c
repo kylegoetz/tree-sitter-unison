@@ -1199,6 +1199,11 @@ static Result inline_tokens(State *state) {
       SHORT_SCANNER;
       return res_fail;
     }
+    case '}': {
+      Result res = layout_end("}", state);
+      SHORT_SCANNER;
+      return res_fail;
+    }
     // case '(': {
     //   Result res = open_paren(state);
     //   SHORT_SCANNER;
@@ -1208,6 +1213,10 @@ static Result inline_tokens(State *state) {
     SYMBOLIC_CASES: {
       Result res = operator(state);
       SHORT_SCANNER;
+      return res_fail;
+    }
+    case ',': {
+      // There should not be any parsing if you encounter a comma
       return res_fail;
     }
     // TODO(414owen) does this clash with inline comments '--'?

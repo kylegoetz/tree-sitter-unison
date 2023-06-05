@@ -13,16 +13,10 @@ module.exports = {
   type_kw: $ => 'type',
   pipe: $ => '|',
   type_name: $ => $.wordy_id,
-  // type_argument: $ => $._lcase_varid,
   type_argument: $ => token(regex.lowercase_varid), // TODO lowercase only?
   
   type_constructor: $ => prec.right(seq(
     $.type_name,
-    // /\.?([a-z]+\.)[a-z]+/,
-    // $.varid,
-    // $.identifier,
-    // optional(seq(sep1(token.immediate('.'), $._immediate_varid), $._immediate_dot)),
-    // $.type_name,
     repeat($.type_argument),
   )),
   
@@ -34,25 +28,17 @@ module.exports = {
   
   list_constructor: $ => seq(
     '[',
-    $.data_constructor,
+    $._data_constructor,
     ']'
   ),
   tuple_constructor: $ => seq(
     '(',
-    sep(',', $.data_constructor),
+    sep(',', $._data_constructor),
     ')'
   ),
-  // simple_constructor: $ => prec.left($.type_name),
   _standard_constructor: $ => prec.right(seq(
     $.type_name,
-    repeat(choice($.type_argument, /*$.simple_constructor,*/ $.list_constructor, $.tuple_constructor, alias($._parenthetical_data_constructor, $.data_constructor)))
-  )),
-  
-  data_constructor: $ => prec.right(choice(
-    $.list_constructor,
-    $.tuple_constructor,
-    // $.simple_constructor,
-    $._standard_constructor,
+    repeat(choice($.type_argument, $.list_constructor, $.tuple_constructor, alias($._parenthetical_data_constructor, $._data_constructor))),
   )),
   
   /**
@@ -63,12 +49,17 @@ module.exports = {
    * Foo (Option Nat)
    * Foo (Option a)
    * Foo Bar (Option a)
+   * [Int] <- list
+   * (Int, Nat, Float) <- tuple
+   * { x : Nat, y : Nat } <- record
    */
-  // data_constructor: $ => prec.right(seq(
-  //   $.type_name,
-  //   // 'Text Nat (Set Genre)'
-  //   repeat(choice($.type_argument, $.type_name, $._parenthetical_data_constructor)),
-  // )),
+  _data_constructor: $ => prec.right(choice(
+    $.list_constructor,
+    $.tuple_constructor,
+    $._standard_constructor,
+    $.record,
+  )),
+
   
   _type_lhs: $ => seq(
     choice($.structural_kw, $.unique_kw),
@@ -76,5 +67,16 @@ module.exports = {
     $.type_constructor
   ),
   
-  _type_rhs: $ => sep1($.pipe, $.data_constructor),
+  _type_rhs: $ => sep1($.pipe, $._data_constructor),
+  
+  // Record type
+  record: $ => seq('{',$._record_fields_block,'}',),
+  record_field: $ => seq(field('name', $.wordy_id), ':', field('type', $._value_type)),
+  _record_fields_inline: $ => seq(sep1(',', $.record_field), optional(',')),
+  _record_fields_block: $ => choice($._record_fields_inline, seq(
+      $._layout_start,
+      sep($._layout_semicolon, $._record_fields_inline),
+      // optional($._layout_semicolon),
+      $._layout_end,
+  )),
 }
