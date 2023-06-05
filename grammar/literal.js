@@ -13,7 +13,7 @@ module.exports = {
     $.literal_hash,
     $.literal_list,
     $.literal_function,
-    $.literal_tuple,
+    $.tuple_or_parenthesized,
     $.literal_termlink,
     $.literal_typelink,
     $.unit,
@@ -56,14 +56,14 @@ module.exports = {
   lambda_arrow: $ => prec(2, '->'),
   func_name: $ => prec.left(regex.varid),
   func_param: $ => prec.left(regex.varid),
-  literal_function: $ => seq(
+  literal_function: $ => prec('literal_function', seq(
     field('lhs', repeat1(prec.left(field('param', $.wordy_id)))),
     $.lambda_arrow, 
     $._expression // func body
-  ),
+  )),
   
   
-  literal_tuple: $ => seq('(', sep1(',', $._expression), ')'),
+  tuple_or_parenthesized: $ => seq('(', sep1(',', $._expression), ')'),
   // term: $ => $._regular_identifier,
   literal_termlink: $ => seq($.kw_termlink, field('term', $.wordy_id)),
   literal_typelink: $ => seq($.kw_typelink, $.type),

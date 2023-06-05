@@ -1140,7 +1140,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "literal_tuple"
+          "name": "tuple_or_parenthesized"
         },
         {
           "type": "SYMBOL",
@@ -1363,38 +1363,42 @@
       }
     },
     "literal_function": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "FIELD",
-          "name": "lhs",
-          "content": {
-            "type": "REPEAT1",
+      "type": "PREC",
+      "value": "literal_function",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "lhs",
             "content": {
-              "type": "PREC_LEFT",
-              "value": 0,
+              "type": "REPEAT1",
               "content": {
-                "type": "FIELD",
-                "name": "param",
+                "type": "PREC_LEFT",
+                "value": 0,
                 "content": {
-                  "type": "SYMBOL",
-                  "name": "wordy_id"
+                  "type": "FIELD",
+                  "name": "param",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "wordy_id"
+                  }
                 }
               }
             }
+          },
+          {
+            "type": "SYMBOL",
+            "name": "lambda_arrow"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
           }
-        },
-        {
-          "type": "SYMBOL",
-          "name": "lambda_arrow"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_expression"
-        }
-      ]
+        ]
+      }
     },
-    "literal_tuple": {
+    "tuple_or_parenthesized": {
       "type": "SEQ",
       "members": [
         {
@@ -1593,75 +1597,6 @@
           "name": "_infix_op_application"
         }
       ]
-    },
-    "kw_if": {
-      "type": "PREC",
-      "value": 10,
-      "content": {
-        "type": "STRING",
-        "value": "if"
-      }
-    },
-    "kw_then": {
-      "type": "PREC",
-      "value": 10,
-      "content": {
-        "type": "STRING",
-        "value": "then"
-      }
-    },
-    "kw_else": {
-      "type": "PREC",
-      "value": 10,
-      "content": {
-        "type": "STRING",
-        "value": "else"
-      }
-    },
-    "exp_if": {
-      "type": "PREC_LEFT",
-      "value": 10,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "kw_if"
-          },
-          {
-            "type": "FIELD",
-            "name": "if_block",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_block"
-            }
-          },
-          {
-            "type": "SYMBOL",
-            "name": "kw_then"
-          },
-          {
-            "type": "FIELD",
-            "name": "then_block",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_block"
-            }
-          },
-          {
-            "type": "SYMBOL",
-            "name": "kw_else"
-          },
-          {
-            "type": "FIELD",
-            "name": "else_block",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_block"
-            }
-          }
-        ]
-      }
     },
     "operator_expression": {
       "type": "SEQ",
@@ -1920,6 +1855,10 @@
           {
             "type": "SYMBOL",
             "name": "parenthetical_exp"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_boolean_exp"
           }
         ]
       }
@@ -2883,6 +2822,113 @@
         }
       ]
     },
+    "or": {
+      "type": "STRING",
+      "value": "||"
+    },
+    "and": {
+      "type": "STRING",
+      "value": "&&"
+    },
+    "_boolean_exp": {
+      "type": "PREC_LEFT",
+      "value": "_boolean_exp",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "or"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "and"
+              }
+            ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          }
+        ]
+      }
+    },
+    "kw_if": {
+      "type": "PREC",
+      "value": 10,
+      "content": {
+        "type": "STRING",
+        "value": "if"
+      }
+    },
+    "kw_then": {
+      "type": "PREC",
+      "value": 10,
+      "content": {
+        "type": "STRING",
+        "value": "then"
+      }
+    },
+    "kw_else": {
+      "type": "PREC",
+      "value": 10,
+      "content": {
+        "type": "STRING",
+        "value": "else"
+      }
+    },
+    "exp_if": {
+      "type": "PREC_LEFT",
+      "value": 10,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "kw_if"
+          },
+          {
+            "type": "FIELD",
+            "name": "if_block",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_block"
+            }
+          },
+          {
+            "type": "SYMBOL",
+            "name": "kw_then"
+          },
+          {
+            "type": "FIELD",
+            "name": "then_block",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_block"
+            }
+          },
+          {
+            "type": "SYMBOL",
+            "name": "kw_else"
+          },
+          {
+            "type": "FIELD",
+            "name": "else_block",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_block"
+            }
+          }
+        ]
+      }
+    },
     "watch_expression": {
       "type": "SEQ",
       "members": [
@@ -3082,7 +3128,7 @@
     ],
     [
       "tuple_constructor",
-      "literal_tuple"
+      "tuple_or_parenthesized"
     ],
     [
       "_literal",
@@ -3174,6 +3220,16 @@
       {
         "type": "STRING",
         "value": "function_application"
+      }
+    ],
+    [
+      {
+        "type": "STRING",
+        "value": "_boolean_exp"
+      },
+      {
+        "type": "STRING",
+        "value": "literal_function"
       }
     ]
   ],

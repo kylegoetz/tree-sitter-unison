@@ -1,0 +1,47 @@
+===
+[Conditionals] single-line `if` expression
+===
+> if x then y else z
+---
+(unison 
+  (watch_expression 
+    (exp_if 
+      (kw_if) 
+      (wordy_id) 
+      (kw_then) 
+      (wordy_id) 
+      (kw_else) 
+      (wordy_id))))
+===
+[Conditionals] multiline `if`
+===
+> if
+      s = 0
+      s > 0
+    then
+      s = 0
+      s + 1
+    else
+      s = 0
+      s + 2
+---
+(unison (watch_expression (exp_if
+  (kw_if) 
+  (term_declaration (term_definition (wordy_id) (kw_equals) (nat)))
+  (function_application (wordy_id) (operator) (nat))
+  (kw_then)
+  (term_declaration (term_definition (wordy_id) (kw_equals) (nat)))
+  (function_application (wordy_id) (operator) (nat))
+  (kw_else)
+  (term_declaration (term_definition (wordy_id) (kw_equals) (nat)))
+  (function_application (wordy_id) (operator) (nat))
+)))
+===
+[Conditionals] Boolean operations
+===
+> x && y
+> x || y
+---
+(unison 
+  (watch_expression (wordy_id) (and) (wordy_id))
+  (watch_expression (wordy_id) (or) (wordy_id)))

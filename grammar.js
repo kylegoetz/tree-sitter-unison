@@ -13,6 +13,7 @@ const effects = require('./grammar/effect')
 const _let = require('./grammar/let')
 const handler = require('./grammar/handle')
 const pattern_matching = require('./grammar/pattern-matching')
+const conditionals = require('./grammar/conditionals')
 
 
 module.exports = grammar({
@@ -25,6 +26,7 @@ module.exports = grammar({
     ['function_application', 'operator'], // `myFn a b + c` is equivalent to `((myFn a) b) + c`
     ['_infix_op_application', '_prefix_function_application'],
     ['literal_function', 'function_application'],
+    ['_boolean_exp', 'literal_function'],
   ],
   conflicts: $ => [
     [$._function_param, $._function_name],
@@ -39,7 +41,7 @@ module.exports = grammar({
     [$._prefix_function_application, $.function_application],
     // [$.identifier, $.binding_lhs],
     [$._identifier, $.type_name],
-    [$.tuple_constructor, $.literal_tuple],
+    [$.tuple_constructor, $.tuple_or_parenthesized],
     [$._literal, $._expression], 
     [$._identifier, $.literal_function, $._lhs],
     [$._infix_op_application, $.literal_function],
@@ -98,6 +100,7 @@ module.exports = grammar({
     ..._let,
     ...handler,
     ...pattern_matching,
+    ...conditionals,
     
     watch_expression: $ => seq('>', $._expression),
     

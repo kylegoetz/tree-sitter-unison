@@ -887,9 +887,13 @@ static void * get_exponent(State *state) {
  */
 static Result detect_nat_ufloat_byte(State *state) {
   LOG(INFO, "->detect_nat_ufloat_byte (%u, %c)\n", COL, PEEK);
+  bool starts_with_zero = PEEK == '0';
   Result res = byte_literal(state);
   SHORT_SCANNER;
   Maybe *whole = (Maybe *)get_whole(state);
+  if (!whole->has_value && starts_with_zero) {
+    whole = justLong(0);
+  }
   if (whole->has_value) {
     if (PEEK == '.') {
       S_ADVANCE;
@@ -964,16 +968,40 @@ static Result paren_symop(State *state) {
 }
 
 /**
+ * Detect || and &&, which should fail so JS can process it. It is only meant to be called from `operator` since it assumes
+ * `res_cont` will continue operator parsing.
+ */
+static Result boolean_operator(State *state) {
+  if (PEEK != '|' && PEEK != '&') return res_cont;
+  switch (PEEK) {
+    case '|': {
+      S_ADVANCE;
+      if (is_eof(state) || PEEK != '|') return res_cont;
+      S_ADVANCE;
+      if (!is_eof(state) && symbolic(PEEK)) return res_cont;
+      return res_fail;
+    }
+    case '&': {
+      S_ADVANCE;
+      if (is_eof(state) || PEEK != '&') return res_cont;
+      S_ADVANCE;
+      if (!is_eof(state) && symbolic(PEEK)) return res_cont;
+      return res_fail;
+    }
+  }
+  return res_cont;
+}
+
+/**
  * Detect operators.
  * Cannot run before determining DOT is not an absolute qualifier.
  * Need to exclude certain symbols as solutions. The following cannot
- * be considered operators: =, 
+ * be considered operators: =, &&, ||
  *
  * Needs to recognize `(OPERATOR)` as a parenthesized operator
  */
 static Result operator(State *state) {
   LOG(INFO, "->operator (%u, %c)\n", COL, PEEK);
-  // if (!SYM(SYMOP)) return res_cont;
   
   if (PEEK == '(') {
     Result res = paren_symop(state);
@@ -981,17 +1009,16 @@ static Result operator(State *state) {
   }
   
   bool parenthesized = false;
-  // bool parenthesized = PEEK == '(';
-  // if (parenthesized) {
-  //   S_ADVANCE;
-  //   skipspace(state);
-  // }
   
   if (!symbolic(PEEK)) return res_fail;
   if (PEEK == '=') {
     Result res = equals(state);
     SHORT_SCANNER;
   }
+
+  uint8_t and_count = 0;
+  uint8_t or_count = 0;
+    
   /*
    * scan until:
    * - if parenthesized and space, skip all succeeding spaces
@@ -1001,7 +1028,21 @@ static Result operator(State *state) {
    */
   while (!is_eof(state)) {
     LOG(VERBOSE, "[operator] Looping with PEEK = %c\n", PEEK);
-    if (symbolic(PEEK)) {
+    if (symbolic(PEEK)) { // If we find | or & as first symbol, count it. Otherwise, ensure code never thinks it has found || or &&
+      switch (PEEK) {
+        case '|': {
+          if (or_count == 0 || or_count == 1) ++or_count;
+          break;
+        }
+        case '&': {
+          if (and_count == 0 || and_count == 1) ++and_count;
+          break;
+        }
+        default: {
+          or_count = -1;
+          and_count = -1;
+        }
+      }
       S_ADVANCE;
       MARK("operator", false, state);
     } else if (parenthesized && PEEK == ' ') { 
@@ -1011,9 +1052,11 @@ static Result operator(State *state) {
       MARK("operator", false, state);
       return finish_if_valid(SYMOP, "symbolic operator", state);
     } else {
+      if (or_count == 2 || and_count == 2) return res_fail;
       return finish_if_valid(SYMOP, "symbolic operator", state);
     }
   }
+  if (or_count == 2 || and_count == 2) return res_fail;
   S_ADVANCE;
   MARK("operator", false, state);
   return finish_if_valid(SYMOP, "symbolic operator", state);

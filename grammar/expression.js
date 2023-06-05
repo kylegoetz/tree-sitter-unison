@@ -15,7 +15,7 @@ module.exports = {
     // $.operator_as_para meter,
 
     $.parenthetical_exp,
-    // $.regular_identifier,
+    $._boolean_exp,
   )),
   
   operator_as_parameter: $ => seq('(',$.operator, ')'),

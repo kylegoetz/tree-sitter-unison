@@ -5,22 +5,6 @@ const { sep, layouted } = require('./util')
 module.exports = {
   ...funcApp,
   
-  kw_if: $ => prec(KEYWORD, 'if'),
-  kw_then: $ => prec(KEYWORD, 'then'),
-  kw_else: $ => prec(KEYWORD, 'else'),
-  
-  /**
-   *
-   */
-  exp_if: $ => prec.left(KEYWORD, seq(
-    $.kw_if,
-    field('if_block', $._block),
-    $.kw_then,
-    field('then_block', $._block),
-    $.kw_else,
-    field('else_block', $._block),
-  )),
-  
   operator_expression: $ => seq(
     $._expression,
     $.operator,
