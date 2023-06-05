@@ -1,0 +1,20 @@
+===
+[Handlers]
+===
+a = handle x with foo
+a = handle
+      x = 23 + 42
+      x + foo 8 102.0 +4
+    with foo
+a = handle
+      x = 1
+      x
+    with foo
+a = handle foo with cases
+     { x } -> x
+---
+(unison
+    (type_declaration (type_definition (identifier) (kw_equals) (handle) (wordy_id) (with) (identifier)))
+    (type_declaration (type_definition (identifier) (kw_equals) (handle) (type_declaration (term_definition (identifier) (kw_equals) (nat) (operator) (nat))) (exp) (with) (identifier)))
+    (type_declaration (type_definition (identifier) (kw_equals) (handle) (type_declaration (term_definition (identifier) (kw_equals) (nat) (operator) (nat))) (exp) (with) (identifier)))
+    (type_declaration (type_definition (identifier) (kw_equals) (handle) (type_declaration (term_definition (identifier) (kw_equals) (nat) (operator) (nat))) (exp) (with) (identifier))))
