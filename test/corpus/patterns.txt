@@ -1,0 +1,45 @@
+===
+[Patterns] match/with
+===
+y = match x with x -> x
+y = match x with 0 -> 1
+y = match x with
+      0 -> 1
+y = match +0 with
+      +0 -> -1
+y = match x with
+      x -> 1
+      2 -> 7
+      _ -> 3
+      Tuple.Cons x y -> x + y
+      Tuple.Cons (Tuple.Cons x y) _ -> x + y 
+y = match x with
+      0 ->
+        z = 0
+        z
+y = match x with
+     0 | 1 == 2 -> 123
+y = match x with
+     [] -> 0
+     [1] -> 1
+     2 +: _ -> 2
+     _ :+ 3 -> 3
+     [4] ++ _ -> 4
+     _ ++ [5] -> 5
+     _ -> -1
+---
+(unison)
+===
+[Patterns] cases
+===
+a = cases x -> x
+a = cases
+     [] -> 0
+     [x] -> 1
+     _ -> 2
+a = cases
+     0 ->
+       z = 0
+       z
+---
+(unison)
