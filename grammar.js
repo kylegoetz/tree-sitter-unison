@@ -23,7 +23,7 @@ module.exports = grammar({
     ['_infix_op_application', '_prefix_function_application'],
   ],
   conflicts: $ => [
-    [$.function_param, $._function_name],
+    [$._function_param, $._function_name],
     [$._function_name, $._expression],
     [$._value_type],
     [$._type2],

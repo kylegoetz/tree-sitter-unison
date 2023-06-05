@@ -23,12 +23,9 @@ y = (+) 5 2
             (wordy_id)
             (kw_equals)
             (function_application
-                (function_application
-                    (operator)
-                    (function_param
-                        (nat)))
-                (function_param
-                    (nat))))))
+                (operator)
+                (nat)
+                (nat)))))
 ===
 regular function
 ===
@@ -40,12 +37,9 @@ x = myFunc 1 2
             (wordy_id)
             (kw_equals)
             (function_application
-                (function_application
-                    (identifier)
-                    (function_param
-                        (nat)))
-                (function_param
-                    (nat))))))
+                (identifier)
+                (nat)
+                (nat)))))
 ===
 infix operator function
 ===

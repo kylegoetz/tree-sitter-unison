@@ -1,5 +1,5 @@
 module.exports = {
-  function_param: $ => choice(
+  _function_param: $ => choice(
     prec.left($._expression),
     seq('(',$.operator,')'),
   ),
@@ -17,8 +17,8 @@ module.exports = {
    * This function name can be a `varid` or `(symop)`.
    */
   _prefix_function_application: $ => choice(
-    seq($._function_name, $.function_param),
-    seq(field('partially_applied', $._prefix_function_application), $.function_param),
+    seq($._function_name, $._function_param),
+    seq(field('partially_applied', $._prefix_function_application), $._function_param),
   ),
   
   // p1 + p2
