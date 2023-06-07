@@ -14,47 +14,7 @@ const varid_re = RegExp(varid_str, 'u')
 const varid = /\.?([a-zA-Z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*\.)*[a-zA-Z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*/u
 
 
-module.exports = {
-  // _varid: $ => varid,
-  // _varid: $ => varid_pattern,
-  // _lcase_varid: $ => lowercase_varid_pattern,
-  // _immediate_varid: $ => token.immediate(varid_pattern),
-  // _immediate_varid: $ => token.immediate(varid),
-  // _immediate_dot: $ => token.immediate('.'),
-  
-  // Foo.bar <-- Foo(ns) bar(name)
-  // qualifier: $ => prec.right(seq(
-  //   optional($._immediate_dot),
-  //   $._varid,
-  //   optional(seq(
-  //     $._immediate_dot,
-  //     sep1(token.immediate('.'), $._immediate_varid)
-  //   )),
-  // )),
-  
-  // _namespace_qualified: $ => seq(
-    // $.qualifier,
-    // $._immediate_dot,
-    // choice($.regular_identifier, $.operator)
-  // ),
-  
-  // varid: $ => $._varid,
-  
-  // .Foo.bar <-- dot(abs qualifier) Foo(ns) bar(name)
-  // _absolutely_qualified: $ => seq(
-    // optional(seq($._immediate_dot,
-    // $.qualifier,
-    // $._immediate_dot)),
-    // choice($.varid, $.operator),
-  // ),
-  
-  // (.)Foo.bar(#asd09afj) <-- dot(abs qualifier) Foo(ns) bar(name) asd...(hash literal)
-  // identifier: $ => seq(
-  //   optional(seq($.qualifier, $._immediate_dot)),
-  //   choice($.varid, $.operator),
-  //   optional($.literal_hash),
-  // ),
-  
+module.exports = {  
   wordy_id: $ => regex.varid,
   symboly_id: $ => $.operator,
   
@@ -66,13 +26,14 @@ module.exports = {
    * `Nat.++`
    * .Foo.bar`
    */
-  identifier: $ => choice(
+  _identifier: $ => choice(
     $.wordy_id,
-    $._identifier,
+    $.__identifier,
   ),
-  _identifier: $ => seq(
-    optional(field('namespace', regex.path)),
-    field('wordy_id', token.immediate(regex.varid)),
+  path: $ => regex.path,
+  __identifier: $ => seq(
+    optional($.path/*field('namespace', regex.path)*/),
+    alias(token.immediate(regex.varid), $.wordy_id),
   ),
     
   namespace: $ => token(regex.namespace),

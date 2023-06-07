@@ -12,7 +12,7 @@ module.exports = {
   unique_kw: $ => 'unique',
   type_kw: $ => 'type',
   pipe: $ => '|',
-  type_name: $ => $.wordy_id,
+  type_name: $ => $._identifier,
   type_argument: $ => token(regex.lowercase_varid), // TODO lowercase only?
   
   type_constructor: $ => prec.right(seq(
@@ -67,7 +67,7 @@ module.exports = {
     $.type_constructor
   ),
   
-  _type_rhs: $ => sep1($.pipe, $._data_constructor),
+  _type_rhs: $ => sep1($.pipe, choice($._value_type, $.record)),
   
   // Record type
   record: $ => seq('{',$._record_fields_block,'}',),

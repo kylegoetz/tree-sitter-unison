@@ -8,8 +8,7 @@ structural ability Throw e where throw : e ->{Throw e} a
     (ability_declaration
         (structural)
         (ability)
-        (identifier
-            (wordy_id))
+        (wordy_id)
         (wordy_id)
         (where)
         (constructor
@@ -31,8 +30,7 @@ unique ability Store a where
     (ability_declaration
         (unique)
         (ability)
-        (identifier
-            (wordy_id))
+        (wordy_id)
         (wordy_id)
         (where)
         (constructor

@@ -205,8 +205,28 @@ State state_new(TSLexer *l, const bool * restrict vs, indent_vec *is) {
   };
 }
 
+static char * debug_indents_str(indent_vec *indents) {
+  char * rv = "";
+  DEBUG_PRINTF("%s", rv);
+  if (indents->len == 0) strcat(rv, "empty");
+  DEBUG_PRINTF("%s", rv);
+  bool empty = true;
+  for (size_t i = 0; i < indents->len; i++) {
+    if (!empty) strcat(rv, "-");
+    DEBUG_PRINTF("%s", rv);
+    rv += sprintf(rv, "%u", indents->data[i]);
+    DEBUG_PRINTF("%s", rv);
+    empty = false;
+  }
+  
+  DEBUG_PRINTF("%s", rv);
+  return rv;
+}
+
 #ifdef DEBUG
 static void debug_indents(indent_vec *indents) {
+  // LOG()
+  // DEBUG_PRINTF("%s", debug_indents_str(indents));
   if (indents->len == 0) DEBUG_PRINTF("empty");
   bool empty = true;
   for (size_t i = 0; i < indents->len; i++) {
@@ -222,6 +242,7 @@ void debug_state(State *state) {
   DEBUG_PRINTF("col = %d", state->lexer->get_column(state->lexer));
   DEBUG_PRINTF(", indents = ");
   debug_indents(state->indents);
+  // DEBUG_PRINTF("%s", debug_indents_str(state->indents));
   DEBUG_PRINTF(" }\n");
 }
 #endif
@@ -345,6 +366,7 @@ static bool same_indent(uint32_t indent, State *state) { return indent_exists(st
  * Require that the current line's indent is smaller than the containing layout's, so the layout may be ended.
  */
 static bool smaller_indent(uint32_t indent, State *state) {
+  LOG(INFO, "->smaller_indent (indent = %u, col = %u, PEEK = %c, indent exists: %s)\n", indent, COL, PEEK, indent_exists(state) ? "yes" : "no");
   return indent_exists(state) && indent < VEC_BACK(state->indents);
 }
  
@@ -500,10 +522,16 @@ static void push(uint16_t ind, State *state) {
  * Remove one level of indentation from the stack, caused by the end of a layout.
  */
 static void pop(State *state) {
+  LOG(VERBOSE, "->pop\n");
+  debug_indents(state->indents);
+  LOG(VERBOSE, "\n");
+  // LOG(VERBOSE, "[pop] before: %s\n", debug_indents_str(state->indents));
   if (indent_exists(state)) {
-    LOG(VERBOSE, "pop\n");
     VEC_POP(state->indents);
   }
+  debug_indents(state->indents);
+  LOG(VERBOSE, "\n");
+  // LOG(VERBOSE, "[pop] after: %s\n", debug_indents_str(state->indents));
 }
 
 /**
@@ -523,7 +551,7 @@ static void skipspace(State *state) {
 }
 
 static Result layout_end(char *desc, State *state) {
-  LOG(INFO, "->layout_end (%u, %c)\n", COL, PEEK);
+  LOG(INFO, "->layout_end (col = %u, desc = %s, PEEK = %c)\n", COL, desc, PEEK);
     if(SYM(END)) {
         pop(state);
         return finish(END, desc);
@@ -665,6 +693,8 @@ static Result dot(State *state) {
  * line after skipping whitespace) is smaller than the layout indent.
  */
 static Result dedent(uint32_t indent, State *state) {
+  LOG(INFO, "->dedent (indent = %u, col = %u, PEEK = %c)\n", indent, COL, PEEK);
+  LOG(VERBOSE, "smaller_indent = %s\n", smaller_indent(indent, state) ? "yes" : "no");
   if (smaller_indent(indent, state)) return layout_end("dedent", state);
   return res_cont;
 }
@@ -804,6 +834,9 @@ static void * get_fractional(State *state) {
     S_ADVANCE;
   }
   return digit_found ? justDouble(val) : &nothing;
+  // if (!is_eof(state) && !isws(PEEK)) return &nothing;
+  // return justDouble(val);
+  
 }
 
 static void * get_whole(State *state) {
@@ -1264,9 +1297,11 @@ static Result inline_tokens(State *state) {
  * This pushes the indentation of the first non-whitespace character onto the stack.
  */
 static Result layout_start(uint32_t column, State *state) {
+    LOG(INFO, "->layout_start (col = %u, PEEK = %c)\n", COL, PEEK);
     if (state->symbols[START]) {
         switch (PEEK) {
-            
+            // TODO add stuff in here for comments, which can appear anywhere
+            // and need to be handled
         }
         push(column, state);
         return finish(START, "layout_start");
@@ -1311,6 +1346,7 @@ static Result repeat_end(uint32_t column, State *state) {
  * Rules that decide based on the indent of the next line.
  */
 static Result newline_indent(uint32_t indent, State *state) {
+  LOG(INFO, "->newline_indent (col = %u, indent = %u, PEEK = %c)\n", COL, indent, PEEK);
   Result res = dedent(indent, state);
   SHORT_SCANNER;
   res = close_layout_in_list(state);
@@ -1351,7 +1387,7 @@ static Result numeric(State *state) {
  * NOTE: not SYMOP because cannot begin a line with one.
  */
 static Result newline_token(uint32_t indent, State *state) {
-  DEBUG_PRINTF("->newline_token\n");
+  LOG(INFO, "->newline_token (col = %u, peek = %c)\n", COL, PEEK);
   if (PEEK == '-') {
     return minus(state);
   }
@@ -1386,8 +1422,7 @@ static Result newline_token(uint32_t indent, State *state) {
  * To be called after parsing a newline, with the indent of the next line as argument.
  */
 static Result newline(uint32_t indent, State *state) {
-  DEBUG_PRINTF("->newline(%u)\n", indent);
-  LOG(VERBOSE, "->newline(%u)\n", indent);
+  LOG(INFO, "->newline(%u)\n", indent);
   Result res = eof(state);
   SHORT_SCANNER;
   if(SYM(START)) {
@@ -1416,6 +1451,7 @@ static Result newline(uint32_t indent, State *state) {
  *   - comments
  */
 static Result immediate(uint32_t column, State *state) {
+  LOG(INFO, "->immediate (col = %u, PEEK = %c)\n", COL, PEEK);
   Result res = layout_start(column, state);
   SHORT_SCANNER;
   res = post_end_semicolon(column, state);

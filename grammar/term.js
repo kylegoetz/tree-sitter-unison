@@ -11,17 +11,15 @@ module.exports = {
     $.term_definition
   )),
   
-  lcase: $ => regex.lowercase_varid,
-  
   /**
     * x = 5
     * myFun p1 ... pn = p1 + ... + pn
     */
-  // block: $ => $._block,
-  _lhs: $ => seq(field('name', $.wordy_id), repeat(field('param', $.wordy_id))),
+  _lhs: $ => seq(field('name', $._identifier), repeat(field('param', $.wordy_id))),
   term_definition: $ => seq(
     $._lhs,
     $.kw_equals,
-    $._block, // works with $._expression for simple things
+    $._block,
+    // choice($._expression, $._block),//$._block, // works with $._expression for simple things
   ),
 }

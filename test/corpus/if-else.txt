@@ -10,7 +10,7 @@ y = if x then 5 else 6
             (kw_equals)
             (exp_if
                 (kw_if)
-                (identifier)
+                (wordy_id)
                 (kw_then)
                 (nat)
                 (kw_else)

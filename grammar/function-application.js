@@ -5,7 +5,7 @@ module.exports = {
   ),
   
   _function_name: $ => choice(
-    $.identifier,
+    $._identifier,
     $.operator,
   ),
   
@@ -29,7 +29,7 @@ module.exports = {
   )),
     
   function_application: $ => choice(
-    $._prefix_function_application,
+    // $._prefix_function_application,
     $._infix_op_application,
   ),
 }

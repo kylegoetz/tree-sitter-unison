@@ -84,7 +84,7 @@ module.exports = {
          ...
      */
     _ebody: $ => seq(
-        field('type_name', $.identifier),
+        field('type_name', $._identifier),
         repeat(field('type_arg', $.wordy_id)),
         $.where,
         choice(

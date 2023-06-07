@@ -3,10 +3,11 @@ const { KEYWORD } = require('./precedences')
 
 module.exports = {
   _expression: $ => prec.left(choice(
+    $.literal_function,
     $.exp_let,
     $.exp_if,
     $._literal,
-    $.identifier,
+    prec(-1, $._identifier),
     // $.operator_as_parameter,
     $.function_application,
     $.parenthetical_exp,
@@ -21,5 +22,5 @@ module.exports = {
   )),
   
   use: $ => prec(KEYWORD, 'use'),
-  use_clause: $ => prec.right(seq($.use, $.namespace, repeat($.identifier))),
+  use_clause: $ => prec.right(seq($.use, $.namespace, repeat($._identifier))),
 }

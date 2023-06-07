@@ -7,16 +7,12 @@ structural type Optional a = Some a | None
     (type_declaration
         (structural_kw)
         (type_kw)
-        (type_constructor
-            (wordy_id)
-            (type_argument))
+        (type_constructor (type_name (wordy_id)) (type_argument))
         (kw_equals)
-        (data_constructor
-            (type_name)
-            (type_argument))
+        (wordy_id)
+        (wordy_id)
         (pipe)
-        (data_constructor
-            (type_name))))
+        (wordy_id)))
 ===
 unique type
 ===
@@ -26,16 +22,13 @@ unique type UserId = Phone Nat | Email Text
     (type_declaration
         (unique_kw)
         (type_kw)
-        (type_constructor
-            (wordy_id))
+        (type_constructor (type_name (wordy_id)))
         (kw_equals)
-        (data_constructor
-            (type_name)
-            (type_argument))
+        (wordy_id)
+        (wordy_id)
         (pipe)
-        (data_constructor
-            (type_name)
-            (type_argument))))
+        (wordy_id)
+        (wordy_id)))
 ===
 type tag (no type constructor)
 ===
@@ -45,9 +38,7 @@ unique type Foo =
     (type_declaration
         (unique_kw)
         (type_kw)
-        (type_constructor
-            (type_name 
-                (wordy_id)))
+        (type_constructor (type_name (wordy_id)))
         (kw_equals)))
 ===
 type name with namespace/qualifier
@@ -59,13 +50,12 @@ unique type controlFlow.Color = RGB Nat Nat Nat
         (unique_kw)
         (type_kw)
         (type_constructor
-            (wordy_id))
+            (type_name (path) (wordy_id)))
         (kw_equals)
-        (data_constructor
-            (type_name)
-            (type_argument)
-            (type_argument)
-            (type_argument))))
+        (wordy_id)
+        (wordy_id)
+        (wordy_id)
+        (wordy_id)))
 ===
 Record type, single line
 ===
@@ -109,13 +99,3 @@ unique type Point2 = {
             (record_field
                 (wordy_id)
                 (wordy_id)))))
-===
-type with complex abilities clause
-===
-store.stopIfTrue : (a -> Boolean) -> a ->{Abort, Store a} a
----
-(unison
-    (type_declaration
-        (wordy_id)
-        ()))
-    

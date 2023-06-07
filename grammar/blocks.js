@@ -33,8 +33,10 @@ module.exports = {
   // statement: $ => $._statement,
   // expression: $ => $._expression,
   _multiline_block: $ => seq(
-    optional(seq(sep1($._layout_semicolon, $._statement))),
+    // optional(seq(sep1($._layout_semicolon, $._statement))),
+    sep($._layout_semicolon, $._statement),
     $._expression,
+    // $.literal_function,
   ),
   _block: $ => seq(
     $._layout_start,
