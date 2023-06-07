@@ -1,5 +1,5 @@
 ===
-simple one line if/else with no complex expressions
+[Conditional] simple one line if/else with no complex expressions
 ===
 y = if x then 5 else 6
 ---
@@ -16,7 +16,7 @@ y = if x then 5 else 6
                 (kw_else)
                 (nat)))))
 ===
-one line if/else
+[Conditional] one line if/else
 ===
 mySimpleTerm = if elem 5 myList then "high five" else "no five found"
 ---
@@ -36,7 +36,7 @@ mySimpleTerm = if elem 5 myList then "high five" else "no five found"
                 (else)
                 (lit_text)))))
 ===
-if/then/else
+[Conditional] if/then/else
 ===
 mySimpleTerm = if elem 5 myList
                then "high five"
@@ -50,10 +50,9 @@ mySimpleTerm = if elem 5 myList
             (exp_if
                 (kw_if)
                 (function_application
-                    (identifier)
+                    (wordy_id)
                     (nat)
-                    (identifier
-                        (wordy_id)))
+                        (wordy_id))
                 (kw_then)
                 (literal_text)
                 (kw_else)

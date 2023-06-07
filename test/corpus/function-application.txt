@@ -37,7 +37,7 @@ x = myFunc 1 2
             (wordy_id)
             (kw_equals)
             (function_application
-                (identifier)
+                (wordy_id)
                 (nat)
                 (nat)))))
 ===

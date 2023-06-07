@@ -41,6 +41,7 @@ module.exports = grammar({
     [$._literal, $._expression], 
     [$._identifier, $.literal_function, $._lhs],
     [$._infix_op_application, $.literal_function],
+    [$._function_name, $._expression, $._lhs],
   ],
   externals: $ => [
     $._layout_semicolon,
@@ -59,6 +60,7 @@ module.exports = grammar({
     $.int,
     $.float,
     $.operator,
+    $._parenthesized_operator,
   ],
   extras: $ => [
     /\\?\s/,

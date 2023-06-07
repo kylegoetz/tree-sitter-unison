@@ -1,5 +1,5 @@
 ===
-text literal
+[Literal] text
 ===
 x = "Test"
 ---
@@ -10,7 +10,7 @@ x = "Test"
             (kw_equals)
             (literal_text))))
 ===
-Nat
+[Literal] Nat
 ===
 x = 123
 ---
@@ -21,7 +21,7 @@ x = 123
             (kw_equals)
             (nat))))
 ===
-Int
+[Literal] Int
 ===
 x = -9223372036854775808
 ---
@@ -32,7 +32,7 @@ x = -9223372036854775808
             (kw_equals)
             (int))))
 ===
-Float
+[Literal] Float
 ===
 x = 1.6777216
 ---
@@ -43,7 +43,7 @@ x = 1.6777216
             (kw_equals)
             (float))))
 ===
-Char
+[Literal] Char
 ===
 x = ?a
 ---
@@ -54,7 +54,7 @@ x = ?a
             (kw_equals)
             (literal_char))))
 ===
-Boolean
+[Literal] Boolean
 ===
 x = true
 ---
@@ -65,7 +65,7 @@ x = true
             (kw_equals)
             (literal_boolean))))
 ===
-Byte
+[Literal] Byte
 ===
 x = 0xsdeadbeef
 ---
@@ -76,7 +76,7 @@ x = 0xsdeadbeef
             (kw_equals)
             (literal_byte))))
 ===
-hash literal
+[Literal] hash literal
 ===
 x = #a0v829
 ---
@@ -87,7 +87,7 @@ x = #a0v829
             (kw_equals)
             (literal_hash))))
 ===
-list literal
+[Literal] list literal
 ===
 x = [1, 2, 3]
 ---
@@ -101,7 +101,7 @@ x = [1, 2, 3]
                 (nat)
                 (nat)))))
 ===
-function literal
+[Literal] function
 ===
 y = x -> x + 2
 ---
@@ -110,12 +110,15 @@ y = x -> x + 2
         (term_definition
             (wordy_id)
             (kw_equals)
-            (function_application
-                (identifier)
-                (operator)
-                (nat)))))
+            (function_literal
+                (wordy_id)
+                (right_arrow)
+                (function_application
+                    (wordy_id)
+                    (operator)
+                    (nat))))))
 ===
-tuple literal
+[Literal] tuple
 ===
 x = (true, true, false)
 ---
@@ -129,7 +132,7 @@ x = (true, true, false)
                 (literal_boolean)
                 (literal_boolean)))))
 ===
-unit tuple literal
+[Literal] unit
 ===
 x = ()
 ---
@@ -140,7 +143,7 @@ x = ()
             (kw_equals)
             (literal_tuple))))
 ===
-termLink literal
+[Literal] termLink
 ===
 x = termLink aUnisonTerm
 ---
@@ -153,7 +156,7 @@ x = termLink aUnisonTerm
                 (kw_termlink)
                 (wordy_id)))))
 ===
-typeLink literal
+[Literal] typeLink
 ===
 x = typeLink Optional
 ---

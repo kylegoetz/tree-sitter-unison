@@ -6,10 +6,11 @@ module.exports = {
     $.literal_function,
     $.exp_let,
     $.exp_if,
+    $.function_application,
     $._literal,
     prec(-1, $._identifier),
-    // $.operator_as_parameter,
-    $.function_application,
+    // $.operator_as_para meter,
+
     $.parenthetical_exp,
     // $.regular_identifier,
   )),

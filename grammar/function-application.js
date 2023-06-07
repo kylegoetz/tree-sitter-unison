@@ -1,12 +1,16 @@
 module.exports = {
+  _prefix_op: $ => seq('(', $.operator, ')'),
   _function_param: $ => choice(
     prec.left($._expression),
-    seq('(',$.operator,')'),
+    $._prefix_op,
+    // seq('(',$.operator,')'),
   ),
   
   _function_name: $ => choice(
-    $._identifier,
-    $.operator,
+    $._identifier, 
+    $._prefix_op,
+    // $._parenthesized_operator,
+    // alias($._parenthesized_operator, $.operator),
   ),
   
   /**
@@ -29,7 +33,8 @@ module.exports = {
   )),
     
   function_application: $ => choice(
-    // $._prefix_function_application,
+    // '(+) 5 2',
+    $._prefix_function_application,
     $._infix_op_application,
   ),
 }

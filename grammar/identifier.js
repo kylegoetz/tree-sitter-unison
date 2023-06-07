@@ -1,17 +1,17 @@
-const { sep } = require('./util')
+// const { sep } = require('./util')
 const regex = require('./regex')
 
-const varid_pattern = /[a-zA-Z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*/u
-const lowercase_varid_pattern = /[a-z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*/u
-const unicode = '\u{1F400}-\u{1FAFF}'
-const alpha = 'a-zA-Z'
-const initials = `[${alpha}_${unicode}]`
-const noninitials = `[${alpha}_!'${unicode}]`
+// const varid_pattern = /[a-zA-Z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*/u
+// const lowercase_varid_pattern = /[a-z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*/u
+// const unicode = '\u{1F400}-\u{1FAFF}'
+// const alpha = 'a-zA-Z'
+// const initials = `[${alpha}_${unicode}]`
+// const noninitials = `[${alpha}_!'${unicode}]`
 
-const varid_str = `\.?(${initials}${noninitials}*\.)*${initials}${noninitials}*`
-const varid_re = RegExp(varid_str, 'u')
+// const varid_str = `\.?(${initials}${noninitials}*\.)*${initials}${noninitials}*`
+// const varid_re = RegExp(varid_str, 'u')
 
-const varid = /\.?([a-zA-Z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*\.)*[a-zA-Z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*/u
+// const varid = /\.?([a-zA-Z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*\.)*[a-zA-Z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*/u
 
 
 module.exports = {  
