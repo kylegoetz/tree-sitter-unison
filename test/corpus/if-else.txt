@@ -27,14 +27,14 @@ mySimpleTerm = if elem 5 myList then "high five" else "no five found"
             (kw_equals)
             (exp_if
                 (kw_if)
-                (functional_expression
-                    (regular_identifier)
-                    (literal_nat)
-                    (regular_identifier))
-                (then)
-                (lit_text)
-                (else)
-                (lit_text)))))
+                (function_application
+                    (wordy_id)
+                    (nat)
+                    (wordy_id))
+                (kw_then)
+                (literal_text)
+                (kw_else)
+                (literal_text)))))
 ===
 [Conditional] if/then/else
 ===

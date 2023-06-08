@@ -104,6 +104,7 @@ typedef enum {
     INT,
     FLOAT,
     SYMOP,
+    PREFIX_SYMOP,
     FAIL, // always last in list
 } Sym;
 
@@ -125,6 +126,7 @@ static char *sym_names[] = {
     "int",
     "float",
     "symop",
+    "(symop)",
     "fail",
 };
 // #endif
@@ -151,7 +153,7 @@ static void debug_valid(const bool *syms) {
   }
   bool fst = true;
   DEBUG_PRINTF("\"");
-  for (Sym i = SEMICOLON; i <= SYMOP; i++) {
+  for (Sym i = SEMICOLON; i <= PREFIX_SYMOP; i++) {
     if (syms[i]) {
       if (!fst) DEBUG_PRINTF(",");
       DEBUG_PRINTF("%s", sym_names[i]);
@@ -904,6 +906,39 @@ static Result equals(State *state) {
 }
 
 /**
+ * Handle the case of `(op)`, which is not detected successfully by JS.
+ */
+static Result paren_symop(State *state) {
+  LOG(INFO, "->paren_symop (col = %u, peek = %c)\n", COL, PEEK);
+  if (PEEK != '(') {
+    return res_cont; 
+  }
+  S_ADVANCE;
+  skipspace(state);
+  if (PEEK == '=') {
+    Result res = equals(state);
+    SHORT_SCANNER;
+  }
+  if (is_eof(state) || !symbolic(PEEK)) {
+    return res_fail;
+  }
+  S_ADVANCE;
+  while (!is_eof(state) && PEEK != ')' && !isws(PEEK)) {
+    if (symbolic(PEEK)) {
+      S_ADVANCE;
+    } else {
+      return res_fail;
+    }
+  }
+  skipspace(state);
+  if (PEEK == ')') {
+    MARK("paren symop", false, state);
+    return finish_if_valid(PREFIX_SYMOP, "paren symop", state);
+  }
+  return res_fail;
+}
+
+/**
  * Detect operators.
  * Cannot run before determining DOT is not an absolute qualifier.
  * Need to exclude certain symbols as solutions. The following cannot
@@ -915,13 +950,19 @@ static Result operator(State *state) {
   LOG(INFO, "->operator (%u, %c)\n", COL, PEEK);
   // if (!SYM(SYMOP)) return res_cont;
   
-  bool parenthesized = PEEK == '(';
-  if (parenthesized) {
-    S_ADVANCE;
-    skipspace(state);
+  if (PEEK == '(') {
+    Result res = paren_symop(state);
+    SHORT_SCANNER;
   }
   
-  if (!symbolic(PEEK)) return parenthesized ? res_fail : res_cont;
+  bool parenthesized = false;
+  // bool parenthesized = PEEK == '(';
+  // if (parenthesized) {
+  //   S_ADVANCE;
+  //   skipspace(state);
+  // }
+  
+  if (!symbolic(PEEK)) return res_fail;
   if (PEEK == '=') {
     Result res = equals(state);
     SHORT_SCANNER;
@@ -953,12 +994,31 @@ static Result operator(State *state) {
   return finish_if_valid(SYMOP, "symbolic operator", state);
 }
 
+/**
+ * This function is called after a +/- is consumed.
+ * The following cases must be handled:
+ * 1. post-sign FLOAT or INT
+ // * 2. SYMOP that begins with +/- and is terminated by whitespace or ')', the latter of which indicates a parenthetical operator
+ // * 3. post-sign symbolic chars as SYMOP
+ // * 4. 
+ */
 static Result post_pos_neg_sign(State *state, bool can_be_operator) {
   LOG(INFO, "->post_pos_neg_sign; PEEK = %c\n", PEEK);
-  if (isws(PEEK) || is_eof(state)) { // found - or + by itself
+  // Immediately fail of 
+  // Immediately terminate as symop if sign followed by whitespace, EOF, or ')', the latter of which is expected in the case of the parenthetical op pattern in JS grammar.
+  if (isws(PEEK) || is_eof(state) || PEEK == ')') {
+    // skipspace(state);
+    // if (PEEK == ')') {
+      // S_ADVANCE;
+      // MARK("post_pos_neg_sign", false, state);
+      // return finish_if_valid(PREFIX_SYMOP, false, state);
+    // } // found - or + by itself
     MARK("post_pos_neg_sign", false, state);
     return finish_if_valid(SYMOP, "+/-", state);
   }
+  // if (symbolic(PEEK)) { // found start of operator
+    // return operator(state);
+  // }
   if (PEEK == '>') { // Either SYMOP or ->
     S_ADVANCE;
     if (!symbolic(PEEK)) {

@@ -17,7 +17,17 @@ module.exports = {
     $.literal_termlink,
     $.literal_typelink,
   ),
-  literal_text: $ => /".+?"/,
+  // literal_text: $ => /".+?"/,
+  literal_text: _ => 
+    seq(
+      '"',
+      repeat(choice(
+        /[^\\"\n]/,
+        /\\(\^)?./,
+        /\\\n\s*\\/,
+      )),
+      '"',
+    ),
   
   // Range: [0, 18446744073709551615]
   

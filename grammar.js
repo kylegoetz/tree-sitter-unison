@@ -42,6 +42,7 @@ module.exports = grammar({
     [$._identifier, $.literal_function, $._lhs],
     [$._infix_op_application, $.literal_function],
     [$._function_name, $._expression, $._lhs],
+    [$.partial_application, $.function_application],
   ],
   externals: $ => [
     $._layout_semicolon,

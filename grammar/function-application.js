@@ -13,6 +13,8 @@ module.exports = {
     // alias($._parenthesized_operator, $.operator),
   ),
   
+  partial_application: $ => $._prefix_function_application,
+  
   /**
    * In Unison, all fns are unary. An n-ary function is modeled as either
    * 1. unary function that returns a partially-applied function; or
@@ -21,8 +23,8 @@ module.exports = {
    * This function name can be a `varid` or `(symop)`.
    */
   _prefix_function_application: $ => choice(
-    seq($._function_name, $._function_param),
-    seq(field('partially_applied', $._prefix_function_application), $._function_param),
+    seq(field('function_name', $._function_name), $._function_param),
+    prec(2, seq($._prefix_function_application, $._function_param)),
   ),
   
   // p1 + p2

@@ -27,15 +27,15 @@ store.stopIfTrue = f a b c
 ---
 (unison
     (term_declaration
-        (type_definition)
+        (type_signature (path) (wordy_id) (type_signature_colon) (wordy_id) (arrow_symbol) (wordy_id) (arrow_symbol) (wordy_id) (arrow_symbol)
+            (effect (wordy_id)) (effect (wordy_id) (wordy_id)) (wordy_id))
         (term_definition
-            (identifier)
+            (path) (wordy_id)
             (kw_equals)
             (function_application
-                (identifier)
-                (function_param
-                    (wordy_id))
-                (function_param
-                    (wordy_id))
-                (function_param
-                    (wordy_id))))))
+                (wordy_id)
+                (function_application
+                    (wordy_id)
+                    (function_application
+                        (wordy_id)
+                        (wordy_id)))))))
