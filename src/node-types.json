@@ -348,6 +348,10 @@
             "named": true
           },
           {
+            "type": "unit",
+            "named": true
+          },
+          {
             "type": "use_clause",
             "named": true
           },
@@ -438,6 +442,10 @@
             "named": true
           },
           {
+            "type": "unit",
+            "named": true
+          },
+          {
             "type": "use_clause",
             "named": true
           },
@@ -525,6 +533,10 @@
           },
           {
             "type": "term_declaration",
+            "named": true
+          },
+          {
+            "type": "unit",
             "named": true
           },
           {
@@ -650,6 +662,10 @@
           "named": true
         },
         {
+          "type": "unit",
+          "named": true
+        },
+        {
           "type": "wordy_id",
           "named": true
         }
@@ -734,6 +750,10 @@
         },
         {
           "type": "path",
+          "named": true
+        },
+        {
+          "type": "unit",
           "named": true
         },
         {
@@ -855,6 +875,10 @@
           "named": true
         },
         {
+          "type": "unit",
+          "named": true
+        },
+        {
           "type": "wordy_id",
           "named": true
         }
@@ -923,6 +947,11 @@
   },
   {
     "type": "literal_boolean",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "literal_char",
     "named": true,
     "fields": {}
   },
@@ -1032,6 +1061,10 @@
           "named": true
         },
         {
+          "type": "unit",
+          "named": true
+        },
+        {
           "type": "wordy_id",
           "named": true
         }
@@ -1124,6 +1157,10 @@
           "named": true
         },
         {
+          "type": "unit",
+          "named": true
+        },
+        {
           "type": "wordy_id",
           "named": true
         }
@@ -1167,7 +1204,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "exp_if",
@@ -1239,6 +1276,10 @@
         },
         {
           "type": "path",
+          "named": true
+        },
+        {
+          "type": "unit",
           "named": true
         },
         {
@@ -1345,6 +1386,10 @@
         },
         {
           "type": "path",
+          "named": true
+        },
+        {
+          "type": "unit",
           "named": true
         },
         {
@@ -1634,6 +1679,10 @@
         },
         {
           "type": "term_declaration",
+          "named": true
+        },
+        {
+          "type": "unit",
           "named": true
         },
         {
@@ -2103,10 +2152,6 @@
   },
   {
     "type": "literal_byte",
-    "named": true
-  },
-  {
-    "type": "literal_char",
     "named": true
   },
   {
