@@ -856,6 +856,24 @@ static void * get_whole(State *state) {
   return digit_found ? justLong(val) : &nothing;
 }
 
+static void * get_exponent(State *state) {
+  LOG(INFO, "->get_exponent (col = %u, peek = %c)\n", COL, PEEK);
+  if (PEEK != 'e' && PEEK != 'E') return &nothing;
+  S_ADVANCE;
+  switch (PEEK) {
+    case '-':
+    case '+': {
+      S_ADVANCE;
+    }
+    NUMERIC_CASES: {
+      return get_whole(state);
+    }
+    default: {
+      return &nothing;
+    }
+  }
+}
+
 /**
  * Parse literals that begin with a digit. These are:
  * - Nat
@@ -871,17 +889,19 @@ static Result detect_nat_ufloat_byte(State *state) {
     if (PEEK == '.') {
       S_ADVANCE;
       Maybe *fractional =(Maybe *)get_fractional(state);
-      if (fractional->has_value) {
-        LOG(VERBOSE, "fractional has value\n");
+      Maybe *exponent = (Maybe *)get_exponent(state);
+      if (fractional->has_value || exponent->has_value) {
+        LOG(VERBOSE, "fractional or exponentiated\n");
         MARK("detect_nat_ufloat_byte", false, state);
         return finish_if_valid(FLOAT, "float", state);
       } else {
-        LOG(VERBOSE, "fractional does not have value\n");
+        LOG(VERBOSE, "not fractional and not exponentiated\n");
         return res_fail;
       }
     } else {
+      Maybe *exponent = (Maybe *)get_exponent(state);
       MARK("detect_nat_ufloat_byte", false, state);
-      return finish_if_valid(NAT, "nat", state);
+      return finish_if_valid(exponent->has_value ? FLOAT : NAT, "nat", state);
     }
   }
   return res_fail;
@@ -1030,7 +1050,8 @@ static Result post_pos_neg_sign(State *state, bool can_be_operator) {
     S_ADVANCE;
     if (isdigit(PEEK)) { // check for FLOAT
       Maybe * val = (Maybe *)get_fractional(state);
-      if(val->has_value) {
+      Maybe * e = (Maybe *) get_exponent(state);
+      if(val->has_value || e->has_value) {
         MARK("handle_negative", false, state);
         return finish_if_valid(FLOAT, "float", state);
       }
@@ -1046,15 +1067,17 @@ static Result post_pos_neg_sign(State *state, bool can_be_operator) {
       if (PEEK == '.') {
         S_ADVANCE;
         Maybe *fractional = (Maybe *)get_fractional(state);
-        if (fractional->has_value) {
+        Maybe *e = (Maybe *)get_exponent(state);
+        if (fractional->has_value || e->has_value) {
           // double total = *(double *)fractional->value + *(long *)whole->value;
           // TODO check bounds
           MARK("handle_negative", false, state);
           return finish_if_valid(FLOAT, "float", state);
         }
       } else {
+        Maybe *e = (Maybe *) get_exponent(state);
         MARK("handle_negative", false, state);
-        return finish_if_valid(INT, "int", state);
+        return finish_if_valid(e->has_value ? FLOAT : INT, "int", state);
       }
       // return res_fail;
     }

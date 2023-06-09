@@ -16,7 +16,9 @@ module.exports = {
     $.literal_tuple,
     $.literal_termlink,
     $.literal_typelink,
+    $.unit,
   ),
+  unit: $ => '()',
   // literal_text: $ => /".+?"/,
   literal_text: _ => 
     seq(
@@ -33,7 +35,7 @@ module.exports = {
   
   // Range: [-9223372036854775808, 9223372036854775807]
   
-  literal_char: $ => /\?./,
+  literal_char: $ => choice(/\?./u, /\?\\[0abfnrtvs\'"]/),
   literal_boolean: $ => choice("true", "false"),
   literal_byte: $ => /0xs[0-9a-fA-F]+/,
   _term_definition_hash: $ => /#[0-9a-v]+/,
@@ -61,7 +63,7 @@ module.exports = {
   ),
   
   
-  literal_tuple: $ => seq('(', sep(',', $._expression), ')'),
+  literal_tuple: $ => seq('(', sep1(',', $._expression), ')'),
   // term: $ => $._regular_identifier,
   literal_termlink: $ => seq($.kw_termlink, field('term', $.wordy_id)),
   literal_typelink: $ => seq($.kw_typelink, $.type),

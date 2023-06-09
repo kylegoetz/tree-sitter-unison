@@ -139,7 +139,7 @@ x = ()
         (term_definition
             (wordy_id)
             (kw_equals)
-            (literal_tuple))))
+            (unit))))
 ===
 [Literal] termLink
 ===
@@ -179,7 +179,7 @@ x = 1
             (kw_equals)
             (nat))))
 ===
-[Literal] Float
+[Literal] numbers
 ===
 x = 1.0
 x = +1
@@ -207,8 +207,8 @@ x = -1.2e-3
 ---
 (unison 
     (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (int)))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (int)))
     (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
     (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
     (term_declaration (term_definition (wordy_id) (kw_equals) (float)))

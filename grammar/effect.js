@@ -37,7 +37,7 @@ module.exports = {
     ),
     // Optional, Optional#abc, woot, #abc
     immediate_hash: $ => token.immediate(/#[a-zA-Z0-9]+/),
-    unit: $ => '()',
+    // unit: $ => '()',
     
     _type_atom: $ => choice(
         seq($.wordy_id, optional($.immediate_hash)),
