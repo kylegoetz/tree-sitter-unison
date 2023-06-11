@@ -73,6 +73,7 @@ module.exports = grammar({
   rules: {
     unison: $ => repeat(
       choice(
+        $.watch_expression,
         $.type_declaration,
         $.term_declaration,
         $.fold,
@@ -94,6 +95,7 @@ module.exports = grammar({
     ...term,
     ..._let,
     ...handler,
+    watch_expression: $ => seq('>', $._expression),
     
     kw_forall: $ => choice("forall", "∀"),
     kw_equals: $ => '=',

@@ -1,0 +1,10 @@
+===
+Watch expression
+===
+> square 4
+---
+(unison
+    (watch_expression
+        (function_application
+            (wordy_id)
+            (nat))))
