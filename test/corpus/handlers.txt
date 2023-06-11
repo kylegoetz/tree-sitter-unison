@@ -1,20 +1,42 @@
 ===
-[Handlers]
+[Handlers] one line
 ===
 a = handle x with foo
+---
+(unison (term_declaration (term_definition (wordy_id) (kw_equals) (handler (handle) (wordy_id) (with) (wordy_id)))))
+===
+[Handlers] multiline 1
+===
 a = handle
       x = 23 + 42
       x + foo 8 102.0 +4
     with foo
+---
+(unison 
+      (term_declaration (term_definition (wordy_id) (kw_equals) 
+            (handler (handle) 
+                  (term_declaration (term_definition (wordy_id) (kw_equals) (function_application (nat) (operator) (nat)))) 
+                  (function_application (wordy_id) (operator) (function_application (wordy_id) (nat) (float) (int)))
+            (with) (wordy_id)))))
+===
+[Handlers] multiline 2
+===
 a = handle
       x = 1
       x
     with foo
+---
+(unison 
+      (term_declaration (term_definition (wordy_id) (kw_equals) 
+            (handler (handle) 
+                  (term_declaration (term_definition (wordy_id) (kw_equals) (nat))) 
+                  (wordy_id)
+            (with) (wordy_id)))))
+===
+[Handlers] with cases
+===
 a = handle foo with cases
      { x } -> x
 ---
 (unison
-    (type_declaration (type_definition (identifier) (kw_equals) (handle) (wordy_id) (with) (identifier)))
-    (type_declaration (type_definition (identifier) (kw_equals) (handle) (type_declaration (term_definition (identifier) (kw_equals) (nat) (operator) (nat))) (exp) (with) (identifier)))
-    (type_declaration (type_definition (identifier) (kw_equals) (handle) (type_declaration (term_definition (identifier) (kw_equals) (nat) (operator) (nat))) (exp) (with) (identifier)))
-    (type_declaration (type_definition (identifier) (kw_equals) (handle) (type_declaration (term_definition (identifier) (kw_equals) (nat) (operator) (nat))) (exp) (with) (identifier))))
+    (term_declaration (term_definition (wordy_id) (kw_equals) (handler) (type_declaration (term_definition (identifier) (kw_equals) (nat) (operator) (nat))) (exp) (with) (identifier))))

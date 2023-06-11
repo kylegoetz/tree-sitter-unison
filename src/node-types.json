@@ -269,8 +269,12 @@
     "fields": {
       "else_block": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
+          {
+            "type": ";",
+            "named": false
+          },
           {
             "type": "exp_if",
             "named": true
@@ -285,6 +289,10 @@
           },
           {
             "type": "function_application",
+            "named": true
+          },
+          {
+            "type": "handler",
             "named": true
           },
           {
@@ -358,13 +366,25 @@
           {
             "type": "wordy_id",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       },
       "if_block": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
+          {
+            "type": ";",
+            "named": false
+          },
           {
             "type": "exp_if",
             "named": true
@@ -379,6 +399,10 @@
           },
           {
             "type": "function_application",
+            "named": true
+          },
+          {
+            "type": "handler",
             "named": true
           },
           {
@@ -452,13 +476,25 @@
           {
             "type": "wordy_id",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       },
       "then_block": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
+          {
+            "type": ";",
+            "named": false
+          },
           {
             "type": "exp_if",
             "named": true
@@ -473,6 +509,10 @@
           },
           {
             "type": "function_application",
+            "named": true
+          },
+          {
+            "type": "handler",
             "named": true
           },
           {
@@ -546,6 +586,14 @@
           {
             "type": "wordy_id",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       }
@@ -595,6 +643,10 @@
         },
         {
           "type": "function_application",
+          "named": true
+        },
+        {
+          "type": "handler",
           "named": true
         },
         {
@@ -694,6 +746,10 @@
         },
         {
           "type": "function_application",
+          "named": true
+        },
+        {
+          "type": "handler",
           "named": true
         },
         {
@@ -815,6 +871,10 @@
           "named": true
         },
         {
+          "type": "handler",
+          "named": true
+        },
+        {
           "type": "int",
           "named": true
         },
@@ -876,6 +936,122 @@
         },
         {
           "type": "unit",
+          "named": true
+        },
+        {
+          "type": "wordy_id",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "handle",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "handler",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "exp_if",
+          "named": true
+        },
+        {
+          "type": "exp_let",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "function_application",
+          "named": true
+        },
+        {
+          "type": "handle",
+          "named": true
+        },
+        {
+          "type": "handler",
+          "named": true
+        },
+        {
+          "type": "int",
+          "named": true
+        },
+        {
+          "type": "literal_boolean",
+          "named": true
+        },
+        {
+          "type": "literal_byte",
+          "named": true
+        },
+        {
+          "type": "literal_char",
+          "named": true
+        },
+        {
+          "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_hash",
+          "named": true
+        },
+        {
+          "type": "literal_list",
+          "named": true
+        },
+        {
+          "type": "literal_termlink",
+          "named": true
+        },
+        {
+          "type": "literal_text",
+          "named": true
+        },
+        {
+          "type": "literal_tuple",
+          "named": true
+        },
+        {
+          "type": "literal_typelink",
+          "named": true
+        },
+        {
+          "type": "nat",
+          "named": true
+        },
+        {
+          "type": "parenthetical_exp",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "term_declaration",
+          "named": true
+        },
+        {
+          "type": "unit",
+          "named": true
+        },
+        {
+          "type": "use_clause",
+          "named": true
+        },
+        {
+          "type": "with",
           "named": true
         },
         {
@@ -1001,6 +1177,10 @@
           "named": true
         },
         {
+          "type": "handler",
+          "named": true
+        },
+        {
           "type": "int",
           "named": true
         },
@@ -1098,6 +1278,10 @@
         },
         {
           "type": "function_application",
+          "named": true
+        },
+        {
+          "type": "handler",
           "named": true
         },
         {
@@ -1223,6 +1407,10 @@
           "named": true
         },
         {
+          "type": "handler",
+          "named": true
+        },
+        {
           "type": "int",
           "named": true
         },
@@ -1330,6 +1518,10 @@
         },
         {
           "type": "function_application",
+          "named": true
+        },
+        {
+          "type": "handler",
           "named": true
         },
         {
@@ -1615,6 +1807,10 @@
         },
         {
           "type": "function_application",
+          "named": true
+        },
+        {
+          "type": "handler",
           "named": true
         },
         {
@@ -2042,6 +2238,11 @@
     }
   },
   {
+    "type": "with",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "wordy_id",
     "named": true,
     "fields": {}
@@ -2076,6 +2277,10 @@
   },
   {
     "type": ":",
+    "named": false
+  },
+  {
+    "type": ";",
     "named": false
   },
   {
@@ -2120,6 +2325,10 @@
   },
   {
     "type": "forall",
+    "named": false
+  },
+  {
+    "type": "handle",
     "named": false
   },
   {
@@ -2205,6 +2414,10 @@
   {
     "type": "where",
     "named": true
+  },
+  {
+    "type": "with",
+    "named": false
   },
   {
     "type": "{",

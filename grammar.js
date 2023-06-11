@@ -11,6 +11,7 @@ const term = require('./grammar/term')
 const regex = require('./grammar/regex')
 const effects = require('./grammar/effect')
 const _let = require('./grammar/let')
+const handler = require('./grammar/handle')
 
 
 module.exports = grammar({
@@ -43,6 +44,7 @@ module.exports = grammar({
     [$._infix_op_application, $.literal_function],
     [$._function_name, $._expression, $._lhs],
     [$.partial_application, $.function_application],
+    [$._function_name, $._lhs],
   ],
   externals: $ => [
     $._layout_semicolon,
@@ -91,6 +93,7 @@ module.exports = grammar({
     ...stmt,
     ...term,
     ..._let,
+    ...handler,
     
     kw_forall: $ => choice("forall", "∀"),
     kw_equals: $ => '=',

@@ -1,6 +1,6 @@
 const { KEYWORD } = require('./precedences')
 const funcApp = require('./function-application')
-const { sep } = require('./util')
+const { sep, layouted } = require('./util')
 
 module.exports = {
   ...funcApp,
@@ -32,15 +32,19 @@ module.exports = {
   // layout_end: $ => $._layout_end,
   // statement: $ => $._statement,
   // expression: $ => $._expression,
-  _multiline_block: $ => seq(
-    // optional(seq(sep1($._layout_semicolon, $._statement))),
-    sep($._layout_semicolon, $._statement),
-    $._expression,
+  multiline_block: $ => seq(
+    optional(seq(sep1($._layout_semicolon, $._statement))),
+    // sep($.semi, choice($.statement, $.expression)),
+    // sep($.semi, $.statement),
+    // choice('x + foo 8 102.0 +4', $._expression),
+    // $._expression,
+    $.expression,
     // $.literal_function,
   ),
   _block: $ => seq(
-    $._layout_start,
-    $._multiline_block,
-    $._layout_end,
+    $.layout_start,
+    $.multiline_block,
+    $.layout_end,
   ),
+  _block: $ => layouted($, $._statement),
 }

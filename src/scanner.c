@@ -136,7 +136,7 @@ static char *sym_names[] = {
  * this function is used to detect them.
  */
 static bool all_syms(const bool *syms) {
-  for (int i = 0; i <= SYMOP; i++) {
+  for (int i = 0; i <= PREFIX_SYMOP; i++) {
     if (!syms[i]) return false;
   }
   return true;
@@ -736,19 +736,24 @@ static Result newline_infix(uint32_t indent, Symbolic type, State *state) {
   // }
   return res_cont;
 }
- 
+
 /**
- * Parse an inline `where` token.
+ * Parse an inline `where` or `with` token.
  *
- * Necessary because `is_newline_where` needs to know that no `where` may follow.
+ * Necessary because `is_newline_where` needs to know that no `where` may follow, and `with` can end a layout started by `handle`.
  */
-static Result where(State *state) {
-  if (token("where", state)) {
-    if (SYM(WHERE)) {
-      MARK("where", false, state);
-      return finish(WHERE, "where");
+static Result where_or_with(State *state) {
+  LOG(INFO, "->where_or_with (col = %u, peek = %c)\n", COL, PEEK);
+  if (PEEK == 'w') {
+    S_ADVANCE;
+    if (token("here", state)) {
+      if (SYM(WHERE)) {
+            MARK("where_or_when", false, state);
+            return finish(WHERE, "where");
+          }
+    } else if (SYM(END) && token("ith", state)) {
+      return layout_end("with", state);
     }
-    return layout_end("where", state);
   }
   return res_cont;
 }
@@ -1291,7 +1296,7 @@ static Result inline_tokens(State *state) {
   LOG(INFO, "->inline_tokens (%u, %c)\n", COL, PEEK);
   switch (PEEK) {
     case 'w': {
-      Result res = where(state);
+      Result res = where_or_with(state);
       SHORT_SCANNER;
       return res_fail;
     }
@@ -1467,6 +1472,7 @@ static Result numeric(State *state) {
  * - starts with '+' (FLOAT, INT)
  * - starts with `.` (FLOAT)
  * - starts with number (NAT, FLOAT, BYTE)
+ * - starts with `w` (END)
  * NOTE: not SYMOP because cannot begin a line with one.
  */
 static Result newline_token(uint32_t indent, State *state) {
@@ -1492,6 +1498,10 @@ static Result newline_token(uint32_t indent, State *state) {
       // Result res = newline_infix(indent, s, state);
       // SHORT_SCANNER;
       return res_fail;
+    }
+    case 'w': {
+      Result res = where_or_with(state);
+      SHORT_SCANNER;
     }
   }
   // NOTE: "where" cannot begin a new line in Unison, just Haskell
@@ -1530,7 +1540,7 @@ static Result newline(uint32_t indent, State *state) {
  *   - Layout start
  *   - ending nested layouts at the same position
  *   - numeric literals + symops
- *   - Tokens `where`, `in`, `$`, `)`, `]`, `,`
+ *   - Tokens `where`, `with`, `in`, `$`, `)`, `]`, `,`
  *   - comments
  */
 static Result immediate(uint32_t column, State *state) {
@@ -1556,12 +1566,16 @@ static Result immediate(uint32_t column, State *state) {
  */
 static Result init(State *state) {
   LOG(INFO, "->init (col = %u, PEEK = %c)\n", COL, PEEK);
-  Result res = eof(state);
+  
+  Result res = after_error(state) ? res_fail : res_cont;
+  SHORT_SCANNER;
+  
+  res = eof(state);
   SHORT_SCANNER;
   
   
-  res = after_error(state) ? res_fail : res_cont;
-  SHORT_SCANNER;
+  // res = after_error(state) ? res_fail : res_cont;
+  // SHORT_SCANNER;
   
   
   // res = initialize_init(state);

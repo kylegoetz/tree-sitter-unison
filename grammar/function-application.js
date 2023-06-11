@@ -24,7 +24,7 @@ module.exports = {
    */
   _prefix_function_application: $ => choice(
     seq(field('function_name', $._function_name), $._function_param),
-    prec(2, seq($._prefix_function_application, $._function_param)),
+    seq($._prefix_function_application, $._function_param),
   ),
   
   // p1 + p2
@@ -36,6 +36,7 @@ module.exports = {
     
   function_application: $ => choice(
     // '(+) 5 2',
+    
     $._prefix_function_application,
     $._infix_op_application,
   ),
