@@ -1,0 +1,52 @@
+===
+[Pattern matching] simple
+===
+> match f with
+    "Pie"     -> "slice"
+    "Coffee"  -> "cup"
+    "Soup"    -> "bowl"
+    "Pancake" -> "stack"
+    _         -> "???"
+---
+(unison
+    (watch_expression
+        (match)
+        (wordy_id)
+        (with)
+        (pattern (literal_text) (arrow_symbol) (literal_text))
+        (pattern (literal_text) (arrow_symbol) (literal_text))
+        (pattern (literal_text) (arrow_symbol) (literal_text))
+        (pattern (literal_text) (arrow_symbol) (literal_text))
+        (pattern (blank_pattern) (arrow_symbol) (literal_text))))
+===
+[Pattern matching] with variables
+===
+> match guess with
+    42 -> "magic"
+    n -> "not magic"
+---
+(unison
+    (watch_expression
+        (match)
+        (wordy_id)
+        (with)
+        (pattern (nat) (arrow_symbol) (literal_text))
+        (pattern (wordy_id) (arrow_symbol) (literal_text))))
+===
+[Pattern matching] guard patterns
+===
+> match a with
+    oneTwo | (oneTwo === 1) || (oneTwo === 2) -> "one or two"
+    threeFour | (threeFour === 3) || (threeFour === 4) -> "three or four"
+    fiveSix | (fiveSix === 5) || (fiveSix === 6) -> "five or six"
+    _ -> "no match"
+---
+(unison
+    (watch_expression
+        (match)
+        (wordy_id)
+        (with)
+        (pattern (wordy_id) (guard (pipe) (function_application (literal_tuple (function_application (wordy_id) (operator) (nat))) (operator) (literal_tuple (function_application (wordy_id) (operator) (nat)))) (arrow_symbol) (literal_text)))
+        (pattern (wordy_id) (guard (pipe) (function_application (literal_tuple (function_application (wordy_id) (operator) (nat))) (operator) (literal_tuple (function_application (wordy_id) (operator) (nat)))) (arrow_symbol) (literal_text)))
+        (pattern (wordy_id) (guard (pipe) (function_application (literal_tuple (function_application (wordy_id) (operator) (nat))) (operator) (literal_tuple (function_application (wordy_id) (operator) (nat)))) (arrow_symbol) (literal_text)))
+        (pattern (blank_pattern) (arrow_symbol) (literal_text))))

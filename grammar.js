@@ -12,6 +12,7 @@ const regex = require('./grammar/regex')
 const effects = require('./grammar/effect')
 const _let = require('./grammar/let')
 const handler = require('./grammar/handle')
+const pattern_matching = require('./grammar/pattern-matching')
 
 
 module.exports = grammar({
@@ -45,6 +46,7 @@ module.exports = grammar({
     [$._function_name, $._expression, $._lhs],
     [$.partial_application, $.function_application],
     [$._function_name, $._lhs],
+    [$._identifier, $._pattern_lhs],
   ],
   externals: $ => [
     $._layout_semicolon,
@@ -95,6 +97,8 @@ module.exports = grammar({
     ...term,
     ..._let,
     ...handler,
+    ...pattern_matching,
+    
     watch_expression: $ => seq('>', $._expression),
     
     kw_forall: $ => choice("forall", "∀"),

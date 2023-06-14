@@ -11,6 +11,7 @@ module.exports = {
     $.function_application,
     $._literal,
     prec(-1, $._identifier),
+    $._pattern_matching,
     // $.operator_as_para meter,
 
     $.parenthetical_exp,
