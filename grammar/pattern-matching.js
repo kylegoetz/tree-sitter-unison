@@ -1,11 +1,6 @@
 const { layouted } = require('./util')
 
 module.exports = {
-  match: $ => 'match',
-  cases: $ => 'cases',
-  pipe: $ => '|',
-  otherwise: $ => 'otherwise',
-  as: $ => '@',
   
   _pattern_matching: $ => seq(
     choice(

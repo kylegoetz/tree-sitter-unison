@@ -1,10 +1,6 @@
 const { sep, sep1 } = require('./util')
 
 module.exports = {
-    structural: $ => 'structural',
-    unique: $ => 'unique',
-    ability: $ => 'ability',
-    where: $ => 'where',
     
     // { E1, E2, ..., En }
     _effect_block: $ => seq(

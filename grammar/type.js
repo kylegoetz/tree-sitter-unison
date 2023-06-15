@@ -8,10 +8,6 @@ module.exports = {
     optional($._type_rhs),
   )),
   
-  structural_kw: $ => 'structural',
-  unique_kw: $ => 'unique',
-  type_kw: $ => 'type',
-  pipe: $ => '|',
   type_name: $ => $._identifier,
   type_argument: $ => token(regex.lowercase_varid), // TODO lowercase only?
   

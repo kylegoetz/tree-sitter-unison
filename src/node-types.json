@@ -1801,11 +1801,6 @@
     }
   },
   {
-    "type": "handle",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "handler",
     "named": true,
     "fields": {
@@ -4599,11 +4594,6 @@
     }
   },
   {
-    "type": "with",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "wordy_id",
     "named": true,
     "fields": {}
@@ -4710,7 +4700,7 @@
   },
   {
     "type": "handle",
-    "named": false
+    "named": true
   },
   {
     "type": "if",
@@ -4818,7 +4808,7 @@
   },
   {
     "type": "with",
-    "named": false
+    "named": true
   },
   {
     "type": "{",

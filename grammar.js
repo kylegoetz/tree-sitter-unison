@@ -10,10 +10,9 @@ const identifiers = require('./grammar/identifier')
 const term = require('./grammar/term')
 const regex = require('./grammar/regex')
 const effects = require('./grammar/effect')
-// const _let = require('./grammar/let')
-const handler = require('./grammar/handle')
 const pattern_matching = require('./grammar/pattern-matching')
 const conditionals = require('./grammar/conditionals')
+const reserved = require('./grammar/reserved')
 
 
 module.exports = grammar({
@@ -87,6 +86,7 @@ module.exports = grammar({
       ),
     ),
     
+    ...reserved,
     ...effects,
     ...identifiers,
     ...types,
@@ -97,17 +97,12 @@ module.exports = grammar({
     ...expressions,
     ...stmt,
     ...term,
-    // ..._let,
-    ...handler,
     ...pattern_matching,
     ...conditionals,
     
     watch_expression: $ => seq('>', $._expression),
     
-    kw_forall: $ => choice("forall", "∀"),
-    kw_equals: $ => '=',
     
-    type_signature_colon: $ => ':',
     
     type_signature: $ => seq(
       field('term_name', $._identifier),
@@ -127,33 +122,11 @@ module.exports = grammar({
       sep1($.type_arrow, field('type_name', $.wordy_id)),
     ),
     
-    kw_termlink: $ => 'termLink',
-    kw_typelink: $ => 'typeLink',
-    
     // _reserved_kw: $ => choice(
-    //   '=',
-    //   ':',
-    //   // '->',
     //   // '\'',
     //   // 'do',
-    //   // '|',
     //   // '!',
     //   // '`',
-    //   // 'if',
-    //   // 'then',
-    //   // 'else',
-    //   // $.kw_forall,
-    //   'handle',
-    //   // 'unique',
-    //   // 'structural',
-    //   // 'where',
-    //   // 'use',
-    //   '&&',
-    //   '||',
-    //   'true',
-    //   'false',
-    //   // 'type',
-    //   // 'ability',
     //   'alias',
     //   'namespace',
     //   'cases',

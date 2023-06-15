@@ -25,9 +25,16 @@ module.exports = {
     _block: $ => layouted($, $._statement),
   
   // let [sm_1] [sm_2] ... [sm_n] [exp]
-  kw_let: _ => 'let',
   exp_let: $ => seq(
     $.kw_let, 
     $._block,
   ),
+  
+  // handle [block] with [block]
+  handler: $ => seq(
+        $.handle,
+        $._block,
+        $.with,
+        $._block,
+    )
 }

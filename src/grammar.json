@@ -42,6 +42,42 @@
         ]
       }
     },
+    "kw_let": {
+      "type": "STRING",
+      "value": "let"
+    },
+    "structural_kw": {
+      "type": "STRING",
+      "value": "structural"
+    },
+    "unique_kw": {
+      "type": "STRING",
+      "value": "unique"
+    },
+    "type_kw": {
+      "type": "STRING",
+      "value": "type"
+    },
+    "pipe": {
+      "type": "STRING",
+      "value": "|"
+    },
+    "match": {
+      "type": "STRING",
+      "value": "match"
+    },
+    "cases": {
+      "type": "STRING",
+      "value": "cases"
+    },
+    "otherwise": {
+      "type": "STRING",
+      "value": "otherwise"
+    },
+    "as": {
+      "type": "STRING",
+      "value": "@"
+    },
     "structural": {
       "type": "STRING",
       "value": "structural"
@@ -57,6 +93,51 @@
     "where": {
       "type": "STRING",
       "value": "where"
+    },
+    "or": {
+      "type": "STRING",
+      "value": "||"
+    },
+    "and": {
+      "type": "STRING",
+      "value": "&&"
+    },
+    "kw_forall": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "forall"
+        },
+        {
+          "type": "STRING",
+          "value": "∀"
+        }
+      ]
+    },
+    "kw_equals": {
+      "type": "STRING",
+      "value": "="
+    },
+    "type_signature_colon": {
+      "type": "STRING",
+      "value": ":"
+    },
+    "kw_termlink": {
+      "type": "STRING",
+      "value": "termLink"
+    },
+    "kw_typelink": {
+      "type": "STRING",
+      "value": "typeLink"
+    },
+    "handle": {
+      "type": "STRING",
+      "value": "handle"
+    },
+    "with": {
+      "type": "STRING",
+      "value": "with"
     },
     "_effect_block": {
       "type": "SEQ",
@@ -679,22 +760,6 @@
           }
         ]
       }
-    },
-    "structural_kw": {
-      "type": "STRING",
-      "value": "structural"
-    },
-    "unique_kw": {
-      "type": "STRING",
-      "value": "unique"
-    },
-    "type_kw": {
-      "type": "STRING",
-      "value": "type"
-    },
-    "pipe": {
-      "type": "STRING",
-      "value": "|"
     },
     "type_name": {
       "type": "SYMBOL",
@@ -1810,16 +1875,33 @@
         }
       ]
     },
-    "kw_let": {
-      "type": "STRING",
-      "value": "let"
-    },
     "exp_let": {
       "type": "SEQ",
       "members": [
         {
           "type": "SYMBOL",
           "name": "kw_let"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_block"
+        }
+      ]
+    },
+    "handler": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "handle"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_block"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "with"
         },
         {
           "type": "SYMBOL",
@@ -2057,59 +2139,6 @@
           "name": "_block"
         }
       ]
-    },
-    "handle": {
-      "type": "PREC",
-      "value": 10,
-      "content": {
-        "type": "STRING",
-        "value": "handle"
-      }
-    },
-    "with": {
-      "type": "PREC",
-      "value": 10,
-      "content": {
-        "type": "STRING",
-        "value": "with"
-      }
-    },
-    "handler": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "handle"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_block"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "with"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_block"
-        }
-      ]
-    },
-    "match": {
-      "type": "STRING",
-      "value": "match"
-    },
-    "cases": {
-      "type": "STRING",
-      "value": "cases"
-    },
-    "otherwise": {
-      "type": "STRING",
-      "value": "otherwise"
-    },
-    "as": {
-      "type": "STRING",
-      "value": "@"
     },
     "_pattern_matching": {
       "type": "SEQ",
@@ -2815,14 +2844,6 @@
         }
       ]
     },
-    "or": {
-      "type": "STRING",
-      "value": "||"
-    },
-    "and": {
-      "type": "STRING",
-      "value": "&&"
-    },
     "_boolean_exp": {
       "type": "PREC_LEFT",
       "value": "_boolean_exp",
@@ -2935,27 +2956,6 @@
         }
       ]
     },
-    "kw_forall": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "forall"
-        },
-        {
-          "type": "STRING",
-          "value": "∀"
-        }
-      ]
-    },
-    "kw_equals": {
-      "type": "STRING",
-      "value": "="
-    },
-    "type_signature_colon": {
-      "type": "STRING",
-      "value": ":"
-    },
     "type_signature": {
       "type": "SEQ",
       "members": [
@@ -3053,14 +3053,6 @@
           ]
         }
       ]
-    },
-    "kw_termlink": {
-      "type": "STRING",
-      "value": "termLink"
-    },
-    "kw_typelink": {
-      "type": "STRING",
-      "value": "typeLink"
     }
   },
   "extras": [
