@@ -1,4 +1,4 @@
-const { layouted } = require('./util')
+const { layouted, sep } = require('./util')
 
 module.exports = {
   
@@ -15,15 +15,36 @@ module.exports = {
     $.literal_char,
     $.literal_text,
   ),
-  as_pattern: $ => seq($.wordy_id, $.as, $._pattern_lhs),
+  as_pattern: $ => prec.left(seq($.wordy_id, $.as, $._pattern_lhs)),
   blank_pattern: $ => '_',
-  constructor_pattern: $ => seq($._identifier, seq($._pattern_lhs)),
-  list_pattern: $ => 'TODO list',
+  
+  constructor_pattern: $ => prec.left(seq($._identifier, repeat(prec.left($._pattern_lhs)))),
+  _list_pattern: $ => choice(
+    $.head_tail_list_pattern,
+    $.init_last_tail_pattern,
+    $.literal_list_pattern,
+    $.concat_list_pattern,
+  ),
   tuple_pattern: $ => 'TODO tuple',
   ability_pattern: $ => choice(
     seq('{', $._pattern_lhs, '}'),
   ),
   
+  /**
+   * A list pattern can be one of the following:
+   * head [List.].+ tail
+   * init [List.]:+ last
+   * [p_1, p2, ..., p_n] where p_i is a PATTERN
+   * part1 [List.]++ part2 where one of part1 and part2 must be a list of known length, e.g.
+   *   [x, y] ++ rest
+   *   start ++ [x, y]
+   *   BUT NOT a ++ b
+   *   TODO: pare this pattern down to something like choice(seq('head', '++', LIST_LITERAL), ...) instead of seq(choice($.wordy_id, $.list_literal, '++', ...))
+   */
+  head_tail_list_pattern: $ => prec.left(seq($._pattern_lhs, /(List\.)?\.\+/, $._pattern_lhs)),
+  init_last_tail_pattern: $ => seq($._pattern_lhs, /(List\.)?:\+/, $._pattern_rhs),
+  literal_list_pattern: $ => seq('[', sep(',', $._pattern_lhs), ']'),
+  concat_list_pattern: $ => seq($._pattern_lhs, /(List\.)?\+\+/, $._pattern_rhs),
   /**
    * A guard can be one of the following:
    * - | BOOL_EXPR -> BLOCK
@@ -42,13 +63,16 @@ module.exports = {
     layouted($, $.guard),
   ),
   
+  /**
+   * Without typechecking, we cannot know whether a single wordy_id is an identifier or constructor pattern with 0-arity, so
+   * we only have a constructor pattern here as an option, no wordy_id pattern.
+   */
   _pattern_lhs: $ => choice(
     $.blank_pattern, // blank pattern
     $._literal_pattern,
-    $.wordy_id,
     $.as_pattern,
     $.constructor_pattern,
-    $.list_pattern,
+    $._list_pattern,
     $.tuple_pattern,
     $.ability_pattern,
   ),

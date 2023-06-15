@@ -48,8 +48,4 @@ a = handle foo with cases
                         (wordy_id)
                         (with)
                         (cases)
-                        (pattern
-                              (ability_pattern
-                                    (wordy_id))
-                              (arrow_symbol)
-                              (wordy_id))))))
+                        (pattern (ability_pattern (constructor_pattern (wordy_id))) (arrow_symbol) (wordy_id))))))

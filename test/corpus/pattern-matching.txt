@@ -31,7 +31,7 @@
         (wordy_id)
         (with)
         (pattern (nat) (arrow_symbol) (literal_text))
-        (pattern (wordy_id) (arrow_symbol) (literal_text))))
+        (pattern (constructor_pattern (wordy_id)) (arrow_symbol) (literal_text))))
 ===
 [Pattern matching] guard patterns
 ===
@@ -46,7 +46,73 @@
         (match)
         (wordy_id)
         (with)
-        (pattern (wordy_id) (guard (pipe) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (arrow_symbol) (literal_text)))
-        (pattern (wordy_id) (guard (pipe) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (arrow_symbol) (literal_text)))
-        (pattern (wordy_id) (guard (pipe) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (arrow_symbol) (literal_text)))
+        (pattern (constructor_pattern (wordy_id)) (guard (pipe) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (arrow_symbol) (literal_text)))
+        (pattern (constructor_pattern (wordy_id)) (guard (pipe) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (arrow_symbol) (literal_text)))
+        (pattern (constructor_pattern (wordy_id)) (guard (pipe) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (arrow_symbol) (literal_text)))
         (pattern (blank_pattern) (arrow_symbol) (literal_text))))
+===
+[Patterns] match/with
+===
+> match x with x -> x
+> match x with 0 -> 1
+> match x with
+    0 -> 1
+> match +0 with
+      +0 -> -1
+> match x with
+      x -> 1
+      2 -> 7
+      _ -> 3
+      Tuple.Cons x y -> x + y
+      Tuple.Cons (Tuple.Cons x y) _ -> x + y 
+> match x with
+      0 ->
+        z = 0
+        z
+> match x with
+     0 | 1 == 2 -> 123
+> match x with
+     [] -> 0
+     [1] -> 1
+     2 +: _ -> 2
+     _ :+ 3 -> 3
+     [4] ++ _ -> 4
+     _ ++ [5] -> 5
+     _ -> -1
+---
+(unison
+    (watch_expression (match) (wordy_id) (with) (wordy_id) (right_arrow) (wordy_id))
+    (watch_expression (match) (wordy_id) (with) (nat) (right_arrow) (nat))
+    (watch_expression (match) (nat) (with) (nat) (right_arrow) (nat))
+    (watch_expression (match) (int) (with) (int) (right_arrow) (int))
+    (watch_expression (match) (wordy_id) (with) 
+        (pattern (wordy_id) (right_arrow) (nat))
+        (pattern (nat) (right_arrow) (nat))
+        (pattern (blank_pattern) (right_arrow) (nat))
+        (constructor_pattern (wordy_id) (wordy_id)) (right_arrow) (function_application (wordy_id) (operator) (wordy_id))
+        (constructor_pattern (constructor_pattern (wordy_id) (wordy_id)) (blank_pattern) (right_arrow) (function_application ((wordy_id) (operator) (wordy_id))))
+    )
+)
+===
+[Patterns] cases
+===
+> cases x -> x
+> cases
+     [] -> 0
+     [x] -> 1
+     _ -> 2
+> cases
+     0 ->
+       z = 0
+       z
+---
+(unison
+    (watch_expression (cases) (pattern (constructor_pattern (wordy_id)) (arrow_symbol) (wordy_id)))
+    (watch_expression (cases)
+        (pattern (literal_list_pattern) (arrow_symbol) (nat))
+        (pattern (literal_list_pattern (constructor_pattern (wordy_id))) (arrow_symbol) (nat))
+        (pattern (blank_pattern) (arrow_symbol) (nat)))
+    (watch_expression (cases)
+        (pattern (nat) (arrow_symbol)
+            (term_declaration (term_definition (wordy_id) (kw_equals) (nat)))
+            (wordy_id))))
