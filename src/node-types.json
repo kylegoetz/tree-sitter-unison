@@ -3090,7 +3090,19 @@
           "named": true
         },
         {
+          "type": "arrow_symbol",
+          "named": true
+        },
+        {
           "type": "cases",
+          "named": true
+        },
+        {
+          "type": "delayed",
+          "named": true
+        },
+        {
+          "type": "effect",
           "named": true
         },
         {
@@ -3114,7 +3126,15 @@
           "named": true
         },
         {
+          "type": "immediate_hash",
+          "named": true
+        },
+        {
           "type": "int",
+          "named": true
+        },
+        {
+          "type": "kw_forall",
           "named": true
         },
         {
@@ -3178,7 +3198,15 @@
           "named": true
         },
         {
+          "type": "sequence_type",
+          "named": true
+        },
+        {
           "type": "tuple_or_parenthesized",
+          "named": true
+        },
+        {
+          "type": "type_signature_colon",
           "named": true
         },
         {

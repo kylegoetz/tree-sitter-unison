@@ -1895,6 +1895,27 @@
             "name": "_expression"
           },
           {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "type_signature_colon"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_value_type"
+                  }
+                ]
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
             "type": "STRING",
             "value": ")"
           }

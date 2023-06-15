@@ -1018,6 +1018,7 @@ static Result operator(State *state) {
 
   uint8_t and_count = 0;
   uint8_t or_count = 0;
+  bool previous_was_colon = false;
     
   /*
    * scan until:
@@ -1028,7 +1029,11 @@ static Result operator(State *state) {
    */
   while (!is_eof(state)) {
     LOG(VERBOSE, "[operator] Looping with PEEK = %c\n", PEEK);
+    if (!symbolic(PEEK) && previous_was_colon) {
+      return res_fail; // This means we just recognized a `:` by itself, which is not an operator but part of a type signature.
+    }
     if (symbolic(PEEK)) { // If we find | or & as first symbol, count it. Otherwise, ensure code never thinks it has found || or &&
+      previous_was_colon = false;
       switch (PEEK) {
         case '|': {
           if (or_count == 0 || or_count == 1) ++or_count;
@@ -1038,6 +1043,7 @@ static Result operator(State *state) {
           if (and_count == 0 || and_count == 1) ++and_count;
           break;
         }
+        case ':': previous_was_colon = true;
         default: {
           or_count = -1;
           and_count = -1;

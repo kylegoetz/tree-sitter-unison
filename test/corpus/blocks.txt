@@ -1,0 +1,27 @@
+===
+[Blocks] block starting with type signature'ified term declaration
+===
+> if
+      s = 0
+      s > 0
+  then
+    s: Int
+    s = (0: Int)
+    s + 1
+  else
+    s = 0
+    s + 2
+---
+(unison (watch_expression (exp_if
+  (kw_if)
+  (term_declaration (term_definition (wordy_id) (kw_equals) (nat)))
+  (function_application (wordy_id) (operator) (nat))
+  (kw_then)
+  (term_declaration
+    (type_signature (wordy_id) (type_signature_colon) (wordy_id))
+    (term_definition (wordy_id) (kw_equals) (parenthetical_exp (nat) (type_signature_colon) (wordy_id)) ))
+  (function_application (wordy_id) (operator) (nat))
+  (kw_else)
+  (term_declaration (term_definition (wordy_id) (kw_equals) (nat)))
+  (function_application (wordy_id) (operator) (nat))
+  )))

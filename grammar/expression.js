@@ -22,6 +22,7 @@ module.exports = {
   parenthetical_exp: $ => prec(-10, seq(
     '(',
     $._expression,
+    optional(seq($.type_signature_colon, $._value_type)),
     ')'
   )),
   
