@@ -11,24 +11,23 @@ module.exports = {
     $._expression
   ),
   
-  // semi: $ => $._layout_semicolon,
-  // layout_start: $ => $._layout_start,
-  // layout_end: $ => $._layout_end,
-  // statement: $ => $._statement,
-  // expression: $ => $._expression,
   multiline_block: $ => seq(
     optional(seq(sep1($._layout_semicolon, $._statement))),
-    // sep($.semi, choice($.statement, $.expression)),
-    // sep($.semi, $.statement),
-    // choice('x + foo 8 102.0 +4', $._expression),
-    // $._expression,
-    $.expression,
-    // $.literal_function,
+    $._expression,
   ),
+
   _block: $ => seq(
     $.layout_start,
     $.multiline_block,
     $.layout_end,
   ),
-  _block: $ => layouted($, $._statement),
+
+    _block: $ => layouted($, $._statement),
+  
+  // let [sm_1] [sm_2] ... [sm_n] [exp]
+  kw_let: _ => 'let',
+  exp_let: $ => seq(
+    $.kw_let, 
+    $._block,
+  ),
 }

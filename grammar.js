@@ -10,7 +10,7 @@ const identifiers = require('./grammar/identifier')
 const term = require('./grammar/term')
 const regex = require('./grammar/regex')
 const effects = require('./grammar/effect')
-const _let = require('./grammar/let')
+// const _let = require('./grammar/let')
 const handler = require('./grammar/handle')
 const pattern_matching = require('./grammar/pattern-matching')
 const conditionals = require('./grammar/conditionals')
@@ -97,7 +97,7 @@ module.exports = grammar({
     ...expressions,
     ...stmt,
     ...term,
-    ..._let,
+    // ..._let,
     ...handler,
     ...pattern_matching,
     ...conditionals,

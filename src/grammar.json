@@ -1658,7 +1658,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "expression"
+          "name": "_expression"
         }
       ]
     },
@@ -1807,6 +1807,23 @@
               "name": "_layout_end"
             }
           ]
+        }
+      ]
+    },
+    "kw_let": {
+      "type": "STRING",
+      "value": "let"
+    },
+    "exp_let": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "kw_let"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_block"
         }
       ]
     },
@@ -2038,51 +2055,6 @@
         {
           "type": "SYMBOL",
           "name": "_block"
-        }
-      ]
-    },
-    "kw_let": {
-      "type": "STRING",
-      "value": "let"
-    },
-    "expression": {
-      "type": "SYMBOL",
-      "name": "_expression"
-    },
-    "exp_let": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "kw_let"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_layout_start"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_layout_semicolon"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "term_definition"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_layout_semicolon"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_expression"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_layout_end"
         }
       ]
     },
