@@ -31,7 +31,7 @@
         (wordy_id)
         (with)
         (pattern (nat) (arrow_symbol) (literal_text))
-        (pattern (constructor_pattern (wordy_id)) (arrow_symbol) (literal_text))))
+        (pattern (constructor_or_variable_pattern (wordy_id)) (arrow_symbol) (literal_text))))
 ===
 [Pattern matching] guard patterns
 ===
@@ -71,6 +71,30 @@
         z
 > match x with
      0 | 1 == 2 -> 123
+---
+(unison
+    (watch_expression (match) (wordy_id) (with) (pattern (constructor_or_variable_pattern (wordy_id)) (arrow_symbol) (wordy_id)))
+    (watch_expression (match) (wordy_id) (with) (pattern (nat) (arrow_symbol) (nat)))
+    (watch_expression (match) (wordy_id) (with) (pattern (nat) (arrow_symbol) (nat)))
+    (watch_expression (match) (int) (with) (pattern (int) (arrow_symbol) (int)))
+    (watch_expression (match) (wordy_id) (with) 
+        (pattern (constructor_or_variable_pattern (wordy_id)) (arrow_symbol) (nat))
+        (pattern (nat) (arrow_symbol) (nat))
+        (pattern (blank_pattern) (arrow_symbol) (nat))
+        (pattern (constructor_or_variable_pattern (path) (wordy_id) (wordy_id) (wordy_id)) (arrow_symbol) (function_application (wordy_id) (operator) (wordy_id)))
+        (pattern (constructor_or_variable_pattern (path) (wordy_id) 
+            (constructor_or_variable_pattern (path) (wordy_id)  (wordy_id) (wordy_id))))
+        (blank_pattern) (arrow_symbol) (function_application ((wordy_id) (operator) (wordy_id))))
+    (watch_expression (match) (wordy_id) (with)
+        (pattern (nat) (arrow_symbol)
+            (term_declaration (term_definition (wordy_id) (kw_equals) (nat)))
+            (wordy_id)))
+    (watch_expression (match) (wordy_id) (with)
+        (pattern (nat) (guard)))
+)
+===
+[Patterns] list patterns
+===
 > match x with
      [] -> 0
      [1] -> 1
@@ -80,19 +104,14 @@
      _ ++ [5] -> 5
      _ -> -1
 ---
-(unison
-    (watch_expression (match) (wordy_id) (with) (wordy_id) (right_arrow) (wordy_id))
-    (watch_expression (match) (wordy_id) (with) (nat) (right_arrow) (nat))
-    (watch_expression (match) (nat) (with) (nat) (right_arrow) (nat))
-    (watch_expression (match) (int) (with) (int) (right_arrow) (int))
-    (watch_expression (match) (wordy_id) (with) 
-        (pattern (wordy_id) (right_arrow) (nat))
-        (pattern (nat) (right_arrow) (nat))
-        (pattern (blank_pattern) (right_arrow) (nat))
-        (constructor_pattern (wordy_id) (wordy_id)) (right_arrow) (function_application (wordy_id) (operator) (wordy_id))
-        (constructor_pattern (constructor_pattern (wordy_id) (wordy_id)) (blank_pattern) (right_arrow) (function_application ((wordy_id) (operator) (wordy_id))))
-    )
-)
+(unison (watch_expression (match) (wordy_id) (with)
+        (pattern (literal_list_pattern) (arrow_symbol) (nat))
+        (pattern (literal_list_pattern (nat)) (arrow_symbol) (nat))
+        (pattern (head_tail_list_pattern (nat) (blank_pattern)) (arrow_symbol) (nat))
+        (pattern (init_last_tail_pattern (blank_pattern) (nat)) (arrow_symbol) (nat))
+        (pattern (concat_list_pattern (literal_list_pattern (nat)) (blank_pattern)) (arrow_symbol) (nat))
+        (pattern (concat_list_pattern (blank_pattern) (literal_list_pattern (nat))) (arrow_symbol) (nat))
+        (pattern (blank_pattern) (arrow_symbol) (int))))
 ===
 [Patterns] cases
 ===
@@ -107,10 +126,10 @@
        z
 ---
 (unison
-    (watch_expression (cases) (pattern (constructor_pattern (wordy_id)) (arrow_symbol) (wordy_id)))
+    (watch_expression (cases) (pattern (constructor_or_variable_pattern (wordy_id)) (arrow_symbol) (wordy_id)))
     (watch_expression (cases)
         (pattern (literal_list_pattern) (arrow_symbol) (nat))
-        (pattern (literal_list_pattern (constructor_pattern (wordy_id))) (arrow_symbol) (nat))
+        (pattern (literal_list_pattern (constructor_or_variable_pattern (wordy_id))) (arrow_symbol) (nat))
         (pattern (blank_pattern) (arrow_symbol) (nat)))
     (watch_expression (cases)
         (pattern (nat) (arrow_symbol)
