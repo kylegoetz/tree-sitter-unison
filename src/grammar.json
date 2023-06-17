@@ -2529,21 +2529,25 @@
       }
     },
     "init_last_tail_pattern": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_pattern_lhs"
-        },
-        {
-          "type": "PATTERN",
-          "value": "(List\\.)?:\\+"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_pattern_rhs"
-        }
-      ]
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_pattern_lhs"
+          },
+          {
+            "type": "PATTERN",
+            "value": "(List\\.)?:\\+"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_pattern_lhs"
+          }
+        ]
+      }
     },
     "literal_list_pattern": {
       "type": "SEQ",
@@ -2592,21 +2596,25 @@
       ]
     },
     "concat_list_pattern": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_pattern_lhs"
-        },
-        {
-          "type": "PATTERN",
-          "value": "(List\\.)?\\+\\+"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_pattern_rhs"
-        }
-      ]
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_pattern_lhs"
+          },
+          {
+            "type": "PATTERN",
+            "value": "(List\\.)?\\+\\+"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_pattern_lhs"
+          }
+        ]
+      }
     },
     "guard": {
       "type": "SEQ",
@@ -2643,19 +2651,11 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_layout_start"
-        },
-        {
-          "type": "SYMBOL",
           "name": "arrow_symbol"
         },
         {
           "type": "SYMBOL",
           "name": "_block"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_layout_end"
         }
       ]
     },
@@ -3204,6 +3204,13 @@
     [
       "_identifier",
       "_pattern_lhs"
+    ],
+    [
+      "head_tail_list_pattern",
+      "init_last_tail_pattern"
+    ],
+    [
+      "init_last_tail_pattern"
     ]
   ],
   "precedences": [

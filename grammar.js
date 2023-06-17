@@ -48,6 +48,9 @@ module.exports = grammar({
     [$.partial_application, $.function_application],
     [$._function_name, $._lhs],
     [$._identifier, $._pattern_lhs],
+    [$.head_tail_list_pattern, $.init_last_tail_pattern],
+    // [$.init_last_tail_pattern, $.concat_list_pattern], // todo maybe make
+    [$.init_last_tail_pattern], // TODO maybe just make this right-associative?
   ],
   externals: $ => [
     $._layout_semicolon,

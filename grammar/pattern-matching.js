@@ -54,9 +54,9 @@ module.exports = {
    *   TODO: pare this pattern down to something like choice(seq('head', '++', LIST_LITERAL), ...) instead of seq(choice($.wordy_id, $.list_literal, '++', ...))
    */
   head_tail_list_pattern: $ => prec.left(seq($._pattern_lhs, /(List\.)?\+:/, $._pattern_lhs)),
-  init_last_tail_pattern: $ => seq($._pattern_lhs, /(List\.)?:\+/, $._pattern_rhs),
+  init_last_tail_pattern: $ => prec.right(seq($._pattern_lhs, /(List\.)?:\+/, $._pattern_lhs)),
   literal_list_pattern: $ => seq('[', sep(',', $._pattern_lhs), ']'),
-  concat_list_pattern: $ => seq($._pattern_lhs, /(List\.)?\+\+/, $._pattern_rhs),
+  concat_list_pattern: $ => prec.right(seq($._pattern_lhs, /(List\.)?\+\+/, $._pattern_lhs)),
   /**
    * A guard can be one of the following:
    * - | BOOL_EXPR -> BLOCK
@@ -64,7 +64,7 @@ module.exports = {
    */
   guard: $ => seq($.pipe, choice($._expression, $.otherwise), $.arrow_symbol, $._block),
   
-  _unguarded_block: $ => seq($._layout_start, $.arrow_symbol, $._block, $._layout_end),
+  _unguarded_block: $ => seq(/*$._layout_start,*/ $.arrow_symbol, $._block, /*$._layout_end*/),
   // _unguarded_block: $ => prec(-1, layouted($, seq($.arrow_symbol, $._block)),
   
   /**
@@ -112,4 +112,8 @@ module.exports = {
     // seq($._pattern_lhs, $._layout_start, '|', $._layout_end),
     // seq($._pattern_lhs, layouted($, $.guard)),
   ),
+  // pattern: $ => seq(
+    // $._pattern_lhs,
+    // choice(seq($.arrow_symbol, $._block), layouted($, $.guard)),
+  // )
 }
