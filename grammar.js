@@ -67,6 +67,10 @@ module.exports = grammar({
     // [$._identifier, $._wordy_id_with_path, $.__identifier, $.literal_function],
     // [$._identifier, $._wordy_id_with_path, $.__identifier],
     // [$._wordy_id_with_path, $.literal_function],
+    [$.head_tail_list_pattern, $.init_last_tail_pattern],
+    // [$.init_last_tail_pattern, $.concat_list_pattern], // todo maybe make
+    [$.init_last_tail_pattern], // TODO maybe just make this right-associative?
+
   ],
   externals: $ => [
     $._layout_semicolon,
@@ -120,7 +124,7 @@ module.exports = grammar({
     ...pattern_matching,
     ...conditionals,
     
-    watch_expression: $ => seq($._watch_start, $._expression),
+    watch_expression: $ => seq($._watch_starteq('>', $._expression),
     
     
     
@@ -153,5 +157,4 @@ module.exports = grammar({
     //   'match',
     //   'with',
     // )
-  },
-})
+ 
