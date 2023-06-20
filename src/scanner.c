@@ -148,19 +148,19 @@ static bool all_syms(const bool *syms) {
  */
 static void debug_valid(const bool *syms) {
   if (all_syms(syms)) {
-    DEBUG_PRINTF("all");
+    LOG(VERBOSE, "all");
     return;
   }
   bool fst = true;
-  DEBUG_PRINTF("\"");
+  LOG(VERBOSE, "\"");
   for (Sym i = SEMICOLON; i <= PREFIX_SYMOP; i++) {
     if (syms[i]) {
-      if (!fst) DEBUG_PRINTF(",");
-      DEBUG_PRINTF("%s", sym_names[i]);
+      if (!fst) LOG(VERBOSE, ",");
+      LOG(VERBOSE, "%s", sym_names[i]);
       fst = false;
     }
   }
-  DEBUG_PRINTF("\"");
+  LOG(VERBOSE, "\"");
 }
 #endif
 
@@ -209,43 +209,40 @@ State state_new(TSLexer *l, const bool * restrict vs, indent_vec *is) {
 
 static char * debug_indents_str(indent_vec *indents) {
   char * rv = "";
-  DEBUG_PRINTF("%s", rv);
+  LOG(VERBOSE, "%s", rv);
   if (indents->len == 0) strcat(rv, "empty");
-  DEBUG_PRINTF("%s", rv);
+  LOG(VERBOSE, "%s", rv);
   bool empty = true;
   for (size_t i = 0; i < indents->len; i++) {
     if (!empty) strcat(rv, "-");
-    DEBUG_PRINTF("%s", rv);
+    LOG(VERBOSE, "%s", rv);
     rv += sprintf(rv, "%u", indents->data[i]);
-    DEBUG_PRINTF("%s", rv);
+    LOG(VERBOSE, "%s", rv);
     empty = false;
   }
   
-  DEBUG_PRINTF("%s", rv);
+  LOG(VERBOSE, "%s", rv);
   return rv;
 }
 
 #ifdef DEBUG
 static void debug_indents(indent_vec *indents) {
-  // LOG()
-  // DEBUG_PRINTF("%s", debug_indents_str(indents));
-  if (indents->len == 0) DEBUG_PRINTF("empty");
+  if (indents->len == 0) LOG(VERBOSE, "empty");
   bool empty = true;
   for (size_t i = 0; i < indents->len; i++) {
-    if (!empty) DEBUG_PRINTF("-");
-    DEBUG_PRINTF("%d", indents->data[i]);
+    if (!empty) LOG(VERBOSE, "-");
+    LOG(VERBOSE, "%d", indents->data[i]);
     empty = false;
   }
 }
 
 void debug_state(State *state) {
-  DEBUG_PRINTF("State { syms = ");
+  LOG(VERBOSE, "State { syms = ");
   debug_valid(state->symbols);
-  DEBUG_PRINTF("col = %d", state->lexer->get_column(state->lexer));
-  DEBUG_PRINTF(", indents = ");
+  LOG(VERBOSE, "col = %d", state->lexer->get_column(state->lexer));
+  LOG(VERBOSE, ", indents = ");
   debug_indents(state->indents);
-  // DEBUG_PRINTF("%s", debug_indents_str(state->indents));
-  DEBUG_PRINTF(" }\n");
+  LOG(VERBOSE, " }\n");
 }
 #endif
 
@@ -476,12 +473,12 @@ typedef struct {
 
 #ifdef DEBUG
 void debug_result(Result res) {
-  DEBUG_PRINTF("Result { finished = %d", res.finished);
+  LOG(VERBOSE, "Result { finished = %d", res.finished);
   if (res.finished) {
-    DEBUG_PRINTF(", result = %s }\n", sym_names[res.sym]);
+    LOG(VERBOSE, ", result = %s }\n", sym_names[res.sym]);
   }
   else
-    DEBUG_PRINTF(" }\n");
+    LOG(VERBOSE, " }\n");
 }
 #endif
 
@@ -821,7 +818,7 @@ static Result byte_literal(State *state) {
 }
 
 static void * get_fractional(State *state) {
-  DEBUG_PRINTF("->get_fractional, %c\n", PEEK);
+  LOG(INFO, "->get_fractional, %c\n", PEEK);
   char running_str[1024] = "";
   double val = 0;
   bool non_zero = false;
@@ -998,10 +995,14 @@ static Result boolean_operator(State *state) {
  * Need to exclude certain symbols as solutions. The following cannot
  * be considered operators: =, &&, ||
  *
+ * Line-initial `>` needs to fail, as that is a watch expression handled by the JS.
+ *
  * Needs to recognize `(OPERATOR)` as a parenthesized operator
  */
 static Result operator(State *state) {
   LOG(INFO, "->operator (%u, %c)\n", COL, PEEK);
+  
+  if (COL == 0 && PEEK == '>') return res_fail; // Fail if watch expression. Let JS handle it.
   
   if (PEEK == '(') {
     Result res = paren_symop(state);
@@ -1686,8 +1687,8 @@ static void debug_lookahead(State *state) {
   for (;;) {
     if (isws(PEEK) || PEEK == 0) break;
     else {
-      if (first) DEBUG_PRINTF("next: ");
-      DEBUG_PRINTF("%c\n", PEEK);
+      if (first) LOG(VERBOSE, "next: ");
+      LOG(VERBOSE, "%c\n", PEEK);
       S_ADVANCE;
       first = false;
     }
@@ -1717,13 +1718,13 @@ static bool eval(Result (*chk)(State *state), State *state) {
 #ifdef DEBUG
     // TODO(414owen) can names[] fail?
     if (state->marked == -1) {
-      DEBUG_PRINTF("%d\n", column(state));
+      LOG(VERBOSE, "%d\n", column(state));
     } else {
-      DEBUG_PRINTF("%s@%d\n", state->marked_by, state->marked);
+      LOG(VERBOSE, "%s@%d\n", state->marked_by, state->marked);
     }
 #endif
     state->lexer->result_symbol = result.sym;
-    LOG(ERROR, "Lexer result: %s\n", sym_names[state->lexer->result_symbol]);
+    LOG(WARN, "Lexer result: %s\n", sym_names[state->lexer->result_symbol]);
     return true;
   } else return false;
 }
@@ -1752,8 +1753,8 @@ bool tree_sitter_unison_external_scanner_scan(void *indents_v, TSLexer *lexer, c
     .indents = indents
   };
   LOG(WARN, "===================\nBeginning scanner\n");
-#ifdef DEBUG
   debug_state(&state);
+#if DEBUG 
   if (state.needs_free) free(state.marked_by);
 #endif
   bool res = eval(scan_all, &state);
