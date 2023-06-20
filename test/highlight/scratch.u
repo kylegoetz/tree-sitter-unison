@@ -1,4 +1,5 @@
-a = handle
-      x = 23 + 42
-      x + foo 8 102.0 +4
-    with foo
+> cases
+      Tuple.Cons x y -> 5
+      fa
+      
+x = 5

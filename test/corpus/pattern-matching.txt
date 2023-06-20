@@ -51,7 +51,9 @@
         (pattern (constructor_or_variable_pattern (wordy_id)) (guard (pipe) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (arrow_symbol) (literal_text)))
         (pattern (constructor_or_variable_pattern (wordy_id)) (guard (pipe) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (arrow_symbol) (literal_text)))
         (pattern (constructor_or_variable_pattern (wordy_id)) (guard (pipe) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (arrow_symbol) (literal_text)))
-        (pattern (blank_pattern) (arrow_symbol) (literal_text))))
+        (pattern (blank_pattern) (arrow_symbol) (literal_text)))
+    (watch_expression (match) (wordy_id) (with)
+        (pattern (nat) (guard (pipe) (function_application (nat) (operator) (nat)) (arrow_symbol) (nat)))))
 ===
 [Patterns] match/with
 ===
@@ -83,7 +85,8 @@
         (pattern (blank_pattern) (arrow_symbol) (nat))
         (pattern (constructor_or_variable_pattern (path) (wordy_id) (wordy_id) (wordy_id)) (arrow_symbol) (function_application (wordy_id) (operator) (wordy_id)))
         (pattern (constructor_or_variable_pattern (path) (wordy_id) 
-            (constructor_or_variable_pattern (path) (wordy_id) (wordy_id) (wordy_id)) (blank_pattern))
+            (constructor_or_variable_pattern (path) (wordy_id) (wordy_id) (wordy_id))
+            (blank_pattern))
             (arrow_symbol) 
             (function_application (wordy_id) (operator) (wordy_id))))
     (watch_expression (match) (wordy_id) (with)

@@ -3,7 +3,7 @@
  */
 #define DEBUG 1
 
-#define LOG_LEVEL VERBOSE
+#define LOG_LEVEL ERROR
 typedef enum {
   VERBOSE,
   INFO,
@@ -996,7 +996,7 @@ static Result boolean_operator(State *state) {
  * Detect operators.
  * Cannot run before determining DOT is not an absolute qualifier.
  * Need to exclude certain symbols as solutions. The following cannot
- * be considered operators: =, &&, ||
+ * be considered operators: =, &&, ||, | (`|` is handled by the JS)
  *
  * Needs to recognize `(OPERATOR)` as a parenthesized operator
  */
@@ -1058,11 +1058,12 @@ static Result operator(State *state) {
       MARK("operator", false, state);
       return finish_if_valid(SYMOP, "symbolic operator", state);
     } else {
-      if (or_count == 2 || and_count == 2) return res_fail;
+      if (or_count == 1 || or_count == 2 || and_count == 2) return res_fail;
       return finish_if_valid(SYMOP, "symbolic operator", state);
     }
   }
-  if (or_count == 2 || and_count == 2) return res_fail;
+  // Let JS handle `|`, `||`, and `&&`
+  if (or_count == 1 || or_count == 2 || and_count == 2) return res_fail;
   S_ADVANCE;
   MARK("operator", false, state);
   return finish_if_valid(SYMOP, "symbolic operator", state);
