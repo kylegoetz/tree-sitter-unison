@@ -1,5 +1,5 @@
 ===
-simplest use clause
+[use] namespace with path and no names
 ===
 use base.List
 ---
@@ -7,3 +7,24 @@ use base.List
     (use_clause
         (use)
         (namespace)))
+
+===
+[use] operators
+===
+use Universal == < > >=
+---
+(unison (use_clause (use) (namespace) (operator) (operator) (operator) (operator)))
+
+===
+[use] name with tick mark
+===
+use Search lubIndexOf'
+---
+(unison (use_clause (use) (namespace) (wordy_id)))
+
+===
+[use] namespace with a path component and an operator name
+===
+use base.List ++
+---
+(unison (use_clause (use) (namespace) (operator)))
