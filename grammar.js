@@ -70,6 +70,7 @@ module.exports = grammar({
     [$.head_tail_list_pattern, $.init_last_tail_pattern],
     // [$.init_last_tail_pattern, $.concat_list_pattern], // todo maybe make
     [$.init_last_tail_pattern], // TODO maybe just make this right-associative?
+    [$.constructor_or_variable_pattern],
 
   ],
   externals: $ => [
@@ -124,7 +125,7 @@ module.exports = grammar({
     ...pattern_matching,
     ...conditionals,
     
-    watch_expression: $ => seq($._watch_starteq('>', $._expression),
+    watch_expression: $ => seq($._watch_stareq('>'teq('>', $._expression),
     
     
     
@@ -156,5 +157,4 @@ module.exports = grammar({
     //   'cases',
     //   'match',
     //   'with',
-    // )
- 
+   

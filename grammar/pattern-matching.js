@@ -2,12 +2,19 @@ const { layouted, sep } = require('./util')
 
 module.exports = {
   
-  _pattern_matching: $ => seq(
-    choice(
-      seq($.match, field('scrutinee', $._expression), $.with),
-      $.cases),
-    layouted($, $.pattern)),
+  _match_with: $ => seq($.match, field('scrutinee', $._expression), $.with),
   
+  // _pattern_matching: $ => seq(
+  //   choice(
+  //     seq($.match, field('scrutinee', $._expression), $.with),
+  //     $.cases),
+  //   layouted($, $.pattern)),
+ 
+  _pattern_matching: $ => seq(
+    choice($._match_with, $.cases),
+    layouted($, $.pattern),
+  ),
+    
   _literal_pattern: $ => choice( // Observe Float is not allowed.
     $.literal_boolean,
     $.nat,
@@ -20,15 +27,16 @@ module.exports = {
   
   constructor_or_variable_pattern: $ => prec.right(seq(
     prec(2, $._identifier),
-    // $.wordy_id,
-    // $.wordy_id,
-    // sep(' ', $.wordy_id),
-    optional(repeat1(prec.right(1, choice($.wordy_id, $._pattern_lhs)))), 
-    // $.wordy_id,
-    // $.wordy_id,
-    // 'x y', 
-    // sep(' ', $.wordy_id),
-    // repeat(prec.left($._pattern_lhs)),
+    // optional(seq($._layout_start, repeat1(prec.left(1, choice($.wordy_id, $._pattern_lhs))), $._layout_end)),  // TODO left off here by adding layout start/end
+    // layouted($, optional(repeat1($.wordy_id))),
+    // repeat(choice('x', 'y'))
+    prec.left(
+      choice(
+        repeat($.wordy_id),
+        // seq($._layout_start, repeat($.wordy_id), optional($._layout_end))
+      )
+    ),
+    // 'x', 'y'
   )),
   
   _list_pattern: $ => choice(
@@ -81,6 +89,7 @@ module.exports = {
    * we only have a constructor pattern here as an option, no wordy_id pattern.
    */
   _pattern_lhs: $ => choice(
+    prec(1, seq('(', $._pattern_lhs, ')')),
     $.blank_pattern, // blank pattern
     $._literal_pattern,
     $.as_pattern,
@@ -88,7 +97,6 @@ module.exports = {
     $._list_pattern,
     prec(2, $.tuple_pattern),
     $.ability_pattern,
-    prec(1, seq('(', $._pattern_lhs, ')')),
   ),
   
   /**
@@ -108,9 +116,10 @@ module.exports = {
   // ),
   
   pattern: $ => choice(
-    seq($._pattern_lhs, $.arrow_symbol, $._block),
+    // prec(100000, '1 -> 1'),
+    seq($._pattern_lhs, $._layout_start, $.arrow_symbol, $._block, $._layout_end),
     // seq($._pattern_lhs, $._layout_start, '|', $._layout_end),
-    // seq($._pattern_lhs, layouted($, $.guard)),
+    seq($._pattern_lhs, layouted($, $.guard)),
   ),
   // pattern: $ => seq(
     // $._pattern_lhs,

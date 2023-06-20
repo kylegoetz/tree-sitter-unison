@@ -3,7 +3,7 @@
  */
 #define DEBUG 1
 
-#define LOG_LEVEL INFO
+#define LOG_LEVEL ERROR
 typedef enum {
   VERBOSE,
   INFO,
@@ -999,7 +999,7 @@ static bool found_pipe_or_logical_op(uint8_t pipe_count, uint8_t amp_count) {
  * Detect operators.
  * Cannot run before determining DOT is not an absolute qualifier.
  * Need to exclude certain symbols as solutions. The following cannot
- * be considered operators: =, &&, ||
+ * be considered operators: =, &&, ||, | (`|` is handled by the JS)
  *
  * Needs to recognize `(OPERATOR)` as a parenthesized operator
  */

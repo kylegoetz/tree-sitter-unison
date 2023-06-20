@@ -387,63 +387,7 @@
       "required": true,
       "types": [
         {
-          "type": "ability_pattern",
-          "named": true
-        },
-        {
-          "type": "as_pattern",
-          "named": true
-        },
-        {
-          "type": "blank_pattern",
-          "named": true
-        },
-        {
-          "type": "concat_list_pattern",
-          "named": true
-        },
-        {
-          "type": "constructor_or_variable_pattern",
-          "named": true
-        },
-        {
-          "type": "head_tail_list_pattern",
-          "named": true
-        },
-        {
-          "type": "init_last_tail_pattern",
-          "named": true
-        },
-        {
-          "type": "int",
-          "named": true
-        },
-        {
-          "type": "literal_boolean",
-          "named": true
-        },
-        {
-          "type": "literal_char",
-          "named": true
-        },
-        {
-          "type": "literal_list_pattern",
-          "named": true
-        },
-        {
-          "type": "literal_text",
-          "named": true
-        },
-        {
-          "type": "nat",
-          "named": true
-        },
-        {
           "type": "path",
-          "named": true
-        },
-        {
-          "type": "tuple_pattern",
           "named": true
         },
         {
@@ -3454,6 +3398,10 @@
         },
         {
           "type": "function_application",
+          "named": true
+        },
+        {
+          "type": "guard",
           "named": true
         },
         {

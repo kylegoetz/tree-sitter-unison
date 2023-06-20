@@ -24,7 +24,7 @@
     "test": "tree-sitter test",
     "examples": "script/parse-examples",
     "examples-wasm": "script/parse-examples wasm",
-    "scratch": "tree-sitter parse test/highlight/scratch.u",
+    "scratch": "tree-sitter parse test/highlight/scratch.u -d",
     "visual": "tree-sitter parse -D test/highlight/scratch.u"
   },
   "tree-sitter": [
