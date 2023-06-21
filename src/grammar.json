@@ -676,8 +676,8 @@
       "value": "[a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*"
     },
     "symboly_id": {
-      "type": "SYMBOL",
-      "name": "operator"
+      "type": "PATTERN",
+      "value": "[!$%^&*-=+<>.~\\\\/|:]+"
     },
     "_identifier": {
       "type": "CHOICE",
@@ -685,6 +685,10 @@
         {
           "type": "SYMBOL",
           "name": "wordy_id"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[!$%^&*-=+<>.~\\\\/|:]+"
         },
         {
           "type": "SYMBOL",
@@ -696,7 +700,36 @@
       "type": "PATTERN",
       "value": "\\.?([a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*\\.)+"
     },
-    "__identifier": {
+    "_symboly_id_with_path": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "path"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "PATTERN",
+              "value": "[!$%^&*-=+<>.~\\\\/|:]+"
+            }
+          },
+          "named": true,
+          "value": "operator"
+        }
+      ]
+    },
+    "_wordy_id_with_path": {
       "type": "SEQ",
       "members": [
         {
@@ -724,6 +757,23 @@
           "value": "wordy_id"
         }
       ]
+    },
+    "__identifier": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_wordy_id_with_path"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_symboly_id_with_path"
+          }
+        ]
+      }
     },
     "namespace": {
       "type": "TOKEN",
@@ -1551,12 +1601,34 @@
           "value": "("
         },
         {
-          "type": "SYMBOL",
-          "name": "operator"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "operator"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_symboly_id_with_path"
+            }
+          ]
         },
         {
           "type": "STRING",
           "value": ")"
+        }
+      ]
+    },
+    "_function_name": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_prefix_op"
         }
       ]
     },
@@ -1570,19 +1642,6 @@
             "type": "SYMBOL",
             "name": "_expression"
           }
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_prefix_op"
-        }
-      ]
-    },
-    "_function_name": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_identifier"
         },
         {
           "type": "SYMBOL",
@@ -1640,8 +1699,17 @@
             "name": "_expression"
           },
           {
-            "type": "SYMBOL",
-            "name": "operator"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "operator"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_symboly_id_with_path"
+              }
+            ]
           },
           {
             "type": "SYMBOL",
@@ -3144,6 +3212,10 @@
     [
       "_identifier",
       "_pattern_lhs"
+    ],
+    [
+      "_infix_op_application",
+      "watch_expression"
     ]
   ],
   "precedences": [
