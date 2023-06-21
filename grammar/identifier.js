@@ -16,7 +16,8 @@ const regex = require('./regex')
 
 module.exports = {  
   wordy_id: $ => regex.varid,
-  symboly_id: $ => $.operator,
+  symboly_id: $ => regex.symboly_id,
+  // symboly_id: $ => $.operator,
   
   /**
    * Accounts for qualified, unqualified (and absolute) identfiers,
@@ -28,13 +29,26 @@ module.exports = {
    */
   _identifier: $ => choice(
     $.wordy_id,
+    regex.symboly_id,
     $.__identifier,
   ),
   path: $ => regex.path,
-  __identifier: $ => seq(
-    optional($.path/*field('namespace', regex.path)*/),
-    alias(token.immediate(regex.varid), $.wordy_id),
-  ),
+  
+  _symboly_id_with_path: $ => seq(optional($.path), alias(token.immediate(regex.symboly_id), $.operator)),
+  _wordy_id_with_path: $ => seq(optional($.path), alias(token.immediate(regex.varid), $.wordy_id)),
+  
+  __identifier: $ => prec.left(choice(
+    $._wordy_id_with_path,
+    $._symboly_id_with_path,
+  )),
+  
+  // __identifier: $ => seq(
+  //   optional($.path/*field('namespace', regex.path)*/),
+  //   choice(
+  //     alias(token.immediate(regex.varid), $.wordy_id),
+  //     alias(token.immediate(regex.symboly_id), $.symboly_id),
+  //   ),
+  // ),
     
   namespace: $ => token(regex.namespace),
   

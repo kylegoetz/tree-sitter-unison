@@ -8,6 +8,8 @@ sep2 = (sep, rule) => seq(rule, repeat1(seq(sep, rule)))
 
 braces = (...rule) => seq('{', ...rule, '}')
 
+parens = (...rule) => seq('(', ...rule, ')')
+
 /**
   * Wrap a repeated rule with semicolon rules.
   * Between any two occurences of a rule in a layout, if no explicit semicolon is encountered, delegate to the scanner
@@ -45,6 +47,7 @@ layouted_without_end = ($, rule) => choice(
 module.exports = {
   layouted,
   layouted_without_end,
+  parens,
   sep,
   sep1,
   sep2,

@@ -35,3 +35,9 @@ x = 1 + 1
                 (nat)
                 (operator)
                 (nat)))))
+===
+[Identifier] operator with path
+===
+> 1 Nat.== 1
+---
+(unison (watch_expression (function_application (nat) (path) (operator) (nat))))
