@@ -17,4 +17,5 @@ This is a WIP. Does not pass all tests. Need more tests.
 - [ ] `typeLink`
 - [ ] complex tests using production code
 - [ ] test escape sequences in Text literals
+- [ ] test watch expressions (`test>`)
 - others?
