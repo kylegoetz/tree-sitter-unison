@@ -62,6 +62,8 @@ module.exports = grammar({
     [$._identifier, $.__identifier, $._pattern_lhs],
     [$.imm_symboly_id, $._prefix_op],
     [$._identifier, $.__identifier, $.literal_function],
+    [$.__identifier, $._op],
+    [$.imm_symboly_id, $._op],
     // [$._identifier, $._wordy_id_with_path, $.__identifier, $.literal_function],
     // [$._identifier, $._wordy_id_with_path, $.__identifier],
     // [$._wordy_id_with_path, $.literal_function],

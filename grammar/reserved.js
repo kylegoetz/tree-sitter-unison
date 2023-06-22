@@ -6,7 +6,6 @@ module.exports = {
   pipe: $ => '|',
   match: $ => 'match',
   cases: $ => 'cases',
-  pipe: $ => '|',
   otherwise: $ => 'otherwise',
   as: $ => '@',
   structural: $ => 'structural',

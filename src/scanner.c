@@ -3,7 +3,7 @@
  */
 #define DEBUG 1
 
-#define LOG_LEVEL ERROR
+#define LOG_LEVEL INFO
 typedef enum {
   VERBOSE,
   INFO,
@@ -991,6 +991,10 @@ static Result boolean_operator(State *state) {
   return res_cont;
 }
 
+static bool found_pipe_or_logical_op(uint8_t pipe_count, uint8_t amp_count) {
+  return pipe_count == 1 || pipe_count == 2 || amp_count == 2;
+}
+
 /**
  * Detect operators.
  * Cannot run before determining DOT is not an absolute qualifier.
@@ -1066,11 +1070,11 @@ static Result operator(State *state) {
       MARK("operator", false, state);
       return finish_if_valid(SYMOP, "symbolic operator", state);
     } else {
-      if (or_count == 2 || and_count == 2) return res_fail;
+      if (found_pipe_or_logical_op(or_count, and_count)) return res_fail;
       return finish_if_valid(SYMOP, "symbolic operator", state);
     }
   }
-  if (or_count == 2 || and_count == 2) return res_fail;
+  if (found_pipe_or_logical_op(or_count, and_count)) return res_fail;
   S_ADVANCE;
   MARK("operator", false, state);
   return finish_if_valid(SYMOP, "symbolic operator", state);
