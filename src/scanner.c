@@ -105,6 +105,7 @@ typedef enum {
     FLOAT,
     SYMOP,
     PREFIX_SYMOP,
+    WATCH,
     FAIL, // always last in list
 } Sym;
 
@@ -127,6 +128,7 @@ static char *sym_names[] = {
     "float",
     "symop",
     "(symop)",
+    "watch",
     "fail",
 };
 // #endif
@@ -136,7 +138,7 @@ static char *sym_names[] = {
  * this function is used to detect them.
  */
 static bool all_syms(const bool *syms) {
-  for (int i = 0; i <= PREFIX_SYMOP; i++) {
+  for (int i = 0; i <= WATCH; i++) {
     if (!syms[i]) return false;
   }
   return true;
@@ -153,7 +155,7 @@ static void debug_valid(const bool *syms) {
   }
   bool fst = true;
   LOG(VERBOSE, "\"");
-  for (Sym i = SEMICOLON; i <= PREFIX_SYMOP; i++) {
+  for (Sym i = SEMICOLON; i <= WATCH; i++) {
     if (syms[i]) {
       if (!fst) LOG(VERBOSE, ",");
       LOG(VERBOSE, "%s", sym_names[i]);
@@ -995,14 +997,19 @@ static Result boolean_operator(State *state) {
  * Need to exclude certain symbols as solutions. The following cannot
  * be considered operators: =, &&, ||
  *
- * Line-initial `>` needs to fail, as that is a watch expression handled by the JS.
- *
  * Needs to recognize `(OPERATOR)` as a parenthesized operator
  */
 static Result operator(State *state) {
   LOG(INFO, "->operator (%u, %c)\n", COL, PEEK);
   
-  if (COL == 0 && PEEK == '>') return res_fail; // Fail if watch expression. Let JS handle it.
+  // Process WATCH
+  if (COL == 0 && PEEK == '>') {
+    S_ADVANCE;
+    if (!symbolic(PEEK)) {
+      MARK("operator", false, state);
+      return finish_if_valid(WATCH, "watch", state);
+    }
+  }
   
   if (PEEK == '(') {
     Result res = paren_symop(state);
@@ -1523,6 +1530,7 @@ static Result numeric(State *state) {
  * - starts with `.` (FLOAT)
  * - starts with number (NAT, FLOAT, BYTE)
  * - starts with `w` (END)
+ * - starts with `>` (WATCH)
  * NOTE: not SYMOP because cannot begin a line with one.
  */
 static Result newline_token(uint32_t indent, State *state) {
@@ -1543,6 +1551,12 @@ static Result newline_token(uint32_t indent, State *state) {
         SHORT_SCANNER;
       } else if (PEEK == '.') {
         Result res = detect_nat_ufloat_byte(state);
+      } else if (PEEK == '>') {
+        S_ADVANCE;
+        if (!symbolic(PEEK)) {
+          MARK("newline_token", false, state);
+          return finish_if_valid(WATCH, "watch", state);
+        }
       }
       // Symbolic s = read_symop(state);
       // Result res = newline_infix(indent, s, state);
