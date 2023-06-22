@@ -53,12 +53,12 @@ module.exports = {
   literal_list: $ => seq('[', sep(',', $._expression), ']'),
   
   // myFn p1 p2 p3 -> exp
-  lambda_arrow: $ => prec(2, '->'),
+  // lambda_arrow: $ => prec(2, '->'),
   func_name: $ => prec.left(regex.varid),
   func_param: $ => prec.left(regex.varid),
   literal_function: $ => prec('literal_function', seq(
     field('lhs', repeat1(prec.left(field('param', $.wordy_id)))),
-    $.lambda_arrow, 
+    $.arrow_symbol, 
     $._expression // func body
   )),
   

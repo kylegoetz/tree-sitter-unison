@@ -2,18 +2,15 @@ const literals = require('./literal')
 const { KEYWORD } = require('./precedences')
 
 module.exports = {
-  _expression: $ => prec.left(choice(
-    // 'x + foo 8 102.0 +4',
+  _expression: $ => prec.right(choice(
     $.literal_function,
     $.exp_let,
     $.exp_if,
     $.handler,
     $.function_application,
     $._literal,
-    prec(-1, $._identifier),
+    $._identifier,
     $._pattern_matching,
-    // $.operator_as_para meter,
-
     $.parenthetical_exp,
     $._boolean_exp,
   )),

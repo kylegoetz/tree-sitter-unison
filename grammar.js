@@ -49,6 +49,22 @@ module.exports = grammar({
     [$._function_name, $._lhs],
     [$._identifier, $._pattern_lhs],
     [$._infix_op_application, $.watch_expression],
+    [$.symboly_id, $._identifier],
+    // [$.__identifier, $._function_name],
+    // [$.wordy_id, $._wordy_id_with_path],
+    // [$._identifier, $._symboly_id_with_path],
+    // [$._identifier, $.symboly_id],
+    [$._identifier, $.__identifier],
+    [$._identifier, $.__identifier, $.literal_function, $._function_name],
+    [$._identifier, $.__identifier, $._function_name],
+    [$.literal_function, $._function_name],
+    [$.imm_wordy_id, $._function_name],
+    [$._identifier, $.__identifier, $._pattern_lhs],
+    [$.imm_symboly_id, $._prefix_op],
+    [$._identifier, $.__identifier, $.literal_function],
+    // [$._identifier, $._wordy_id_with_path, $.__identifier, $.literal_function],
+    // [$._identifier, $._wordy_id_with_path, $.__identifier],
+    // [$._wordy_id_with_path, $.literal_function],
   ],
   externals: $ => [
     $._layout_semicolon,
@@ -68,6 +84,7 @@ module.exports = grammar({
     $.float,
     $.operator,
     $._parenthesized_operator,
+    $._watch_start
   ],
   extras: $ => [
     /\\?\s/,
@@ -101,7 +118,7 @@ module.exports = grammar({
     ...pattern_matching,
     ...conditionals,
     
-    watch_expression: $ => seq('>', $._expression),
+    watch_expression: $ => seq($._watch_start, $._expression),
     
     
     

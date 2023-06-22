@@ -1,11 +1,19 @@
 const { parens } = require('./util')
+const regex = require('./regex')
 
 module.exports = {
   // _prefix_op: $ => seq('(', choice($.operator, $._symboly_id_with_path), ')'),
-  _prefix_op: $ => parens(choice($.operator, $._symboly_id_with_path)),
+  _prefix_op: $ => parens(choice(
+    $.operator,
+    seq($.path, token.immediate(regex.symboly_id)),
+    // $._symboly_id_with_path
+  )),
   
   _function_name: $ => choice(
-    $._identifier, 
+    // $._identifier, 
+    $.wordy_id,
+    seq($.path, token.immediate(regex.varid)),
+    // $._wordy_id_with_path,
     $._prefix_op,
   ),
     
@@ -28,10 +36,16 @@ module.exports = {
     seq($._prefix_function_application, $._function_param),
   ),
   
+  _op: $ => choice($.operator, seq($.path, token.immediate(regex.symboly_id))),
+  
   // p1 + p2
   _infix_op_application: $ => prec.right(seq(
     $._expression, 
-    choice($.operator, $._symboly_id_with_path), 
+    $._op,
+    // choice(
+      // $.operator,
+      // $._symboly_id_with_path
+    // ), 
     $._expression,
   )),
   

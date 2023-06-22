@@ -16,7 +16,10 @@ const regex = require('./regex')
 
 module.exports = {  
   wordy_id: $ => regex.varid,
+  imm_wordy_id: $ => token.immediate(regex.varid),
+  
   symboly_id: $ => regex.symboly_id,
+  imm_symboly_id: $ => token.immediate(regex.symboly_id),
   // symboly_id: $ => $.operator,
   
   /**
@@ -29,17 +32,30 @@ module.exports = {
    */
   _identifier: $ => choice(
     $.wordy_id,
-    regex.symboly_id,
+    alias(regex.symboly_id, $.operator),
     $.__identifier,
   ),
   path: $ => regex.path,
   
-  _symboly_id_with_path: $ => seq(optional($.path), alias(token.immediate(regex.symboly_id), $.operator)),
-  _wordy_id_with_path: $ => seq(optional($.path), alias(token.immediate(regex.varid), $.wordy_id)),
+  // _symboly_id_with_path: $ => seq(optional($.path), alias(token.immediate(regex.symboly_id), $.operator)),
+  // _wordy_id_with_path: $ => seq(
+  //   optional($.path), 
+  //   choice(/*'square', */alias(token.immediate(regex.varid), $.wordy_id))
+  // ),
+  // _wordy_id_with_path: $ => maybe_with_path($, /*alias(regex.varid, $.wordy_id)*/$.wordy_id),
+  // _wordy_id_with_path: $ => choice(
+    // seq($.path, $.imm_wordy_id),
+    // $.wordy_id,
+  // ),
+  // _symboly_id_with_path: $ => maybe_with_path($, alias(regex.symboly_id, $.operator)),
   
   __identifier: $ => prec.left(choice(
-    $._wordy_id_with_path,
-    $._symboly_id_with_path,
+    seq($.path, alias($.imm_wordy_id, $.wordy_id)),
+    $.wordy_id,
+    seq($.path, alias($.imm_symboly_id, $.operator)),
+    alias($.symboly_id, $.operator),
+    // $._wordy_id_with_path,
+    // $._symboly_id_with_path,
   )),
   
   // __identifier: $ => seq(
@@ -53,3 +69,8 @@ module.exports = {
   namespace: $ => token(regex.namespace),
   
 }
+
+const maybe_with_path = ($, rule, maybeAlias) => choice(
+  seq($.path, token.immediate(rule)),
+  rule,
+)
