@@ -13,6 +13,7 @@ const effects = require('./grammar/effect')
 const pattern_matching = require('./grammar/pattern-matching')
 const conditionals = require('./grammar/conditionals')
 const reserved = require('./grammar/reserved')
+const destructuring_bind = require('./grammar/binding')
 
 
 module.exports = grammar({
@@ -124,6 +125,7 @@ module.exports = grammar({
     ...term,
     ...pattern_matching,
     ...conditionals,
+    ...destructuring_bind,
     
     watch_expression: $ => seq($._watch_stareq('>'teq('>', $._expression),
     
