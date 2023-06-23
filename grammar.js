@@ -103,6 +103,7 @@ module.exports = grammar({
     unison: $ => repeat(
       choice(
         $.watch_expression,
+        $.test_watch_expression,
         $.type_declaration,
         $.term_declaration,
         $.fold,
@@ -127,9 +128,7 @@ module.exports = grammar({
     ...conditionals,
     ...destructuring_bind,
     
-    watch_expression: $ => seq($._watch_stareq('>'teq('>', $._expression),
-    
-    
+      
     
     type_signature: $ => seq(
       field('term_name', $._identifier),
@@ -159,4 +158,7 @@ module.exports = grammar({
     //   'cases',
     //   'match',
     //   'with',
-   
+    watch_expression: $ => seq($._watch_start, $._expression),
+    test_watch_expression: $ => prec.right(seq($.wordy_id, token.immediate('>'), $._expression)),
+  }
+})
