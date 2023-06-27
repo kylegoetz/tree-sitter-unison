@@ -25,6 +25,15 @@ terminated = ($, rule) => seq(
 
 layouted_braces = rule => braces(sep(';', rule), optional(';')),
 
+
+open_block_with = ($, opener, start_type) => seq(
+  start_type ?? $._layout_start,//$._layout_start,
+  terminated($, opener),
+  optional(terminated($, $._statement)),
+  // optional(terminated($, rule)), 
+  $._layout_end,
+)
+
 /**
   * Wrap a repeated rule in a layout.
   * This is used for `where`, `let`, `of` and `do`, and the toplevel module.
@@ -37,6 +46,7 @@ layouted_braces = rule => braces(sep(';', rule), optional(';')),
 layouted = ($, rule) => choice(
   layouted_braces(rule),
   seq($._layout_start, optional(terminated($, rule)), $._layout_end),
+  rule,
 )
 
 layouted_without_end = ($, rule) => choice(
@@ -47,6 +57,7 @@ layouted_without_end = ($, rule) => choice(
 module.exports = {
   layouted,
   layouted_without_end,
+  open_block_with,
   parens,
   sep,
   sep1,

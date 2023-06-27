@@ -8,7 +8,7 @@ module.exports = {
   _function_name: $ => choice(
     // $._identifier, 
     $.wordy_id,
-    seq($.path, token.immediate(regex.varid)),
+    seq($.path, alias(token.immediate(regex.varid), $.wordy_id)),
     // $._wordy_id_with_path,
     $._prefix_op,
   ),

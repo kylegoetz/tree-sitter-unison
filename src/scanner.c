@@ -106,6 +106,7 @@ typedef enum {
     SYMOP,
     PREFIX_SYMOP,
     WATCH,
+    START_AND_ARROW,
     FAIL, // always last in list
 } Sym;
 
@@ -129,6 +130,7 @@ static char *sym_names[] = {
     "symop",
     "(symop)",
     "watch",
+    "start ->",
     "fail",
 };
 // #endif
@@ -138,7 +140,7 @@ static char *sym_names[] = {
  * this function is used to detect them.
  */
 static bool all_syms(const bool *syms) {
-  for (int i = 0; i <= WATCH; i++) {
+  for (int i = 0; i <= START_AND_ARROW; i++) {
     if (!syms[i]) return false;
   }
   return true;
@@ -155,7 +157,7 @@ static void debug_valid(const bool *syms) {
   }
   bool fst = true;
   LOG(VERBOSE, "\"");
-  for (Sym i = SEMICOLON; i <= WATCH; i++) {
+  for (Sym i = SEMICOLON; i <= START_AND_ARROW; i++) {
     if (syms[i]) {
       if (!fst) LOG(VERBOSE, ",");
       LOG(VERBOSE, "%s", sym_names[i]);
@@ -810,9 +812,9 @@ inline_comment_after_skip:
  */
 static Result byte_literal(State *state) {
   LOG(INFO, "->byte_literal (col = %u, peek = %c)\n", COL, PEEK);
-  if (PEEK == '0') {
+  if (!is_eof(state) && PEEK == '0') {
     S_ADVANCE;
-    if (PEEK == 'x') {
+    if (!is_eof(state) && PEEK == 'x') {
       return res_fail;
     }
   }
@@ -862,12 +864,15 @@ static void * get_whole(State *state) {
 
 static void * get_exponent(State *state) {
   LOG(INFO, "->get_exponent (col = %u, peek = %c)\n", COL, PEEK);
+  if (is_eof(state)) return &nothing;
   if (PEEK != 'e' && PEEK != 'E') return &nothing;
   S_ADVANCE;
+  if (is_eof(state)) return &nothing;
   switch (PEEK) {
     case '-':
     case '+': {
-      S_ADVANCE;
+      S_ADVANCE; 
+      // no return so fallthrough for numeric cases
     }
     NUMERIC_CASES: {
       return get_whole(state);
@@ -1347,14 +1352,21 @@ static Result handle_negative(State *state) {
  *   - `where` here is just for the actual valid token
  *   - `in` closes a layout when inline
  *   - `then` closes a layout when inline
+ *   - '+' closes a layout when inline if END valid
  *   - `)` can end the layout of an `of`
  *   - symbolic operators are complicated to implement with regex
  *   - `$` can be a splice if not followed by whitespace
  *   - '[' can be a list or a quasiquote
  *   - '|' in a quasiquote, since it can be followed by symbolic operator characters, which would be consumed
+ * TODO: should this handle -> instead of layout_start handling it?
  */
 static Result inline_tokens(State *state) {
   LOG(INFO, "->inline_tokens (%u, %c)\n", COL, PEEK);
+  if (PEEK == '+') {
+    Result res = layout_end("+", state);
+    SHORT_SCANNER;
+    return res_fail;
+  }
   switch (PEEK) {
     case 'w': {
       Result res = where_or_with(state);
@@ -1434,11 +1446,36 @@ static Result inline_tokens(State *state) {
 }
 
 /**
+ * Parser for numbers and symops. JS grammar is detecting zero-length nat for some reason.
+ * - Nat
+ * - Int
+ * - Float
+ * - Byte
+ * Parser must fail if it detects a non-number/byte that begins with digit/decimal,
+ * or if it detects a number out of range of permissible values.
+ */
+static Result numeric(State *state) {
+  LOG(INFO, "->numeric, %c\n", PEEK);
+  if (isdigit(PEEK) || PEEK == '.' || PEEK == '-' || PEEK == '+') {
+    if (PEEK == '-' || PEEK == '+') {
+      Result res = handle_negative(state);
+      LOG(VERBOSE, "Result of handle_negative: %s\n", sym_names[res.sym]);
+      SHORT_SCANNER;
+    } else if(isdigit(PEEK)) {
+      Result res = detect_nat_ufloat_byte(state);
+      SHORT_SCANNER;
+    }
+  }
+  return res_cont;
+}
+
+/**
  * If the symbol `START` is valid, starting a new layout is almost always indicated.
  *
  * If the next character is a left brace, it is either a comment, pragma or an explicit layout. In the comment case, the
  * it must be parsed here.
  * If the next character is a minus, it might be a comment.
+ * If the next character is a +, it might be -> or an INT/FLOAT.
  *
  * In all of those cases, the layout can't be started now. In the comment and pragma case, it will be started in the
  * next run.
@@ -1447,11 +1484,54 @@ static Result inline_tokens(State *state) {
  */
 static Result layout_start(uint32_t column, State *state) {
     LOG(INFO, "->layout_start (col = %u, PEEK = %c)\n", COL, PEEK);
+    if (state->symbols[START_AND_ARROW]) {
+      if (PEEK == '-') {
+        S_ADVANCE;
+        if (PEEK == '>') {
+          S_ADVANCE;
+          if (!symbolic(PEEK)) {
+            push(column, state);
+            return finish(START_AND_ARROW, "layout_start before ->");
+          }
+        }
+        return res_fail;
+      }
+      return res_cont;
+    }
     if (state->symbols[START]) {
         switch (PEEK) {
+          SYMBOLIC_CASES: { // Cannot start a layout with a -/+ unless it's part of '->' or -+INT/FLOAT
+            if (PEEK == '+') {
+              S_ADVANCE;
+              Maybe * w = (Maybe *)get_whole(state);
+              Maybe * f = (Maybe *)get_fractional(state);
+              if ( w->has_value || f->has_value) {
+                goto foo;
+              }
+              return res_fail;
+            }
+            if (PEEK == '-') {
+              S_ADVANCE;
+              if (PEEK == '>') {
+                S_ADVANCE;
+                if (!symbolic(PEEK)) {
+                  goto foo;
+                }
+              } else if(isnumber(PEEK)) {
+                goto foo;
+                // Result res = numeric(state);
+                // if (res.sym == NAT) { // Really it's an INT since we consumed `-` already
+                  // res = finish_if_valid(INT, "int", state);
+                // }
+                // SHORT_SCANNER;
+              }
+            }
+            return res_cont;
+          }
             // TODO add stuff in here for comments, which can appear anywhere
             // and need to be handled
         }
+        foo:
         push(column, state);
         return finish(START, "layout_start");
     }
@@ -1501,30 +1581,6 @@ static Result newline_indent(uint32_t indent, State *state) {
   res = close_layout_in_list(state);
   SHORT_SCANNER;
   return newline_semicolon(indent, state);
-}
-
-/**
- * Parser for numbers and symops. JS grammar is detecting zero-length nat for some reason.
- * - Nat
- * - Int
- * - Float
- * - Byte
- * Parser must fail if it detects a non-number/byte that begins with digit/decimal,
- * or if it detects a number out of range of permissible values.
- */
-static Result numeric(State *state) {
-  LOG(INFO, "->numeric, %c\n", PEEK);
-  if (isdigit(PEEK) || PEEK == '.' || PEEK == '-' || PEEK == '+') {
-    if (PEEK == '-' || PEEK == '+') {
-      Result res = handle_negative(state);
-      LOG(VERBOSE, "Result of handle_negative: %s\n", sym_names[res.sym]);
-      SHORT_SCANNER;
-    } else if(isdigit(PEEK)) {
-      Result res = detect_nat_ufloat_byte(state);
-      SHORT_SCANNER;
-    }
-  }
-  return res_cont;
 }
  
 /**

@@ -27,6 +27,7 @@ module.exports = grammar({
     ['_infix_op_application', '_prefix_function_application'],
     ['literal_function', 'function_application'],
     ['_boolean_exp', 'literal_function'],
+    ['constructor_or_variable_pattern', '_lhs'],
   ],
   conflicts: $ => [
     [$._function_param, $._function_name],
@@ -72,6 +73,10 @@ module.exports = grammar({
     // [$.init_last_tail_pattern, $.concat_list_pattern], // todo maybe make
     [$.init_last_tail_pattern], // TODO maybe just make this right-associative?
     [$.constructor_or_variable_pattern],
+    [$._literal, $._literal_pattern],
+    [$._expression, $.constructor_or_variable_pattern],
+    [$._identifier, $.__identifier, $._lhs],
+    [$.literal_list, $.literal_list_pattern],
 
   ],
   externals: $ => [
@@ -92,7 +97,8 @@ module.exports = grammar({
     $.float,
     $.operator,
     $._parenthesized_operator,
-    $._watch_start
+    $._watch_start,
+    $._start_before_arrow,
   ],
   extras: $ => [
     /\\?\s/,
@@ -112,7 +118,7 @@ module.exports = grammar({
         alias($.effect_declaration, $.ability_declaration),
       ),
     ),
-    
+    // nat: $ => /[0-9]+/,
     ...reserved,
     ...effects,
     ...identifiers,
