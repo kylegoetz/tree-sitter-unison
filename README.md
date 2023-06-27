@@ -4,7 +4,7 @@ This is a WIP. Does not pass all tests. Need more tests.
 
 ### To do:
 - [x] use clause
-- [ ] pattern matching ([see here](https://github.com/kylegoetz/tree-sitter-unison/tree/patterns))
+- [x] pattern matching ([see here](https://github.com/kylegoetz/tree-sitter-unison/tree/patterns))
 - [x] where
 - [x] destructuring binds (depends on pattern matching)
 - [x] record types
