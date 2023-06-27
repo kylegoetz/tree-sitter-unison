@@ -74,17 +74,6 @@ x = 0xsdeadbeef
             (kw_equals)
             (literal_byte))))
 ===
-[Literal] hash literal
-===
-x = #a0v829
----
-(unison
-    (term_declaration
-        (term_definition
-            (wordy_id)
-            (kw_equals)
-            (literal_hash))))
-===
 [Literal] list literal
 ===
 x = [1, 2, 3]

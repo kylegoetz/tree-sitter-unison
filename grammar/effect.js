@@ -35,9 +35,10 @@ module.exports = {
     immediate_hash: $ => token.immediate(/#[a-zA-Z0-9]+/),
     // unit: $ => '()',
     
+    // TODO refer back to hashes again. Can it also be ##builtin hash?
     _type_atom: $ => choice(
         seq($.wordy_id, optional($.immediate_hash)),
-        seq($.literal_hash),
+        seq(/#[0-9a-zA-Z]+/),
         $.unit,
     ),
     // [Int], [A -> B], etc.

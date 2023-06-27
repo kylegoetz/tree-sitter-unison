@@ -77,6 +77,10 @@ module.exports = grammar({
     [$._expression, $.constructor_or_variable_pattern],
     [$._identifier, $.__identifier, $._lhs],
     [$.literal_list, $.literal_list_pattern],
+    [$._hash_qualified, $._expression],
+    [$._hash_qualified, $._expression, $._lhs],
+    [$._hash_qualified, $._expression, $.constructor_or_variable_pattern],
+    [$._hash_qualified, $._expression, $.type_signature],
 
   ],
   externals: $ => [
