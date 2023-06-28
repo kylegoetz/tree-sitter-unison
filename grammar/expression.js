@@ -14,6 +14,8 @@ module.exports = {
     $._pattern_matching,
     $.parenthetical_exp,
     $._boolean_exp,
+    $.delay_block,
+    $.bang,
   )),
   
   operator_as_parameter: $ => seq('(',$.operator, ')'),

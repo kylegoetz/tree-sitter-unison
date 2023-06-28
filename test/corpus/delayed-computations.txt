@@ -1,0 +1,33 @@
+===
+[Delayed] type and block
+===
+program : '{IO, Exception} ()
+program = do
+  use Text ++
+  printLine "What is your name?"
+  name = !readLine
+  printLine ("Hello, " ++ name)
+---
+(unison
+    (term_declaration
+        (type_signature
+            (wordy_id)
+            (type_signature_colon)
+            (delayed
+                (effect
+                    (wordy_id))
+                (effect
+                    (wordy_id))
+                (unit)))
+        (term_definition
+            (wordy_id)
+            (kw_equals)
+            (delay_block
+                (do)
+                (use_clause
+                    (use)
+                    (namespace)
+                    (operator))
+                (function_application (wordy_id) (literal_text))
+                (term_declaration (term_definition (wordy_id) (kw_equals) (bang (wordy_id))))
+                (function_application (wordy_id) (tuple_or_parenthesized (function_application (literal_text) (operator) (wordy_id))))))))

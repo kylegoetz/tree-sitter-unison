@@ -14,6 +14,8 @@ const pattern_matching = require('./grammar/pattern-matching')
 const conditionals = require('./grammar/conditionals')
 const reserved = require('./grammar/reserved')
 const destructuring_bind = require('./grammar/binding')
+const delayed = require('./grammar/delayed-computation')
+const doc = require('./grammar/doc')
 
 
 module.exports = grammar({
@@ -138,6 +140,8 @@ module.exports = grammar({
     ...pattern_matching,
     ...conditionals,
     ...destructuring_bind,
+    ...delayed,
+    ...doc,
     
       
     

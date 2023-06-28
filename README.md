@@ -10,7 +10,7 @@ This is a WIP. Does not pass all tests. Need more tests.
 - [x] record types
 - [x] hash-qualifications for identifiers
 - [ ] bring terminology more in line with documentation or the `*Parser.hs` terms (`wordy_id` vs `identifier`, `symboly_id` vs `operator`, etc.)
-- [ ] lazy functionality (`'`, `!`)
+- [x] lazy functionality (`'`, `!`)
 - [ ] `alias`
 - [ ] `namespace`
 - [ ] `termLink`
@@ -20,4 +20,5 @@ This is a WIP. Does not pass all tests. Need more tests.
 - [x] test watch expressions (`test>`)
 - [ ] do we need to support lcase, ucase, or both for hashes in base32hex?
 - [x] offload hash detection to C scanner bc JS has problems parsing the hash, cycle, and cid correctly.
+- [ ] documentation (doc block)
 - others?

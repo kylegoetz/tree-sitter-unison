@@ -1,4 +1,5 @@
 module.exports = {
+  do: _ => 'do',
   kw_let: _ => 'let',
   structural_kw: $ => 'structural',
   unique_kw: $ => 'unique',

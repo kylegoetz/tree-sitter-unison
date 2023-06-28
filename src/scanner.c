@@ -1029,11 +1029,14 @@ static bool found_pipe_or_logical_op(uint8_t pipe_count, uint8_t amp_count) {
  * Cannot run before determining DOT is not an absolute qualifier.
  * Need to exclude certain symbols as solutions. The following cannot
  * be considered operators: =, &&, ||, | (`|` is handled by the JS)
+ * Also need to exclude !( and ! bc these are bangs, a reserved keyword not an operator.
  *
  * Needs to recognize `(OPERATOR)` as a parenthesized operator
  */
 static Result operator(State *state) {
   LOG(INFO, "->operator (%u, %c)\n", COL, PEEK);
+  
+  if (is_eof(state)) return res_cont;
   
   // Process WATCH
   if (COL == 0 && PEEK == '>') {
@@ -1055,6 +1058,14 @@ static Result operator(State *state) {
   if (PEEK == '=') {
     Result res = equals(state);
     SHORT_SCANNER;
+  }
+  
+  // Detect bangs and let JS handle them
+  if ( PEEK == '!') {
+    S_ADVANCE;
+    if (is_eof(state) || PEEK == '(' || !symbolic(PEEK)) {
+      return res_fail;
+    }
   }
 
   uint8_t and_count = 0;
