@@ -145,17 +145,12 @@ x = termLink aUnisonTerm
 ===
 [Literal] typeLink
 ===
-x = typeLink Optional
+> typeLink Optional
+> typeLink ##Foo.bar
 ---
 (unison
-    (term_declaration
-        (term_definition
-            (wordy_id)
-            (kw_equals)
-            (literal_typelink
-                (kw_typelink)
-                (type
-                    (wordy_id))))))
+    (watch_expression (literal_typelink (kw_typelink) (wordy_id)))
+    (watch_expression (literal_typelink (kw_typelink) (built_in_hash (path) (wordy_id)))))
 ===
 [Literal] Nat
 ===

@@ -69,6 +69,6 @@ module.exports = {
   
   tuple_or_parenthesized: $ => seq('(', sep1(',', $._expression), ')'),
   // term: $ => $._regular_identifier,
-  literal_termlink: $ => seq($.kw_termlink, field('term', $.wordy_id)),
-  literal_typelink: $ => seq($.kw_typelink, $.type),
+  literal_termlink: $ => seq($.kw_termlink, $._hash_qualified),
+  literal_typelink: $ => seq($.kw_typelink, $._hash_qualified),
 }
