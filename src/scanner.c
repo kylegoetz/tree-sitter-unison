@@ -1247,23 +1247,6 @@ static Result multiline_comment_success(State *state) {
 }
 
 /**
- * Since {{ }} doc blocks can be nested arbitrarily, this has to keep track of how many have been opened, so that the
- * outermost block isn't closed prematurely.
- */
-// static Result doc_block(State *state) {
-//   LOG(INFO, "doc_block (col = %u, PEEK = %c)\n", COL, PEEK);
-//   uint16_t level = 0;
-//   for (;;) {
-//     switch (PEEK) {
-//       case '{':
-//         S_ADVANCE;
-//         if (PEEK == '{') {
-//           S_ADVANCE;
-//         }
-//     }
-//   }
-// }
-/**
  * Can appear anywhere. Only call once we've consumed a `{{` (in `multiline_comment`).
  */
 static Result doc_block(State *state) {
