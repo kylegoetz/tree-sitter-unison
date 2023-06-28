@@ -1,7 +1,4 @@
 const regex = require('./regex')
-const HASH_PREFIX = /#[0-9a-zA-Z]+/
-
-const HASH_QUALIFIER = /#[0-9a-zA-Z]+(\.[0-9a-zA-Z]+)?(#[0-9a-zA-Z]+)?/
 
 module.exports = {  
   wordy_id: $ => regex.varid,
@@ -34,24 +31,28 @@ module.exports = {
     
   namespace: $ => token(regex.namespace),
   
+  hash_qualifier: $ => seq(
+    alias(/#[a-zA-Z0-9]+/, $.hash_prefix), 
+    optional(alias($._dot, $.cyclic_index)),
+    optional($.hash_cid),
+  ),
+  
+  imm_hash_qualifier: $ => seq(
+    alias(token.immediate(/#[a-zA-Z0-9]+/), $.hash_prefix),
+    optional(alias($._dot, $.cyclic_index)),
+    optional($.hash_cid),
+  ),
+  
   _hash_qualified: $ => choice(
     $._identifier,
     $.built_in_hash,
-    alias(HASH_QUALIFIER, $.hash_qualifier),
-    seq($._identifier, alias(token.immediate(HASH_QUALIFIER), $.hash_qualifier)),
-    // seq($.hash_prefix, optional($._hash_tail)),
-    // seq($._identifier, seq(alias($.imm_hash_prefix, $.hash_prefix), optional($._hash_tail))),
+    $.hash_qualifier,
+    seq(
+      $._identifier, 
+      alias($.imm_hash_qualifier, $.hash_qualifier),
+    ),
   ),
-  hash_prefix: _ => HASH_PREFIX,
-  imm_hash_prefix: _ => token.immediate(HASH_PREFIX),
-  hash_cycle: _ => token.immediate(/\.[0-9a-zA-Z]+/),
-  hash_cid: _ => token.immediate(/#[0-9a-zA-Z]+/),
-  // _hash_tail: $ => seq(optional($.hash_cycle), optional($.hash_cid)),
-  _hash_tail: $ => choice(
-    $.hash_cycle,
-    $.hash_cid,
-    seq($.hash_cycle, $.hash_cid),
-  ),
+
   built_in_hash: $ => seq(
     '##',
     alias(token.immediate(regex.path), $.path),
@@ -61,8 +62,3 @@ module.exports = {
     )
   ),
 }
-
-const maybe_with_path = ($, rule, maybeAlias) => choice(
-  seq($.path, token.immediate(rule)),
-  rule,
-)

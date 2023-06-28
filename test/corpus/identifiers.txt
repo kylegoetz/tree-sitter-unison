@@ -52,7 +52,7 @@ x = >>=#foo
                 (wordy_id)
                 (kw_equals)
                 (operator) 
-                (hash_qualifier))))
+                (hash_qualifier (hash_prefix)))))
 ===
 [Identifier] HQ built in
 ===
@@ -69,7 +69,7 @@ x = #2tWjVAuc7
         (term_definition
             (wordy_id)
             (kw_equals)
-            (hash_qualifier))))
+            (hash_qualifier (hash_prefix)))))
 ===
 [Identifier] HQ prefix and cycle
 ===
@@ -80,7 +80,7 @@ x = #y9ycWkiC1.y9
         (term_definition
             (wordy_id)
             (kw_equals)
-            (hash_qualifier))))
+            (hash_qualifier (hash_prefix) (cyclic_index)))))
 ===
 [Identifier] HQ prefix and cid
 ===
@@ -91,7 +91,7 @@ x = #cWkiC1x89#1
         (term_definition 
             (wordy_id) 
             (kw_equals)
-            (hash_qualifier))))
+            (hash_qualifier (hash_prefix) (hash_cid)))))
 ===
 [Identifier] HQ prefix, cycle, and cid
 ===
@@ -102,4 +102,4 @@ x = #DCxrnCAPS.WD#0
             (term_definition
                 (wordy_id)
                 (kw_equals)
-                (hash_qualifier))))
+                (hash_qualifier (hash_prefix) (cyclic_index) (hash_cid)))))

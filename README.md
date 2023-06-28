@@ -19,5 +19,5 @@ This is a WIP. Does not pass all tests. Need more tests.
 - [ ] test escape sequences in Text literals
 - [x] test watch expressions (`test>`)
 - [ ] do we need to support lcase, ucase, or both for hashes in base32hex?
-- [ ] offload hash detection to C scanner bc JS has problems parsing the hash, cycle, and cid correctly.
+- [x] offload hash detection to C scanner bc JS has problems parsing the hash, cycle, and cid correctly.
 - others?

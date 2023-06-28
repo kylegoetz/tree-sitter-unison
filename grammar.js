@@ -103,6 +103,7 @@ module.exports = grammar({
     $._parenthesized_operator,
     $._watch_start,
     $._start_before_arrow,
+    $.hash_cid,
   ],
   extras: $ => [
     /\\?\s/,

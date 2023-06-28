@@ -107,6 +107,7 @@ typedef enum {
     PREFIX_SYMOP,
     WATCH,
     START_AND_ARROW,
+    OCTOTHORPE,
     FAIL, // always last in list
 } Sym;
 
@@ -131,6 +132,7 @@ static char *sym_names[] = {
     "(symop)",
     "watch",
     "start ->",
+    "octothorpe",
     "fail",
 };
 // #endif
@@ -140,7 +142,7 @@ static char *sym_names[] = {
  * this function is used to detect them.
  */
 static bool all_syms(const bool *syms) {
-  for (int i = 0; i <= START_AND_ARROW; i++) {
+  for (int i = 0; i <= OCTOTHORPE; i++) {
     if (!syms[i]) return false;
   }
   return true;
@@ -157,7 +159,7 @@ static void debug_valid(const bool *syms) {
   }
   bool fst = true;
   LOG(VERBOSE, "\"");
-  for (Sym i = SEMICOLON; i <= START_AND_ARROW; i++) {
+  for (Sym i = SEMICOLON; i <= OCTOTHORPE; i++) {
     if (syms[i]) {
       if (!fst) LOG(VERBOSE, ",");
       LOG(VERBOSE, "%s", sym_names[i]);
@@ -656,40 +658,62 @@ static Result eof(State *state) {
   // };
   // return res_cont;
 // }
- 
+
 /**
- * If a dot is neither preceded nor succeded by whitespace, it may be parsed as a qualified module dot.
- *
- * The preceding space is ensured by sequencing this parser before `skipspace` in `init`.
- * Since this parser cannot look back to see whether the preceding name is a conid, this has to be ensured by the
- * grammar, represented here by the requirement of a valid symbol `DOT`.
- *
- * Since the dot is consumed here, the alternative interpretation, a `VARSYM`, has to be emitted here.
- * A `TYCONSYM` is invalid here, because the dot is only expected in expressions.
+ * Detect the cyclic and cid parts of a hash (OCTOTHORPE and DOT).
+ * A hash is of the form ##builtin or #prefix(.cyclic)(#cid)
+ * We let builtins be discovered by the JS, so fail for ##.
+ * We also detect #prefix in the JS. So only detect the #cid and .cyclic
+ * The cid is only valid if we've just found the prefix, so can never
+ * detect the cid when should be detecting the prefix.
  */
-static Result dot(State *state) {
-  if (SYM(DOT)) {
-    if (PEEK == '.') {
+static Result hash(State *state) {
+  if (SYM(OCTOTHORPE)) {
+    if (!is_eof(state) && PEEK == '#') { // Could be the cid of a hash
       S_ADVANCE;
-      if (SYM(VARSYM) && iswspace(PEEK)) return finish(VARSYM, "dot");
-      MARK("dot", false, state);
-      return finish(DOT, "dot");
+      bool found = false;
+      while (isdigit(PEEK) || isalpha(PEEK)) {
+        found = true;
+        S_ADVANCE;
+      }
+      if (found) {
+        MARK("hash", false, state);
+        return finish(OCTOTHORPE, "hash");
+      } else {
+        return res_fail;
+      }
+    }
+  }
+  if (SYM(DOT)) {
+    if (!is_eof(state) && PEEK == '.') { // Could be cyclic of a hash
+      S_ADVANCE;
+      bool found = false;
+      while (isdigit(PEEK) || isalpha(PEEK)) {
+        found = true;
+        S_ADVANCE;
+      }
+      if(found) {
+        MARK("hash", false, state);
+        return finish(DOT, "hash");
+      } else {
+        return res_fail;
+      }
     }
   }
   return res_cont;
 }
  
- static Result fold(State *state) {
-   LOG(INFO, "->fold with PEEK =%c@%u\n", PEEK, column(state));
-   if (seq("---", state)) {
-     LOG(VERBOSE, "--- and PEEK is %c@%u\n", PEEK, column(state));
-     while(!is_eof(state)) S_ADVANCE;
-     LOG(VERBOSE, "after advancing, PEEK is %c and should be EOF: %s\n", PEEK, is_eof(state) ? "true" : "false");
-     MARK("fold", false, state);
-     return finish(FOLD, "fold");
-   }
-   return res_cont;
- }
+static Result fold(State *state) {
+  LOG(INFO, "->fold with PEEK =%c@%u\n", PEEK, column(state));
+  if (seq("---", state)) {
+    LOG(VERBOSE, "--- and PEEK is %c@%u\n", PEEK, column(state));
+    while(!is_eof(state)) S_ADVANCE;
+    LOG(VERBOSE, "after advancing, PEEK is %c and should be EOF: %s\n", PEEK, is_eof(state) ? "true" : "false");
+    MARK("fold", false, state);
+    return finish(FOLD, "fold");
+  }
+  return res_cont;
+}
  
 /**
  * End a layout by removing an indentation from the stack, but only if the current column (which should be in the next
@@ -1704,8 +1728,8 @@ static Result init(State *state) {
   
   // res = initialize_init(state);
   // SHORT_SCANNER;
-  // res = dot(state);
-  // SHORT_SCANNER;  
+  res = hash(state);
+  SHORT_SCANNER;  
   if (SYM(FOLD)) {
     res = fold(state);
     SHORT_SCANNER;
