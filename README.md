@@ -13,8 +13,8 @@ This is a WIP. Does not pass all tests. Need more tests.
 - [x] lazy functionality (`'`, `!`)
 - [x] `alias` <-- no current implementation, merely a reserved keyword
 - [x] `namespace` <-- no current implementatoin, merely a reserved keyword
-- [ ] `termLink`
-- [ ] `typeLink`
+- [x] `termLink`
+- [x] `typeLink`
 - [ ] complex tests using production code
 - [ ] test escape sequences in Text literals
 - [x] test watch expressions (`test>`)
