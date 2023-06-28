@@ -7,5 +7,5 @@ module.exports = {
   
   // TODO can this appear anywhere?
   // comment_documentation_block: $ => seq('{{', /.*/m, '}}'),
-  comment_documentation_block: $ => /\{\{.*}}/m,
+  // comment_documentation_block: $ => /\{\{.*}}/m,
 }

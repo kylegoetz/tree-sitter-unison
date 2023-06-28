@@ -106,11 +106,13 @@ module.exports = grammar({
     $._watch_start,
     $._start_before_arrow,
     $.hash_cid,
+    $.doc_block,
   ],
   extras: $ => [
     /\\?\s/,
     $.comment,
     $.comment_multiline,
+    $.doc_block,
   ],
   rules: {
     unison: $ => repeat(

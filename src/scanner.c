@@ -108,6 +108,7 @@ typedef enum {
     WATCH,
     START_AND_ARROW,
     OCTOTHORPE,
+    DOC_BLOCK,
     FAIL, // always last in list
 } Sym;
 
@@ -133,6 +134,7 @@ static char *sym_names[] = {
     "watch",
     "start ->",
     "octothorpe",
+    "doc block",
     "fail",
 };
 // #endif
@@ -142,7 +144,7 @@ static char *sym_names[] = {
  * this function is used to detect them.
  */
 static bool all_syms(const bool *syms) {
-  for (int i = 0; i <= OCTOTHORPE; i++) {
+  for (int i = 0; i <= DOC_BLOCK; i++) {
     if (!syms[i]) return false;
   }
   return true;
@@ -159,7 +161,7 @@ static void debug_valid(const bool *syms) {
   }
   bool fst = true;
   LOG(VERBOSE, "\"");
-  for (Sym i = SEMICOLON; i <= OCTOTHORPE; i++) {
+  for (Sym i = SEMICOLON; i <= DOC_BLOCK; i++) {
     if (syms[i]) {
       if (!fst) LOG(VERBOSE, ",");
       LOG(VERBOSE, "%s", sym_names[i]);
@@ -1245,13 +1247,93 @@ static Result multiline_comment_success(State *state) {
 }
 
 /**
+ * Since {{ }} doc blocks can be nested arbitrarily, this has to keep track of how many have been opened, so that the
+ * outermost block isn't closed prematurely.
+ */
+// static Result doc_block(State *state) {
+//   LOG(INFO, "doc_block (col = %u, PEEK = %c)\n", COL, PEEK);
+//   uint16_t level = 0;
+//   for (;;) {
+//     switch (PEEK) {
+//       case '{':
+//         S_ADVANCE;
+//         if (PEEK == '{') {
+//           S_ADVANCE;
+//         }
+//     }
+//   }
+// }
+/**
+ * Can appear anywhere. Only call once we've consumed a `{{` (in `multiline_comment`).
+ */
+static Result doc_block(State *state) {
+  LOG(INFO, "doc_block (col = %u, peek = %c)\n", COL, PEEK);
+  if (!SYM(DOC_BLOCK)) {
+    return res_fail;
+  }
+  uint16_t level = 0;
+  for (;;) {
+    switch(PEEK) {
+      case '{': {
+        S_ADVANCE;
+        if (PEEK == '{') {
+          S_ADVANCE;
+          ++level;
+        }
+        break;
+      }
+      case '}': {
+        S_ADVANCE;
+        if (PEEK == '}') {
+          S_ADVANCE;
+          if (level == 0) {
+            MARK("doc_block", false, state);
+            return res_finish(DOC_BLOCK);
+          }
+          --level;
+        }
+        break;
+      }
+      case 0: {
+        Result res = eof(state);
+        SHORT_SCANNER;
+        return res_fail;
+      }
+      default:
+        S_ADVANCE;
+        break;
+    }
+  }
+  while (level > 0 && !is_eof(state)) {
+    if (PEEK == '{') {
+      S_ADVANCE;
+      if (!is_eof(state) && PEEK == '{') {
+        ++level;
+      }
+    }
+    if (PEEK == '}') {
+      S_ADVANCE;
+      if (!is_eof(state) && PEEK == '}') {
+        --level;
+      }
+    }
+    S_ADVANCE;
+  }
+  if (level == 0) {
+    MARK("doc_block", false, state);
+    return res_finish(DOC_BLOCK);
+  }
+  return res_fail;
+}
+
+/**
  * See `nested_comment`.
  *
- * Since {- -} comments can be nested arbitrarily, this has to keep track of how many have been openend, so that the
+ * Since {- -} comments and {{ }} doc blocks can be nested arbitrarily, this has to keep track of how many have been openend, so that the
  * outermost comment isn't closed prematurely.
  */
 static Result multiline_comment(State *state) {
-  LOG(INFO, "->multiline_comment (col = %u, PEEK = %c)\n", state->lexer->get_column(state->lexer), PEEK);
+  LOG(INFO, "->multiline_comment (col = %u, PEEK = %c)\n", COL, PEEK);
   uint16_t level = 0;
   for (;;) {
     switch (PEEK) {
@@ -1283,14 +1365,21 @@ static Result multiline_comment(State *state) {
 }
 
 /**
- * NOTE: No pragmas in Unison; this is a Haskell thing. Remove the {-#
- * When a brace is encountered, it can be an explicitly started layout, a pragma, or a comment. In the latter case, the
- * comment is parsed, otherwise parsing fails to delegate to the corresponding grammar rule.
+ * When a brace is encountered, it can be a multi-line comment, doc block, or ability-related.
+ * In the first two cases, the comment/doc block is parsed, otherwise parsing fails to delegate to the corresponding grammar rule.
  */
 static Result brace(State *state) {
-  LOG(INFO, "->brace\n");
+  LOG(INFO, "->brace (col = %u, peek = %c)\n", COL, PEEK);
   if (PEEK != '{') return res_fail;
   S_ADVANCE;
+  switch (PEEK) {
+    case '{': {
+      S_ADVANCE;
+      return doc_block(state);
+    }
+    case '-': return multiline_comment(state);
+    default: return res_fail;
+  }
   if (PEEK != '-') return res_fail;
   S_ADVANCE;
   // if (PEEK == '#') return res_fail;
@@ -1472,10 +1561,10 @@ static Result inline_tokens(State *state) {
     //   return res_fail;
     // }
     // '-' case covered by symop
-    // case '{': {
-    //   Result res = comment(state);
-    //   SHORT_SCANNER;
-    // }
+    case '{': {
+      Result res = comment(state);
+      SHORT_SCANNER;
+    }
   }
   return close_layout_in_list(state);
 }
