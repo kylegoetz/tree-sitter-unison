@@ -11,8 +11,8 @@ This is a WIP. Does not pass all tests. Need more tests.
 - [x] hash-qualifications for identifiers
 - [ ] bring terminology more in line with documentation or the `*Parser.hs` terms (`wordy_id` vs `identifier`, `symboly_id` vs `operator`, etc.)
 - [x] lazy functionality (`'`, `!`)
-- [ ] `alias`
-- [ ] `namespace`
+- [x] `alias` <-- no current implementation, merely a reserved keyword
+- [x] `namespace` <-- no current implementatoin, merely a reserved keyword
 - [ ] `termLink`
 - [ ] `typeLink`
 - [ ] complex tests using production code
