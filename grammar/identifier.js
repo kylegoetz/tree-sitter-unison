@@ -55,7 +55,7 @@ module.exports = {
 
   built_in_hash: $ => seq(
     '##',
-    alias(token.immediate(regex.path), $.path),
+    optional(alias(token.immediate(regex.path), $.path)),
     choice(
       alias($.imm_wordy_id, $.wordy_id),
       alias($.imm_symboly_id, $.operator),
