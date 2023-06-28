@@ -1,18 +1,4 @@
 ===
-documentation block
-===
-{{Maya Angelou was an acclaimed poet, director, essayist, and novelist.}}
-poet = "Maya Angelou"
----
-(unison
-    (comment_documentation_block)
-    (term_declaration
-        (term_definition
-            (wordy_id)
-            (kw_equals)
-            (literal_text))))
-
-===
 line comment
 ===
 
@@ -35,7 +21,7 @@ multiline comment
 -}
 ---
 (unison
-    (comment_multiline))
+    (comment))
     
 ===
 fold
@@ -61,4 +47,4 @@ comment with -} nesting
             (wordy_id)
             (kw_equals)
             (nat)
-            (comment_multiline))))
+            (comment))))

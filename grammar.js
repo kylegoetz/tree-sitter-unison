@@ -111,7 +111,6 @@ module.exports = grammar({
   extras: $ => [
     /\\?\s/,
     $.comment,
-    $.comment_multiline,
     $.doc_block,
   ],
   rules: {
@@ -122,7 +121,6 @@ module.exports = grammar({
         $.type_declaration,
         $.term_declaration,
         $.fold,
-        $.comment_documentation_block,
         $.use_clause,
         alias($.effect_declaration, $.ability_declaration),
       ),

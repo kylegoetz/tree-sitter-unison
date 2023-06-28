@@ -18,3 +18,9 @@ x = 1 + 2
 x = ##Foo
 ---
 (unison (term_declaration (term_definition (wordy_id) (kw_equals) (built_in_hash (wordy_id)))))
+===
+[Regression] Issue 22: multiline comments barf on imbalanced nesting. No comment should be recognized.
+===
+{- a {- b -} foo
+---
+(unison)
