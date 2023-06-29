@@ -27,7 +27,7 @@ store.stopIfTrue = f a b c
 ---
 (unison
     (term_declaration
-        (type_signature (path) (wordy_id) (type_signature_colon) (wordy_id) (arrow_symbol) (wordy_id) (arrow_symbol) (wordy_id) (arrow_symbol)
+        (type_signature (path) (wordy_id) (type_signature_colon) (parenthesized (wordy_id) (arrow_symbol) (wordy_id)) (arrow_symbol) (wordy_id) (arrow_symbol)
             (effect (wordy_id)) (effect (wordy_id) (wordy_id)) (wordy_id))
         (term_definition
             (path) (wordy_id)

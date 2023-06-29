@@ -30,8 +30,9 @@ module.exports = {
         optional($.forall), 
         $._type1
     ),
+    parenthesized: $ => seq('(', $._value_type, ')'),
     _value_type_leaf: $ => choice(
-        seq('(', $._value_type, ')'),
+        $.parenthesized,
         $._type_atom,
         $.sequence_type,
     ),
