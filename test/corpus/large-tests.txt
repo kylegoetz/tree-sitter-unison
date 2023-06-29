@@ -68,3 +68,40 @@ Heap.deleteMin cmp = cases
             (pattern
                 (constructor_or_variable_pattern (path) (wordy_id)) (arrow_symbol) (path) (wordy_id))
         )))
+===
+[Large] @unison/json Decoder.run
+===
+j =
+  """
+  [1, "some text", null, true, 42.0, 239489234823098234]
+  """
+> Decoder.run
+
+  (array6
+    Decoder.nat
+    Decoder.text
+    Decoder.null
+    Decoder.boolean
+    Decoder.float
+    unparsed)
+  j
+---
+(unison
+    (term_declaration (term_definition (wordy_id) (kw_equals) (literal_text)))
+    (watch_expression (function_application
+        (path) (wordy_id)
+        (tuple_or_parenthesized
+            (function_application
+                (wordy_id)
+                (function_application
+                    (path) (wordy_id)
+                    (function_application
+                        (path) (wordy_id)
+                        (function_application
+                            (path) (wordy_id)
+                            (function_application
+                                (path) (wordy_id)
+                                (function_application
+                                    (path) (wordy_id)
+                                    (wordy_id))))))))
+        (wordy_id))))
