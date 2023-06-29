@@ -1624,7 +1624,7 @@ static Result layout_start(uint32_t column, State *state) {
                 if (!symbolic(PEEK)) {
                   goto foo;
                 }
-              } else if(isnumber(PEEK)) {
+              } else if(isdigit(PEEK)) {
                 goto foo;
                 // Result res = numeric(state);
                 // if (res.sym == NAT) { // Really it's an INT since we consumed `-` already
