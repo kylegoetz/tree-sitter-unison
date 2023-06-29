@@ -1,6 +1,6 @@
 # Tree sitter for Unison
 
-This is a WIP. Does not pass all tests. Need more tests.
+* [2023-06-28] v1 released. All Unison entities parsed, but doc blocks are only parsed as a doc block without breaking them down further into sections, etc.
 
 ### To do:
 - [ ] bring terminology more in line with documentation or the `*Parser.hs` terms (`wordy_id` vs `identifier`, `symboly_id` vs `operator`, etc.)
