@@ -20,15 +20,23 @@ module.exports = {
   ),
   unit: $ => '()',
   // literal_text: $ => /".+?"/,
-  literal_text: _ => 
-    seq(
-      '"',
-      repeat(choice(
-        /[^\\"\n]/,
-        /\\(\^)?./,
-        /\\\n\s*\\/,
-      )),
-      '"',
+  _text_interior: _ => repeat1(choice(
+          /[^\\"\n]/,
+          /\\(\^)?./,
+          /\\\n\s*\\/,
+        )),
+  literal_text: $ => 
+    choice(
+      seq(
+        '"',
+        optional($._text_interior),
+        '"',
+      ),
+      seq(
+        '"""', 
+        optional($._text_interior),
+        '"""'
+      ),
     ),
   
   // Range: [0, 18446744073709551615]
