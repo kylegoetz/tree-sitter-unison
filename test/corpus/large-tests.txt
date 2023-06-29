@@ -105,3 +105,80 @@ j =
                                     (path) (wordy_id)
                                     (wordy_id))))))))
         (wordy_id))))
+===
+[Large] @unison/json Decoding sum types
+===
+d =
+  use Decoder nat
+  nested
+    "tag" nat "value" (cases
+      0 -> Left !(array2 nat Decoder.boolean)
+      1 -> Right !Decoder.text
+      t ->
+        use Text ++
+        Decoder.fail ("unknown tag: " ++ Nat.toText t))
+> Decoder.run d "{ \"tag\" : 0, \"value\" : [1, true] }"
+---
+ (unison
+      (term_declaration
+        (term_definition
+          (wordy_id)
+          (kw_equals)
+          (use_clause
+            (use)
+            (namespace)
+            (wordy_id))
+          (function_application
+            (wordy_id)
+            (literal_text)
+            (wordy_id)
+            (literal_text)
+            (tuple_or_parenthesized
+              (cases)
+              (pattern
+                (nat)
+                (arrow_symbol)
+                (function_application
+                  (wordy_id)
+                  (bang
+                    (tuple_or_parenthesized
+                      (function_application
+                        (wordy_id)
+                        (function_application
+                          (wordy_id)
+                          (path)
+                          (wordy_id)))))))
+              (pattern
+                (nat)
+                (arrow_symbol)
+                (function_application
+                  (wordy_id)
+                  (bang
+                    (path)
+                    (wordy_id))))
+              (pattern
+                (constructor_or_variable_pattern
+                  (wordy_id))
+                (arrow_symbol)
+                (use_clause
+                  (use)
+                  (namespace)
+                  (operator))
+                (function_application
+                  (path)
+                  (wordy_id)
+                  (tuple_or_parenthesized
+                    (function_application
+                      (literal_text)
+                      (operator)
+                      (function_application
+                        (path)
+                        (wordy_id)
+                        (wordy_id))))))))))
+      (watch_expression
+        (function_application
+          (path)
+          (wordy_id)
+          (function_application
+            (wordy_id)
+            (literal_text)))))
