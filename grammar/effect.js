@@ -25,7 +25,11 @@ module.exports = {
      * value_type -> {...} value_type
      * value_type -> { ... } ()
      */
-    _value_type: $ => seq(optional($.kw_forall), $._type1),
+    forall: $ => seq($.kw_forall, repeat($.wordy_id), '.'),
+    _value_type: $ => seq(
+        optional($.forall), 
+        $._type1
+    ),
     _value_type_leaf: $ => choice(
         seq('(', $._value_type, ')'),
         $._type_atom,
