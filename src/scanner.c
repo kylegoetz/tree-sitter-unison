@@ -1601,12 +1601,28 @@ static Result layout_start(uint32_t column, State *state) {
             return finish(START_AND_ARROW, "layout_start before ->");
           }
         }
+        else if (PEEK == '-') {
+          return inline_comment(state);
+        }
         return res_fail;
       }
       return res_cont;
     }
+    // Need to make sure we aren't calculating a layout based on comment col
     if (state->symbols[START]) {
+      if (PEEK == '-') {
+        S_ADVANCE;
+        if (PEEK == '-') {
+          return inline_comment(state);
+        }
+      }
         switch (PEEK) {
+          case '{': {
+            S_ADVANCE;
+            if (PEEK == '-') {
+              return multiline_comment(state);
+            }
+          }
           SYMBOLIC_CASES: { // Cannot start a layout with a -/+ unless it's part of '->' or -+INT/FLOAT
             if (PEEK == '+') {
               S_ADVANCE;

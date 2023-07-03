@@ -25,3 +25,17 @@
   (term_declaration (term_definition (wordy_id) (kw_equals) (nat)))
   (function_application (wordy_id) (operator) (nat))
   )))
+===
+[Blocks] inline and multiline comments should not affect indentation calculation
+===
+> cases
+       {- A comment -}
+          -- A one-line comment
+     0 -> "hi"
+     1 -> "bye"
+---
+(unison
+  (comment)
+  (comment)
+  (pattern (nat) (arrow_symbol) (literal_text))
+  (pattern (nat) (arrow_symbol) (literal_text)))
