@@ -25,14 +25,8 @@ module.exports = {
   as_pattern: $ => prec.left(seq($.wordy_id, $.as, $._pattern_lhs)),
   
   constructor_or_variable_pattern: $ => prec.left('constructor_or_variable_pattern', seq(
-    prec(2, $._identifier),
-    // optional(seq($._layout_start, repeat1(prec.left(1, choice($.wordy_id, $._pattern_lhs))), $._layout_end)),  // TODO left off here by adding layout start/end
-    // layouted($, optional(repeat1($.wordy_id))),
-    // repeat(choice('x', 'y'))
-    prec.left(
-        repeat(prec.left($._pattern_lhs)),
-        // seq($._layout_start, repeat($.wordy_id), optional($._layout_end))
-    ),
+    prec(2, $._hash_qualified),
+    prec.left(repeat(prec.left($._pattern_lhs))),
   )),
   
   _list_pattern: $ => choice(

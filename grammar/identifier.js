@@ -1,4 +1,5 @@
 const regex = require('./regex')
+const { parens } = require('./util')
 
 module.exports = {  
   wordy_id: $ => regex.varid,
@@ -52,6 +53,29 @@ module.exports = {
       alias($.imm_hash_qualifier, $.hash_qualifier),
     ),
   ),
+  
+  _hq_qualified_wordy_id: $ => seq(
+    choice(
+      $.wordy_id,
+      seq($.path, alias($.imm_wordy_id, $.wordy_id)),
+    ),
+    optional(alias($.imm_hash_qualifier, $.hash_qualifier)),
+  ),
+  
+  _hq_qualified_symboly_id: $ => seq(
+    choice(
+      $.operator,
+      seq($.path, alias($.imm_symboly_id, $.operator)),
+    ),
+    optional(alias($.imm_hash_qualifier, $.hash_qualifier)),
+  ),
+  
+  _hq_qualified_prefix_term: $ => choice(
+    $._hq_qualified_wordy_id,
+    parens($._hq_qualified_symboly_id),
+  ),
+  
+  _hq_qualified_infix_term: $ => $._hq_qualified_symboly_id,
 
   built_in_hash: $ => seq(
     '##',
