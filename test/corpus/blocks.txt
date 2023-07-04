@@ -35,7 +35,9 @@
      1 -> "bye"
 ---
 (unison
-  (comment)
-  (comment)
-  (pattern (nat) (arrow_symbol) (literal_text))
-  (pattern (nat) (arrow_symbol) (literal_text)))
+  (watch_expression
+    (cases)
+    (comment)
+    (comment)
+    (pattern (nat) (arrow_symbol) (literal_text))
+    (pattern (nat) (arrow_symbol) (literal_text))))
