@@ -24,3 +24,9 @@ x = ##Foo
 > """ foo " bar """
 ---
 (unison (watch_expression (literal_text)))
+===
+[Regression] Issue 30, infix ops with path in function application
+===
+> 1 Nat.+ 2
+---
+(unison (watch_expression (function_application (nat) (path) (operator) (nat))))
