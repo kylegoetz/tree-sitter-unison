@@ -2,7 +2,7 @@
   "name": "tree-sitter-unison",
   "license": "MIT",
   "author": "Kyle Goetz <kylegoetz@gmail.com>",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "Unison grammar for tree-sitter",
   "repository": "github:kylegoetz/tree-sitter-unison",
   "main": "bindings/node",
