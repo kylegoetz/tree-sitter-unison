@@ -173,7 +173,11 @@ module.exports = grammar({
     //   'cases',
     //   'match',
     //   'with',
-    watch_expression: $ => seq($._watch_start, $._expression),
-    test_watch_expression: $ => prec.right(seq($.wordy_id, token.immediate('>'), $._expression)),
+    _watch_expression: $ => prec.right(choice(
+      $._expression,
+      $.term_definition,
+    )),
+    watch_expression: $ => seq($._watch_start, $._watch_expression),
+    test_watch_expression: $ => prec.right(seq($.wordy_id, token.immediate('>'), $._watch_expression)),
   }
 })

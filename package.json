@@ -16,6 +16,9 @@
     "nan": "^2.12.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.6.6",
+    "@commitlint/config-conventional": "^17.6.6",
+    "husky": "^8.0.0",
     "tree-sitter-cli": "^0.20.8",
     "web-tree-sitter": "^0.20.8"
   },
@@ -25,7 +28,8 @@
     "examples": "script/parse-examples",
     "examples-wasm": "script/parse-examples wasm",
     "scratch": "tree-sitter parse scratch.u -d",
-    "visual": "tree-sitter parse -D scratch.u"
+    "visual": "tree-sitter parse -D scratch.u",
+    "prepare": "husky install"
   },
   "tree-sitter": [
     {
@@ -37,5 +41,11 @@
         "queries/highlights.scm"
       ]
     }
-  ]
+  ],
+  "commitlint": {
+    "extends": ["@commitlint/config-conventional"],
+    "rules": {
+        "subject-case": [2, "never", ["start-case", "pascal-case"]]
+    }
+  }
 }

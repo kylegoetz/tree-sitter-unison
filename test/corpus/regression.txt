@@ -29,4 +29,13 @@ x = ##Foo
 ===
 > 1 Nat.+ 2
 ---
-(unison (watch_expression (function_application (nat) (path) (operator) (nat))))
+(unison (watch_expression (function_application (nat) (path) (operator) (nat))))===
+[Regression] #34 - watch expressions can be binds (term definitions, but types are not allowed as per TermParser.hs, so not term declarations)
+They cannot be destructuring binds, which cannot happen at the top level. Verified via Unison LSP.
+===
+> z = 5
+---
+(unison 
+    (watch_expression 
+        (term_definition 
+            (wordy_id) (kw_equals) (nat))))
