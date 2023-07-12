@@ -1,5 +1,5 @@
 ===
-one line structural ability
+[Abilities] one line structural ability
 ===
 structural ability Throw e where throw : e ->{Throw e} a
 
@@ -20,7 +20,7 @@ structural ability Throw e where throw : e ->{Throw e} a
                 (wordy_id))
             (wordy_id))))
 ===
-unique ability
+[Abilities] unique ability
 ===
 unique ability Store a where
   put : a ->{Store a} ()
