@@ -31,3 +31,18 @@ poet = "Maya Angelou"
 }}
 ---
 (unison (doc_block))
+
+===
+[Docs] with assignment
+===
+Example.Type.doc = {{
+    it's a ''type''
+}}
+---
+(unison
+  (term_declaration
+    (term_definition
+      (path)
+      (wordy_id)
+      (kw_equals)
+      (doc_block))))
