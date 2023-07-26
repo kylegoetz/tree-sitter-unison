@@ -16,6 +16,7 @@ module.exports = {
     $._boolean_exp,
     $.delay_block,
     $.bang,
+    $.doc_block,
   )),
   
   operator_as_parameter: $ => seq('(',$.operator, ')'),

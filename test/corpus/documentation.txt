@@ -5,8 +5,8 @@
 poet = "Maya Angelou"
 ---
 (unison
-    (doc_block)
     (term_declaration
+        (doc_block)
         (term_definition
             (wordy_id)
             (kw_equals)
@@ -16,7 +16,7 @@ poet = "Maya Angelou"
 ===
 [Docs] complex
 ===
-{{
+> {{
     `repeat` is a function which will repeat the provided text a specified number of times.
 
     Source:
@@ -30,4 +30,4 @@ poet = "Maya Angelou"
     ```
 }}
 ---
-(unison (doc_block))
+(unison (watch_expression (doc_block)))

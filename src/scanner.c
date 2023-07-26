@@ -1622,6 +1622,7 @@ static Result layout_start(uint32_t column, State *state) {
             if (PEEK == '-') {
               return multiline_comment(state);
             }
+            goto foo;
           }
           SYMBOLIC_CASES: { // Cannot start a layout with a -/+ unless it's part of '->' or -+INT/FLOAT
             if (PEEK == '+') {
@@ -1642,17 +1643,10 @@ static Result layout_start(uint32_t column, State *state) {
                 }
               } else if(isdigit(PEEK)) {
                 goto foo;
-                // Result res = numeric(state);
-                // if (res.sym == NAT) { // Really it's an INT since we consumed `-` already
-                  // res = finish_if_valid(INT, "int", state);
-                // }
-                // SHORT_SCANNER;
               }
             }
             return res_cont;
           }
-            // TODO add stuff in here for comments, which can appear anywhere
-            // and need to be handled
         }
         foo:
         push(column, state);

@@ -7,6 +7,7 @@ module.exports = {
    * x = 5 <-- term definition
    */
   term_declaration: $ => prec(20, seq(
+    optional($.doc_block),
     optional($.type_signature),
     $.term_definition
   )),

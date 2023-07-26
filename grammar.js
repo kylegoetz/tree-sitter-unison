@@ -111,7 +111,6 @@ module.exports = grammar({
   extras: $ => [
     /\\?\s/,
     $.comment,
-    $.doc_block,
   ],
   rules: {
     unison: $ => repeat(
