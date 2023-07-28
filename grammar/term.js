@@ -16,7 +16,7 @@ module.exports = {
     * x = 5
     * myFun p1 ... pn = p1 + ... + pn
     */
-  _lhs: $ => prec('_lhs', seq(field('name', $._identifier), repeat(field('param', $.wordy_id)))),
+  _lhs: $ => prec('_lhs', seq(field('name', $._prefix_definition_name), repeat(field('param', $.wordy_id)))),
   term_definition: $ => seq(
     $._lhs,
     $.kw_equals,

@@ -55,3 +55,12 @@ x = 5
 (unison (term_declaration
     (doc_block)
     (term_definition (wordy_id) (kw_equals) (nat))))
+===
+[Regression] Issue 39, Parenthesized operators in term declaration (def'n + type sig) fail
+===
+(Numeric.>=) : Numeric -> Numeric -> Boolean
+(Numeric.>=) = todo "implement"
+---
+(unison (term_declaration
+    (type_signature (path) (operator) (type_signature_colon) (wordy_id) (arrow_symbol) (wordy_id) (arrow_symbol) (wordy_id))
+    (term_definition (path) (operator) (kw_equals) (function_application (wordy_id) (literal_text)))))

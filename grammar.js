@@ -83,6 +83,12 @@ module.exports = grammar({
     [$._hash_qualified, $._expression, $._lhs],
     [$._hash_qualified, $._expression, $.constructor_or_variable_pattern],
     [$._hash_qualified, $._expression, $.type_signature],
+    [$._identifier, $.__identifier, $._wordy_definition_name, $.literal_function, $._function_name],
+    [$._wordy_definition_name, $.literal_function, $._function_name],
+    [$.__identifier, $._symboly_definition_name, $._op],
+    [$.__identifier, $._wordy_definition_name],
+    [$._identifier, $.__identifier, $._wordy_definition_name],
+    [$.__identifier, $._symboly_definition_name],
 
   ],
   externals: $ => [
@@ -145,7 +151,7 @@ module.exports = grammar({
       
     
     type_signature: $ => seq(
-      field('term_name', $._identifier),
+      field('term_name', $._prefix_definition_name),
       $.type_signature_colon,
       $._value_type,
     ),

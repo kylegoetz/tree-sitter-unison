@@ -85,4 +85,17 @@ module.exports = {
       alias($.imm_symboly_id, $.operator),
     )
   ),
+  
+  _prefix_definition_name: $ => choice(
+    $._wordy_definition_name,
+    parens($._symboly_definition_name),
+  ),
+  _wordy_definition_name: $ => choice(
+      $.wordy_id,
+      seq($.path, alias($.imm_wordy_id, $.wordy_id)),
+  ),
+  _symboly_definition_name: $ => choice(
+      $.operator,
+      seq($.path, alias($.imm_symboly_id, $.operator)),
+  ),
 }
