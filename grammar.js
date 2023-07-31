@@ -21,7 +21,6 @@ const doc = require('./grammar/doc')
 module.exports = grammar({
   name: 'unison',
   precedences: $ => [
-    // ['_literal', '_expression'],
     ['_expression', 'identifier'],
     ['term_definition', '_expression'],
     ['keyword', '_expression'],
@@ -42,7 +41,6 @@ module.exports = grammar({
     [$.wordy_id, $.literal_function],
     [$.type],
     [$._prefix_function_application, $.function_application],
-    // [$.identifier, $.binding_lhs],
     [$._identifier, $.type_name],
     [$.tuple_constructor, $.tuple_or_parenthesized],
     [$._literal, $._expression], 
@@ -54,10 +52,6 @@ module.exports = grammar({
     [$._identifier, $._pattern_lhs],
     [$._infix_op_application, $.watch_expression],
     [$.symboly_id, $._identifier],
-    // [$.__identifier, $._function_name],
-    // [$.wordy_id, $._wordy_id_with_path],
-    // [$._identifier, $._symboly_id_with_path],
-    // [$._identifier, $.symboly_id],
     [$._identifier, $.__identifier],
     [$._identifier, $.__identifier, $.literal_function, $._function_name],
     [$._identifier, $.__identifier, $._function_name],
@@ -68,11 +62,7 @@ module.exports = grammar({
     [$._identifier, $.__identifier, $.literal_function],
     [$.__identifier, $._op],
     [$.imm_symboly_id, $._op],
-    // [$._identifier, $._wordy_id_with_path, $.__identifier, $.literal_function],
-    // [$._identifier, $._wordy_id_with_path, $.__identifier],
-    // [$._wordy_id_with_path, $.literal_function],
     [$.head_tail_list_pattern, $.init_last_tail_pattern],
-    // [$.init_last_tail_pattern, $.concat_list_pattern], // todo maybe make
     [$.init_last_tail_pattern], // TODO maybe just make this right-associative?
     [$.constructor_or_variable_pattern],
     [$._literal, $._literal_pattern],
@@ -83,6 +73,12 @@ module.exports = grammar({
     [$._hash_qualified, $._expression, $._lhs],
     [$._hash_qualified, $._expression, $.constructor_or_variable_pattern],
     [$._hash_qualified, $._expression, $.type_signature],
+    [$._identifier, $.__identifier, $._wordy_definition_name, $.literal_function, $._function_name],
+    [$._wordy_definition_name, $.literal_function, $._function_name],
+    [$.__identifier, $._symboly_definition_name, $._op],
+    [$.__identifier, $._wordy_definition_name],
+    [$._identifier, $.__identifier, $._wordy_definition_name],
+    [$.__identifier, $._symboly_definition_name],
 
   ],
   externals: $ => [
@@ -124,7 +120,6 @@ module.exports = grammar({
         alias($.effect_declaration, $.ability_declaration),
       ),
     ),
-    // nat: $ => /[0-9]+/,
     ...reserved,
     ...effects,
     ...identifiers,
@@ -145,7 +140,7 @@ module.exports = grammar({
       
     
     type_signature: $ => seq(
-      field('term_name', $._identifier),
+      field('term_name', $._prefix_definition_name),
       $.type_signature_colon,
       $._value_type,
     ),
@@ -162,16 +157,6 @@ module.exports = grammar({
       sep1($.type_arrow, field('type_name', $.wordy_id)),
     ),
     
-    // _reserved_kw: $ => choice(
-    //   // '\'',
-    //   // 'do',
-    //   // '!',
-    //   // '`',
-    //   'alias',
-    //   'namespace',
-    //   'cases',
-    //   'match',
-    //   'with',
     _watch_expression: $ => prec.right(choice(
       $._expression,
       $.term_definition,
