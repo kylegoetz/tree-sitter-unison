@@ -16,6 +16,7 @@ module.exports = {
         // optional(choice($.effect_inline, $._effect_block)),
         '}',
     ),
+    term_type: $ => $._value_type,
     
     /** 
      * Cannot have effects except as the RHS of an arrow
