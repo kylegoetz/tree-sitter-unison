@@ -21,7 +21,7 @@ unique type heap.Heap a
         (kw_equals)
         (path) (wordy_id)
         (pipe)
-        (wordy_id) (wordy_id) (wordy_id) (parenthesized (path) (wordy_id) (wordy_id)) (parenthesized (path) (wordy_id) (wordy_id))
+        (wordy_id) (wordy_id) (wordy_id) (tuple_or_parenthesized_type (path) (wordy_id) (wordy_id)) (tuple_or_parenthesized_type  (path) (wordy_id) (wordy_id))
         ))
 ===
 [Large]  Heap.deleteMin
@@ -37,7 +37,7 @@ Heap.deleteMin cmp = cases
         (type_signature
             (path) (wordy_id) (type_signature_colon)
             (forall (kw_forall) (wordy_id) (wordy_id) (wordy_id))
-            (parenthesized (wordy_id) (arrow_symbol) 
+            (tuple_or_parenthesized_type  (wordy_id) (arrow_symbol) 
             (effect (wordy_id)) (wordy_id) (arrow_symbol) 
             (effect (wordy_id)) (wordy_id)) (arrow_symbol)
             (path) (wordy_id) (wordy_id) (arrow_symbol) 
