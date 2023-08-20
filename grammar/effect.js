@@ -31,8 +31,9 @@ module.exports = {
         $._type1
     ),
     parenthesized: $ => seq('(', $._value_type, ')'),
+    tuple_or_parenthesized_type: $ => seq('(', sep1(',', $._value_type), ')'),
     _value_type_leaf: $ => choice(
-        $.parenthesized,
+        $.tuple_or_parenthesized_type,
         $._type_atom,
         $.sequence_type,
     ),
