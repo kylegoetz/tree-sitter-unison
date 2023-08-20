@@ -17,7 +17,7 @@ sumUpTo x = x
 ---
 (unison
     (term_declaration
-        (type_signature (wordy_id) (type_signature_colon) (wordy_id) (arrow_symbol) (wordy_id))
+        (type_signature (wordy_id) (type_signature_colon) (term_type (wordy_id) (arrow_symbol) (wordy_id)))
         (term_definition (wordy_id) (wordy_id) (kw_equals) (wordy_id))))
 ===
 [Term] type signature with complex abilities clause
@@ -27,8 +27,12 @@ store.stopIfTrue = f a b c
 ---
 (unison
     (term_declaration
-        (type_signature (path) (wordy_id) (type_signature_colon) (parenthesized (wordy_id) (arrow_symbol) (wordy_id)) (arrow_symbol) (wordy_id) (arrow_symbol)
-            (effect (wordy_id)) (effect (wordy_id) (wordy_id)) (wordy_id))
+        (type_signature (path) (wordy_id) (type_signature_colon) (term_type 
+            (parenthesized (wordy_id) (arrow_symbol) (wordy_id))
+            (arrow_symbol) 
+            (wordy_id) 
+            (arrow_symbol)
+            (effect (wordy_id)) (effect (wordy_id) (wordy_id)) (wordy_id)))
         (term_definition
             (path) (wordy_id)
             (kw_equals)

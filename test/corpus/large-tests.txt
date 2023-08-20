@@ -35,14 +35,14 @@ Heap.deleteMin cmp = cases
 (unison
     (term_declaration
         (type_signature
-            (path) (wordy_id) (type_signature_colon)
-            (forall (kw_forall) (wordy_id) (wordy_id) (wordy_id))
-            (parenthesized (wordy_id) (arrow_symbol) 
-            (effect (wordy_id)) (wordy_id) (arrow_symbol) 
-            (effect (wordy_id)) (wordy_id)) (arrow_symbol)
-            (path) (wordy_id) (wordy_id) (arrow_symbol) 
-            (effect (wordy_id)) (effect (wordy_id)) (path) (wordy_id) (wordy_id)
-        )
+            (path) (wordy_id) (type_signature_colon) (term_type
+                (forall (kw_forall) (wordy_id) (wordy_id) (wordy_id))
+                (parenthesized (wordy_id) (arrow_symbol) 
+                (effect (wordy_id)) (wordy_id) (arrow_symbol) 
+                (effect (wordy_id)) (wordy_id)) (arrow_symbol)
+                (path) (wordy_id) (wordy_id) (arrow_symbol) 
+                (effect (wordy_id)) (effect (wordy_id)) (path) (wordy_id) (wordy_id)
+            ))
         (term_definition
             (path) (wordy_id) (wordy_id) (kw_equals)
             (cases)

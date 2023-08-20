@@ -142,7 +142,7 @@ module.exports = grammar({
     type_signature: $ => seq(
       field('term_name', $._prefix_definition_name),
       $.type_signature_colon,
-      $._value_type,
+      alias($._value_type, $.term_type),
     ),
     
     type_variable: $ => regex.lowercase_varid,
