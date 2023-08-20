@@ -54,7 +54,7 @@ tup = (3, 3)
     (type_signature
       (wordy_id)
       (type_signature_colon)
-      (term_type (
+      (term_type (tuple_or_parenthesized_type
         (wordy_id)
         (wordy_id))))
     (term_definition
