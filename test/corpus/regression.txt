@@ -62,5 +62,5 @@ x = 5
 (Numeric.>=) = todo "implement"
 ---
 (unison (term_declaration
-    (type_signature (path) (operator) (type_signature_colon) (wordy_id) (arrow_symbol) (wordy_id) (arrow_symbol) (wordy_id))
+    (type_signature (path) (operator) (type_signature_colon) (term_type (wordy_id) (arrow_symbol) (wordy_id) (arrow_symbol) (wordy_id)))
     (term_definition (path) (operator) (kw_equals) (function_application (wordy_id) (literal_text)))))

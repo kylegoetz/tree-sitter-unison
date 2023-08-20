@@ -13,12 +13,12 @@ program = do
         (type_signature
             (wordy_id)
             (type_signature_colon)
-            (delayed
+            (term_type (delayed
                 (effect
                     (wordy_id))
                 (effect
                     (wordy_id))
-                (unit)))
+                (unit))))
         (term_definition
             (wordy_id)
             (kw_equals)
