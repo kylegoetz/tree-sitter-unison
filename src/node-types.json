@@ -644,15 +644,15 @@
             "named": true
           },
           {
-            "type": "parenthesized",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
           {
             "type": "sequence_type",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
             "named": true
           },
           {
@@ -1359,15 +1359,15 @@
           "named": true
         },
         {
-          "type": "parenthesized",
-          "named": true
-        },
-        {
           "type": "path",
           "named": true
         },
         {
           "type": "sequence_type",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized_type",
           "named": true
         },
         {
@@ -1728,15 +1728,15 @@
           "named": true
         },
         {
-          "type": "parenthesized",
-          "named": true
-        },
-        {
           "type": "path",
           "named": true
         },
         {
           "type": "sequence_type",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized_type",
           "named": true
         },
         {
@@ -4605,65 +4605,6 @@
     "fields": {}
   },
   {
-    "type": "parenthesized",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "arrow_symbol",
-          "named": true
-        },
-        {
-          "type": "built_in_hash",
-          "named": true
-        },
-        {
-          "type": "delayed",
-          "named": true
-        },
-        {
-          "type": "effect",
-          "named": true
-        },
-        {
-          "type": "forall",
-          "named": true
-        },
-        {
-          "type": "hash_qualifier",
-          "named": true
-        },
-        {
-          "type": "operator",
-          "named": true
-        },
-        {
-          "type": "parenthesized",
-          "named": true
-        },
-        {
-          "type": "path",
-          "named": true
-        },
-        {
-          "type": "sequence_type",
-          "named": true
-        },
-        {
-          "type": "unit",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "parenthetical_exp",
     "named": true,
     "fields": {
@@ -4935,10 +4876,6 @@
           "named": true
         },
         {
-          "type": "parenthesized",
-          "named": true
-        },
-        {
           "type": "parenthetical_exp",
           "named": true
         },
@@ -4956,6 +4893,10 @@
         },
         {
           "type": "tuple_or_parenthesized",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized_type",
           "named": true
         },
         {
@@ -5385,15 +5326,15 @@
             "named": true
           },
           {
-            "type": "parenthesized",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
           {
             "type": "sequence_type",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
             "named": true
           },
           {
@@ -5453,15 +5394,15 @@
           "named": true
         },
         {
-          "type": "parenthesized",
-          "named": true
-        },
-        {
           "type": "path",
           "named": true
         },
         {
           "type": "sequence_type",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized_type",
           "named": true
         },
         {
@@ -5837,6 +5778,65 @@
         },
         {
           "type": "with",
+          "named": true
+        },
+        {
+          "type": "wordy_id",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "term_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "arrow_symbol",
+          "named": true
+        },
+        {
+          "type": "built_in_hash",
+          "named": true
+        },
+        {
+          "type": "delayed",
+          "named": true
+        },
+        {
+          "type": "effect",
+          "named": true
+        },
+        {
+          "type": "forall",
+          "named": true
+        },
+        {
+          "type": "hash_qualifier",
+          "named": true
+        },
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "sequence_type",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized_type",
+          "named": true
+        },
+        {
+          "type": "unit",
           "named": true
         },
         {
@@ -6458,6 +6458,65 @@
     }
   },
   {
+    "type": "tuple_or_parenthesized_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "arrow_symbol",
+          "named": true
+        },
+        {
+          "type": "built_in_hash",
+          "named": true
+        },
+        {
+          "type": "delayed",
+          "named": true
+        },
+        {
+          "type": "effect",
+          "named": true
+        },
+        {
+          "type": "forall",
+          "named": true
+        },
+        {
+          "type": "hash_qualifier",
+          "named": true
+        },
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "sequence_type",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized_type",
+          "named": true
+        },
+        {
+          "type": "unit",
+          "named": true
+        },
+        {
+          "type": "wordy_id",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "tuple_pattern",
     "named": true,
     "fields": {},
@@ -6594,10 +6653,6 @@
           "named": true
         },
         {
-          "type": "parenthesized",
-          "named": true
-        },
-        {
           "type": "path",
           "named": true
         },
@@ -6615,6 +6670,10 @@
         },
         {
           "type": "structural_kw",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized_type",
           "named": true
         },
         {
@@ -6699,55 +6758,11 @@
       "required": true,
       "types": [
         {
-          "type": "arrow_symbol",
-          "named": true
-        },
-        {
-          "type": "built_in_hash",
-          "named": true
-        },
-        {
-          "type": "delayed",
-          "named": true
-        },
-        {
-          "type": "effect",
-          "named": true
-        },
-        {
-          "type": "forall",
-          "named": true
-        },
-        {
-          "type": "hash_qualifier",
-          "named": true
-        },
-        {
-          "type": "operator",
-          "named": true
-        },
-        {
-          "type": "parenthesized",
-          "named": true
-        },
-        {
-          "type": "path",
-          "named": true
-        },
-        {
-          "type": "sequence_type",
+          "type": "term_type",
           "named": true
         },
         {
           "type": "type_signature_colon",
-          "named": true
-        },
-        {
-          "type": "unit",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
