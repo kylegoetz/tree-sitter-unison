@@ -705,14 +705,27 @@ static Result hash(State *state) {
   return res_cont;
 }
  
+/**
+ * Check for fold. However, because check for fold consumes -- it needs to consider line comments as well.
+ */
 static Result fold(State *state) {
   LOG(INFO, "->fold with PEEK =%c@%u\n", PEEK, column(state));
-  if (seq("---", state)) {
+  if (seq("--", state)) { // either FOLD or COMMENT
     LOG(VERBOSE, "--- and PEEK is %c@%u\n", PEEK, column(state));
-    while(!is_eof(state)) S_ADVANCE;
-    LOG(VERBOSE, "after advancing, PEEK is %c and should be EOF: %s\n", PEEK, is_eof(state) ? "true" : "false");
-    MARK("fold", false, state);
-    return finish(FOLD, "fold");
+    switch(PEEK) {
+      case '-': { // FOLD
+        while(!is_eof(state)) S_ADVANCE;
+        LOG(VERBOSE, "after advancing, PEEK is %c and should be EOF: %s\n", PEEK, is_eof(state) ? "true" : "false");
+        MARK("fold", false, state);
+        return finish(FOLD, "fold");
+      }
+      default: { // COMMENT
+        while(!is_eof(state) && !is_newline(PEEK)) S_ADVANCE;
+        LOG(VERBOSE, "after advancing, PEEK is %c and should be EOF: %s\n", PEEK, is_eof(state) ? "true" : "false");
+        MARK("fold", false, state);
+        return finish(COMMENT, "comment");
+      }
+    }
   }
   return res_cont;
 }
