@@ -6,10 +6,3 @@ log.html
 
 # OS-specific
 .DS_Store
-
-# app specific
-src/grammar.json
-src/node-types.json
-src/parser.c
-scratch.u
-*.wasm
