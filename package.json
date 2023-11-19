@@ -2,6 +2,12 @@
   "name": "tree-sitter-unison",
   "license": "MIT",
   "author": "Kyle Goetz <kylegoetz@gmail.com>",
+  "contributors": [
+    {
+      "name": "Anton Parkhomenko",
+      "url": "https://github.com/chuwy"
+    }
+  ],
   "version": "1.0.3",
   "description": "Unison grammar for tree-sitter",
   "repository": "github:kylegoetz/tree-sitter-unison",
