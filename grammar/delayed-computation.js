@@ -16,6 +16,7 @@ module.exports = {
         $.nat,
         $.int,
         $.literal_byte,
+        $.literal_hex,
         $.literal_boolean,
         $.literal_termlink,
         $.literal_typelink,
