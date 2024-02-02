@@ -58,7 +58,7 @@ module.exports = {
 
   
   _type_lhs: $ => seq(
-    choice($.structural_kw, optional($.unique_kw)),
+    choice($.structural, optional($.unique)),
     $.type_kw,
     $.type_constructor
   ),
@@ -72,7 +72,6 @@ module.exports = {
   _record_fields_block: $ => choice($._record_fields_inline, seq(
       $._layout_start,
       sep($._layout_semicolon, $._record_fields_inline),
-      // optional($._layout_semicolon),
       $._layout_end,
   )),
 }

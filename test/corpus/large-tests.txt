@@ -11,7 +11,7 @@ unique type heap.Heap a
 ---
 (unison
     (type_declaration
-        (unique_kw)
+        (unique)
         (type_kw)
         (type_constructor
             (type_name

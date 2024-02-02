@@ -1,8 +1,6 @@
 module.exports = {
   do: _ => 'do',
   kw_let: _ => 'let',
-  structural_kw: $ => 'structural',
-  unique_kw: $ => 'unique',
   type_kw: $ => 'type',
   pipe: $ => '|',
   match: $ => 'match',
