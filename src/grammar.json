@@ -50,14 +50,6 @@
       "type": "STRING",
       "value": "let"
     },
-    "structural_kw": {
-      "type": "STRING",
-      "value": "structural"
-    },
-    "unique_kw": {
-      "type": "STRING",
-      "value": "unique"
-    },
     "type_kw": {
       "type": "STRING",
       "value": "type"
@@ -696,8 +688,16 @@
               "name": "structural"
             },
             {
-              "type": "SYMBOL",
-              "name": "unique"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "unique"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             }
           ]
         },
@@ -1431,11 +1431,19 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "structural_kw"
+              "name": "structural"
             },
             {
-              "type": "SYMBOL",
-              "name": "unique_kw"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "unique"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             }
           ]
         },
@@ -1664,6 +1672,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "literal_hex"
+        },
+        {
+          "type": "SYMBOL",
           "name": "literal_list"
         },
         {
@@ -1796,6 +1808,10 @@
     "literal_byte": {
       "type": "PATTERN",
       "value": "0xs[0-9a-fA-F]+"
+    },
+    "literal_hex": {
+      "type": "PATTERN",
+      "value": "0x[0-9a-fA-F]+"
     },
     "literal_list": {
       "type": "SEQ",
@@ -3857,6 +3873,10 @@
         {
           "type": "SYMBOL",
           "name": "literal_byte"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "literal_hex"
         },
         {
           "type": "SYMBOL",

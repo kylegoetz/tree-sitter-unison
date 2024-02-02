@@ -318,6 +318,10 @@
             "named": true
           },
           {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
             "type": "literal_list",
             "named": true
           },
@@ -454,6 +458,10 @@
         },
         {
           "type": "literal_char",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
           "named": true
         },
         {
@@ -843,6 +851,10 @@
             "named": true
           },
           {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
             "type": "literal_list",
             "named": true
           },
@@ -991,6 +1003,10 @@
         },
         {
           "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
           "named": true
         },
         {
@@ -1145,6 +1161,10 @@
             "named": true
           },
           {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
             "type": "literal_list",
             "named": true
           },
@@ -1281,6 +1301,10 @@
         },
         {
           "type": "literal_char",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
           "named": true
         },
         {
@@ -1462,6 +1486,10 @@
             "named": true
           },
           {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
             "type": "literal_list",
             "named": true
           },
@@ -1614,6 +1642,10 @@
         },
         {
           "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
           "named": true
         },
         {
@@ -1835,6 +1867,10 @@
             "named": true
           },
           {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
             "type": "literal_list",
             "named": true
           },
@@ -1993,6 +2029,10 @@
             "named": true
           },
           {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
             "type": "literal_list",
             "named": true
           },
@@ -2147,6 +2187,10 @@
             "named": true
           },
           {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
             "type": "literal_list",
             "named": true
           },
@@ -2294,6 +2338,10 @@
           },
           {
             "type": "literal_function",
+            "named": true
+          },
+          {
+            "type": "literal_hex",
             "named": true
           },
           {
@@ -2475,6 +2523,10 @@
             "named": true
           },
           {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
             "type": "literal_list",
             "named": true
           },
@@ -2623,6 +2675,10 @@
         },
         {
           "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
           "named": true
         },
         {
@@ -2822,6 +2878,10 @@
             "named": true
           },
           {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
             "type": "literal_list",
             "named": true
           },
@@ -2965,6 +3025,10 @@
           "named": true
         },
         {
+          "type": "literal_hex",
+          "named": true
+        },
+        {
           "type": "literal_list",
           "named": true
         },
@@ -3105,6 +3169,10 @@
           },
           {
             "type": "literal_function",
+            "named": true
+          },
+          {
+            "type": "literal_hex",
             "named": true
           },
           {
@@ -3256,6 +3324,10 @@
         },
         {
           "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
           "named": true
         },
         {
@@ -3418,6 +3490,10 @@
             "named": true
           },
           {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
             "type": "literal_list",
             "named": true
           },
@@ -3566,6 +3642,10 @@
         },
         {
           "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
           "named": true
         },
         {
@@ -3962,6 +4042,10 @@
             "named": true
           },
           {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
             "type": "literal_list",
             "named": true
           },
@@ -4109,6 +4193,10 @@
           "named": true
         },
         {
+          "type": "literal_hex",
+          "named": true
+        },
+        {
           "type": "literal_list",
           "named": true
         },
@@ -4252,6 +4340,10 @@
             "named": true
           },
           {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
             "type": "literal_list",
             "named": true
           },
@@ -4392,6 +4484,10 @@
         },
         {
           "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
           "named": true
         },
         {
@@ -4685,6 +4781,10 @@
             "named": true
           },
           {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
             "type": "literal_list",
             "named": true
           },
@@ -4844,6 +4944,10 @@
           "named": true
         },
         {
+          "type": "literal_hex",
+          "named": true
+        },
+        {
           "type": "literal_list",
           "named": true
         },
@@ -4996,6 +5100,10 @@
           },
           {
             "type": "literal_function",
+            "named": true
+          },
+          {
+            "type": "literal_hex",
             "named": true
           },
           {
@@ -5179,6 +5287,10 @@
         },
         {
           "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
           "named": true
         },
         {
@@ -5417,16 +5529,6 @@
     }
   },
   {
-    "type": "structural",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "structural_kw",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "term_declaration",
     "named": true,
     "fields": {},
@@ -5563,6 +5665,10 @@
           },
           {
             "type": "literal_function",
+            "named": true
+          },
+          {
+            "type": "literal_hex",
             "named": true
           },
           {
@@ -5714,6 +5820,10 @@
         },
         {
           "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
           "named": true
         },
         {
@@ -5927,6 +6037,10 @@
             "named": true
           },
           {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
             "type": "literal_list",
             "named": true
           },
@@ -6067,6 +6181,10 @@
         },
         {
           "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
           "named": true
         },
         {
@@ -6252,6 +6370,10 @@
             "named": true
           },
           {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
             "type": "literal_list",
             "named": true
           },
@@ -6392,6 +6514,10 @@
         },
         {
           "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
           "named": true
         },
         {
@@ -6669,7 +6795,7 @@
           "named": true
         },
         {
-          "type": "structural_kw",
+          "type": "structural",
           "named": true
         },
         {
@@ -6685,7 +6811,7 @@
           "named": true
         },
         {
-          "type": "unique_kw",
+          "type": "unique",
           "named": true
         },
         {
@@ -6775,16 +6901,6 @@
   },
   {
     "type": "type_variable",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "unique",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "unique_kw",
     "named": true,
     "fields": {}
   },
@@ -6944,6 +7060,10 @@
             "named": true
           },
           {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
             "type": "literal_list",
             "named": true
           },
@@ -7084,6 +7204,10 @@
         },
         {
           "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
           "named": true
         },
         {
@@ -7323,6 +7447,10 @@
     "named": true
   },
   {
+    "type": "literal_hex",
+    "named": true
+  },
+  {
     "type": "match",
     "named": true
   },
@@ -7352,7 +7480,7 @@
   },
   {
     "type": "structural",
-    "named": false
+    "named": true
   },
   {
     "type": "then",
@@ -7368,7 +7496,7 @@
   },
   {
     "type": "unique",
-    "named": false
+    "named": true
   },
   {
     "type": "unit",
