@@ -58,7 +58,7 @@ module.exports = {
 
   
   _type_lhs: $ => seq(
-    choice($.structural_kw, $.unique_kw),
+    choice($.structural_kw, optional($.unique_kw)),
     $.type_kw,
     $.type_constructor
   ),
