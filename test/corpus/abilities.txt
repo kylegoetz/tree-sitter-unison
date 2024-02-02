@@ -47,4 +47,30 @@ unique ability Store a where
                 (wordy_id)
                 (wordy_id))
             (wordy_id))))
-        
+===
+[Abilities] optional `unique`
+===
+ability Store a where
+  put : a ->{Store a} ()
+  get : {Store a} a
+---
+(unison
+    (ability_declaration
+        (ability)
+        (wordy_id)
+        (wordy_id)
+        (where)
+        (constructor
+            (wordy_id)
+            (wordy_id)
+            (arrow_symbol)
+            (effect
+                (wordy_id)
+                (wordy_id))
+            (unit))
+        (constructor
+            (wordy_id)
+            (effect
+                (wordy_id)
+                (wordy_id))
+            (wordy_id))))

@@ -99,3 +99,18 @@ unique type Point2 = {
             (record_field
                 (wordy_id)
                 (wordy_id)))))
+===
+[Types] optional `unique` keyword
+===
+type UserId = Phone Nat | Email Text
+---
+(unison
+    (type_declaration
+        (type_kw)
+        (type_constructor (type_name (wordy_id)))
+        (kw_equals)
+        (wordy_id)
+        (wordy_id)
+        (pipe)
+        (wordy_id)
+        (wordy_id)))

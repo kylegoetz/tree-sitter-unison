@@ -114,7 +114,7 @@ module.exports = {
      *   throw: e ->{ Throw e } a
      */
     effect_declaration: $ => seq(
-        choice($.structural, $.unique),
+        choice($.structural, optional($.unique)),
         $.ability,
         $._ebody,
     )
