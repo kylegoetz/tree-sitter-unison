@@ -1,11 +1,11 @@
 ===
-structural type
+[Types] structural type
 ===
 structural type Optional a = Some a | None
 ---
 (unison
     (type_declaration
-        (structural_kw)
+        (structural)
         (type_kw)
         (type_constructor (type_name (wordy_id)) (type_argument))
         (kw_equals)
@@ -14,13 +14,13 @@ structural type Optional a = Some a | None
         (pipe)
         (wordy_id)))
 ===
-unique type
+[Types] unique type
 ===
 unique type UserId = Phone Nat | Email Text
 ---
 (unison
     (type_declaration
-        (unique_kw)
+        (unique)
         (type_kw)
         (type_constructor (type_name (wordy_id)))
         (kw_equals)
@@ -30,24 +30,24 @@ unique type UserId = Phone Nat | Email Text
         (wordy_id)
         (wordy_id)))
 ===
-type tag (no type constructor)
+[Types] type tag (no type constructor)
 ===
 unique type Foo =
 ---
 (unison
     (type_declaration
-        (unique_kw)
+        (unique)
         (type_kw)
         (type_constructor (type_name (wordy_id)))
         (kw_equals)))
 ===
-type name with namespace/qualifier
+[Types] type name with namespace/qualifier
 ===
 unique type controlFlow.Color = RGB Nat Nat Nat
 ---
 (unison
     (type_declaration
-        (unique_kw)
+        (unique)
         (type_kw)
         (type_constructor
             (type_name (path) (wordy_id)))
@@ -57,13 +57,13 @@ unique type controlFlow.Color = RGB Nat Nat Nat
         (wordy_id)
         (wordy_id)))
 ===
-Record type, single line
+[Types] Record type, single line
 ===
 unique type Point2 = { x : Nat, y : Nat }
 ---
 (unison
     (type_declaration
-        (unique_kw)
+        (unique)
         (type_kw)
         (type_constructor
             (type_name
@@ -77,7 +77,7 @@ unique type Point2 = { x : Nat, y : Nat }
                 (wordy_id)
                 (wordy_id)))))
 ===
-Record type, multiline
+[Types] Record type, multiline
 ===
 unique type Point2 = {
     x : Nat,
@@ -86,7 +86,7 @@ unique type Point2 = {
 ---
 (unison
     (type_declaration
-        (unique_kw)
+        (unique)
         (type_kw)
         (type_constructor
             (type_name
