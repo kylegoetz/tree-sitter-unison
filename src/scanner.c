@@ -218,11 +218,11 @@ State state_new(TSLexer *l, const bool * restrict vs, indent_vec *is) {
 static char * debug_indents_str(indent_vec *indents) {
   char * rv = "";
   LOG(VERBOSE, "%s", rv);
-  if (indents->len == 0) strcat(rv, "empty");
+  if (indents->len == 0) strncat(rv, "empty");
   LOG(VERBOSE, "%s", rv);
   bool empty = true;
   for (size_t i = 0; i < indents->len; i++) {
-    if (!empty) strcat(rv, "-");
+    if (!empty) strncat(rv, "-");
     LOG(VERBOSE, "%s", rv);
     rv += sprintf(rv, "%u", indents->data[i]);
     LOG(VERBOSE, "%s", rv);
@@ -873,7 +873,7 @@ static void * get_fractional(State *state) {
       non_zero = true;
     }
     const char a[2] = { PEEK, '\0' };
-    strcat(running_str, a);
+    strncat(running_str, a);
     val = atof(running_str);
     if (non_zero && val == 0) { // i.e., we know `atof` failed
       return &nothing;
