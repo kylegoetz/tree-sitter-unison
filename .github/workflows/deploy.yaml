@@ -2,9 +2,11 @@ name: ci
 on:
   push:
     branches: [ci-test]
-    # paths:
-      # - src/grammar.json
-      # - package.json
+    paths:
+      - src/**
+      - grammar.js
+      - bindings/**
+      - binding.gyp
 concurrency:
   group: ${{github.workflow}}-${{github.ref}}
   cancel-in-progress: true
@@ -26,11 +28,11 @@ jobs:
         with:
           test-rust: ${{runner.os == 'Linux'}}
           test-swift: ${{runner.os == 'macOS'}}
-      # - name: Parse sample files
-      #   uses: tree-sitter/parse-action@v3
-      #   id: parse-files
-      #   with:
-      #     files: examples/**
+      - name: Parse sample files
+        uses: tree-sitter/parse-action@v3
+        id: parse-files
+        with:
+          files: examples/**
       - name: Upload failures artifact
         uses: actions/upload-artifact@v4
         if: "!cancelled() && steps.parse-files.outcome == 'failure'"
