@@ -3,7 +3,7 @@
  */
 #define DEBUG 1
 
-#define LOG_LEVEL VERBOSE
+#define LOG_LEVEL WARN
 typedef enum {
   VERBOSE,
   INFO,
@@ -895,19 +895,19 @@ static void * get_whole(State *state) {
   LOG(INFO, "->get_whole, %c\n", PEEK);
   long val = 0;
   bool digit_found = false;
-  LOG(VERBOSE, "get_whole { is_eof = %s, PEEK = %c }\n", is_eof(state) ? "true" : "false", PEEK);
+  LOG(WARN, "get_whole { is_eof = %s, PEEK = %c }\n", is_eof(state) ? "true" : "false", PEEK);
   while (!is_eof(state) && isdigit(PEEK)) {
     digit_found = true;
     // Test to see if new val will exceed permitted bounds
     long new_val = val * 10 + PEEK - ASCII_OFFSET;
     if ((new_val + ASCII_OFFSET - PEEK) / 10 != val) {
-      LOG(VERBOSE, "get_whole, new_val + ASCII_OFFSET step is true { val = %ld, new_val = %ld, ASCII_OFFSET = %d, PEEK = %c }\n", val, new_val, ASCII_OFFSET, PEEK);
+      LOG(WARN, "get_whole, new_val + ASCII_OFFSET step is true { val = %ld, new_val = %ld, ASCII_OFFSET = %d, PEEK = %c }\n", val, new_val, ASCII_OFFSET, PEEK);
       return &nothing;
     }
     val = new_val;
     S_ADVANCE;
   }
-  LOG(VERBOSE, "get_whole: finished loop { digit_found = %c }\n", digit_found ? 't' : 'f');
+  LOG(WARN, "get_whole: finished loop { digit_found = %c }\n", digit_found ? 't' : 'f');
   return digit_found ? justLong(val) : &nothing;
 }
 
