@@ -1,6 +1,7 @@
 !*/
 !src/grammar.json
 !src/parser.c
+!src/node-types.json
 node_modules
 *.log
 log
@@ -14,7 +15,6 @@ log.html
 .vscode
 
 # app specific
-src/node-types.json
 src/
 scratch.u
 *.wasm
