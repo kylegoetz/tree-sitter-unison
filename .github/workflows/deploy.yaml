@@ -26,11 +26,11 @@ jobs:
         with:
           test-rust: ${{runner.os == 'Linux'}}
           test-swift: ${{runner.os == 'macOS'}}
-      - name: Parse sample files
-        uses: tree-sitter/parse-action@v4
-        id: parse-files
-        with:
-          files: examples/**
+      # - name: Parse sample files
+      #   uses: tree-sitter/parse-action@v3
+      #   id: parse-files
+      #   with:
+      #     files: examples/**
       - name: Upload failures artifact
         uses: actions/upload-artifact@v4
         if: "!cancelled() && steps.parse-files.outcome == 'failure'"
