@@ -35,7 +35,8 @@
     "examples-wasm": "script/parse-examples wasm",
     "scratch": "tree-sitter parse scratch.u -d",
     "visual": "tree-sitter parse -D scratch.u",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "ci": "tree-sitter generate && tree-sitter build-wasm && tree-sitter test"
   },
   "tree-sitter": [
     {
