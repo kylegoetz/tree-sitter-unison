@@ -54,8 +54,8 @@ inputs:
     description: The NodeJS version
     default: ${{vars.NODE_VERSION || 'latest'}}
     type: string
-secrets:
-  NODE_AUTH_TOKEN:
-    description: The authentication token for npm
-    required: true
+  secrets:
+    NODE_AUTH_TOKEN:
+      description: The authentication token for npm
+      required: true
 
