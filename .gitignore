@@ -9,6 +9,9 @@ log.html
 # OS-specific
 .DS_Store
 
+# IDE-specific
+.vscode
+
 # app specific
 src/node-types.json
 src/parser.c
