@@ -1,0 +1,87 @@
+name: ci
+on:
+  push:
+    branches: ["*"]
+    paths:
+      - src/**
+      - grammar.js
+      - bindings/**
+      - binding.gyp
+      - test/**
+  pull_request: 
+    paths:
+      - src/**
+      - grammar.js
+      - bindings/**
+      - binding.gyp
+      - test/**
+concurrency:
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
+jobs:
+  test:
+    name: Test parser
+    runs-on: ${{matrix.os}}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-14, windows-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up tree-sitter
+        uses: tree-sitter/setup-action/cli@v1
+      - name: Run parser and binding tests
+        uses: tree-sitter/parser-test-action@v2
+      - name: Parse sample files
+        uses: tree-sitter/parse-action@v3
+        id: parse-files
+        with:
+          files: examples/**
+      - name: Upload failures artifact
+        uses: actions/upload-artifact@v4
+        if: "!cancelled() && steps.parse-files.outcome == 'failure'"
+        with:
+          name: failures-${{runner.os}}
+          path: ${{steps.parse-files.outputs.failures}}
+  fuzz:
+    name: Fuzz scanner
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Check for scanner changes
+        id: scanner-check
+        run: |-
+          if git diff --quiet HEAD^ -- src/scanner.c; then
+            printf 'changed=false\n' >> "$GITHUB_OUTPUT"
+          else
+            printf 'changed=true\n' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Run the fuzzer
+        uses: tree-sitter/fuzz-action@v4
+        if: steps.scanner-check.outputs.changed == 'true'
+  # npm:
+  #   uses: tree-sitter/workflows/.github/workflows/package-npm.yml@main
+  #   secrets:
+  #     NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+# inputs:
+#   package-name:
+#     description: The name of the package
+#     default: ${{github.event.repository.name}}
+#     type: string
+#   environment-name:
+#     description: The name of the environment
+#     default: npm
+#     type: string
+#   node-version:
+#     description: The NodeJS version
+#     default: ${{vars.NODE_VERSION || 'latest'}}
+#     type: string
+#   secrets:
+#     NODE_AUTH_TOKEN:
+#       description: The authentication token for npm
+#       required: true
+
