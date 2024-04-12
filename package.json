@@ -6,9 +6,13 @@
     {
       "name": "Anton Parkhomenko",
       "url": "https://github.com/chuwy"
+    },
+    {
+      "name": "zetashift",
+      "url": "https://github.com/zetashift"
     }
   ],
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Unison grammar for tree-sitter",
   "repository": "github:kylegoetz/tree-sitter-unison",
   "main": "bindings/node",
