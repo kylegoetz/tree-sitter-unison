@@ -218,11 +218,11 @@ State state_new(TSLexer *l, const bool * restrict vs, indent_vec *is) {
 static char * debug_indents_str(indent_vec *indents) {
   char * rv = "";
   LOG(VERBOSE, "%s", rv);
-  if (indents->len == 0) strncat(rv, "empty");
+  if (indents->len == 0) strncat(rv, "empty", 5);
   LOG(VERBOSE, "%s", rv);
   bool empty = true;
   for (size_t i = 0; i < indents->len; i++) {
-    if (!empty) strncat(rv, "-");
+    if (!empty) strncat(rv, "-", 1);
     LOG(VERBOSE, "%s", rv);
     rv += sprintf(rv, "%u", indents->data[i]);
     LOG(VERBOSE, "%s", rv);
@@ -873,13 +873,18 @@ static void * get_fractional(State *state) {
       non_zero = true;
     }
     const char a[2] = { PEEK, '\0' };
-    strncat(running_str, a);
+    LOG(VERBOSE, "get_fractional: adding %c\n", PEEK);
+    strncat(running_str, a, strlen(a));
+    LOG(VERBOSE, "get_fractional: strncat finished, running_str = %s\n", running_str);
     val = atof(running_str);
     if (non_zero && val == 0) { // i.e., we know `atof` failed
+      LOG(VERBOSE, "get_fractional: atof failed\n");
       return &nothing;
     }
+    LOG(VERBOSE, "get_fractional: atof succeeded\n");
     S_ADVANCE;
   }
+  LOG(VERBOSE, "get_fractional: finished loop { digit_found = %c, val = %f, running_str = %s }\n", digit_found ? 't' : 'f', val, running_str);
   return digit_found ? justDouble(val) : &nothing;
   // if (!is_eof(state) && !isws(PEEK)) return &nothing;
   // return justDouble(val);
