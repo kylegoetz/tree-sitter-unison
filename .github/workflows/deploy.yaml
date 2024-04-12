@@ -41,21 +41,21 @@ jobs:
   #   uses: tree-sitter/workflows/.github/workflows/package-npm.yml@main
   #   secrets:
   #     NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-inputs:
-  package-name:
-    description: The name of the package
-    default: ${{github.event.repository.name}}
-    type: string
-  environment-name:
-    description: The name of the environment
-    default: npm
-    type: string
-  node-version:
-    description: The NodeJS version
-    default: ${{vars.NODE_VERSION || 'latest'}}
-    type: string
-  secrets:
-    NODE_AUTH_TOKEN:
-      description: The authentication token for npm
-      required: true
+# inputs:
+#   package-name:
+#     description: The name of the package
+#     default: ${{github.event.repository.name}}
+#     type: string
+#   environment-name:
+#     description: The name of the environment
+#     default: npm
+#     type: string
+#   node-version:
+#     description: The NodeJS version
+#     default: ${{vars.NODE_VERSION || 'latest'}}
+#     type: string
+#   secrets:
+#     NODE_AUTH_TOKEN:
+#       description: The authentication token for npm
+#       required: true
 
