@@ -3,7 +3,7 @@
  */
 #define DEBUG 1
 
-#define LOG_LEVEL WARN
+#define LOG_LEVEL INFO
 typedef enum {
   VERBOSE,
   INFO,
