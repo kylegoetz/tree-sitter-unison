@@ -1,3 +1,5 @@
+!*/
+!src/grammar.json
 node_modules
 *.log
 log
@@ -8,8 +10,11 @@ log.html
 .DS_Store
 
 # app specific
-src/grammar.json
 src/node-types.json
 src/parser.c
+src/
 scratch.u
 *.wasm
+target/
+build/
+Cargo.lock
