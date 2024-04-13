@@ -902,7 +902,7 @@ static void * get_whole(State *state) {
     // Test to see if new val will exceed permitted bounds
     int64_t new_val = val * 10 + PEEK - ASCII_OFFSET;
     if ((new_val + ASCII_OFFSET - PEEK) / 10 != val) {
-      LOG(WARN, "get_whole, new_val + ASCII_OFFSET step is true { val = %ld, new_val = %ld, ASCII_OFFSET = %d, PEEK = %c }\n", val, new_val, ASCII_OFFSET, PEEK);
+      LOG(WARN, "get_whole, new_val + ASCII_OFFSET step is true { val = %lld, new_val = %lld, ASCII_OFFSET = %d, PEEK = %c }\n", val, new_val, ASCII_OFFSET, PEEK);
       return &nothing;
     }
     val = new_val;
