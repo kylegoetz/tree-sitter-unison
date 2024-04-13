@@ -1563,7 +1563,7 @@ static Result inline_tokens(State *state) {
  */
 static Result numeric(State *state) {
   LOG(INFO, "->numeric, %c\n", PEEK);
-  bool isDigit = isdigit(PEEK);
+  bool isDigit = PEEK ? isdigit(PEEK) : false; // Used to prevent use-after-free error.
   Result res = res_cont;
   switch (PEEK) {
     case '+':
