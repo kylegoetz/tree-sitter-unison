@@ -907,7 +907,7 @@ static Result detect_nat_ufloat_byte(State *state) {
   SHORT_SCANNER;
   whole = (Maybe *)get_whole(state);
   if (!whole->has_value && starts_with_zero) {
-    whole = justLong(0);
+    whole = justInt64(0);
   }
   if (whole->has_value) {
     if (PEEK == '.') {
@@ -933,9 +933,9 @@ static Result detect_nat_ufloat_byte(State *state) {
   }
   res = res_fail;
   CLEANUP:
-    if(whole && isJust(whole)) free(whole);
-    if(fractional && isJust(fractional)) free(fractional);
-    if(exponent && isJust(exponent)) free(exponent);
+    if(whole && isJust(whole)) freeJust(whole);
+    if(fractional && isJust(fractional)) freeJust(fractional);
+    if(exponent && isJust(exponent)) freeJust(exponent);
     return res;
 }
 
@@ -1192,9 +1192,9 @@ static Result post_pos_neg_sign(State *state, bool can_be_operator) {
   }
   res = res_fail;
   CLEANUP:
-    if(whole && isJust(whole)) free(whole);
-    if(val && isJust(val)) free(val);
-    if(e && isJust(e)) free(e);
+    if(whole && isJust(whole)) freeJust(whole);
+    if(val && isJust(val)) freeJust(val);
+    if(e && isJust(e)) freeJust(e);
     return res;
 }
 
