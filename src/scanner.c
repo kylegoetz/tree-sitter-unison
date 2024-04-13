@@ -2013,6 +2013,7 @@ void tree_sitter_unison_external_scanner_deserialize(void *indents_v, char *buff
 void tree_sitter_unison_external_scanner_destroy(void *indents_v) {
   indent_vec *indents = (indent_vec*) indents_v;
   VEC_FREE(indents);
+  free(indents);
 }
 
 // For unit tests
