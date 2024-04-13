@@ -1,7 +1,7 @@
 /**
  * Print input and result information.
  */
-#define DEBUG 1
+#define DEBUG 0
 
 #define LOG_LEVEL ERROR
 typedef enum {
@@ -15,6 +15,7 @@ typedef enum {
 #include "tree_sitter/parser.h"
 #include <assert.h>
 #include <stdio.h>
+#include <inttypes.h> # needed for portability of PRId64
 #ifdef DEBUG
 #include <assert.h>
 #endif
@@ -215,24 +216,6 @@ State state_new(TSLexer *l, const bool * restrict vs, indent_vec *is) {
   };
 }
 
-static char * debug_indents_str(indent_vec *indents) {
-  char * rv = "";
-  LOG(VERBOSE, "%s", rv);
-  if (indents->len == 0) strncat(rv, "empty", 5);
-  LOG(VERBOSE, "%s", rv);
-  bool empty = true;
-  for (size_t i = 0; i < indents->len; i++) {
-    if (!empty) strncat(rv, "-", 1);
-    LOG(VERBOSE, "%s", rv);
-    rv += sprintf(rv, "%u", indents->data[i]);
-    LOG(VERBOSE, "%s", rv);
-    empty = false;
-  }
-  
-  LOG(VERBOSE, "%s", rv);
-  return rv;
-}
-
 #ifdef DEBUG
 static void debug_indents(indent_vec *indents) {
   if (indents->len == 0) LOG(VERBOSE, "empty");
@@ -379,21 +362,6 @@ static bool smaller_indent(uint32_t indent, State *state) {
  
 static bool indent_lesseq(uint32_t indent, State *state) { return indent_exists(state) && indent <= VEC_BACK(state->indents); }
 
-/**
- * Composite condition examining whether the current layout can be terminated if the line after the position where the
- * scan started begins with a `where`.
- *
- * This is needed because `where` can appear on the same indent as, for example, a `do` statement in a `decl`, while
- * being part of the latter and therefore having to end the `do`'s layout before parsing the `where`.
- *
- * This does only check whether the line begins with a `w`, the entire `where` is consumed by the calling parser below.
- */
-static bool is_newline_where(uint32_t indent, State *state) {
-  return keep_layout(indent, state)
-    && (SYM(SEMICOLON) || SYM(END))
-    && !SYM(WHERE)
-    && PEEK == 'w';
-}
 
 #define NEWLINE_CASES \
   case '\n': \
@@ -766,16 +734,6 @@ static Result newline_semicolon(uint32_t indent, State *state) {
   }
   return res_cont;
 }
- 
-/**
- * End a layout if the next token is an infix operator and the indent is equal to or less than the current layout.
- */
-static Result newline_infix(uint32_t indent, Symbolic type, State *state) {
-  // if (end_on_infix(indent, type, state)) {
-  //   return layout_end("newline_infix", state);
-  // }
-  return res_cont;
-}
 
 /**
  * Parse an inline `where` or `with` token.
@@ -902,7 +860,7 @@ static void * get_whole(State *state) {
     // Test to see if new val will exceed permitted bounds
     int64_t new_val = val * 10 + PEEK - ASCII_OFFSET;
     if ((new_val + ASCII_OFFSET - PEEK) / 10 != val) {
-      LOG(WARN, "get_whole, new_val + ASCII_OFFSET step is true { val = %lld, new_val = %lld, ASCII_OFFSET = %d, PEEK = %c }\n", val, new_val, ASCII_OFFSET, PEEK);
+      LOG(WARN, "get_whole: exceeded the length of an int64 { val = %" PRId64 ", new_val = %" PRId64 ", ASCII_OFFSET = %d, PEEK = %c }\n", val, new_val, ASCII_OFFSET, PEEK);
       return &nothing;
     }
     val = new_val;
@@ -1036,26 +994,26 @@ static Result paren_symop(State *state) {
  * Detect || and &&, which should fail so JS can process it. It is only meant to be called from `operator` since it assumes
  * `res_cont` will continue operator parsing.
  */
-static Result boolean_operator(State *state) {
-  if (PEEK != '|' && PEEK != '&') return res_cont;
-  switch (PEEK) {
-    case '|': {
-      S_ADVANCE;
-      if (is_eof(state) || PEEK != '|') return res_cont;
-      S_ADVANCE;
-      if (!is_eof(state) && symbolic(PEEK)) return res_cont;
-      return res_fail;
-    }
-    case '&': {
-      S_ADVANCE;
-      if (is_eof(state) || PEEK != '&') return res_cont;
-      S_ADVANCE;
-      if (!is_eof(state) && symbolic(PEEK)) return res_cont;
-      return res_fail;
-    }
-  }
-  return res_cont;
-}
+// static Result boolean_operator(State *state) {
+//   if (PEEK != '|' && PEEK != '&') return res_cont;
+//   switch (PEEK) {
+//     case '|': {
+//       S_ADVANCE;
+//       if (is_eof(state) || PEEK != '|') return res_cont;
+//       S_ADVANCE;
+//       if (!is_eof(state) && symbolic(PEEK)) return res_cont;
+//       return res_fail;
+//     }
+//     case '&': {
+//       S_ADVANCE;
+//       if (is_eof(state) || PEEK != '&') return res_cont;
+//       S_ADVANCE;
+//       if (!is_eof(state) && symbolic(PEEK)) return res_cont;
+//       return res_fail;
+//     }
+//   }
+//   return res_cont;
+// }
 
 static bool found_pipe_or_logical_op(uint8_t pipe_count, uint8_t amp_count) {
   return pipe_count == 1 || pipe_count == 2 || amp_count == 2;
@@ -1166,6 +1124,7 @@ static Result operator(State *state) {
  // * 4. 
  */
 static Result post_pos_neg_sign(State *state, bool can_be_operator) {
+  (void) can_be_operator; // suppresses "unused variable" warning
   LOG(INFO, "->post_pos_neg_sign; PEEK = %c\n", PEEK);
   Maybe* whole = NULL;
   Maybe* val = NULL;
@@ -1459,23 +1418,23 @@ static Result close_layout_in_list(State *state) {
  * to have difficulty with `(+)` being seq('(', $.operator, ')') bc need
  * to be able to token.immediate($.operator) but that is not possible.
  */
-static Result open_paren(State *state) {
-  LOG(INFO, "->open_paren (%u, %c)\n", COL, PEEK);
-  if (PEEK != '(') {
-    return res_cont;
-  }
-  S_ADVANCE;
-  skipspace(state);
-  Result op_res = operator(state);
-  if (op_res.finished) {
-    skipspace(state);
-    if (PEEK == ')') {
-      MARK("open_paren", false, state);
-      return finish(SYMOP, "parenthesized operator");
-    }
-  }
-  return res_fail;
-}
+// static Result open_paren(State *state) {
+//   LOG(INFO, "->open_paren (%u, %c)\n", COL, PEEK);
+//   if (PEEK != '(') {
+//     return res_cont;
+//   }
+//   S_ADVANCE;
+//   skipspace(state);
+//   Result op_res = operator(state);
+//   if (op_res.finished) {
+//     skipspace(state);
+//     if (PEEK == ')') {
+//       MARK("open_paren", false, state);
+//       return finish(SYMOP, "parenthesized operator");
+//     }
+//   }
+//   return res_fail;
+// }
 
 
 
@@ -1754,6 +1713,7 @@ static Result newline_indent(uint32_t indent, State *state) {
  * NOTE: not SYMOP because cannot begin a line with one.
  */
 static Result newline_token(uint32_t indent, State *state) {
+  (void) indent; //suppress "unused variable" warning
   LOG(INFO, "->newline_token (col = %u, peek = %c)\n", COL, PEEK);
   if (PEEK == '-') {
     return minus(state);
@@ -1771,6 +1731,7 @@ static Result newline_token(uint32_t indent, State *state) {
         SHORT_SCANNER;
       } else if (PEEK == '.') {
         Result res = detect_nat_ufloat_byte(state);
+        SHORT_SCANNER;
       } else if (PEEK == '>') {
         S_ADVANCE;
         if (!symbolic(PEEK)) {
