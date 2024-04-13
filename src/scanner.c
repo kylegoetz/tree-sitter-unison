@@ -1644,13 +1644,11 @@ static Result layout_start(uint32_t column, State *state) {
               S_ADVANCE;
               Maybe * w = (Maybe *)get_whole(state);
               Maybe * f = (Maybe *)get_fractional(state);
-              if ( w->has_value || f->has_value) {
-                if(w) freeJust(w);
-                if(f) freeJust(f);
+              bool jumpFoo = w->has_value || f->has_value;
+              if(w && isJust(w)) freeJust(w);
+              if(f && isJust(f)) freeJust(f);
+              if(jumpFoo) {
                 goto foo;
-              } else {
-                if(w && isJust(w)) freeJust(w);
-                if(f && isJust(f)) freeJust(f);
               }
               return res_fail;
             }
