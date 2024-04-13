@@ -15,7 +15,7 @@ typedef enum {
 #include "tree_sitter/parser.h"
 #include <assert.h>
 #include <stdio.h>
-#include <inttypes.h> # needed for portability of PRId64
+#include <inttypes.h> // needed for portability of PRId64
 #ifdef DEBUG
 #include <assert.h>
 #endif
@@ -343,9 +343,9 @@ static bool indent_exists(State *state) { return state->indents->len != 0; };
  * Require that the current line's indent is greater or equal than the containing layout's, so the current layout is
  * continued.
  */
-static bool keep_layout(uint16_t indent, State *state) {
-  return indent_exists(state) && indent >= VEC_BACK(state->indents);
-}
+// static bool keep_layout(uint16_t indent, State *state) {
+  // return indent_exists(state) && indent >= VEC_BACK(state->indents);
+// }
  
 /**
  * Require that the current line's indent is equal to the containing layout's, so the line may start a new `decl`.
@@ -1876,20 +1876,20 @@ static Result scan_all(State *state) {
   *
   * Note: This may break the parser, since not all paths use `mark`.
   */
-#ifdef DEBUG
-static void debug_lookahead(State *state) {
-  bool first = true;
-  for (;;) {
-    if (isws(PEEK) || PEEK == 0) break;
-    else {
-      if (first) LOG(VERBOSE, "next: ");
-      LOG(VERBOSE, "%c\n", PEEK);
-      S_ADVANCE;
-      first = false;
-    }
-  }
-}
-#endif
+// #ifdef DEBUG
+// static void debug_lookahead(State *state) {
+//   bool first = true;
+//   for (;;) {
+//     if (isws(PEEK) || PEEK == 0) break;
+//     else {
+//       if (first) LOG(VERBOSE, "next: ");
+//       LOG(VERBOSE, "%c\n", PEEK);
+//       S_ADVANCE;
+//       first = false;
+//     }
+//   }
+// }
+// #endif
 
 /**
   * The main function of the parsing machinery, executing the parser by passing in the initial state and analyzing the
