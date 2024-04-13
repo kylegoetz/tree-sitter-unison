@@ -31,3 +31,9 @@ void * justLong(long l) {
     *it = l;
     return just(it);
 }
+
+void * justInt64(int8_t i) {
+    int8_t * it = (int8_t *) malloc(sizeof(int8_t));
+    *it = i;
+    return just(it);
+}

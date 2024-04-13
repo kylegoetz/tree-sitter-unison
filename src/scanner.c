@@ -891,15 +891,16 @@ static void * get_fractional(State *state) {
   
 }
 
+// returns *Maybe<Int64>
 static void * get_whole(State *state) {
   LOG(INFO, "->get_whole, %c\n", PEEK);
-  long val = 0;
+  int64_t val = 0;
   bool digit_found = false;
   LOG(WARN, "get_whole { is_eof = %s, PEEK = %c }\n", is_eof(state) ? "true" : "false", PEEK);
   while (!is_eof(state) && isdigit(PEEK)) {
     digit_found = true;
     // Test to see if new val will exceed permitted bounds
-    long new_val = val * 10 + PEEK - ASCII_OFFSET;
+    int64_t new_val = val * 10 + PEEK - ASCII_OFFSET;
     if ((new_val + ASCII_OFFSET - PEEK) / 10 != val) {
       LOG(WARN, "get_whole, new_val + ASCII_OFFSET step is true { val = %ld, new_val = %ld, ASCII_OFFSET = %d, PEEK = %c }\n", val, new_val, ASCII_OFFSET, PEEK);
       return &nothing;
@@ -908,7 +909,7 @@ static void * get_whole(State *state) {
     S_ADVANCE;
   }
   LOG(WARN, "get_whole: finished loop { digit_found = %c }\n", digit_found ? 't' : 'f');
-  return digit_found ? justLong(val) : &nothing;
+  return digit_found ? justInt64(val) : &nothing;
 }
 
 static void * get_exponent(State *state) {
