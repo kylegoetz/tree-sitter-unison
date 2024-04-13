@@ -943,31 +943,42 @@ static Result detect_nat_ufloat_byte(State *state) {
   LOG(INFO, "->detect_nat_ufloat_byte (%u, %c)\n", COL, PEEK);
   bool starts_with_zero = PEEK == '0';
   Result res = byte_literal(state);
+  Maybe* whole = NULL;
+  Maybe* exponent = NULL;
+  Maybe* fractional = NULL;
   SHORT_SCANNER;
-  Maybe *whole = (Maybe *)get_whole(state);
+  whole = (Maybe *)get_whole(state);
   if (!whole->has_value && starts_with_zero) {
     whole = justLong(0);
   }
   if (whole->has_value) {
     if (PEEK == '.') {
       S_ADVANCE;
-      Maybe *fractional =(Maybe *)get_fractional(state);
-      Maybe *exponent = (Maybe *)get_exponent(state);
+      fractional =(Maybe*)get_fractional(state);
+      exponent = (Maybe*)get_exponent(state);
       if (fractional->has_value || exponent->has_value) {
         LOG(VERBOSE, "fractional or exponentiated\n");
         MARK("detect_nat_ufloat_byte", false, state);
-        return finish_if_valid(FLOAT, "float", state);
+        res = finish_if_valid(FLOAT, "float", state);
+        goto CLEANUP;
       } else {
         LOG(VERBOSE, "not fractional and not exponentiated\n");
-        return res_fail;
+        res = res_fail;
+        goto CLEANUP;
       }
     } else {
-      Maybe *exponent = (Maybe *)get_exponent(state);
+      exponent = (Maybe*)get_exponent(state);
       MARK("detect_nat_ufloat_byte", false, state);
-      return finish_if_valid(exponent->has_value ? FLOAT : NAT, "nat", state);
+      res = finish_if_valid(exponent->has_value ? FLOAT : NAT, "nat", state);
+      goto CLEANUP;
     }
   }
-  return res_fail;
+  res = res_fail;
+  CLEANUP:
+    if(whole && isJust(whole)) free(whole);
+    if(fractional && isJust(fractional)) free(fractional);
+    if(exponent && isJust(exponent)) free(exponent);
+    return res;
 }
 
 /**
@@ -1156,15 +1167,13 @@ static Result operator(State *state) {
  */
 static Result post_pos_neg_sign(State *state, bool can_be_operator) {
   LOG(INFO, "->post_pos_neg_sign; PEEK = %c\n", PEEK);
+  Maybe* whole = NULL;
+  Maybe* val = NULL;
+  Maybe* e = NULL;
+  Result res = res_fail;
   // Immediately fail of 
   // Immediately terminate as symop if sign followed by whitespace, EOF, or ')', the latter of which is expected in the case of the parenthetical op pattern in JS grammar.
   if (isws(PEEK) || is_eof(state) || PEEK == ')') {
-    // skipspace(state);
-    // if (PEEK == ')') {
-      // S_ADVANCE;
-      // MARK("post_pos_neg_sign", false, state);
-      // return finish_if_valid(PREFIX_SYMOP, false, state);
-    // } // found - or + by itself
     MARK("post_pos_neg_sign", false, state);
     return finish_if_valid(SYMOP, "+/-", state);
   }
@@ -1181,45 +1190,53 @@ static Result post_pos_neg_sign(State *state, bool can_be_operator) {
   } else if (PEEK == '.') { // either -.123123 or -.(symbols) a symop
     S_ADVANCE;
     if (isdigit(PEEK)) { // check for FLOAT
-      Maybe * val = (Maybe *)get_fractional(state);
-      Maybe * e = (Maybe *) get_exponent(state);
+      val = (Maybe *)get_fractional(state);
+      e = (Maybe *) get_exponent(state);
       if(val->has_value || e->has_value) {
         MARK("handle_negative", false, state);
-        return finish_if_valid(FLOAT, "float", state);
+        res = finish_if_valid(FLOAT, "float", state);
+        goto CLEANUP;
       }
     } else if (symbolic(PEEK)) { // CHECK FOR SYMOP
       return operator(state);
     }
-    return res_fail;
+    res = res_fail;
+    goto CLEANUP;
   } else if (isdigit(PEEK)) { // check for -a.b FLOAT or -a INT
     LOG(VERBOSE, "\t2b. handle_negative >= 1, %c\n", PEEK);
-    Maybe * whole = (Maybe *)get_whole(state);
+    whole = (Maybe *)get_whole(state);
     if (whole->has_value) {
       LOG(VERBOSE, "\t3. whole has value\n");
       if (PEEK == '.') {
         S_ADVANCE;
-        Maybe *fractional = (Maybe *)get_fractional(state);
-        Maybe *e = (Maybe *)get_exponent(state);
-        if (fractional->has_value || e->has_value) {
+        val = (Maybe *)get_fractional(state);
+        e = (Maybe *)get_exponent(state);
+        if (val->has_value || e->has_value) {
           // double total = *(double *)fractional->value + *(long *)whole->value;
           // TODO check bounds
           MARK("handle_negative", false, state);
-          return finish_if_valid(FLOAT, "float", state);
+          res = finish_if_valid(FLOAT, "float", state);
+          goto CLEANUP;
         }
       } else {
-        Maybe *e = (Maybe *) get_exponent(state);
+        e = (Maybe *) get_exponent(state);
         MARK("handle_negative", false, state);
-        return finish_if_valid(e->has_value ? FLOAT : INT, "int", state);
+        res = finish_if_valid(e->has_value ? FLOAT : INT, "int", state);
+        goto CLEANUP;
       }
-      // return res_fail;
     }
   } else {
     LOG(VERBOSE, "non-dot symbolic PEEK %c\n", PEEK);
-    Result res = operator(state);
+    res = operator(state);
     LOG(VERBOSE, "Result of operator: %s\n", sym_names[res.sym]);
-    SHORT_SCANNER;
+    goto CLEANUP;
   }
-  return res_fail;
+  res = res_fail;
+  CLEANUP:
+    if(whole && isJust(whole)) free(whole);
+    if(val && isJust(val)) free(val);
+    if(e && isJust(e)) free(e);
+    return res;
 }
 
 /**
@@ -1654,6 +1671,8 @@ static Result layout_start(uint32_t column, State *state) {
               Maybe * w = (Maybe *)get_whole(state);
               Maybe * f = (Maybe *)get_fractional(state);
               if ( w->has_value || f->has_value) {
+                if(isJust(w)) free(w);
+                if(isJust(f)) free(f);
                 goto foo;
               }
               return res_fail;

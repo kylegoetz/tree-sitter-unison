@@ -20,6 +20,10 @@ void * just(void * a) {
 
 Maybe nothing = { false, 0 };
 
+bool isJust(Maybe* a) {
+    return a->has_value;
+}
+
 void * justDouble(double d) {
     double * it = (double *) malloc(sizeof(double));
     *it = d;
