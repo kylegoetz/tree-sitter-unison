@@ -20,6 +20,13 @@ void * just(void * a) {
 
 Maybe nothing = { false, 0 };
 
+void freeJust(Maybe* a) {
+    if (a->has_value) {
+        free(a->value);
+        free(a);
+    }
+}
+
 bool isJust(Maybe* a) {
     return a->has_value;
 }
@@ -36,8 +43,8 @@ void * justLong(long l) {
     return just(it);
 }
 
-void * justInt64(int8_t i) {
-    int8_t * it = (int8_t *) malloc(sizeof(int8_t));
+void * justInt64(int64_t i) {
+    int64_t * it = (int64_t *) malloc(sizeof(int64_t));
     *it = i;
     return just(it);
 }
