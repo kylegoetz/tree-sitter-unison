@@ -1563,17 +1563,30 @@ static Result inline_tokens(State *state) {
  */
 static Result numeric(State *state) {
   LOG(INFO, "->numeric, %c\n", PEEK);
-  if (isdigit(PEEK) || PEEK == '.' || PEEK == '-' || PEEK == '+') {
-    if (PEEK == '-' || PEEK == '+') {
-      Result res = handle_negative(state);
-      LOG(VERBOSE, "Result of handle_negative: %s\n", sym_names[res.sym]);
+  // int isDigit = PEEK ? isdigit(PEEK) : false; // Used to prevent use-after-free error.
+  Result res = res_cont;
+  switch (PEEK) {
+    case '+':
+    case '-':
+      res = handle_negative(state);
       SHORT_SCANNER;
-    } else if(isdigit(PEEK)) {
-      Result res = detect_nat_ufloat_byte(state);
+      break;
+    NUMERIC_CASES:
+      res = detect_nat_ufloat_byte(state);
       SHORT_SCANNER;
-    }
+      break;
   }
-  return res_cont;
+  // if (isDigit || PEEK == '.' || PEEK == '-' || PEEK == '+') {
+  //   if (PEEK == '-' || PEEK == '+') {
+  //     Result res = handle_negative(state);
+  //     // LOG(VERBOSE, "Result of handle_negative: %s\n", sym_names[res.sym]);
+  //     SHORT_SCANNER;
+  //   } else if(isdigit(PEEK)) {
+  //     Result res = detect_nat_ufloat_byte(state);
+  //     SHORT_SCANNER;
+  //   }
+  // }
+  return res;
 }
 
 /**
@@ -1629,13 +1642,11 @@ static Result layout_start(uint32_t column, State *state) {
               S_ADVANCE;
               Maybe * w = (Maybe *)get_whole(state);
               Maybe * f = (Maybe *)get_fractional(state);
-              if ( w->has_value || f->has_value) {
-                if(w) freeJust(w);
-                if(f) freeJust(f);
+              bool jumpFoo = w->has_value || f->has_value;
+              if(w && isJust(w)) freeJust(w);
+              if(f && isJust(f)) freeJust(f);
+              if(jumpFoo) {
                 goto foo;
-              } else {
-                if(w && isJust(w)) freeJust(w);
-                if(f && isJust(f)) freeJust(f);
               }
               return res_fail;
             }
