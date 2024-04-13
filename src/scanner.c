@@ -16,6 +16,7 @@ typedef enum {
 #include <assert.h>
 #include <stdio.h>
 #include <inttypes.h> // needed for portability of PRId64
+#include "jtckdint.h" // needed to prevent integer overflow in get_whole
 #ifdef DEBUG
 #include <assert.h>
 #endif
@@ -27,10 +28,10 @@ typedef enum {
 #include "maybe.c"
 
 #define ASCII_OFFSET 48
-#define NAT_MIN 0
-#define NAT_MAX 18446744073709551615u
-#define INT_MIN 9223372036854775808u
-#define INT_MAX 9223372036854775807
+#define UNISON_NAT_MIN 0
+#define UNISON_NAT_MAX 18446744073709551615u
+#define UNISON_INT_MIN 9223372036854775808u
+#define UNISON_INT_MAX 9223372036854775807
 #define NUMERIC_CASES \
   case '0': \
   case '1': \
@@ -857,13 +858,11 @@ static void * get_whole(State *state) {
   LOG(WARN, "get_whole { is_eof = %s, PEEK = %c }\n", is_eof(state) ? "true" : "false", PEEK);
   while (!is_eof(state) && isdigit(PEEK)) {
     digit_found = true;
-    // Test to see if new val will exceed permitted bounds
-    int64_t new_val = val * 10 + PEEK - ASCII_OFFSET;
-    if ((new_val + ASCII_OFFSET - PEEK) / 10 != val) {
+    int64_t new_val = 0;
+    if(ckd_mul(&new_val, val, 10) && ckd_add(&new_val, new_val, PEEK - ASCII_OFFSET)) {
       LOG(WARN, "get_whole: exceeded the length of an int64 { val = %" PRId64 ", new_val = %" PRId64 ", ASCII_OFFSET = %d, PEEK = %c }\n", val, new_val, ASCII_OFFSET, PEEK);
       return &nothing;
     }
-    val = new_val;
     S_ADVANCE;
   }
   LOG(WARN, "get_whole: finished loop { digit_found = %c }\n", digit_found ? 't' : 'f');
@@ -1563,7 +1562,6 @@ static Result inline_tokens(State *state) {
  */
 static Result numeric(State *state) {
   LOG(INFO, "->numeric, %c\n", PEEK);
-  // int isDigit = PEEK ? isdigit(PEEK) : false; // Used to prevent use-after-free error.
   Result res = res_cont;
   switch (PEEK) {
     case '+':
@@ -1576,16 +1574,6 @@ static Result numeric(State *state) {
       SHORT_SCANNER;
       break;
   }
-  // if (isDigit || PEEK == '.' || PEEK == '-' || PEEK == '+') {
-  //   if (PEEK == '-' || PEEK == '+') {
-  //     Result res = handle_negative(state);
-  //     // LOG(VERBOSE, "Result of handle_negative: %s\n", sym_names[res.sym]);
-  //     SHORT_SCANNER;
-  //   } else if(isdigit(PEEK)) {
-  //     Result res = detect_nat_ufloat_byte(state);
-  //     SHORT_SCANNER;
-  //   }
-  // }
   return res;
 }
 
