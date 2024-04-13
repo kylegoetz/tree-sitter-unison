@@ -1563,16 +1563,31 @@ static Result inline_tokens(State *state) {
  */
 static Result numeric(State *state) {
   LOG(INFO, "->numeric, %c\n", PEEK);
-  if (isdigit(PEEK) || PEEK == '.' || PEEK == '-' || PEEK == '+') {
-    if (PEEK == '-' || PEEK == '+') {
-      Result res = handle_negative(state);
-      LOG(VERBOSE, "Result of handle_negative: %s\n", sym_names[res.sym]);
+  bool isDigit = isdigit(PEEK);
+  Result res = res_cont;
+  switch (PEEK) {
+    case '+':
+    case '-':
+      res = handle_negative(state);
       SHORT_SCANNER;
-    } else if(isdigit(PEEK)) {
-      Result res = detect_nat_ufloat_byte(state);
-      SHORT_SCANNER;
-    }
+      break;
+    default:
+      if(isDigit) {
+        res = detect_nat_ufloat_byte(state);
+        SHORT_SCANNER;
+      }
+      break;
   }
+  // if (isDigit || PEEK == '.' || PEEK == '-' || PEEK == '+') {
+  //   if (PEEK == '-' || PEEK == '+') {
+  //     Result res = handle_negative(state);
+  //     // LOG(VERBOSE, "Result of handle_negative: %s\n", sym_names[res.sym]);
+  //     SHORT_SCANNER;
+  //   } else if(isdigit(PEEK)) {
+  //     Result res = detect_nat_ufloat_byte(state);
+  //     SHORT_SCANNER;
+  //   }
+  // }
   return res_cont;
 }
 
