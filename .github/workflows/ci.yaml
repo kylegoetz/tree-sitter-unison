@@ -61,7 +61,7 @@ jobs:
             printf 'changed=true\n' >> "$GITHUB_OUTPUT"
           fi
       - name: Run the fuzzer
-        uses: tree-sitter/fuzz-action@4
+        uses: tree-sitter/fuzz-action
         if: steps.scanner-check.outputs.changed == 'true'
   # npm:
   #   uses: tree-sitter/workflows/.github/workflows/package-npm.yml@main
