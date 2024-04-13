@@ -2,6 +2,7 @@
 !src/grammar.json
 !src/parser.c
 !src/node-types.json
+!src/jtckdint.h
 node_modules
 *.log
 log
