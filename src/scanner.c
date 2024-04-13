@@ -1563,7 +1563,7 @@ static Result inline_tokens(State *state) {
  */
 static Result numeric(State *state) {
   LOG(INFO, "->numeric, %c\n", PEEK);
-  bool isDigit = PEEK ? isdigit(PEEK) : false; // Used to prevent use-after-free error.
+  // int isDigit = PEEK ? isdigit(PEEK) : false; // Used to prevent use-after-free error.
   Result res = res_cont;
   switch (PEEK) {
     case '+':
@@ -1571,11 +1571,9 @@ static Result numeric(State *state) {
       res = handle_negative(state);
       SHORT_SCANNER;
       break;
-    default:
-      if(isDigit) {
-        res = detect_nat_ufloat_byte(state);
-        SHORT_SCANNER;
-      }
+    NUMERIC_CASES:
+      res = detect_nat_ufloat_byte(state);
+      SHORT_SCANNER;
       break;
   }
   // if (isDigit || PEEK == '.' || PEEK == '-' || PEEK == '+') {
@@ -1588,7 +1586,7 @@ static Result numeric(State *state) {
   //     SHORT_SCANNER;
   //   }
   // }
-  return res_cont;
+  return res;
 }
 
 /**
