@@ -2,12 +2,12 @@ name: ci
 on:
   push:
     branches: ["*"]
-    # paths:
-    #   - src/**
-    #   - grammar.js
-    #   - bindings/**
-    #   - binding.gyp
-    #   - test/**
+    paths:
+      - src/**
+      - grammar.js
+      - bindings/**
+      - binding.gyp
+      - test/**
   pull_request: 
     paths:
       - src/**
@@ -56,7 +56,7 @@ jobs:
         id: scanner-check
         run: |-
           if git diff --quiet HEAD^ -- src/scanner.c; then
-            printf 'changed=true\n' >> "$GITHUB_OUTPUT"
+            printf 'changed=false\n' >> "$GITHUB_OUTPUT"
           else
             printf 'changed=true\n' >> "$GITHUB_OUTPUT"
           fi
