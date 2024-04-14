@@ -12,4 +12,4 @@ concurrency:
 jobs:
   regenerate:
     uses: tree-sitter/workflows/.github/workflows/regenerate.yml@main
-    if: github.actor == 'dependabot[bot]'
+    if: github.actor == 'dependabot[bot]' 
