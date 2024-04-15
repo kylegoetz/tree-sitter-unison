@@ -28,7 +28,6 @@
   "devDependencies": {
     "@commitlint/cli": "^19.2.2",
     "@commitlint/config-conventional": "^19.2.2",
-    "husky": "^9.0.11",
     "tree-sitter-cli": "^0.22.5",
     "web-tree-sitter": "^0.22.5"
   },
@@ -54,9 +53,18 @@
     }
   ],
   "commitlint": {
-    "extends": ["@commitlint/config-conventional"],
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
     "rules": {
-        "subject-case": [2, "never", ["start-case", "pascal-case"]]
+      "subject-case": [
+        2,
+        "never",
+        [
+          "start-case",
+          "pascal-case"
+        ]
+      ]
     }
   }
 }
