@@ -23,14 +23,14 @@
     "unison"
   ],
   "dependencies": {
-    "nan": "^2.12.1"
+    "nan": "^2.19.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.6.6",
-    "@commitlint/config-conventional": "^17.6.6",
-    "husky": "^8.0.0",
-    "tree-sitter-cli": "^0.20.8",
-    "web-tree-sitter": "^0.20.8"
+    "@commitlint/cli": "^19.2.2",
+    "@commitlint/config-conventional": "^19.2.2",
+    "husky": "^9.0.11",
+    "tree-sitter-cli": "^0.22.5",
+    "web-tree-sitter": "^0.22.5"
   },
   "scripts": {
     "start": "tree-sitter generate",
