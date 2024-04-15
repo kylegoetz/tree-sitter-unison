@@ -652,7 +652,7 @@ __ckd_declare_mul(__ckd_mul_uint128, unsigned __int128)
 #endif
 
 #else
-#pragma message "checked integer arithmetic unsupported in this environment"
+#pragma message("checked integer arithmetic unsupported in this environment")
 
 #define ckd_add(res, x, y) (*(res) = (x) + (y), 0)
 #define ckd_sub(res, x, y) (*(res) = (x) - (y), 0)
