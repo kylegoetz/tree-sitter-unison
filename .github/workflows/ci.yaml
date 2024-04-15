@@ -34,7 +34,7 @@ jobs:
       - name: Run parser and binding tests
         uses: tree-sitter/parser-test-action@v2
       - name: Parse sample files
-        uses: tree-sitter/parse-action@v3
+        uses: tree-sitter/parse-action@v4
         id: parse-files
         with:
           files: examples/**
