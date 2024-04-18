@@ -53,7 +53,7 @@ typedef enum {
 #define S_SKIP state->lexer->advance(state->lexer, true)
 #define SYM(s) (state->symbols[s])
 
-#ifndef __EMSCRIPTEN__
+#ifndef __wasm32__
 #define LOG(level, format, ...) \
   do { \
     if ((level) >= LOG_LEVEL) { \
@@ -66,7 +66,7 @@ typedef enum {
 #endif
 
 #ifdef DEBUG
-  #ifndef __EMSCRIPTEN__
+  #ifndef __wasm32__
   #define DEBUG_PRINTF(...) do{ fprintf( stderr, __VA_ARGS__ ); } while( false )
   #else
   #define DEBUG_PRINTF(...) do{ } while ( false )
