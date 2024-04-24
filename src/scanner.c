@@ -245,6 +245,9 @@ void debug_state(State *state) {
   debug_indents(state->indents);
   LOG(VERBOSE, " }\n");
 }
+#else
+static void debug_indents(indent_vec *indents) { return; }
+void debug_state(State *state) { return; }
 #endif
 
 /**
