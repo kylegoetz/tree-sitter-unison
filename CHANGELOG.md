@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.3] - 2024-04-24
+
+### Fixed
+
+- #71 - Hashes now only validate for proper base32hex (i.e., fail if a letter after 'v' appears in the hash)
+- #67 - fprintf conditionally included in scanner so WASM builds succeed
+
+## [1.1.1] - 2024-04-13
+
+### Fixed
+
+- #57 - strncat instead of strcat to support WASM
+
 ## [1.1.0] - 2024-02-02
 
 ### Added
