@@ -62,7 +62,7 @@ x = ##Text.take
 ===
 [Identifier] HQ prefix
 ===
-x = #2tWjVAuc7
+x = #2tBjVAuc7
 ---
 (unison
     (term_declaration
@@ -73,7 +73,7 @@ x = #2tWjVAuc7
 ===
 [Identifier] HQ prefix and cycle
 ===
-x = #y9ycWkiC1.y9
+x = #9ckiC1.a9
 ---
 (unison
     (term_declaration
@@ -84,7 +84,7 @@ x = #y9ycWkiC1.y9
 ===
 [Identifier] HQ prefix and cid
 ===
-x = #cWkiC1x89#1
+x = #ckiC189#1
 ---
 (unison 
     (term_declaration 
@@ -95,7 +95,7 @@ x = #cWkiC1x89#1
 ===
 [Identifier] HQ prefix, cycle, and cid
 ===
-x = #DCxrnCAPS.WD#0
+x = #DCrnCAPS.AD#0
 ---
 (unison
         (term_declaration
