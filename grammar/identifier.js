@@ -33,7 +33,7 @@ module.exports = {
   namespace: $ => token(regex.namespace),
   
   hash_qualifier: $ => seq(
-    alias(/#[a-zA-Z0-9]+/, $.hash_prefix), 
+    alias(/#[a-vA-V0-9]+/, $.hash_prefix), 
     optional(alias($._dot, $.cyclic_index)),
     optional($.hash_cid),
   ),
