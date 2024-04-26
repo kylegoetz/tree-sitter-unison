@@ -3,6 +3,7 @@ const { KEYWORD } = require('./precedences')
 
 module.exports = {
   _expression: $ => prec.right(choice(
+    $.rewrite_block,
     $.literal_function,
     $.exp_let,
     $.exp_if,

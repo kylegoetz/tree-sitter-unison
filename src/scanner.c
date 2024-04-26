@@ -2,10 +2,10 @@
  * Print input and result information.
  */
 #ifndef __wasm32__ // disable logging for Zed build
-#define DEBUG 0
+#define DEBUG 1
 #endif
 
-#define LOG_LEVEL ERROR
+#define LOG_LEVEL VERBOSE
 typedef enum {
   VERBOSE,
   INFO,
@@ -828,16 +828,44 @@ static Result byte_literal(State *state) {
  * sees a term assignment as function application with operator `=` as
  * discovered by the external scanner. This function exists to prevent
  * this.
+ * 2024-04-26: Need to exclude `==>` as well, as it is a reserved operator now and the JS will handle it.
+ * 
+ * Should only be called by `operator` and `paren_symop` because it assumes we're at the start of a potential operator.
+ * 
+ * Fail on: single equals, ==>, guaranteed non-OPERATOR
  */
 static Result equals(State *state) {
-  LOG(INFO, "->equals (%u, %c)\n", COL, PEEK);
+  LOG(INFO, "[equals] { COL = %u, PEEK = %c }\n", COL, PEEK);
   if (PEEK == '=') {
+    LOG(VERBOSE, "[equals] Found first equals. Could be =, ==>, symop, or failure\n");
     S_ADVANCE;
+    // Trigger fail on `=` or non-OPERATOR
     if (is_eof(state) || isws(PEEK) || !symbolic(PEEK)) {
+      LOG(VERBOSE, "[equals] { COL = %u, PEEK = %c } FAIL: is = or non-OPERATOR\n", COL, PEEK);
       return res_fail;
     }
+    if (PEEK == '=') {
+      LOG(VERBOSE, "[equals] Found second equals in a row. Could be ==>, symop, or failure\n");
+      S_ADVANCE;
+      if(is_eof(state) || isws(PEEK)) { // ==, succeed
+        LOG(VERBOSE, "[equals] Found `==` and continuing with calling function. { COL = %u }", COL);
+        return res_cont;
+      } else if (PEEK == '>') { // Either ==> or let OPERATOR handle
+        LOG(VERBOSE, "[equals] Found `==>`. Could be that symbol or SYMOP or failure\n");
+        S_ADVANCE;
+        if (is_eof(state) || isws(PEEK)) { // ==> for sure
+          LOG(VERBOSE, "[equals] Found `==>` that has no symbol after it, so it's not a SYMOP. FAIL to allow JS to parse it\n");
+          return res_fail;
+        } else {
+          LOG(VERBOSE, "[equals] Found `==>` and continuing with calling function to look for SYMOP. { COL = %u }", COL);
+          return res_cont;
+        }
+      }
+      if (is_eof(state) || isws(PEEK) || symbolic(PEEK)) {
+        return res_cont;
+      }
+    }
   }
-  return res_cont;
 }
 
 /**
@@ -854,10 +882,6 @@ static Result paren_symop(State *state) {
     Result res = equals(state);
     SHORT_SCANNER;
   }
-  if (is_eof(state) || !symbolic(PEEK)) {
-    return res_fail;
-  }
-  S_ADVANCE;
   while (!is_eof(state) && PEEK != ')' && !isws(PEEK)) {
     if (symbolic(PEEK)) {
       S_ADVANCE;
@@ -873,31 +897,6 @@ static Result paren_symop(State *state) {
   return res_fail;
 }
 
-/**
- * Detect || and &&, which should fail so JS can process it. It is only meant to be called from `operator` since it assumes
- * `res_cont` will continue operator parsing.
- */
-// static Result boolean_operator(State *state) {
-//   if (PEEK != '|' && PEEK != '&') return res_cont;
-//   switch (PEEK) {
-//     case '|': {
-//       S_ADVANCE;
-//       if (is_eof(state) || PEEK != '|') return res_cont;
-//       S_ADVANCE;
-//       if (!is_eof(state) && symbolic(PEEK)) return res_cont;
-//       return res_fail;
-//     }
-//     case '&': {
-//       S_ADVANCE;
-//       if (is_eof(state) || PEEK != '&') return res_cont;
-//       S_ADVANCE;
-//       if (!is_eof(state) && symbolic(PEEK)) return res_cont;
-//       return res_fail;
-//     }
-//   }
-//   return res_cont;
-// }
-
 static bool found_pipe_or_logical_op(uint8_t pipe_count, uint8_t amp_count) {
   return pipe_count == 1 || pipe_count == 2 || amp_count == 2;
 }
@@ -908,6 +907,7 @@ static bool found_pipe_or_logical_op(uint8_t pipe_count, uint8_t amp_count) {
  * Need to exclude certain symbols as solutions. The following cannot
  * be considered operators: =, &&, ||, | (`|` is handled by the JS)
  * Also need to exclude !( and ! bc these are bangs, a reserved keyword not an operator.
+ * 2024-04-26: Need to exclude `==>` as well, as it is a reserved operator now and the JS will handle it.
  *
  * Needs to recognize `(OPERATOR)` as a parenthesized operator
  */

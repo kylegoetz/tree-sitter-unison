@@ -366,6 +366,10 @@
             "named": true
           },
           {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -899,6 +903,10 @@
             "named": true
           },
           {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -1054,6 +1062,10 @@
           "named": true
         },
         {
+          "type": "rewrite_block",
+          "named": true
+        },
+        {
           "type": "term_declaration",
           "named": true
         },
@@ -1206,6 +1218,10 @@
           },
           {
             "type": "pattern",
+            "named": true
+          },
+          {
+            "type": "rewrite_block",
             "named": true
           },
           {
@@ -1534,6 +1550,10 @@
             "named": true
           },
           {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -1690,6 +1710,10 @@
         },
         {
           "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "rewrite_block",
           "named": true
         },
         {
@@ -1915,6 +1939,10 @@
             "named": true
           },
           {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
             "type": "term_declaration",
             "named": true
           },
@@ -2077,6 +2105,10 @@
             "named": true
           },
           {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
             "type": "term_declaration",
             "named": true
           },
@@ -2235,6 +2267,10 @@
             "named": true
           },
           {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -2386,6 +2422,10 @@
           },
           {
             "type": "pattern",
+            "named": true
+          },
+          {
+            "type": "rewrite_block",
             "named": true
           },
           {
@@ -2571,6 +2611,10 @@
             "named": true
           },
           {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -2723,6 +2767,10 @@
         },
         {
           "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "rewrite_block",
           "named": true
         },
         {
@@ -2926,6 +2974,10 @@
             "named": true
           },
           {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -3073,6 +3125,10 @@
           "named": true
         },
         {
+          "type": "rewrite_block",
+          "named": true
+        },
+        {
           "type": "tuple_or_parenthesized",
           "named": true
         },
@@ -3217,6 +3273,10 @@
           },
           {
             "type": "pattern",
+            "named": true
+          },
+          {
+            "type": "rewrite_block",
             "named": true
           },
           {
@@ -3383,6 +3443,10 @@
           "named": true
         },
         {
+          "type": "rewrite_block",
+          "named": true
+        },
+        {
           "type": "term_declaration",
           "named": true
         },
@@ -3538,6 +3602,10 @@
             "named": true
           },
           {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -3690,6 +3758,10 @@
         },
         {
           "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "rewrite_block",
           "named": true
         },
         {
@@ -4090,6 +4162,10 @@
             "named": true
           },
           {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -4241,6 +4317,10 @@
           "named": true
         },
         {
+          "type": "rewrite_block",
+          "named": true
+        },
+        {
           "type": "tuple_or_parenthesized",
           "named": true
         },
@@ -4388,6 +4468,10 @@
             "named": true
           },
           {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -4532,6 +4616,10 @@
         },
         {
           "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "rewrite_block",
           "named": true
         },
         {
@@ -4829,6 +4917,10 @@
             "named": true
           },
           {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -4992,6 +5084,10 @@
           "named": true
         },
         {
+          "type": "rewrite_block",
+          "named": true
+        },
+        {
           "type": "sequence_type",
           "named": true
         },
@@ -5148,6 +5244,10 @@
           },
           {
             "type": "pattern",
+            "named": true
+          },
+          {
+            "type": "rewrite_block",
             "named": true
           },
           {
@@ -5342,6 +5442,10 @@
           "named": true
         },
         {
+          "type": "rewrite_block",
+          "named": true
+        },
+        {
           "type": "term_declaration",
           "named": true
         },
@@ -5467,6 +5571,804 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "rewrite_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "kw_rewrite",
+          "named": true
+        },
+        {
+          "type": "rewrite_case",
+          "named": true
+        },
+        {
+          "type": "rewrite_signature",
+          "named": true
+        },
+        {
+          "type": "rewrite_term",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "rewrite_case",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "operator",
+            "named": true
+          },
+          {
+            "type": "path",
+            "named": true
+          },
+          {
+            "type": "wordy_id",
+            "named": true
+          }
+        ]
+      },
+      "param": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "wordy_id",
+            "named": true
+          }
+        ]
+      },
+      "scrutinee": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ";",
+            "named": false
+          },
+          {
+            "type": "and",
+            "named": true
+          },
+          {
+            "type": "bang",
+            "named": true
+          },
+          {
+            "type": "built_in_hash",
+            "named": true
+          },
+          {
+            "type": "cases",
+            "named": true
+          },
+          {
+            "type": "delay_block",
+            "named": true
+          },
+          {
+            "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "exp_if",
+            "named": true
+          },
+          {
+            "type": "exp_let",
+            "named": true
+          },
+          {
+            "type": "float",
+            "named": true
+          },
+          {
+            "type": "function_application",
+            "named": true
+          },
+          {
+            "type": "handler",
+            "named": true
+          },
+          {
+            "type": "hash_qualifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": true
+          },
+          {
+            "type": "literal_boolean",
+            "named": true
+          },
+          {
+            "type": "literal_byte",
+            "named": true
+          },
+          {
+            "type": "literal_char",
+            "named": true
+          },
+          {
+            "type": "literal_function",
+            "named": true
+          },
+          {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
+            "type": "literal_list",
+            "named": true
+          },
+          {
+            "type": "literal_termlink",
+            "named": true
+          },
+          {
+            "type": "literal_text",
+            "named": true
+          },
+          {
+            "type": "literal_typelink",
+            "named": true
+          },
+          {
+            "type": "match",
+            "named": true
+          },
+          {
+            "type": "nat",
+            "named": true
+          },
+          {
+            "type": "operator",
+            "named": true
+          },
+          {
+            "type": "or",
+            "named": true
+          },
+          {
+            "type": "parenthetical_exp",
+            "named": true
+          },
+          {
+            "type": "path",
+            "named": true
+          },
+          {
+            "type": "pattern",
+            "named": true
+          },
+          {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "unit",
+            "named": true
+          },
+          {
+            "type": "with",
+            "named": true
+          },
+          {
+            "type": "wordy_id",
+            "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "and",
+          "named": true
+        },
+        {
+          "type": "bang",
+          "named": true
+        },
+        {
+          "type": "built_in_hash",
+          "named": true
+        },
+        {
+          "type": "cases",
+          "named": true
+        },
+        {
+          "type": "delay_block",
+          "named": true
+        },
+        {
+          "type": "destructuring_bind",
+          "named": true
+        },
+        {
+          "type": "doc_block",
+          "named": true
+        },
+        {
+          "type": "exp_if",
+          "named": true
+        },
+        {
+          "type": "exp_let",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "function_application",
+          "named": true
+        },
+        {
+          "type": "handler",
+          "named": true
+        },
+        {
+          "type": "hash_qualifier",
+          "named": true
+        },
+        {
+          "type": "int",
+          "named": true
+        },
+        {
+          "type": "literal_boolean",
+          "named": true
+        },
+        {
+          "type": "literal_byte",
+          "named": true
+        },
+        {
+          "type": "literal_char",
+          "named": true
+        },
+        {
+          "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
+          "named": true
+        },
+        {
+          "type": "literal_list",
+          "named": true
+        },
+        {
+          "type": "literal_termlink",
+          "named": true
+        },
+        {
+          "type": "literal_text",
+          "named": true
+        },
+        {
+          "type": "literal_typelink",
+          "named": true
+        },
+        {
+          "type": "match",
+          "named": true
+        },
+        {
+          "type": "nat",
+          "named": true
+        },
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "or",
+          "named": true
+        },
+        {
+          "type": "parenthetical_exp",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "rewrite_block",
+          "named": true
+        },
+        {
+          "type": "superarrow",
+          "named": true
+        },
+        {
+          "type": "term_declaration",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized",
+          "named": true
+        },
+        {
+          "type": "unit",
+          "named": true
+        },
+        {
+          "type": "use_clause",
+          "named": true
+        },
+        {
+          "type": "with",
+          "named": true
+        },
+        {
+          "type": "wordy_id",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "rewrite_signature",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "arrow_symbol",
+          "named": true
+        },
+        {
+          "type": "built_in_hash",
+          "named": true
+        },
+        {
+          "type": "delayed",
+          "named": true
+        },
+        {
+          "type": "effect",
+          "named": true
+        },
+        {
+          "type": "forall",
+          "named": true
+        },
+        {
+          "type": "hash_qualifier",
+          "named": true
+        },
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "sequence_type",
+          "named": true
+        },
+        {
+          "type": "superarrow",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized_type",
+          "named": true
+        },
+        {
+          "type": "unit",
+          "named": true
+        },
+        {
+          "type": "wordy_id",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "rewrite_term",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "operator",
+            "named": true
+          },
+          {
+            "type": "path",
+            "named": true
+          },
+          {
+            "type": "wordy_id",
+            "named": true
+          }
+        ]
+      },
+      "param": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "wordy_id",
+            "named": true
+          }
+        ]
+      },
+      "scrutinee": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ";",
+            "named": false
+          },
+          {
+            "type": "and",
+            "named": true
+          },
+          {
+            "type": "bang",
+            "named": true
+          },
+          {
+            "type": "built_in_hash",
+            "named": true
+          },
+          {
+            "type": "cases",
+            "named": true
+          },
+          {
+            "type": "delay_block",
+            "named": true
+          },
+          {
+            "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "exp_if",
+            "named": true
+          },
+          {
+            "type": "exp_let",
+            "named": true
+          },
+          {
+            "type": "float",
+            "named": true
+          },
+          {
+            "type": "function_application",
+            "named": true
+          },
+          {
+            "type": "handler",
+            "named": true
+          },
+          {
+            "type": "hash_qualifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": true
+          },
+          {
+            "type": "literal_boolean",
+            "named": true
+          },
+          {
+            "type": "literal_byte",
+            "named": true
+          },
+          {
+            "type": "literal_char",
+            "named": true
+          },
+          {
+            "type": "literal_function",
+            "named": true
+          },
+          {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
+            "type": "literal_list",
+            "named": true
+          },
+          {
+            "type": "literal_termlink",
+            "named": true
+          },
+          {
+            "type": "literal_text",
+            "named": true
+          },
+          {
+            "type": "literal_typelink",
+            "named": true
+          },
+          {
+            "type": "match",
+            "named": true
+          },
+          {
+            "type": "nat",
+            "named": true
+          },
+          {
+            "type": "operator",
+            "named": true
+          },
+          {
+            "type": "or",
+            "named": true
+          },
+          {
+            "type": "parenthetical_exp",
+            "named": true
+          },
+          {
+            "type": "path",
+            "named": true
+          },
+          {
+            "type": "pattern",
+            "named": true
+          },
+          {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "unit",
+            "named": true
+          },
+          {
+            "type": "with",
+            "named": true
+          },
+          {
+            "type": "wordy_id",
+            "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "and",
+          "named": true
+        },
+        {
+          "type": "bang",
+          "named": true
+        },
+        {
+          "type": "built_in_hash",
+          "named": true
+        },
+        {
+          "type": "cases",
+          "named": true
+        },
+        {
+          "type": "delay_block",
+          "named": true
+        },
+        {
+          "type": "destructuring_bind",
+          "named": true
+        },
+        {
+          "type": "doc_block",
+          "named": true
+        },
+        {
+          "type": "exp_if",
+          "named": true
+        },
+        {
+          "type": "exp_let",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "function_application",
+          "named": true
+        },
+        {
+          "type": "handler",
+          "named": true
+        },
+        {
+          "type": "hash_qualifier",
+          "named": true
+        },
+        {
+          "type": "int",
+          "named": true
+        },
+        {
+          "type": "literal_boolean",
+          "named": true
+        },
+        {
+          "type": "literal_byte",
+          "named": true
+        },
+        {
+          "type": "literal_char",
+          "named": true
+        },
+        {
+          "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
+          "named": true
+        },
+        {
+          "type": "literal_list",
+          "named": true
+        },
+        {
+          "type": "literal_termlink",
+          "named": true
+        },
+        {
+          "type": "literal_text",
+          "named": true
+        },
+        {
+          "type": "literal_typelink",
+          "named": true
+        },
+        {
+          "type": "match",
+          "named": true
+        },
+        {
+          "type": "nat",
+          "named": true
+        },
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "or",
+          "named": true
+        },
+        {
+          "type": "parenthetical_exp",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "rewrite_block",
+          "named": true
+        },
+        {
+          "type": "superarrow",
+          "named": true
+        },
+        {
+          "type": "term_declaration",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized",
+          "named": true
+        },
+        {
+          "type": "unit",
+          "named": true
+        },
+        {
+          "type": "use_clause",
+          "named": true
+        },
+        {
+          "type": "with",
+          "named": true
+        },
+        {
+          "type": "wordy_id",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -5716,6 +6618,10 @@
             "named": true
           },
           {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -5868,6 +6774,10 @@
         },
         {
           "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "rewrite_block",
           "named": true
         },
         {
@@ -6085,6 +6995,10 @@
             "named": true
           },
           {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -6229,6 +7143,10 @@
         },
         {
           "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "rewrite_block",
           "named": true
         },
         {
@@ -6418,6 +7336,10 @@
             "named": true
           },
           {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -6562,6 +7484,10 @@
         },
         {
           "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "rewrite_block",
           "named": true
         },
         {
@@ -7108,6 +8034,10 @@
             "named": true
           },
           {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -7255,6 +8185,10 @@
           "named": true
         },
         {
+          "type": "rewrite_block",
+          "named": true
+        },
+        {
           "type": "term_definition",
           "named": true
         },
@@ -7363,6 +8297,10 @@
     "named": true
   },
   {
+    "type": "case",
+    "named": false
+  },
+  {
     "type": "cases",
     "named": true
   },
@@ -7435,6 +8373,10 @@
     "named": true
   },
   {
+    "type": "kw_rewrite",
+    "named": true
+  },
+  {
     "type": "kw_termlink",
     "named": true
   },
@@ -7479,8 +8421,20 @@
     "named": true
   },
   {
+    "type": "signature",
+    "named": false
+  },
+  {
     "type": "structural",
     "named": true
+  },
+  {
+    "type": "superarrow",
+    "named": true
+  },
+  {
+    "type": "term",
+    "named": false
   },
   {
     "type": "then",
