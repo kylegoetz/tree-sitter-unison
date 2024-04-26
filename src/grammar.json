@@ -4463,18 +4463,6 @@
       "name": "_empty"
     },
     {
-      "type": "STRING",
-      "value": "nat"
-    },
-    {
-      "type": "STRING",
-      "value": "int"
-    },
-    {
-      "type": "STRING",
-      "value": "float"
-    },
-    {
       "type": "SYMBOL",
       "name": "operator"
     },

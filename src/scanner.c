@@ -15,7 +15,7 @@ typedef enum {
 } LogLevel;
 
 #include "tree_sitter/parser.h"
-#include <stdlib.h> // malloc, free, calloc, atof
+#include <stdlib.h> // malloc, free, calloc
 #include <stdio.h> // fprintf, stderr
 #include <assert.h> // assert
 #include <string.h> // memcpy, strlen, strncat
@@ -107,9 +107,6 @@ typedef enum {
     IN,
     INDENT,
     EMPTY,
-    NAT,
-    INT,
-    FLOAT,
     SYMOP,
     PREFIX_SYMOP,
     WATCH,
@@ -133,9 +130,6 @@ static char *sym_names[] = {
     "in",
     "indent",
     "empty",
-    "nat",
-    "int",
-    "float",
     "symop",
     "(symop)",
     "watch",
@@ -827,89 +821,6 @@ static Result byte_literal(State *state) {
   return res_cont;
 }
 
-static bool is_fractional(State *state) {
-  LOG(INFO, "->get_fractional, %c\n", PEEK);
-  bool non_zero = false;
-  bool digit_found = false;
-  
-  while (!is_eof(state) && isdigit(PEEK)) {
-    digit_found = true;
-    if (PEEK != '0') {
-      non_zero = true;
-    }
-    LOG(VERBOSE, "get_fractional: adding %c\n", PEEK);
-    S_ADVANCE;
-  }
-  return digit_found;  
-}
-
-static bool is_whole(State *state) {
-  LOG(INFO, "->get_whole, %c\n", PEEK);
-  LOG(WARN, "get_whole { is_eof = %s, PEEK = %c }\n", is_eof(state) ? "true" : "false", PEEK);
-  if(is_eof(state) || !isdigit(PEEK)) {
-    return false;
-  }
-  while (!is_eof(state) && isdigit(PEEK)) {
-    S_ADVANCE;
-  }
-  return true;
-}
-
-static bool is_exponent(State *state) {
-  LOG(INFO, "->get_exponent (col = %u, peek = %c)\n", COL, PEEK);
-  if (is_eof(state)) return false;
-  if (PEEK != 'e' && PEEK != 'E') return false;
-  S_ADVANCE;
-  if (is_eof(state)) return false;
-  switch (PEEK) {
-    case '-':
-    case '+': {
-      S_ADVANCE; 
-      // no return so fallthrough for numeric cases
-    }
-    NUMERIC_CASES: {
-      return is_whole(state);
-    }
-    default: {
-      return false;
-    }
-  }
-}
-
-/**
- * Parse literals that begin with a digit. These are:
- * - Nat
- * - Float (in Unison, they are not required to begin with `+` if positive)
- * - Byte (they begin with the token "0xs")
- */
-static Result detect_nat_ufloat_byte(State *state) {
-  LOG(INFO, "->detect_nat_ufloat_byte (%u, %c)\n", COL, PEEK);
-  bool starts_with_zero = PEEK == '0';
-  Result res = byte_literal(state);
-  SHORT_SCANNER;
-  if (starts_with_zero || is_whole(state)) {
-    if (PEEK == '.') {
-      S_ADVANCE;
-      bool fractional = is_fractional(state);
-      bool exponent = is_exponent(state);
-      if (fractional || exponent) {
-        LOG(VERBOSE, "fractional or exponentiated\n");
-        MARK("detect_nat_ufloat_byte", false, state);
-        res = finish_if_valid(FLOAT, "float", state);
-        SHORT_SCANNER;
-      } else {
-        LOG(VERBOSE, "not fractional and not exponentiated\n");
-        res = res_fail;
-        SHORT_SCANNER;
-      }
-    } else {
-      MARK("detect_nat_ufloat_byte", false, state);
-      res = finish_if_valid(is_exponent(state) ? FLOAT : NAT, "nat", state);
-      SHORT_SCANNER;
-    }
-  }
-  return res_fail;
-}
 
 /**
  * Handle an operator that begins with `=`. If it's a single `=` then fail
@@ -1090,7 +1001,6 @@ static Result operator(State *state) {
 /**
  * This function is called after a +/- is consumed.
  * The following cases must be handled:
- * 1. post-sign FLOAT or INT
  // * 2. SYMOP that begins with +/- and is terminated by whitespace or ')', the latter of which indicates a parenthetical operator
  // * 3. post-sign symbolic chars as SYMOP
  // * 4. 
@@ -1099,34 +1009,36 @@ static Result post_pos_neg_sign(State *state, bool can_be_operator) {
   (void) can_be_operator; // suppresses "unused variable" warning
   LOG(INFO, "->post_pos_neg_sign; PEEK = %c\n", PEEK);
   Result res = res_fail;
-  // Immediately fail of 
   // Immediately terminate as symop if sign followed by whitespace, EOF, or ')', the latter of which is expected in the case of the parenthetical op pattern in JS grammar.
   if (isws(PEEK) || is_eof(state) || PEEK == ')') {
     MARK("post_pos_neg_sign", false, state);
     return finish_if_valid(SYMOP, "+/-", state);
   }
-  if (PEEK == '>') { // Either SYMOP or ->
-    S_ADVANCE;
-    if (!symbolic(PEEK)) {
-      return res_fail; // Fail on "->"
-    } else {
-      return operator(state);
-    }
-  } else if (PEEK == '.') { // either -.123123 or -.(symbols) a symop
-    S_ADVANCE;
-    if (isdigit(PEEK)) { // check for FLOAT
-      return res_fail; // let JS take over
-    } else if (symbolic(PEEK)) { // CHECK FOR SYMOP
-      return operator(state);
-    }
-    res = res_fail;
-  } else if (isdigit(PEEK)) { // check for -a.b FLOAT or -a INT
-    return res_fail; // let JS take over
-  } else {
-    LOG(VERBOSE, "non-dot symbolic PEEK %c\n", PEEK);
-    res = operator(state);
-    LOG(VERBOSE, "Result of operator: %s\n", sym_names[res.sym]);
-    SHORT_SCANNER;
+  switch(PEEK) {
+    case '>':
+      S_ADVANCE;
+      if(!symbolic(PEEK)) {
+        return res_fail;
+      } else {
+        return operator(state);
+      }
+      break;
+    case '.':
+      S_ADVANCE;
+      if(isdigit(PEEK)) {
+        return res_fail;
+      } else {
+        return operator(state);
+      }
+      break;
+    NUMERIC_CASES:
+      return res_fail;
+      break;
+    default:
+      LOG(VERBOSE, "non-dot symbolic PEEK %c\n", PEEK);
+      res = operator(state);
+      LOG(VERBOSE, "Result of operator: %s\n", sym_names[res.sym]);
+      SHORT_SCANNER;
   }
   return res_fail;
 }
@@ -1146,7 +1058,8 @@ static Result minus(State *state) {
   if (PEEK != '-') return res_cont;
   S_ADVANCE;
   switch(PEEK) {
-    NUMERIC_CASES: // INT, FLOAT, 
+    NUMERIC_CASES:
+      return res_fail;
     case '.': {
       return post_pos_neg_sign(state, false);
     }
@@ -1163,8 +1076,6 @@ static Result minus(State *state) {
           return res_fail;
         }
       } 
-      // while (PEEK == '-') S_ADVANCE;
-      // if (symbolic(PEEK)) return res_fail;
       return inline_comment(state);
     } 
   }
@@ -1504,7 +1415,7 @@ static Result numeric(State *state) {
       SHORT_SCANNER;
       break;
     NUMERIC_CASES:
-      res = detect_nat_ufloat_byte(state);
+      res = res_fail;//detect_nat_ufloat_byte(state);
       SHORT_SCANNER;
       break;
   }
@@ -1517,7 +1428,7 @@ static Result numeric(State *state) {
  * If the next character is a left brace, it is either a comment, pragma or an explicit layout. In the comment case, the
  * it must be parsed here.
  * If the next character is a minus, it might be a comment.
- * If the next character is a +, it might be -> or an INT/FLOAT.
+ * If the next character is a +, it might be ->
  *
  * In all of those cases, the layout can't be started now. In the comment and pragma case, it will be started in the
  * next run.
@@ -1559,7 +1470,7 @@ static Result layout_start(uint32_t column, State *state) {
             }
             goto foo;
           }
-          SYMBOLIC_CASES: { // Cannot start a layout with a -/+ unless it's part of '->' or -+INT/FLOAT
+          SYMBOLIC_CASES: { // Cannot start a layout with a -/+ unless it's part of '->'
             if (PEEK == '+') {
               return res_fail;
             }
@@ -1637,10 +1548,7 @@ static Result newline_indent(uint32_t indent, State *state) {
  
 /**
  * Rules that decide based on the first token on the next line.
- * - starts with `-` (FLOAT, INT, COMMENT, FOLD)
- * - starts with '+' (FLOAT, INT)
- * - starts with `.` (FLOAT)
- * - starts with number (NAT, FLOAT, BYTE)
+ * - starts with `-` (COMMENT, FOLD)
  * - starts with `w` (END)
  * - starts with `>` (WATCH)
  * NOTE: not SYMOP because cannot begin a line with one.
@@ -1662,9 +1570,6 @@ static Result newline_token(uint32_t indent, State *state) {
       if (PEEK == '+') {
         Result res = handle_negative(state);
         SHORT_SCANNER;
-      } else if (PEEK == '.') {
-        Result res = detect_nat_ufloat_byte(state);
-        SHORT_SCANNER;
       } else if (PEEK == '>') {
         S_ADVANCE;
         if (!symbolic(PEEK)) {
@@ -1672,9 +1577,6 @@ static Result newline_token(uint32_t indent, State *state) {
           return finish_if_valid(WATCH, "watch", state);
         }
       }
-      // Symbolic s = read_symop(state);
-      // Result res = newline_infix(indent, s, state);
-      // SHORT_SCANNER;
       return res_fail;
     }
     case 'w': {
