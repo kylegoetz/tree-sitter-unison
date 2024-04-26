@@ -21,6 +21,11 @@ module.exports = {
   ),
   unit: $ => '()',
   // literal_text: $ => /".+?"/,
+
+  nat: $ => /[0-9]+/,
+  int: $ => /[+-][0-9]+/,
+  float: $ => /[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?/,
+
   literal_text: _ => 
     choice(
       seq(

@@ -79,6 +79,7 @@ module.exports = grammar({
     [$.__identifier, $._wordy_definition_name],
     [$._identifier, $.__identifier, $._wordy_definition_name],
     [$.__identifier, $._symboly_definition_name],
+    // [$._expression, $._watch_expression],
 
   ],
   externals: $ => [
@@ -94,9 +95,9 @@ module.exports = grammar({
     $._in,
     $._indent,
     $._empty,
-    $.nat,
-    $.int,
-    $.float,
+    'nat',
+    'int',
+    'float',
     $.operator,
     $._parenthesized_operator,
     $._watch_start,

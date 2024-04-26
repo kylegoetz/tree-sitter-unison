@@ -9,7 +9,6 @@ module.exports = {
     $.handler,
     $.function_application,
     $._literal,
-    $._identifier,
     $._hash_qualified,
     $._pattern_matching,
     $.parenthetical_exp,

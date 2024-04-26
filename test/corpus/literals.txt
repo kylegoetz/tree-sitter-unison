@@ -236,3 +236,9 @@ x = ()
 > "\0 \a \b \f \n \r \t \v \s \\ \' \""
 ---
 (unison (watch_expression (literal_text)))
+===
+[Literal] illegal float
+===
+> 1.7976931348623157E+309
+---
+(unison (watch_expression (float)))

@@ -28,10 +28,6 @@ typedef enum {
 #endif
 
 #define ASCII_OFFSET 48
-#define UNISON_NAT_MIN 0
-#define UNISON_NAT_MAX 18446744073709551615u
-#define UNISON_INT_MIN 9223372036854775808u
-#define UNISON_INT_MAX 9223372036854775807
 #define NUMERIC_CASES \
   case '0': \
   case '1': \
@@ -831,10 +827,8 @@ static Result byte_literal(State *state) {
   return res_cont;
 }
 
-static void * get_fractional(State *state) {
+static bool is_fractional(State *state) {
   LOG(INFO, "->get_fractional, %c\n", PEEK);
-  char running_str[1024] = "";
-  double val = 0;
   bool non_zero = false;
   bool digit_found = false;
   
@@ -843,52 +837,30 @@ static void * get_fractional(State *state) {
     if (PEEK != '0') {
       non_zero = true;
     }
-    const char a[2] = { PEEK, '\0' };
     LOG(VERBOSE, "get_fractional: adding %c\n", PEEK);
-    strncat(running_str, a, strlen(a));
-    LOG(VERBOSE, "get_fractional: strncat finished, running_str = %s\n", running_str);
-    val = atof(running_str);
-    if (non_zero && val == 0) { // i.e., we know `atof` failed
-      LOG(VERBOSE, "get_fractional: atof failed\n");
-      return &nothing;
-    }
-    LOG(VERBOSE, "get_fractional: atof succeeded\n");
     S_ADVANCE;
   }
-  LOG(VERBOSE, "get_fractional: finished loop { digit_found = %c, val = %f, running_str = %s }\n", digit_found ? 't' : 'f', val, running_str);
-  return digit_found ? justDouble(val) : &nothing;
-  // if (!is_eof(state) && !isws(PEEK)) return &nothing;
-  // return justDouble(val);
-  
+  return digit_found;  
 }
 
-// returns *Maybe<Int64>
-static void * get_whole(State *state) {
+static bool is_whole(State *state) {
   LOG(INFO, "->get_whole, %c\n", PEEK);
-  int64_t val = 0;
-  bool digit_found = false;
   LOG(WARN, "get_whole { is_eof = %s, PEEK = %c }\n", is_eof(state) ? "true" : "false", PEEK);
+  if(is_eof(state) || !isdigit(PEEK)) {
+    return false;
+  }
   while (!is_eof(state) && isdigit(PEEK)) {
-    digit_found = true;
-    int64_t new_val = 0;
-    if(ckd_mul(&new_val, val, 10) && ckd_add(&new_val, new_val, PEEK - ASCII_OFFSET)) {
-      #ifndef __wasm32__ // Zed build cannot handle PRId64
-      LOG(WARN, "get_whole: exceeded the length of an int64 { val = %" PRId64 ", new_val = %" PRId64 ", ASCII_OFFSET = %d, PEEK = %c }\n", val, new_val, ASCII_OFFSET, PEEK);
-      #endif
-      return &nothing;
-    }
     S_ADVANCE;
   }
-  LOG(WARN, "get_whole: finished loop { digit_found = %c }\n", digit_found ? 't' : 'f');
-  return digit_found ? justInt64(val) : &nothing;
+  return true;
 }
 
-static void * get_exponent(State *state) {
+static bool is_exponent(State *state) {
   LOG(INFO, "->get_exponent (col = %u, peek = %c)\n", COL, PEEK);
-  if (is_eof(state)) return &nothing;
-  if (PEEK != 'e' && PEEK != 'E') return &nothing;
+  if (is_eof(state)) return false;
+  if (PEEK != 'e' && PEEK != 'E') return false;
   S_ADVANCE;
-  if (is_eof(state)) return &nothing;
+  if (is_eof(state)) return false;
   switch (PEEK) {
     case '-':
     case '+': {
@@ -896,10 +868,10 @@ static void * get_exponent(State *state) {
       // no return so fallthrough for numeric cases
     }
     NUMERIC_CASES: {
-      return get_whole(state);
+      return is_whole(state);
     }
     default: {
-      return &nothing;
+      return false;
     }
   }
 }
@@ -914,42 +886,29 @@ static Result detect_nat_ufloat_byte(State *state) {
   LOG(INFO, "->detect_nat_ufloat_byte (%u, %c)\n", COL, PEEK);
   bool starts_with_zero = PEEK == '0';
   Result res = byte_literal(state);
-  Maybe* whole = NULL;
-  Maybe* exponent = NULL;
-  Maybe* fractional = NULL;
   SHORT_SCANNER;
-  whole = (Maybe *)get_whole(state);
-  if (!whole->has_value && starts_with_zero) {
-    whole = justInt64(0);
-  }
-  if (whole->has_value) {
+  if (starts_with_zero || is_whole(state)) {
     if (PEEK == '.') {
       S_ADVANCE;
-      fractional =(Maybe*)get_fractional(state);
-      exponent = (Maybe*)get_exponent(state);
-      if (fractional->has_value || exponent->has_value) {
+      bool fractional = is_fractional(state);
+      bool exponent = is_exponent(state);
+      if (fractional || exponent) {
         LOG(VERBOSE, "fractional or exponentiated\n");
         MARK("detect_nat_ufloat_byte", false, state);
         res = finish_if_valid(FLOAT, "float", state);
-        goto CLEANUP;
+        SHORT_SCANNER;
       } else {
         LOG(VERBOSE, "not fractional and not exponentiated\n");
         res = res_fail;
-        goto CLEANUP;
+        SHORT_SCANNER;
       }
     } else {
-      exponent = (Maybe*)get_exponent(state);
       MARK("detect_nat_ufloat_byte", false, state);
-      res = finish_if_valid(exponent->has_value ? FLOAT : NAT, "nat", state);
-      goto CLEANUP;
+      res = finish_if_valid(is_exponent(state) ? FLOAT : NAT, "nat", state);
+      SHORT_SCANNER;
     }
   }
-  res = res_fail;
-  CLEANUP:
-    if(whole && isJust(whole)) freeJust(whole);
-    if(fractional && isJust(fractional)) freeJust(fractional);
-    if(exponent && isJust(exponent)) freeJust(exponent);
-    return res;
+  return res_fail;
 }
 
 /**
@@ -1139,9 +1098,6 @@ static Result operator(State *state) {
 static Result post_pos_neg_sign(State *state, bool can_be_operator) {
   (void) can_be_operator; // suppresses "unused variable" warning
   LOG(INFO, "->post_pos_neg_sign; PEEK = %c\n", PEEK);
-  Maybe* whole = NULL;
-  Maybe* val = NULL;
-  Maybe* e = NULL;
   Result res = res_fail;
   // Immediately fail of 
   // Immediately terminate as symop if sign followed by whitespace, EOF, or ')', the latter of which is expected in the case of the parenthetical op pattern in JS grammar.
@@ -1149,9 +1105,6 @@ static Result post_pos_neg_sign(State *state, bool can_be_operator) {
     MARK("post_pos_neg_sign", false, state);
     return finish_if_valid(SYMOP, "+/-", state);
   }
-  // if (symbolic(PEEK)) { // found start of operator
-    // return operator(state);
-  // }
   if (PEEK == '>') { // Either SYMOP or ->
     S_ADVANCE;
     if (!symbolic(PEEK)) {
@@ -1162,53 +1115,20 @@ static Result post_pos_neg_sign(State *state, bool can_be_operator) {
   } else if (PEEK == '.') { // either -.123123 or -.(symbols) a symop
     S_ADVANCE;
     if (isdigit(PEEK)) { // check for FLOAT
-      val = (Maybe *)get_fractional(state);
-      e = (Maybe *) get_exponent(state);
-      if(val->has_value || e->has_value) {
-        MARK("handle_negative", false, state);
-        res = finish_if_valid(FLOAT, "float", state);
-        goto CLEANUP;
-      }
+      return res_fail; // let JS take over
     } else if (symbolic(PEEK)) { // CHECK FOR SYMOP
       return operator(state);
     }
     res = res_fail;
-    goto CLEANUP;
   } else if (isdigit(PEEK)) { // check for -a.b FLOAT or -a INT
-    LOG(VERBOSE, "\t2b. handle_negative >= 1, %c\n", PEEK);
-    whole = (Maybe *)get_whole(state);
-    if (whole->has_value) {
-      LOG(VERBOSE, "\t3. whole has value\n");
-      if (PEEK == '.') {
-        S_ADVANCE;
-        val = (Maybe *)get_fractional(state);
-        e = (Maybe *)get_exponent(state);
-        if (val->has_value || e->has_value) {
-          // double total = *(double *)fractional->value + *(long *)whole->value;
-          // TODO check bounds
-          MARK("handle_negative", false, state);
-          res = finish_if_valid(FLOAT, "float", state);
-          goto CLEANUP;
-        }
-      } else {
-        e = (Maybe *) get_exponent(state);
-        MARK("handle_negative", false, state);
-        res = finish_if_valid(e->has_value ? FLOAT : INT, "int", state);
-        goto CLEANUP;
-      }
-    }
+    return res_fail; // let JS take over
   } else {
     LOG(VERBOSE, "non-dot symbolic PEEK %c\n", PEEK);
     res = operator(state);
     LOG(VERBOSE, "Result of operator: %s\n", sym_names[res.sym]);
-    goto CLEANUP;
+    SHORT_SCANNER;
   }
-  res = res_fail;
-  CLEANUP:
-    if(whole && isJust(whole)) freeJust(whole);
-    if(val && isJust(val)) freeJust(val);
-    if(e && isJust(e)) freeJust(e);
-    return res;
+  return res_fail;
 }
 
 /**
@@ -1641,26 +1561,23 @@ static Result layout_start(uint32_t column, State *state) {
           }
           SYMBOLIC_CASES: { // Cannot start a layout with a -/+ unless it's part of '->' or -+INT/FLOAT
             if (PEEK == '+') {
-              S_ADVANCE;
-              Maybe * w = (Maybe *)get_whole(state);
-              Maybe * f = (Maybe *)get_fractional(state);
-              bool jumpFoo = w->has_value || f->has_value;
-              if(w && isJust(w)) freeJust(w);
-              if(f && isJust(f)) freeJust(f);
-              if(jumpFoo) {
-                goto foo;
-              }
               return res_fail;
             }
-            if (PEEK == '-') {
+            if (PEEK == '-') { // look to see if -> or -. or -DIGIT
               S_ADVANCE;
-              if (PEEK == '>') {
+              if (PEEK == '.') { // if -. see if -.DIGIT
+                S_ADVANCE;
+                if(isdigit(PEEK)) {
+                  return res_fail; // fail so JS can parse
+                }
+              }
+              if (PEEK == '>') { // check if ->
                 S_ADVANCE;
                 if (!symbolic(PEEK)) {
                   goto foo;
                 }
-              } else if(isdigit(PEEK)) {
-                goto foo;
+              } else if(isdigit(PEEK)) { // check if -DIGIT
+                return res_fail; // fail so JS can look
               }
             }
             return res_cont;
