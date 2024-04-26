@@ -36,7 +36,7 @@ Heap.deleteMin cmp = cases
     (term_declaration
         (type_signature
             (path) (wordy_id) (type_signature_colon) (term_type
-            (forall (kw_forall) (wordy_id) (wordy_id) (wordy_id))
+            (forall (kw_forall) (wordy_id) (wordy_id) (wordy_id) (typesig_dot))
             (tuple_or_parenthesized_type  (wordy_id) (arrow_symbol) 
             (effect (wordy_id)) (wordy_id) (arrow_symbol) 
             (effect (wordy_id)) (wordy_id)) (arrow_symbol)

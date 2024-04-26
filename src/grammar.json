@@ -135,6 +135,30 @@
       "type": "STRING",
       "value": "with"
     },
+    "rewrite": {
+      "type": "STRING",
+      "value": "@rewrite"
+    },
+    "term": {
+      "type": "STRING",
+      "value": "term"
+    },
+    "case": {
+      "type": "STRING",
+      "value": "case"
+    },
+    "signature": {
+      "type": "STRING",
+      "value": "signature"
+    },
+    "superarrow": {
+      "type": "STRING",
+      "value": "==>"
+    },
+    "typesig_dot": {
+      "type": "STRING",
+      "value": "."
+    },
     "_effect_block": {
       "type": "SEQ",
       "members": [
@@ -266,8 +290,8 @@
           }
         },
         {
-          "type": "STRING",
-          "value": "."
+          "type": "SYMBOL",
+          "name": "typesig_dot"
         }
       ]
     },
@@ -2417,7 +2441,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "kw_rewrite"
+          "name": "rewrite"
         },
         {
           "type": "SYMBOL",
@@ -2442,7 +2466,7 @@
                     },
                     {
                       "type": "SYMBOL",
-                      "name": "rewrite_signature"
+                      "name": "rewrite_type"
                     }
                   ]
                 },
@@ -2481,7 +2505,7 @@
                           },
                           {
                             "type": "SYMBOL",
-                            "name": "rewrite_signature"
+                            "name": "rewrite_type"
                           }
                         ]
                       }
@@ -2523,8 +2547,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "term"
+          "type": "SYMBOL",
+          "name": "term"
         },
         {
           "type": "SYMBOL",
@@ -2544,8 +2568,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "case"
+          "type": "SYMBOL",
+          "name": "case"
         },
         {
           "type": "SYMBOL",
@@ -2561,12 +2585,12 @@
         }
       ]
     },
-    "rewrite_signature": {
+    "rewrite_type": {
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "signature"
+          "type": "SYMBOL",
+          "name": "signature"
         },
         {
           "type": "REPEAT1",
@@ -2576,8 +2600,8 @@
           }
         },
         {
-          "type": "STRING",
-          "value": "."
+          "type": "SYMBOL",
+          "name": "typesig_dot"
         },
         {
           "type": "SYMBOL",
@@ -2600,14 +2624,6 @@
           "name": "_layout_end"
         }
       ]
-    },
-    "kw_rewrite": {
-      "type": "STRING",
-      "value": "@rewrite"
-    },
-    "superarrow": {
-      "type": "STRING",
-      "value": "==>"
     },
     "_expression": {
       "type": "PREC_RIGHT",

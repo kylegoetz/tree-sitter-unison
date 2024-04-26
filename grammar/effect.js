@@ -25,7 +25,7 @@ module.exports = {
      * value_type -> {...} value_type
      * value_type -> { ... } ()
      */
-    forall: $ => seq($.kw_forall, repeat($.wordy_id), '.'),
+    forall: $ => seq($.kw_forall, repeat($.wordy_id), $.typesig_dot),
     _value_type: $ => seq(
         optional($.forall), 
         $._type1

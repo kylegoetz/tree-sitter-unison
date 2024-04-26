@@ -2,10 +2,10 @@
  * Print input and result information.
  */
 #ifndef __wasm32__ // disable logging for Zed build
-#define DEBUG 1
+#define DEBUG 0
 #endif
 
-#define LOG_LEVEL VERBOSE
+#define LOG_LEVEL ERROR
 typedef enum {
   VERBOSE,
   INFO,
@@ -848,8 +848,9 @@ static Result equals(State *state) {
       LOG(VERBOSE, "[equals] Found second equals in a row. Could be ==>, symop, or failure\n");
       S_ADVANCE;
       if(is_eof(state) || isws(PEEK)) { // ==, succeed
-        LOG(VERBOSE, "[equals] Found `==` and continuing with calling function. { COL = %u }", COL);
-        return res_cont;
+        LOG(VERBOSE, "[equals] Found `==` and finishing with success. { COL = %u }", COL);
+        MARK("equals", false, state);
+        return finish_if_valid(SYMOP, "equals", state);
       } else if (PEEK == '>') { // Either ==> or let OPERATOR handle
         LOG(VERBOSE, "[equals] Found `==>`. Could be that symbol or SYMOP or failure\n");
         S_ADVANCE;

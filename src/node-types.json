@@ -2813,6 +2813,10 @@
           "named": true
         },
         {
+          "type": "typesig_dot",
+          "named": true
+        },
+        {
           "type": "wordy_id",
           "named": true
         }
@@ -5582,7 +5586,7 @@
       "required": true,
       "types": [
         {
-          "type": "kw_rewrite",
+          "type": "rewrite",
           "named": true
         },
         {
@@ -5590,11 +5594,11 @@
           "named": true
         },
         {
-          "type": "rewrite_signature",
+          "type": "rewrite_term",
           "named": true
         },
         {
-          "type": "rewrite_term",
+          "type": "rewrite_type",
           "named": true
         }
       ]
@@ -5812,6 +5816,10 @@
           "named": true
         },
         {
+          "type": "case",
+          "named": true
+        },
+        {
           "type": "cases",
           "named": true
         },
@@ -5945,69 +5953,6 @@
         },
         {
           "type": "with",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "rewrite_signature",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "arrow_symbol",
-          "named": true
-        },
-        {
-          "type": "built_in_hash",
-          "named": true
-        },
-        {
-          "type": "delayed",
-          "named": true
-        },
-        {
-          "type": "effect",
-          "named": true
-        },
-        {
-          "type": "forall",
-          "named": true
-        },
-        {
-          "type": "hash_qualifier",
-          "named": true
-        },
-        {
-          "type": "operator",
-          "named": true
-        },
-        {
-          "type": "path",
-          "named": true
-        },
-        {
-          "type": "sequence_type",
-          "named": true
-        },
-        {
-          "type": "superarrow",
-          "named": true
-        },
-        {
-          "type": "tuple_or_parenthesized_type",
-          "named": true
-        },
-        {
-          "type": "unit",
           "named": true
         },
         {
@@ -6345,6 +6290,10 @@
           "named": true
         },
         {
+          "type": "term",
+          "named": true
+        },
+        {
           "type": "term_declaration",
           "named": true
         },
@@ -6362,6 +6311,77 @@
         },
         {
           "type": "with",
+          "named": true
+        },
+        {
+          "type": "wordy_id",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "rewrite_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "arrow_symbol",
+          "named": true
+        },
+        {
+          "type": "built_in_hash",
+          "named": true
+        },
+        {
+          "type": "delayed",
+          "named": true
+        },
+        {
+          "type": "effect",
+          "named": true
+        },
+        {
+          "type": "forall",
+          "named": true
+        },
+        {
+          "type": "hash_qualifier",
+          "named": true
+        },
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "sequence_type",
+          "named": true
+        },
+        {
+          "type": "signature",
+          "named": true
+        },
+        {
+          "type": "superarrow",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized_type",
+          "named": true
+        },
+        {
+          "type": "typesig_dot",
+          "named": true
+        },
+        {
+          "type": "unit",
           "named": true
         },
         {
@@ -8298,7 +8318,7 @@
   },
   {
     "type": "case",
-    "named": false
+    "named": true
   },
   {
     "type": "cases",
@@ -8373,10 +8393,6 @@
     "named": true
   },
   {
-    "type": "kw_rewrite",
-    "named": true
-  },
-  {
     "type": "kw_termlink",
     "named": true
   },
@@ -8421,8 +8437,12 @@
     "named": true
   },
   {
+    "type": "rewrite",
+    "named": true
+  },
+  {
     "type": "signature",
-    "named": false
+    "named": true
   },
   {
     "type": "structural",
@@ -8434,7 +8454,7 @@
   },
   {
     "type": "term",
-    "named": false
+    "named": true
   },
   {
     "type": "then",
@@ -8446,6 +8466,10 @@
   },
   {
     "type": "type_kw",
+    "named": true
+  },
+  {
+    "type": "typesig_dot",
     "named": true
   },
   {

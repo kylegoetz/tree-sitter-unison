@@ -20,4 +20,10 @@ module.exports = {
   kw_typelink: $ => 'typeLink',
   handle: $ => 'handle',
   with: $ => 'with',
+  rewrite: $ => '@rewrite',
+  term: $ => 'term',
+  case: $ => 'case',
+  signature: $ => 'signature',
+  superarrow: $ => '==>',
+  typesig_dot: $ => '.',
 }
