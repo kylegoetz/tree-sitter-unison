@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.4] - 2024-04-25
+
+### Fixed
+
+- #73 - Removed bounds checks (`atof`) for int, nat, float and now use JS rather than C to parse
+
 ## [1.1.3] - 2024-04-24
 
 ### Fixed
