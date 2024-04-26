@@ -41,3 +41,25 @@
     (comment)
     (pattern (nat) (arrow_symbol) (literal_text))
     (pattern (nat) (arrow_symbol) (literal_text))))
+===
+[Block] rewrite block
+===
+reflection.Rewrites.examples.optionalToEither _e a =
+  @rewrite
+    term None ==> Left _e
+    term Some a ==> Right a
+    case Some a ==> Right a
+    case Right a ==> Some a
+    signature e a . Optional a ==> Either e a
+---
+(unison (term_declaration (term_definition
+      (path)
+      (wordy_id)
+      (kw_equals)
+      (rewrite_block
+            (rewrite)
+            (term (lhs) (superarrow) (rhs))
+            (term (lhs) (superarrow) (rhs))
+            (case (lhs) (superarrow) (rhs))
+            (case (lhs) (superarrow) (rhs))
+            (signature (wordy_id) (wordy_id) (kw_dot) (wordy_id) (wordy_id) (superarrow) (wordy_id) (wordy_id) (wordy_id))))))
