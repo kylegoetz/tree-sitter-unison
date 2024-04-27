@@ -4821,41 +4821,8 @@
       "_symboly_definition_name"
     ],
     [
-      "_wordy_definition_name",
-      "literal_function"
-    ],
-    [
-      "_literal",
-      "_term_leaf"
-    ],
-    [
-      "_expression",
-      "_term_leaf"
-    ],
-    [
-      "_infix_op_application"
-    ],
-    [
-      "_expression",
-      "_keyword_block"
-    ],
-    [
       "__identifier",
       "_hq_qualified_symboly_id"
-    ],
-    [
-      "_literal",
-      "_literal_pattern",
-      "_term_leaf"
-    ],
-    [
-      "_expression",
-      "constructor_or_variable_pattern",
-      "_term_leaf"
-    ],
-    [
-      "constructor_or_variable_pattern",
-      "_term_leaf"
     ],
     [
       "_infix_app_or_boolean_op"

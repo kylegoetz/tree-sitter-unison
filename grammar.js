@@ -79,7 +79,8 @@ module.exports = grammar({
     [$.__identifier, $._wordy_definition_name],
     [$._identifier, $.__identifier, $._wordy_definition_name],
     [$.__identifier, $._symboly_definition_name],
-    // [$._expression, $._watch_expression],
+    [$.__identifier, $._hq_qualified_symboly_id],
+    [$._infix_app_or_boolean_op],
 
   ],
   externals: $ => [
