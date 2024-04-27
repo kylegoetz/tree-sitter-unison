@@ -1490,6 +1490,7 @@ static Result layout_start(uint32_t column, State *state) {
             }
             goto foo;
           }
+        }
         foo:
         push(column, state);
         return finish(START, "layout_start");
