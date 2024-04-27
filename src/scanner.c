@@ -1490,29 +1490,29 @@ static Result layout_start(uint32_t column, State *state) {
             }
             goto foo;
           }
-          SYMBOLIC_CASES: { // Cannot start a layout with a -/+ unless it's part of '->'
-            if (PEEK == '+') {
-              return res_fail;
-            }
-            if (PEEK == '-') { // look to see if -> or -. or -DIGIT
-              S_ADVANCE;
-              if (PEEK == '.') { // if -. see if -.DIGIT
-                S_ADVANCE;
-                if(isdigit(PEEK)) {
-                  return res_fail; // fail so JS can parse
-                }
-              }
-              if (PEEK == '>') { // check if ->
-                S_ADVANCE;
-                if (!symbolic(PEEK)) {
-                  goto foo;
-                }
-              } else if(isdigit(PEEK)) { // check if -DIGIT
-                return res_fail; // fail so JS can look
-              }
-            }
-            return res_cont;
-          }
+          // SYMBOLIC_CASES: { // Cannot start a layout with a -/+ unless it's part of '->'
+          //   if (PEEK == '+') {
+          //     return res_fail;
+          //   }
+          //   if (PEEK == '-') { // look to see if -> or -. or -DIGIT
+          //     S_ADVANCE;
+          //     if (PEEK == '.') { // if -. see if -.DIGIT
+          //       S_ADVANCE;
+          //       if(isdigit(PEEK)) {
+          //         return res_fail; // fail so JS can parse
+          //       }
+          //     }
+          //     if (PEEK == '>') { // check if ->
+          //       S_ADVANCE;
+          //       if (!symbolic(PEEK)) {
+          //         goto foo;
+          //       }
+          //     } else if(isdigit(PEEK)) { // check if -DIGIT
+          //       return res_fail; // fail so JS can look
+          //     }
+          //   }
+          //   return res_cont;
+          // }
         }
         foo:
         push(column, state);
