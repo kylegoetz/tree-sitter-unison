@@ -20,8 +20,9 @@ module.exports = {
   _lhs: $ => prec('_lhs', seq(field('name', $._hq_qualified_prefix_term), repeat(field('param', $.wordy_id)))),
   term_definition: $ => seq(
     $._lhs,
-    $.kw_equals,
-    $._block,
+    block($, $.kw_equals),
+    // $.kw_equals,
+    // $._block,
     // choice($._expression, $._block),//$._block, // works with $._expression for simple things
   ),
 

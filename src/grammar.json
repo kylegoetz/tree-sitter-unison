@@ -2910,6 +2910,10 @@
                 }
               ]
             }
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_layout_semicolon"
           }
         ]
       }
@@ -3012,12 +3016,53 @@
           "name": "_lhs"
         },
         {
-          "type": "SYMBOL",
-          "name": "kw_equals"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_block"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "kw_equals"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_layout_start"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "use_clause"
+              }
+            },
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_statement"
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "_layout_semicolon"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "_statement"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_layout_end"
+            }
+          ]
         }
       ]
     },
