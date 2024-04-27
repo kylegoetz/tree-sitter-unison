@@ -192,12 +192,33 @@ incrementAndEtaReduce x f =
     term arg -> f arg ==> f
 ---
 (unison
-  (use_clause (use) (namespace) (operator))
-  (term_declaration (term_definition (wordy_id) (wordy_id) (wordy_id) (kw_equals) (rewrite_block (rewrite) 
-    (rewrite_term 
-      (term)
-      (wordy_id) (operator) (nat)
-      (superarrow)
-      (function_application
-        (path) (wordy_id) (wordy_id)))
-    (rewrite_term (term) (wordy_id) (arrow_symbol) (wordy_id) (wordy_id) (superarrow) (wordy_id))))))
+  (use_clause
+    (use)
+    (namespace)
+    (operator))
+  (term_declaration
+    (term_definition 
+      (wordy_id)
+      (wordy_id)
+      (wordy_id)
+      (kw_equals)
+      (rewrite_block
+        (rewrite)
+        (rewrite_term
+          (term)
+          (wordy_id)
+          (operator)
+          (nat)
+          (superarrow)
+          (function_application
+            (path)
+            (wordy_id)
+            (wordy_id)))
+        (rewrite_term
+          (term)
+          (wordy_id)
+          (arrow_symbol)
+          (wordy_id)
+          (wordy_id)
+          (superarrow)
+          (wordy_id))))))
