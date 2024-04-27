@@ -65,3 +65,20 @@ reflection.Rewrites.examples.optionalToEither _e a =
             (rewrite_case (case) (wordy_id) (wordy_id) (superarrow) (function_application (wordy_id) (wordy_id)))
             (rewrite_case (case) (wordy_id) (wordy_id) (superarrow) (function_application (wordy_id) (wordy_id)))
             (rewrite_type (signature) (wordy_id) (wordy_id) (typesig_dot) (wordy_id) (wordy_id) (superarrow) (wordy_id) (wordy_id) (wordy_id))))))
+===
+[Block] rewrite
+===
+rule1 f = @rewrite term (x -> f x) ==> f
+rule2 = @rewrite term (x -> f x) ==> f
+rule1 x = @rewrite term x + 1 ==> Nat.increment x
+rule2 x = @rewrite signature Optional ==> Optional2
+---
+(unison
+  (term_declaration (term_definition (wordy_id) (wordy_id) (kw_equals) (rewrite_block (rewrite) 
+    (rewrite_term (term) (tuple_or_parenthesized (literal_function (wordy_id) (arrow_symbol) (function_application (wordy_id) (wordy_id)))) (superarrow) (wordy_id)))))
+  (term_declaration (term_definition (wordy_id) (kw_equals) (rewrite_block (rewrite) 
+    (rewrite_term (term) (tuple_or_parenthesized (literal_function (wordy_id) (arrow_symbol) (function_application (wordy_id) (wordy_id)))) (superarrow) (wordy_id)))))
+  (term_declaration (term_definition (wordy_id) (wordy_id) (kw_equals) (rewrite_block (rewrite) 
+    (rewrite_term (term) (wordy_id) (operator) (nat) (superarrow) (function_application (path) (wordy_id) (wordy_id))))))
+  (term_declaration (term_definition (wordy_id) (wordy_id) (kw_equals) (rewrite_block (rewrite)
+    (rewrite_type (signature) (wordy_id) (superarrow) (wordy_id))))))

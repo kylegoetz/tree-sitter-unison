@@ -5,7 +5,7 @@
 #define DEBUG 0
 #endif
 
-#define LOG_LEVEL ERROR
+#define LOG_LEVEL VERBOSE
 typedef enum {
   VERBOSE,
   INFO,
@@ -909,6 +909,7 @@ static bool found_pipe_or_logical_op(uint8_t pipe_count, uint8_t amp_count) {
  * be considered operators: =, &&, ||, | (`|` is handled by the JS)
  * Also need to exclude !( and ! bc these are bangs, a reserved keyword not an operator.
  * 2024-04-26: Need to exclude `==>` as well, as it is a reserved operator now and the JS will handle it.
+ * 2024-04-26: Discovered a case where it will find `---` as operator if current context is function application. Should fail on that instead.
  *
  * Needs to recognize `(OPERATOR)` as a parenthesized operator
  */
@@ -934,6 +935,20 @@ static Result operator(State *state) {
   bool parenthesized = false;
   
   if (!symbolic(PEEK)) return res_fail;
+
+  // Handle FOLD case
+  if (COL == 0 && PEEK == '-') {
+    S_ADVANCE;
+    if (PEEK == '-') {
+      S_ADVANCE;
+      if (PEEK == '-') {
+        if (is_newline(PEEK))
+        MARK("operator", false, state);
+        return finish_if_valid(FOLD, "operator", state);
+      }
+    }
+  }
+
   if (PEEK == '=') {
     Result res = equals(state);
     SHORT_SCANNER;
