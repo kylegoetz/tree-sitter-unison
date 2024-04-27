@@ -353,7 +353,9 @@ static bool indent_exists(State *state) { return state->indents->len != 0; };
 /**
  * Require that the current line's indent is equal to the containing layout's, so the line may start a new `decl`.
  */
-static bool same_indent(uint32_t indent, State *state) { return indent_exists(state) && indent == VEC_BACK(state->indents); }
+static bool same_indent(uint32_t indent, State *state) {
+  return (indent_exists(state) && indent == VEC_BACK(state->indents)) || (!indent_exists(state) && indent == 0);
+}
  
 /**
  * Require that the current line's indent is smaller than the containing layout's, so the layout may be ended.
@@ -732,6 +734,7 @@ static Result dedent(uint32_t indent, State *state) {
  * Succeed for `SEMICOLON` if the indent of the next line is equal to the current layout's.
  */
 static Result newline_semicolon(uint32_t indent, State *state) {
+  LOG(VERBOSE, "[newline_semicolon] { COL = %u, PEEK = %c, indent = %u }\n", COL, PEEK, indent);
   if (SYM(SEMICOLON) && same_indent(indent, state)) {
     return finish(SEMICOLON, "newline_semicolon");
   }
@@ -1251,6 +1254,7 @@ static Result comment(State *state) {
 }
  
 static Result close_layout_in_list(State *state) {
+  LOG(VERBOSE, "[close_layout_in_list] { COL = %u, PEEK = %c }\n", COL, PEEK);
   switch (PEEK) {
     case ']': {
       if (state->symbols[END]) {
@@ -1554,7 +1558,7 @@ static Result repeat_end(uint32_t column, State *state) {
  * Rules that decide based on the indent of the next line.
  */
 static Result newline_indent(uint32_t indent, State *state) {
-  LOG(INFO, "->newline_indent (col = %u, indent = %u, PEEK = %c)\n", COL, indent, PEEK);
+  LOG(INFO, "[newline_indent] { COL = %u, indent = %u, PEEK = %c }\n", COL, indent, PEEK);
   Result res = dedent(indent, state);
   SHORT_SCANNER;
   res = close_layout_in_list(state);
@@ -1622,8 +1626,8 @@ static Result newline(uint32_t indent, State *state) {
   // SHORT_SCANNER;
   // res = cpp(state);
   // SHORT_SCANNER;
-  res = comment(state);
-  SHORT_SCANNER;
+  // res = comment(state);
+  // SHORT_SCANNER;
   res = newline_indent(indent, state);
   SHORT_SCANNER;
   return newline_token(indent, state);
@@ -1699,9 +1703,10 @@ static Result scan_main(State *state) {
   SHORT_SCANNER;
   MARK("main", false, state);
   if (is_newline(PEEK)) {
-    LOG(VERBOSE, "is newline\n");
+    LOG(VERBOSE, "[scan_main] found newline\n");
     S_SKIP;
     uint32_t indent = count_indent(state);
+    LOG(VERBOSE, "[scan_main] indent at newline = %u\n", indent);
     return newline(indent, state);
   }
   uint32_t col = column(state);

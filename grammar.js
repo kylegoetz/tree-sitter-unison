@@ -73,14 +73,21 @@ module.exports = grammar({
     [$._hash_qualified, $._expression, $._lhs],
     [$._hash_qualified, $._expression, $.constructor_or_variable_pattern],
     [$._hash_qualified, $._expression, $.type_signature],
-    [$._identifier, $.__identifier, $._wordy_definition_name, $.literal_function, $._function_name],
-    [$._wordy_definition_name, $.literal_function, $._function_name],
-    [$.__identifier, $._symboly_definition_name, $._op],
-    [$.__identifier, $._wordy_definition_name],
-    [$._identifier, $.__identifier, $._wordy_definition_name],
-    [$.__identifier, $._symboly_definition_name],
+    // [$._identifier, $.__identifier, $._wordy_definition_name, $.literal_function, $._function_name],
+    // [$._wordy_definition_name, $.literal_function, $._function_name],
+    // [$.__identifier, $._symboly_definition_name, $._op],
+    // [$.__identifier, $._wordy_definition_name],
+    // [$._identifier, $.__identifier, $._wordy_definition_name],
+    // [$.__identifier, $._symboly_definition_name],
     [$.__identifier, $._hq_qualified_symboly_id],
     [$._infix_app_or_boolean_op],
+    [$._identifier, $.__identifier, $._hq_qualified_wordy_id],
+    [$._identifier, $.__identifier, $._hq_qualified_symboly_id, $.literal_function, $._function_name],
+    [$._identifier, $.__identifier, $._hq_qualified_wordy_id, $.literal_function, $._function_name],
+    [$._hq_qualified_wordy_id, $.literal_function, $._function_name],
+    [$.__identifier, $._hq_qualified_symboly_id, $._op],
+    [$.__identifier, $._hq_qualified_wordy_id],
+    [$._type_atom, $.rewrite_type],
 
   ],
   externals: $ => [
@@ -139,7 +146,7 @@ module.exports = grammar({
       
     
     type_signature: $ => seq(
-      field('term_name', $._prefix_definition_name),
+      field('term_name', $._hq_qualified_prefix_term), // TODO is this correct? check TypeParser.hs ensure _prefix_definition_name isn't required
       $.type_signature_colon,
       alias($._value_type, $.term_type),
     ),

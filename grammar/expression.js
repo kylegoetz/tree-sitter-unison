@@ -29,5 +29,9 @@ module.exports = {
   
   use: $ => prec(KEYWORD, 'use'),
   // use_clause: $ => prec.right(seq($.use, $.namespace, repeat($._identifier))),
-  use_clause: $ => prec.left(seq(alias('use', $.use), $.namespace , repeat(choice($.wordy_id, alias($.symboly_id, $.operator))))),
+  use_clause: $ => prec.left(seq(
+    alias('use', $.use),
+    $.namespace ,
+    repeat(choice($.wordy_id, alias($.symboly_id, $.operator))),
+    $._layout_semicolon)),
 }
