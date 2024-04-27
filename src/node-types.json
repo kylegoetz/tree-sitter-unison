@@ -624,15 +624,19 @@
         "required": true,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
             "type": ",",
             "named": false
           },
           {
             "type": "arrow_symbol",
-            "named": true
-          },
-          {
-            "type": "built_in_hash",
             "named": true
           },
           {
@@ -1376,12 +1380,8 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
-        {
-          "type": "built_in_hash",
-          "named": true
-        },
         {
           "type": "delayed",
           "named": true
@@ -1757,10 +1757,6 @@
       "types": [
         {
           "type": "arrow_symbol",
-          "named": true
-        },
-        {
-          "type": "built_in_hash",
           "named": true
         },
         {
@@ -5514,15 +5510,19 @@
         "required": true,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
             "type": ",",
             "named": false
           },
           {
             "type": "arrow_symbol",
-            "named": true
-          },
-          {
-            "type": "built_in_hash",
             "named": true
           },
           {
@@ -6333,10 +6333,6 @@
           "named": true
         },
         {
-          "type": "built_in_hash",
-          "named": true
-        },
-        {
           "type": "delayed",
           "named": true
         },
@@ -6401,10 +6397,6 @@
       "types": [
         {
           "type": "arrow_symbol",
-          "named": true
-        },
-        {
-          "type": "built_in_hash",
           "named": true
         },
         {
@@ -6488,6 +6480,10 @@
           {
             "type": ")",
             "named": false
+          },
+          {
+            "type": "hash_qualifier",
+            "named": true
           },
           {
             "type": "operator",
@@ -6837,10 +6833,6 @@
       "types": [
         {
           "type": "arrow_symbol",
-          "named": true
-        },
-        {
-          "type": "built_in_hash",
           "named": true
         },
         {
@@ -7542,10 +7534,6 @@
           "named": true
         },
         {
-          "type": "built_in_hash",
-          "named": true
-        },
-        {
           "type": "delayed",
           "named": true
         },
@@ -7697,10 +7685,6 @@
           "named": true
         },
         {
-          "type": "built_in_hash",
-          "named": true
-        },
-        {
           "type": "delayed",
           "named": true
         },
@@ -7809,6 +7793,10 @@
           {
             "type": ")",
             "named": false
+          },
+          {
+            "type": "hash_qualifier",
+            "named": true
           },
           {
             "type": "operator",

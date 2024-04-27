@@ -43,7 +43,9 @@ module.exports = {
     
     // TODO refer back to hashes again. Can it also be ##builtin hash?
     _type_atom: $ => choice(
-        $._hash_qualified,
+        // $._hqPrefixId,
+        $._hq_qualified_prefix_term,
+        // $._hash_qualified,
         // seq($.wordy_id, optional($.immediate_hash)),
         // seq(/#[0-9a-zA-Z]+/),
         $.unit,
