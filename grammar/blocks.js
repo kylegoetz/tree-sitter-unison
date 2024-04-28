@@ -38,7 +38,7 @@ module.exports = {
         $._block,
     ),
   rewrite_block: $ => seq($.rewrite, layouted($, choice($.rewrite_term, $.rewrite_case, $.rewrite_type))),
-  rewrite_term: $ => seq($.term, $._term, $.superarrow , $._block),
-  rewrite_case: $ => seq($.case, $._term, $.superarrow, $._block),
+  rewrite_term: $ => prec.left(seq($.term, $._term, /*$.superarrow , $._block*/block($, $.superarrow))),
+  rewrite_case: $ => seq($.case, $._term, /*$.superarrow, $._block*/block($, $.superarrow)),
   rewrite_type: $ => seq($.signature, optional(seq(repeat1($._hq_qualified_prefix_term), $.typesig_dot)), $._computation_type, $.superarrow, $._layout_start, $._computation_type, $._layout_end),
 }

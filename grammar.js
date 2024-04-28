@@ -21,11 +21,11 @@ const doc = require('./grammar/doc')
 module.exports = grammar({
   name: 'unison',
   precedences: $ => [
-    ['_expression', 'identifier'],
-    ['term_definition', '_expression'],
-    ['keyword', '_expression'],
-    ['function_application', 'operator'], // `myFn a b + c` is equivalent to `((myFn a) b) + c`
-    ['_infix_op_application', '_prefix_function_application'],
+    // ['_expression', 'identifier'],
+    // ['term_definition', '_expression'],
+    // ['keyword', '_expression'],
+    // ['function_application', 'operator'], // `myFn a b + c` is equivalent to `((myFn a) b) + c`
+    // ['_infix_op_application', '_prefix_function_application'],
     ['literal_function', 'function_application'],
     ['_boolean_exp', 'literal_function'],
     ['constructor_or_variable_pattern', '_lhs'],

@@ -34,13 +34,20 @@ open_block_with = ($, opener, start_type) => seq(
   $._layout_end,
 )
 
-block = ($, opener) => seq(
+block = ($, opener) => prec.dynamic(1, seq(
   opener,
   $._layout_start,
   repeat($.use_clause),
   sep1($._layout_semicolon, $._statement),
   $._layout_end,
+))
+
+openBlockWith = ($, opener) => seq(
+  opener,
+  $._layout_start,
 )
+
+closeBlock = $ => $._layout_end
 
 // _open_block_with = ($, opener, body) => seq(
 //   $.opener,

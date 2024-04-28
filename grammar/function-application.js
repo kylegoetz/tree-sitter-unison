@@ -42,10 +42,10 @@ module.exports = {
     $._expression,
   )),
   
-  function_application: $ => choice(
+  function_application: $ => prec.dynamic(2, choice(
     $._prefix_function_application,
     $._infix_op_application,
-  ),
+  )),
 
   // func_app: $ => 
 }

@@ -5,7 +5,7 @@
 #define DEBUG 0
 #endif
 
-#define LOG_LEVEL VERBOSE
+#define LOG_LEVEL ERROR
 typedef enum {
   VERBOSE,
   INFO,
