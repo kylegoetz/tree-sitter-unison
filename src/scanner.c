@@ -810,19 +810,19 @@ inline_comment_after_skip:
   return finish(COMMENT, "inline_comment");
 }
 
-/**
- * Parse for byte literal. If detect "0x" then fail and let the JS grammar handle this.
- */
-static Result byte_literal(State *state) {
-  LOG(INFO, "->byte_literal (col = %u, peek = %c)\n", COL, PEEK);
-  if (!is_eof(state) && PEEK == '0') {
-    S_ADVANCE;
-    if (!is_eof(state) && PEEK == 'x') {
-      return res_fail;
-    }
-  }
-  return res_cont;
-}
+// /**
+//  * Parse for byte literal. If detect "0x" then fail and let the JS grammar handle this.
+//  */
+// static Result byte_literal(State *state) {
+//   LOG(INFO, "->byte_literal (col = %u, peek = %c)\n", COL, PEEK);
+//   if (!is_eof(state) && PEEK == '0') {
+//     S_ADVANCE;
+//     if (!is_eof(state) && PEEK == 'x') {
+//       return res_fail;
+//     }
+//   }
+//   return res_cont;
+// }
 
 
 /**
@@ -870,6 +870,7 @@ static Result equals(State *state) {
       }
     }
   }
+  return res_cont;
 }
 
 /**
