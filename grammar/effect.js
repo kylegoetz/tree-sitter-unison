@@ -25,7 +25,7 @@ module.exports = {
      * value_type -> {...} value_type
      * value_type -> { ... } ()
      */
-    forall: $ => seq($.kw_forall, repeat($.wordy_id), '.'),
+    forall: $ => seq($.kw_forall, repeat($.wordy_id), $.typesig_dot),
     _value_type: $ => seq(
         optional($.forall), 
         $._type1
@@ -43,7 +43,9 @@ module.exports = {
     
     // TODO refer back to hashes again. Can it also be ##builtin hash?
     _type_atom: $ => choice(
-        $._hash_qualified,
+        // $._hqPrefixId,
+        $._hq_qualified_prefix_term,
+        // $._hash_qualified,
         // seq($.wordy_id, optional($.immediate_hash)),
         // seq(/#[0-9a-zA-Z]+/),
         $.unit,

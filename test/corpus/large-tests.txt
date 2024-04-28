@@ -36,7 +36,7 @@ Heap.deleteMin cmp = cases
     (term_declaration
         (type_signature
             (path) (wordy_id) (type_signature_colon) (term_type
-            (forall (kw_forall) (wordy_id) (wordy_id) (wordy_id))
+            (forall (kw_forall) (wordy_id) (wordy_id) (wordy_id) (typesig_dot))
             (tuple_or_parenthesized_type  (wordy_id) (arrow_symbol) 
             (effect (wordy_id)) (wordy_id) (arrow_symbol) 
             (effect (wordy_id)) (wordy_id)) (arrow_symbol)
@@ -61,13 +61,13 @@ Heap.deleteMin cmp = cases
                             (function_application
                                 (path)
                                 (wordy_id)
-                                (wordy_id)
-                                (wordy_id)
-                                (wordy_id)))))
-            )
+                                (function_application
+                                  (wordy_id)
+                                  (function_application
+                                    (wordy_id)
+                                    (wordy_id))))))))
             (pattern
-                (constructor_or_variable_pattern (path) (wordy_id)) (arrow_symbol) (path) (wordy_id))
-        )))
+                (constructor_or_variable_pattern (path) (wordy_id)) (arrow_symbol) (path) (wordy_id)))))
 ===
 [Large] @unison/json Decoder.run
 ===
@@ -131,8 +131,9 @@ d =
           (function_application
             (wordy_id)
             (literal_text)
-            (wordy_id)
-            (literal_text)
+            (function_application
+              (wordy_id)
+              (literal_text))
             (tuple_or_parenthesized
               (cases)
               (pattern
@@ -182,3 +183,43 @@ d =
           (function_application
             (wordy_id)
             (literal_text)))))
+===
+[Large] Rewrite example from Unison Base
+===
+use Nat +
+incrementAndEtaReduce x f =
+  @rewrite
+    term x + 1 ==> Nat.increment x
+    term arg -> f arg ==> f
+---
+(unison
+  (use_clause
+    (use)
+    (namespace)
+    (operator))
+  (term_declaration
+    (term_definition 
+      (wordy_id)
+      (wordy_id)
+      (wordy_id)
+      (kw_equals)
+      (rewrite_block
+        (rewrite)
+        (rewrite_term
+          (term)
+          (wordy_id)
+          (operator)
+          (nat)
+          (superarrow)
+          (function_application
+            (path)
+            (wordy_id)
+            (wordy_id)))
+        (rewrite_term
+          (term)
+          (wordy_id)
+          (arrow_symbol)
+          (wordy_id)
+          (wordy_id)
+          (superarrow)
+          (wordy_id))))))

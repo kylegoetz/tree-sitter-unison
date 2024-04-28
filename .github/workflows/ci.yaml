@@ -2,19 +2,19 @@ name: ci
 on:
   push:
     branches: ["*"]
-    paths:
-      - src/**
-      - grammar.js
-      - bindings/**
-      - binding.gyp
-      - test/**
+    # paths:
+    #   - src/**/*
+    #   - grammar/**/*
+    #   - bindings/**
+    #   - binding.gyp
+    #   - test/corpus/*.txt
   pull_request: 
     paths:
-      - src/**
-      - grammar.js
+      - src/**/*
+      - grammar/**/*
       - bindings/**
       - binding.gyp
-      - test/**
+      - test/corpus/*.txt
 concurrency:
   group: ${{github.workflow}}-${{github.ref}}
   cancel-in-progress: true

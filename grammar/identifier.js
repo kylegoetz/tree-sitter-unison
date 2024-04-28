@@ -44,6 +44,9 @@ module.exports = {
     optional($.hash_cid),
   ),
   
+
+  // _hqPrefixId: $ => choice($._hqWordyId, seq('(',$._hqSymbolyId,')')),
+
   _hash_qualified: $ => choice(
     $._identifier,
     $.built_in_hash,
@@ -52,22 +55,6 @@ module.exports = {
       $._identifier, 
       alias($.imm_hash_qualifier, $.hash_qualifier),
     ),
-  ),
-  
-  _hq_qualified_wordy_id: $ => seq(
-    choice(
-      $.wordy_id,
-      seq($.path, alias($.imm_wordy_id, $.wordy_id)),
-    ),
-    optional(alias($.imm_hash_qualifier, $.hash_qualifier)),
-  ),
-  
-  _hq_qualified_symboly_id: $ => seq(
-    choice(
-      $.operator,
-      seq($.path, alias($.imm_symboly_id, $.operator)),
-    ),
-    optional(alias($.imm_hash_qualifier, $.hash_qualifier)),
   ),
   
   _hq_qualified_prefix_term: $ => choice(
@@ -86,16 +73,33 @@ module.exports = {
     )
   ),
   
-  _prefix_definition_name: $ => choice(
-    $._wordy_definition_name,
-    parens($._symboly_definition_name),
-  ),
-  _wordy_definition_name: $ => choice(
+  // _prefix_definition_name: $ => choice(
+  //   $._wordy_definition_name,
+  //   parens($._symboly_definition_name),
+  // ),
+
+  _hq_qualified_wordy_id: $ => seq(
+    choice(
       $.wordy_id,
       seq($.path, alias($.imm_wordy_id, $.wordy_id)),
+    ),
+    optional(alias($.imm_hash_qualifier, $.hash_qualifier)),
   ),
-  _symboly_definition_name: $ => choice(
+  
+  _hq_qualified_symboly_id: $ => seq(
+    choice(
       $.operator,
       seq($.path, alias($.imm_symboly_id, $.operator)),
+    ),
+    optional(alias($.imm_hash_qualifier, $.hash_qualifier)),
   ),
+
+  // _wordy_definition_name: $ => choice(
+  //     $.wordy_id,
+  //     seq($.path, alias($.imm_wordy_id, $.wordy_id)),
+  // ),
+  // _symboly_definition_name: $ => choice(
+  //     $.operator,
+  //     seq($.path, alias($.imm_symboly_id, $.operator)),
+  // ),
 }

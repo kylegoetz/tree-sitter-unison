@@ -31,6 +31,10 @@ module.exports = {
   
   _op: $ => choice($.operator, seq($.path, alias(token.immediate(regex.symboly_id), $.operator))),
   
+  // A := term [(|| or && or HQIT) A]
+  _infix_app_or_boolean_op/*_infix_op_application*/: $ => sep1(choice($.or, $.and, seq($._hq_qualified_infix_term, optional($._layout_semicolon))), $._term4),
+  _term4: $ => repeat1($._term_leaf),
+
   // p1 + p2
   _infix_op_application: $ => prec.right(seq(
     $._expression, 
@@ -38,8 +42,12 @@ module.exports = {
     $._expression,
   )),
   
-  function_application: $ => choice(
+  function_application: $ => prec.dynamic(2, choice(
     $._prefix_function_application,
     $._infix_op_application,
-  ),
+  )),
+
+  // func_app: $ => 
 }
+
+// const chain = ($, rule, chainer) => 

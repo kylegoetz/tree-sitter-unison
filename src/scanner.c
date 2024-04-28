@@ -353,7 +353,9 @@ static bool indent_exists(State *state) { return state->indents->len != 0; };
 /**
  * Require that the current line's indent is equal to the containing layout's, so the line may start a new `decl`.
  */
-static bool same_indent(uint32_t indent, State *state) { return indent_exists(state) && indent == VEC_BACK(state->indents); }
+static bool same_indent(uint32_t indent, State *state) {
+  return (indent_exists(state) && indent == VEC_BACK(state->indents)) || (!indent_exists(state) && indent == 0);
+}
  
 /**
  * Require that the current line's indent is smaller than the containing layout's, so the layout may be ended.
@@ -732,6 +734,7 @@ static Result dedent(uint32_t indent, State *state) {
  * Succeed for `SEMICOLON` if the indent of the next line is equal to the current layout's.
  */
 static Result newline_semicolon(uint32_t indent, State *state) {
+  LOG(VERBOSE, "[newline_semicolon] { COL = %u, PEEK = %c, indent = %u }\n", COL, PEEK, indent);
   if (SYM(SEMICOLON) && same_indent(indent, state)) {
     return finish(SEMICOLON, "newline_semicolon");
   }
@@ -807,19 +810,19 @@ inline_comment_after_skip:
   return finish(COMMENT, "inline_comment");
 }
 
-/**
- * Parse for byte literal. If detect "0x" then fail and let the JS grammar handle this.
- */
-static Result byte_literal(State *state) {
-  LOG(INFO, "->byte_literal (col = %u, peek = %c)\n", COL, PEEK);
-  if (!is_eof(state) && PEEK == '0') {
-    S_ADVANCE;
-    if (!is_eof(state) && PEEK == 'x') {
-      return res_fail;
-    }
-  }
-  return res_cont;
-}
+// /**
+//  * Parse for byte literal. If detect "0x" then fail and let the JS grammar handle this.
+//  */
+// static Result byte_literal(State *state) {
+//   LOG(INFO, "->byte_literal (col = %u, peek = %c)\n", COL, PEEK);
+//   if (!is_eof(state) && PEEK == '0') {
+//     S_ADVANCE;
+//     if (!is_eof(state) && PEEK == 'x') {
+//       return res_fail;
+//     }
+//   }
+//   return res_cont;
+// }
 
 
 /**
@@ -828,13 +831,43 @@ static Result byte_literal(State *state) {
  * sees a term assignment as function application with operator `=` as
  * discovered by the external scanner. This function exists to prevent
  * this.
+ * 2024-04-26: Need to exclude `==>` as well, as it is a reserved operator now and the JS will handle it.
+ * 
+ * Should only be called by `operator` and `paren_symop` because it assumes we're at the start of a potential operator.
+ * 
+ * Fail on: single equals, ==>, guaranteed non-OPERATOR
  */
 static Result equals(State *state) {
-  LOG(INFO, "->equals (%u, %c)\n", COL, PEEK);
+  LOG(INFO, "[equals] { COL = %u, PEEK = %c }\n", COL, PEEK);
   if (PEEK == '=') {
+    LOG(VERBOSE, "[equals] Found first equals. Could be =, ==>, symop, or failure\n");
     S_ADVANCE;
+    // Trigger fail on `=` or non-OPERATOR
     if (is_eof(state) || isws(PEEK) || !symbolic(PEEK)) {
+      LOG(VERBOSE, "[equals] { COL = %u, PEEK = %c } FAIL: is = or non-OPERATOR\n", COL, PEEK);
       return res_fail;
+    }
+    if (PEEK == '=') {
+      LOG(VERBOSE, "[equals] Found second equals in a row. Could be ==>, symop, or failure\n");
+      S_ADVANCE;
+      if(is_eof(state) || isws(PEEK)) { // ==, succeed
+        LOG(VERBOSE, "[equals] Found `==` and finishing with success. { COL = %u }", COL);
+        MARK("equals", false, state);
+        return finish_if_valid(SYMOP, "equals", state);
+      } else if (PEEK == '>') { // Either ==> or let OPERATOR handle
+        LOG(VERBOSE, "[equals] Found `==>`. Could be that symbol or SYMOP or failure\n");
+        S_ADVANCE;
+        if (is_eof(state) || isws(PEEK)) { // ==> for sure
+          LOG(VERBOSE, "[equals] Found `==>` that has no symbol after it, so it's not a SYMOP. FAIL to allow JS to parse it\n");
+          return res_fail;
+        } else {
+          LOG(VERBOSE, "[equals] Found `==>` and continuing with calling function to look for SYMOP. { COL = %u }", COL);
+          return res_cont;
+        }
+      }
+      if (is_eof(state) || isws(PEEK) || symbolic(PEEK)) {
+        return res_cont;
+      }
     }
   }
   return res_cont;
@@ -854,10 +887,6 @@ static Result paren_symop(State *state) {
     Result res = equals(state);
     SHORT_SCANNER;
   }
-  if (is_eof(state) || !symbolic(PEEK)) {
-    return res_fail;
-  }
-  S_ADVANCE;
   while (!is_eof(state) && PEEK != ')' && !isws(PEEK)) {
     if (symbolic(PEEK)) {
       S_ADVANCE;
@@ -873,31 +902,6 @@ static Result paren_symop(State *state) {
   return res_fail;
 }
 
-/**
- * Detect || and &&, which should fail so JS can process it. It is only meant to be called from `operator` since it assumes
- * `res_cont` will continue operator parsing.
- */
-// static Result boolean_operator(State *state) {
-//   if (PEEK != '|' && PEEK != '&') return res_cont;
-//   switch (PEEK) {
-//     case '|': {
-//       S_ADVANCE;
-//       if (is_eof(state) || PEEK != '|') return res_cont;
-//       S_ADVANCE;
-//       if (!is_eof(state) && symbolic(PEEK)) return res_cont;
-//       return res_fail;
-//     }
-//     case '&': {
-//       S_ADVANCE;
-//       if (is_eof(state) || PEEK != '&') return res_cont;
-//       S_ADVANCE;
-//       if (!is_eof(state) && symbolic(PEEK)) return res_cont;
-//       return res_fail;
-//     }
-//   }
-//   return res_cont;
-// }
-
 static bool found_pipe_or_logical_op(uint8_t pipe_count, uint8_t amp_count) {
   return pipe_count == 1 || pipe_count == 2 || amp_count == 2;
 }
@@ -908,6 +912,8 @@ static bool found_pipe_or_logical_op(uint8_t pipe_count, uint8_t amp_count) {
  * Need to exclude certain symbols as solutions. The following cannot
  * be considered operators: =, &&, ||, | (`|` is handled by the JS)
  * Also need to exclude !( and ! bc these are bangs, a reserved keyword not an operator.
+ * 2024-04-26: Need to exclude `==>` as well, as it is a reserved operator now and the JS will handle it.
+ * 2024-04-26: Discovered a case where it will find `---` as operator if current context is function application. Should fail on that instead.
  *
  * Needs to recognize `(OPERATOR)` as a parenthesized operator
  */
@@ -933,6 +939,20 @@ static Result operator(State *state) {
   bool parenthesized = false;
   
   if (!symbolic(PEEK)) return res_fail;
+
+  // Handle FOLD case
+  if (COL == 0 && PEEK == '-') {
+    S_ADVANCE;
+    if (PEEK == '-') {
+      S_ADVANCE;
+      if (PEEK == '-') {
+        if (is_newline(PEEK))
+        MARK("operator", false, state);
+        return finish_if_valid(FOLD, "operator", state);
+      }
+    }
+  }
+
   if (PEEK == '=') {
     Result res = equals(state);
     SHORT_SCANNER;
@@ -1235,6 +1255,7 @@ static Result comment(State *state) {
 }
  
 static Result close_layout_in_list(State *state) {
+  LOG(VERBOSE, "[close_layout_in_list] { COL = %u, PEEK = %c }\n", COL, PEEK);
   switch (PEEK) {
     case ']': {
       if (state->symbols[END]) {
@@ -1470,29 +1491,6 @@ static Result layout_start(uint32_t column, State *state) {
             }
             goto foo;
           }
-          SYMBOLIC_CASES: { // Cannot start a layout with a -/+ unless it's part of '->'
-            if (PEEK == '+') {
-              return res_fail;
-            }
-            if (PEEK == '-') { // look to see if -> or -. or -DIGIT
-              S_ADVANCE;
-              if (PEEK == '.') { // if -. see if -.DIGIT
-                S_ADVANCE;
-                if(isdigit(PEEK)) {
-                  return res_fail; // fail so JS can parse
-                }
-              }
-              if (PEEK == '>') { // check if ->
-                S_ADVANCE;
-                if (!symbolic(PEEK)) {
-                  goto foo;
-                }
-              } else if(isdigit(PEEK)) { // check if -DIGIT
-                return res_fail; // fail so JS can look
-              }
-            }
-            return res_cont;
-          }
         }
         foo:
         push(column, state);
@@ -1538,7 +1536,7 @@ static Result repeat_end(uint32_t column, State *state) {
  * Rules that decide based on the indent of the next line.
  */
 static Result newline_indent(uint32_t indent, State *state) {
-  LOG(INFO, "->newline_indent (col = %u, indent = %u, PEEK = %c)\n", COL, indent, PEEK);
+  LOG(INFO, "[newline_indent] { COL = %u, indent = %u, PEEK = %c }\n", COL, indent, PEEK);
   Result res = dedent(indent, state);
   SHORT_SCANNER;
   res = close_layout_in_list(state);
@@ -1606,8 +1604,8 @@ static Result newline(uint32_t indent, State *state) {
   // SHORT_SCANNER;
   // res = cpp(state);
   // SHORT_SCANNER;
-  res = comment(state);
-  SHORT_SCANNER;
+  // res = comment(state);
+  // SHORT_SCANNER;
   res = newline_indent(indent, state);
   SHORT_SCANNER;
   return newline_token(indent, state);
@@ -1683,9 +1681,10 @@ static Result scan_main(State *state) {
   SHORT_SCANNER;
   MARK("main", false, state);
   if (is_newline(PEEK)) {
-    LOG(VERBOSE, "is newline\n");
+    LOG(VERBOSE, "[scan_main] found newline\n");
     S_SKIP;
     uint32_t indent = count_indent(state);
+    LOG(VERBOSE, "[scan_main] indent at newline = %u\n", indent);
     return newline(indent, state);
   }
   uint32_t col = column(state);
