@@ -16,24 +16,43 @@
       "url": "https://github.com/zetashift"
     }
   ],
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Unison grammar for tree-sitter",
   "repository": "github:kylegoetz/tree-sitter-unison",
   "main": "bindings/node",
+  "types": "bindings/node",
   "keywords": [
     "parsing",
     "parser",
     "unisonlang",
     "unison"
   ],
+  "files": [
+    "grammar.js",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**"
+  ],
   "dependencies": {
-    "nan": "^2.19.0"
+    "node-addon-api": "^7.1.0",
+    "node-gyp-build": "^4.8.0"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.21.0"
+  },
+  "peerDependenciesMeta": {
+    "tree_sitter": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@commitlint/cli": "^19.2.2",
     "@commitlint/config-conventional": "^19.2.2",
     "tree-sitter-cli": "^0.22.5",
-    "web-tree-sitter": "^0.22.5"
+    "web-tree-sitter": "^0.22.5",
+    "prebuildify": "^6.0.0"
   },
   "scripts": {
     "start": "tree-sitter generate",
@@ -42,7 +61,9 @@
     "examples-wasm": "script/parse-examples wasm",
     "scratch": "tree-sitter parse scratch.u -d",
     "visual": "tree-sitter parse -D scratch.u",
-    "ci": "tree-sitter generate && tree-sitter build-wasm && tree-sitter test"
+    "ci": "tree-sitter generate && tree-sitter build-wasm && tree-sitter test",
+    "install": "node-gyp-build",
+    "prebuildify": "prebuildify --napi --strip"
   },
   "tree-sitter": [
     {

@@ -36,9 +36,9 @@ They cannot be destructuring binds, which cannot happen at the top level. Verifi
 ===
 > z = 5
 ---
-(unison 
-    (watch_expression 
-        (term_definition 
+(unison
+    (watch_expression
+        (term_definition
             (wordy_id) (kw_equals) (nat))))
 ===
 [Regression] Issue 37, docblock can be anywhere an expression is
@@ -70,3 +70,34 @@ x = 5
 -- this is a comment
 ---
 (unison (comment))
+===
+[Regression] #82
+===
+-- builtin lib.base.Float.fromNat : lib.base.Nat -> lib.base.Float
+
+lib.base.Float.fromNat.doc : Doc
+lib.base.Float.fromNat.doc =
+  use Float fromNat
+  {{
+  Convert a {type Nat} to a {type Float}.
+
+  # Examples
+
+    ```
+    fromNat 3
+    ```
+
+    ```
+    fromNat maxNat
+    ```
+  }}
+---
+(unison
+    (comment)
+    (term_declaration
+        (type_signature (path) (wordy_id) (type_signature_colon) (term_type (wordy_id)))
+        (term_definition
+            (path) (wordy_id)
+            (kw_equals)
+            (use_clause (use) (namespace) (wordy_id))
+            (doc_block))))
