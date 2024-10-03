@@ -43,7 +43,7 @@ module.exports = grammar({
     [$._prefix_function_application, $.function_application],
     [$._identifier, $.type_name],
     [$.tuple_constructor, $.tuple_or_parenthesized],
-    [$._literal, $._expression], 
+    [$._literal, $._expression],
     [$._identifier, $.literal_function, $._lhs],
     [$._infix_op_application, $.literal_function],
     [$._function_name, $._expression, $._lhs],
@@ -105,6 +105,7 @@ module.exports = grammar({
   extras: $ => [
     /\\?\s/,
     $.comment,
+    $.doc_block,
   ],
   rules: {
     unison: $ => repeat(
@@ -134,27 +135,27 @@ module.exports = grammar({
     ...destructuring_bind,
     ...delayed,
     ...doc,
-    
-      
-    
+
+
+
     type_signature: $ => seq(
       field('term_name', $._prefix_definition_name),
       $.type_signature_colon,
       alias($._value_type, $.term_type),
     ),
-    
+
     type_variable: $ => regex.lowercase_varid,
     type_arrow: $ => '->',
-    
+
     type: $ => seq(
       optional(seq(
-        $.kw_forall, 
-        repeat1($.type_variable), 
+        $.kw_forall,
+        repeat1($.type_variable),
         token.immediate('.')
-      )), 
+      )),
       sep1($.type_arrow, field('type_name', $.wordy_id)),
     ),
-    
+
     _watch_expression: $ => prec.right(choice(
       $._expression,
       $.term_definition,
