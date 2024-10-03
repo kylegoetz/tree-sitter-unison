@@ -1,8 +1,4 @@
 !*/
-!src/grammar.json
-!src/parser.c
-!src/node-types.json
-!src/jtckdint.h
 node_modules
 *.log
 log
@@ -16,9 +12,16 @@ log.html
 .vscode
 
 # app specific
-src/
+src/*
+!src/tree_sitter
+!src/tree_sitter/parser.h
 scratch.u
 *.wasm
 target/
 build/
 Cargo.lock
+
+!grammar.json
+!parser.c
+!node-types.json
+!jtckdint.h

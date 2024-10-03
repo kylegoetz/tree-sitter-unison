@@ -713,13 +713,15 @@
     },
     "wordy_id": {
       "type": "PATTERN",
-      "value": "[a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*"
+      "value": "[a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*",
+      "flags": "u"
     },
     "imm_wordy_id": {
       "type": "IMMEDIATE_TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*"
+        "value": "[a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*",
+        "flags": "u"
       }
     },
     "symboly_id": {
@@ -757,7 +759,8 @@
     },
     "path": {
       "type": "PATTERN",
-      "value": "\\.?([a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*\\.)+"
+      "value": "\\.?([a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*\\.)+",
+      "flags": "u"
     },
     "__identifier": {
       "type": "PREC_LEFT",
@@ -816,7 +819,8 @@
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "\\.?([a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*\\.)*[a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*"
+        "value": "\\.?([a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*\\.)*[a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*",
+        "flags": "u"
       }
     },
     "hash_qualifier": {
@@ -1087,7 +1091,8 @@
                 "type": "IMMEDIATE_TOKEN",
                 "content": {
                   "type": "PATTERN",
-                  "value": "\\.?([a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*\\.)+"
+                  "value": "\\.?([a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*\\.)+",
+                  "flags": "u"
                 }
               },
               "named": true,
@@ -1240,7 +1245,8 @@
       "type": "TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "[a-za-z_\\u{1f400}-\\u{1faff}][a-za-z0-9_!'\\u{1f400}-\\u{1faff}]*"
+        "value": "[a-za-z_\\u{1f400}-\\u{1faff}][a-za-z0-9_!'\\u{1f400}-\\u{1faff}]*",
+        "flags": "u"
       }
     },
     "type_constructor": {
@@ -1796,7 +1802,8 @@
       "members": [
         {
           "type": "PATTERN",
-          "value": "\\?."
+          "value": "\\?.",
+          "flags": "u"
         },
         {
           "type": "PATTERN",
@@ -1876,7 +1883,8 @@
       "value": 0,
       "content": {
         "type": "PATTERN",
-        "value": "[a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*"
+        "value": "[a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*",
+        "flags": "u"
       }
     },
     "func_param": {
@@ -1884,7 +1892,8 @@
       "value": 0,
       "content": {
         "type": "PATTERN",
-        "value": "[a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*"
+        "value": "[a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*",
+        "flags": "u"
       }
     },
     "literal_function": {
@@ -2028,7 +2037,8 @@
                 "type": "IMMEDIATE_TOKEN",
                 "content": {
                   "type": "PATTERN",
-                  "value": "[a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*"
+                  "value": "[a-zA-Z_\\u{1F400}-\\u{1FAFF}][a-zA-Z0-9_!'\\u{1F400}-\\u{1FAFF}]*",
+                  "flags": "u"
                 }
               },
               "named": true,
@@ -3985,7 +3995,8 @@
     },
     "type_variable": {
       "type": "PATTERN",
-      "value": "[a-za-z_\\u{1f400}-\\u{1faff}][a-za-z0-9_!'\\u{1f400}-\\u{1faff}]*"
+      "value": "[a-za-z_\\u{1f400}-\\u{1faff}][a-za-z0-9_!'\\u{1f400}-\\u{1faff}]*",
+      "flags": "u"
     },
     "type_arrow": {
       "type": "STRING",
@@ -4123,6 +4134,10 @@
     {
       "type": "SYMBOL",
       "name": "comment"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "doc_block"
     }
   ],
   "conflicts": [
@@ -4490,4 +4505,3 @@
   "inline": [],
   "supertypes": []
 }
-
