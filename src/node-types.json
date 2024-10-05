@@ -33,42 +33,17 @@
   {
     "type": "ability_declaration",
     "named": true,
-    "fields": {
-      "type_arg": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "wordy_id",
-            "named": true
-          }
-        ]
-      },
-      "type_name": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "operator",
-            "named": true
-          },
-          {
-            "type": "path",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
       "required": true,
       "types": [
         {
           "type": "ability",
+          "named": true
+        },
+        {
+          "type": "ability_name",
           "named": true
         },
         {
@@ -80,11 +55,38 @@
           "named": true
         },
         {
+          "type": "type_argument",
+          "named": true
+        },
+        {
           "type": "unique",
           "named": true
         },
         {
           "type": "where",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "ability_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
           "named": true
         }
       ]
@@ -366,6 +368,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -375,10 +381,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -497,15 +499,15 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "tuple_or_parenthesized",
           "named": true
         },
         {
           "type": "with",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -605,16 +607,6 @@
     "type": "constructor",
     "named": true,
     "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "wordy_id",
-            "named": true
-          }
-        ]
-      },
       "type": {
         "multiple": true,
         "required": true,
@@ -656,6 +648,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "sequence_type",
             "named": true
           },
@@ -668,10 +664,6 @@
             "named": true
           },
           {
-            "type": "wordy_id",
-            "named": true
-          },
-          {
             "type": "{",
             "named": false
           },
@@ -681,7 +673,26 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "colon",
+          "named": true
+        },
+        {
+          "type": "constructor_name",
+          "named": true
+        }
+      ]
     }
+  },
+  {
+    "type": "constructor_name",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "constructor_or_variable_pattern",
@@ -760,11 +771,11 @@
           "named": true
         },
         {
-          "type": "tuple_pattern",
+          "type": "regular_identifier",
           "named": true
         },
         {
-          "type": "wordy_id",
+          "type": "tuple_pattern",
           "named": true
         }
       ]
@@ -899,6 +910,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -908,10 +923,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -1054,6 +1065,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "term_declaration",
           "named": true
         },
@@ -1071,10 +1086,6 @@
         },
         {
           "type": "with",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -1209,6 +1220,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -1218,10 +1233,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -1340,15 +1351,15 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "tuple_or_parenthesized",
           "named": true
         },
         {
           "type": "with",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -1387,6 +1398,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "sequence_type",
           "named": true
         },
@@ -1396,10 +1411,6 @@
         },
         {
           "type": "unit",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -1534,6 +1545,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -1543,10 +1558,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -1693,6 +1704,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "term_declaration",
           "named": true
         },
@@ -1714,10 +1729,6 @@
         },
         {
           "type": "with",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -1764,6 +1775,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "sequence_type",
           "named": true
         },
@@ -1773,10 +1788,6 @@
         },
         {
           "type": "unit",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -1915,6 +1926,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "term_declaration",
             "named": true
           },
@@ -1932,10 +1947,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -2077,6 +2088,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "term_declaration",
             "named": true
           },
@@ -2094,10 +2109,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -2235,6 +2246,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -2244,10 +2259,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -2389,6 +2400,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "term_declaration",
             "named": true
           },
@@ -2406,10 +2421,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -2571,6 +2582,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -2580,10 +2595,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -2726,6 +2737,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "term_declaration",
           "named": true
         },
@@ -2744,13 +2759,14 @@
         {
           "type": "with",
           "named": true
-        },
-        {
-          "type": "wordy_id",
-          "named": true
         }
       ]
     }
+  },
+  {
+    "type": "field_name",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "forall",
@@ -2926,6 +2942,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -2935,10 +2955,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -3073,6 +3089,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "tuple_or_parenthesized",
           "named": true
         },
@@ -3082,10 +3102,6 @@
         },
         {
           "type": "with",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -3220,6 +3236,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -3229,10 +3249,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -3383,6 +3399,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "term_declaration",
           "named": true
         },
@@ -3400,10 +3420,6 @@
         },
         {
           "type": "with",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -3538,6 +3554,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -3547,10 +3567,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -3693,6 +3709,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "term_declaration",
           "named": true
         },
@@ -3710,10 +3730,6 @@
         },
         {
           "type": "with",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -4090,6 +4106,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -4099,10 +4119,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -4241,6 +4257,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "tuple_or_parenthesized",
           "named": true
         },
@@ -4250,10 +4270,6 @@
         },
         {
           "type": "with",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -4388,6 +4404,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -4397,10 +4417,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -4535,6 +4551,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "tuple_or_parenthesized",
           "named": true
         },
@@ -4544,10 +4564,6 @@
         },
         {
           "type": "with",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -4649,7 +4665,7 @@
           "named": true
         },
         {
-          "type": "wordy_id",
+          "type": "regular_identifier",
           "named": true
         }
       ]
@@ -4689,7 +4705,30 @@
           "named": true
         },
         {
-          "type": "wordy_id",
+          "type": "regular_identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "namespace",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
           "named": true
         }
       ]
@@ -4829,6 +4868,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -4838,10 +4881,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -4992,6 +5031,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "sequence_type",
           "named": true
         },
@@ -5013,10 +5056,6 @@
         },
         {
           "type": "with",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -5151,6 +5190,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -5160,10 +5203,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -5342,6 +5381,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "term_declaration",
           "named": true
         },
@@ -5363,10 +5406,6 @@
         },
         {
           "type": "with",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -5391,16 +5430,6 @@
     "type": "record_field",
     "named": true,
     "fields": {
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "wordy_id",
-            "named": true
-          }
-        ]
-      },
       "type": {
         "multiple": true,
         "required": true,
@@ -5442,6 +5471,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "sequence_type",
             "named": true
           },
@@ -5454,10 +5487,6 @@
             "named": true
           },
           {
-            "type": "wordy_id",
-            "named": true
-          },
-          {
             "type": "{",
             "named": false
           },
@@ -5467,7 +5496,22 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "field_name",
+          "named": true
+        }
+      ]
     }
+  },
+  {
+    "type": "regular_identifier",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "sequence_type",
@@ -5510,6 +5554,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "sequence_type",
           "named": true
         },
@@ -5519,10 +5567,6 @@
         },
         {
           "type": "unit",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -5716,6 +5760,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -5725,10 +5773,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -5871,6 +5915,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "term_declaration",
           "named": true
         },
@@ -5888,10 +5936,6 @@
         },
         {
           "type": "with",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -5938,6 +5982,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "sequence_type",
           "named": true
         },
@@ -5947,10 +5995,6 @@
         },
         {
           "type": "unit",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -6085,6 +6129,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -6094,10 +6142,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -6229,6 +6273,10 @@
         },
         {
           "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
           "named": true
         },
         {
@@ -6418,6 +6466,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -6427,10 +6479,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -6565,6 +6613,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "tuple_or_parenthesized",
           "named": true
         },
@@ -6574,10 +6626,6 @@
         },
         {
           "type": "with",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -6624,6 +6672,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "sequence_type",
           "named": true
         },
@@ -6633,10 +6685,6 @@
         },
         {
           "type": "unit",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -6791,6 +6839,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "sequence_type",
           "named": true
         },
@@ -6817,10 +6869,6 @@
         {
           "type": "unit",
           "named": true
-        },
-        {
-          "type": "wordy_id",
-          "named": true
         }
       ]
     }
@@ -6842,7 +6890,7 @@
           "named": true
         },
         {
-          "type": "wordy_id",
+          "type": "regular_identifier",
           "named": true
         }
       ]
@@ -6969,11 +7017,11 @@
           "named": true
         },
         {
-          "type": "use",
+          "type": "regular_identifier",
           "named": true
         },
         {
-          "type": "wordy_id",
+          "type": "use",
           "named": true
         }
       ]
@@ -7108,6 +7156,10 @@
             "named": true
           },
           {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
             "named": true
           },
@@ -7117,10 +7169,6 @@
           },
           {
             "type": "with",
-            "named": true
-          },
-          {
-            "type": "wordy_id",
             "named": true
           },
           {
@@ -7255,6 +7303,10 @@
           "named": true
         },
         {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "term_definition",
           "named": true
         },
@@ -7268,10 +7320,6 @@
         },
         {
           "type": "with",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
           "named": true
         }
       ]
@@ -7367,6 +7415,10 @@
     "named": true
   },
   {
+    "type": "colon",
+    "named": true
+  },
+  {
     "type": "comment",
     "named": true
   },
@@ -7452,10 +7504,6 @@
   },
   {
     "type": "match",
-    "named": true
-  },
-  {
-    "type": "namespace",
     "named": true
   },
   {

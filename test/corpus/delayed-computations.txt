@@ -15,9 +15,9 @@ program = do
             (type_signature_colon)
             (term_type (delayed
                 (effect
-                    (wordy_id))
+                    (regular_identifier))
                 (effect
-                    (wordy_id))
+                    (regular_identifier))
                 (unit))))
         (term_definition
             (wordy_id)
@@ -26,8 +26,8 @@ program = do
                 (do)
                 (use_clause
                     (use)
-                    (namespace)
+                    (namespace (regular_identifier))
                     (operator))
                 (function_application (wordy_id) (literal_text))
-                (term_declaration (term_definition (wordy_id) (kw_equals) (bang (wordy_id))))
-                (function_application (wordy_id) (tuple_or_parenthesized (function_application (literal_text) (operator) (wordy_id))))))))
+                (term_declaration (term_definition (wordy_id) (kw_equals) (bang (regular_identifier))))
+                (function_application (wordy_id) (tuple_or_parenthesized (function_application (literal_text) (operator) (regular_identifier))))))))

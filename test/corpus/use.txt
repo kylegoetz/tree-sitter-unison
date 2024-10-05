@@ -6,25 +6,25 @@ use base.List
 (unison
     (use_clause
         (use)
-        (namespace)))
+        (namespace (path) (regular_identifier))))
 
 ===
 [use] operators
 ===
 use Universal == < > >=
 ---
-(unison (use_clause (use) (namespace) (operator) (operator) (operator) (operator)))
+(unison (use_clause (use) (namespace (regular_identifier)) (operator) (operator) (operator) (operator)))
 
 ===
 [use] name with tick mark
 ===
 use Search lubIndexOf'
 ---
-(unison (use_clause (use) (namespace) (wordy_id)))
+(unison (use_clause (use) (namespace (regular_identifier)) (regular_identifier)))
 
 ===
 [use] namespace with a path component and an operator name
 ===
 use base.List ++
 ---
-(unison (use_clause (use) (namespace) (operator)))
+(unison (use_clause (use) (namespace (path) (regular_identifier)) (operator)))

@@ -10,7 +10,7 @@ y = if x then 5 else 6
             (kw_equals)
             (exp_if
                 (kw_if)
-                (wordy_id)
+                (regular_identifier)
                 (kw_then)
                 (nat)
                 (kw_else)
@@ -30,7 +30,7 @@ mySimpleTerm = if elem 5 myList then "high five" else "no five found"
                 (function_application
                     (wordy_id)
                     (nat)
-                    (wordy_id))
+                    (regular_identifier))
                 (kw_then)
                 (literal_text)
                 (kw_else)
@@ -52,7 +52,7 @@ mySimpleTerm = if elem 5 myList
                 (function_application
                     (wordy_id)
                     (nat)
-                        (wordy_id))
+                        (regular_identifier))
                 (kw_then)
                 (literal_text)
                 (kw_else)

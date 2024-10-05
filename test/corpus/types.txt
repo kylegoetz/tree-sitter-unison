@@ -7,12 +7,12 @@ structural type Optional a = Some a | None
     (type_declaration
         (structural)
         (type_kw)
-        (type_constructor (type_name (wordy_id)) (type_argument))
+        (type_constructor (type_name (regular_identifier)) (type_argument))
         (kw_equals)
-        (wordy_id)
-        (wordy_id)
+        (regular_identifier)
+        (regular_identifier)
         (pipe)
-        (wordy_id)))
+        (regular_identifier)))
 ===
 [Types] unique type
 ===
@@ -22,13 +22,13 @@ unique type UserId = Phone Nat | Email Text
     (type_declaration
         (unique)
         (type_kw)
-        (type_constructor (type_name (wordy_id)))
+        (type_constructor (type_name (regular_identifier)))
         (kw_equals)
-        (wordy_id)
-        (wordy_id)
+        (regular_identifier)
+        (regular_identifier)
         (pipe)
-        (wordy_id)
-        (wordy_id)))
+        (regular_identifier)
+        (regular_identifier)))
 ===
 [Types] type tag (no type constructor)
 ===
@@ -38,7 +38,7 @@ unique type Foo =
     (type_declaration
         (unique)
         (type_kw)
-        (type_constructor (type_name (wordy_id)))
+        (type_constructor (type_name (regular_identifier)))
         (kw_equals)))
 ===
 [Types] type name with namespace/qualifier
@@ -50,12 +50,12 @@ unique type controlFlow.Color = RGB Nat Nat Nat
         (unique)
         (type_kw)
         (type_constructor
-            (type_name (path) (wordy_id)))
+            (type_name (path) (regular_identifier)))
         (kw_equals)
-        (wordy_id)
-        (wordy_id)
-        (wordy_id)
-        (wordy_id)))
+        (regular_identifier)
+        (regular_identifier)
+        (regular_identifier)
+        (regular_identifier)))
 ===
 [Types] Record type, single line
 ===
@@ -67,15 +67,15 @@ unique type Point2 = { x : Nat, y : Nat }
         (type_kw)
         (type_constructor
             (type_name
-                (wordy_id)))
+                (regular_identifier)))
         (kw_equals)
         (record
             (record_field
-                (wordy_id)
-                (wordy_id))
+                (field_name)
+                (regular_identifier))
             (record_field
-                (wordy_id)
-                (wordy_id)))))
+                (field_name)
+                (regular_identifier)))))
 ===
 [Types] Record type, multiline
 ===
@@ -90,15 +90,15 @@ unique type Point2 = {
         (type_kw)
         (type_constructor
             (type_name
-                (wordy_id)))
+                (regular_identifier)))
         (kw_equals)
         (record
             (record_field
-                (wordy_id)
-                (wordy_id))
+                (field_name)
+                (regular_identifier))
             (record_field
-                (wordy_id)
-                (wordy_id)))))
+                (field_name)
+                (regular_identifier)))))
 ===
 [Types] optional `unique` keyword
 ===
@@ -107,10 +107,10 @@ type UserId = Phone Nat | Email Text
 (unison
     (type_declaration
         (type_kw)
-        (type_constructor (type_name (wordy_id)))
+        (type_constructor (type_name (regular_identifier)))
         (kw_equals)
-        (wordy_id)
-        (wordy_id)
+        (regular_identifier)
+        (regular_identifier)
         (pipe)
-        (wordy_id)
-        (wordy_id)))
+        (regular_identifier)
+        (regular_identifier)))

@@ -17,7 +17,7 @@ module.exports = {
     $.bang,
     $.doc_block,
   )),
-  
+
   operator_as_parameter: $ => seq('(',$.operator, ')'),
   parenthetical_exp: $ => prec(-10, seq(
     '(',
@@ -25,7 +25,7 @@ module.exports = {
     optional(seq($.type_signature_colon, $._value_type)),
     ')'
   )),
-  
+
   use: $ => prec(KEYWORD, 'use'),
-  use_clause: $ => prec.right(seq($.use, $.namespace, repeat($._identifier))),
+  use_clause: $ => prec.right(seq($.use, alias($._identifier, $.namespace), repeat($._identifier))),
 }

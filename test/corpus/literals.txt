@@ -112,7 +112,7 @@ y = x -> x + 2
                 (wordy_id)
                 (arrow_symbol)
                 (function_application
-                    (wordy_id)
+                    (regular_identifier)
                     (operator)
                     (nat))))))
 ===
@@ -152,7 +152,7 @@ x = termLink aUnisonTerm
             (kw_equals)
             (literal_termlink
                 (kw_termlink)
-                (wordy_id)))))
+                (regular_identifier)))))
 ===
 [Literal] typeLink
 ===
@@ -160,7 +160,7 @@ x = termLink aUnisonTerm
 > typeLink ##Foo.bar
 ---
 (unison
-    (watch_expression (literal_typelink (kw_typelink) (wordy_id)))
+    (watch_expression (literal_typelink (kw_typelink) (regular_identifier)))
     (watch_expression (literal_typelink (kw_typelink) (built_in_hash (path) (wordy_id)))))
 ===
 [Literal] Nat
@@ -200,7 +200,7 @@ x = -1.2e3
 x = -1.2e+3
 x = -1.2e-3
 ---
-(unison 
+(unison
     (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
     (term_declaration (term_definition (wordy_id) (kw_equals) (int)))
     (term_declaration (term_definition (wordy_id) (kw_equals) (int)))

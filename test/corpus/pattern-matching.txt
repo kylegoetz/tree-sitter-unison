@@ -11,7 +11,7 @@
 (unison
     (watch_expression
         (match)
-        (wordy_id)
+        (regular_identifier)
         (with)
         (pattern (literal_text) (arrow_symbol) (literal_text))
         (pattern (literal_text) (arrow_symbol) (literal_text))
@@ -28,10 +28,10 @@
 (unison
     (watch_expression
         (match)
-        (wordy_id)
+        (regular_identifier)
         (with)
         (pattern (nat) (arrow_symbol) (literal_text))
-        (pattern (constructor_or_variable_pattern (wordy_id)) (arrow_symbol) (literal_text))))
+        (pattern (constructor_or_variable_pattern (regular_identifier)) (arrow_symbol) (literal_text))))
 ===
 [Pattern matching] guard patterns
 ===
@@ -46,13 +46,13 @@
 (unison
     (watch_expression
         (match)
-        (wordy_id)
+        (regular_identifier)
         (with)
-        (pattern (constructor_or_variable_pattern (wordy_id)) (guard (pipe) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (arrow_symbol) (literal_text)))
-        (pattern (constructor_or_variable_pattern (wordy_id)) (guard (pipe) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (arrow_symbol) (literal_text)))
-        (pattern (constructor_or_variable_pattern (wordy_id)) (guard (pipe) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (wordy_id) (operator) (nat))) (arrow_symbol) (literal_text)))
+        (pattern (constructor_or_variable_pattern (regular_identifier)) (guard (pipe) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (arrow_symbol) (literal_text)))
+        (pattern (constructor_or_variable_pattern (regular_identifier)) (guard (pipe) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (arrow_symbol) (literal_text)))
+        (pattern (constructor_or_variable_pattern (regular_identifier)) (guard (pipe) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (arrow_symbol) (literal_text)))
         (pattern (blank_pattern) (arrow_symbol) (literal_text)))
-    (watch_expression (match) (wordy_id) (with)
+    (watch_expression (match) (regular_identifier) (with)
         (pattern (nat) (guard (pipe) (function_application (nat) (operator) (nat)) (arrow_symbol) (nat)))))
 ===
 [Patterns] match/with
@@ -68,31 +68,31 @@
       2 -> 7
       _ -> 3
       Tuple.Cons x y -> x + y
-      Tuple.Cons (Tuple.Cons x y) _ -> x + y 
+      Tuple.Cons (Tuple.Cons x y) _ -> x + y
 > match x with
       0 ->
         z = 0
         z
 ---
 (unison
-    (watch_expression (match) (wordy_id) (with) (pattern (constructor_or_variable_pattern (wordy_id)) (arrow_symbol) (wordy_id)))
-    (watch_expression (match) (wordy_id) (with) (pattern (nat) (arrow_symbol) (nat)))
-    (watch_expression (match) (wordy_id) (with) (pattern (nat) (arrow_symbol) (nat)))
+    (watch_expression (match) (regular_identifier) (with) (pattern (constructor_or_variable_pattern (regular_identifier)) (arrow_symbol) (regular_identifier)))
+    (watch_expression (match) (regular_identifier) (with) (pattern (nat) (arrow_symbol) (nat)))
+    (watch_expression (match) (regular_identifier) (with) (pattern (nat) (arrow_symbol) (nat)))
     (watch_expression (match) (int) (with) (pattern (int) (arrow_symbol) (int)))
-    (watch_expression (match) (wordy_id) (with) 
-        (pattern (constructor_or_variable_pattern (wordy_id)) (arrow_symbol) (nat))
+    (watch_expression (match) (regular_identifier) (with)
+        (pattern (constructor_or_variable_pattern (regular_identifier)) (arrow_symbol) (nat))
         (pattern (nat) (arrow_symbol) (nat))
         (pattern (blank_pattern) (arrow_symbol) (nat))
-        (pattern (constructor_or_variable_pattern (path) (wordy_id) (constructor_or_variable_pattern (wordy_id)) (constructor_or_variable_pattern (wordy_id))) (arrow_symbol) (function_application (wordy_id) (operator) (wordy_id)))
-        (pattern (constructor_or_variable_pattern (path) (wordy_id) 
-            (tuple_pattern (constructor_or_variable_pattern (path) (wordy_id) (constructor_or_variable_pattern (wordy_id)) (constructor_or_variable_pattern (wordy_id))))
+        (pattern (constructor_or_variable_pattern (path) (regular_identifier) (constructor_or_variable_pattern (regular_identifier)) (constructor_or_variable_pattern (regular_identifier))) (arrow_symbol) (function_application (regular_identifier) (operator) (regular_identifier)))
+        (pattern (constructor_or_variable_pattern (path) (regular_identifier)
+            (tuple_pattern (constructor_or_variable_pattern (path) (regular_identifier) (constructor_or_variable_pattern (regular_identifier)) (constructor_or_variable_pattern (regular_identifier))))
             (blank_pattern))
-            (arrow_symbol) 
-            (function_application (wordy_id) (operator) (wordy_id))))
-    (watch_expression (match) (wordy_id) (with)
+            (arrow_symbol)
+            (function_application (regular_identifier) (operator) (regular_identifier))))
+    (watch_expression (match) (regular_identifier) (with)
         (pattern (nat) (arrow_symbol)
             (term_declaration (term_definition (wordy_id) (kw_equals) (nat)))
-            (wordy_id)))
+            (regular_identifier)))
 )
 ===
 [Patterns] list patterns
@@ -106,7 +106,7 @@
      _ ++ [5] -> 5
      _ -> -1
 ---
-(unison (watch_expression (match) (wordy_id) (with)
+(unison (watch_expression (match) (regular_identifier) (with)
         (pattern (literal_list_pattern) (arrow_symbol) (nat))
         (pattern (literal_list_pattern (nat)) (arrow_symbol) (nat))
         (pattern (head_tail_list_pattern (nat) (blank_pattern)) (arrow_symbol) (nat))
@@ -128,12 +128,12 @@
        z
 ---
 (unison
-    (watch_expression (cases) (pattern (constructor_or_variable_pattern (wordy_id)) (arrow_symbol) (wordy_id)))
+    (watch_expression (cases) (pattern (constructor_or_variable_pattern (regular_identifier)) (arrow_symbol) (regular_identifier)))
     (watch_expression (cases)
         (pattern (literal_list_pattern) (arrow_symbol) (nat))
-        (pattern (literal_list_pattern (constructor_or_variable_pattern (wordy_id))) (arrow_symbol) (nat))
+        (pattern (literal_list_pattern (constructor_or_variable_pattern (regular_identifier))) (arrow_symbol) (nat))
         (pattern (blank_pattern) (arrow_symbol) (nat)))
     (watch_expression (cases)
         (pattern (nat) (arrow_symbol)
             (term_declaration (term_definition (wordy_id) (kw_equals) (nat)))
-            (wordy_id))))
+            (regular_identifier))))
