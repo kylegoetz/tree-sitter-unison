@@ -11,7 +11,7 @@ module.exports = {
     optional($.type_signature),
     $.term_definition
   )),
-  
+
   /**
     * x = 5
     * myFun p1 ... pn = p1 + ... + pn

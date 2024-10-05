@@ -9,7 +9,7 @@ x = foo.bar.baz
             (wordy_id)
             (kw_equals)
             (path)
-            (wordy_id))))
+            (regular_identifier))))
 ===
 identifier: simple
 ===
@@ -20,7 +20,7 @@ x = baz
         (term_definition
             (wordy_id)
             (kw_equals)
-            (wordy_id))))
+            (regular_identifier))))
 ===
 identifier: symop
 ===
@@ -46,12 +46,12 @@ x = 1 + 1
 ===
 x = >>=#foo
 ---
-(unison 
-        (term_declaration 
+(unison
+        (term_declaration
             (term_definition
                 (wordy_id)
                 (kw_equals)
-                (operator) 
+                (operator)
                 (hash_qualifier (hash_prefix)))))
 ===
 [Identifier] HQ built in
@@ -86,10 +86,10 @@ x = #9ckiC1.a9
 ===
 x = #ckiC189#1
 ---
-(unison 
-    (term_declaration 
-        (term_definition 
-            (wordy_id) 
+(unison
+    (term_declaration
+        (term_definition
+            (wordy_id)
             (kw_equals)
             (hash_qualifier (hash_prefix) (hash_cid)))))
 ===

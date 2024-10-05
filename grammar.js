@@ -16,6 +16,7 @@ const reserved = require('./grammar/reserved')
 const destructuring_bind = require('./grammar/binding')
 const delayed = require('./grammar/delayed-computation')
 const doc = require('./grammar/doc')
+// const term$ = require('./grammar/revised-term')
 
 
 module.exports = grammar({
@@ -31,55 +32,23 @@ module.exports = grammar({
     ['constructor_or_variable_pattern', '_lhs'],
   ],
   conflicts: $ => [
-    [$._function_param, $._function_name],
-    [$._function_name, $._expression],
     [$._value_type],
     [$._type2],
     [$._type1, $.constructor],
-    [$._identifier, $._lhs],
-    [$._identifier, $.literal_function],
-    [$.wordy_id, $.literal_function],
-    [$.type],
     [$._prefix_function_application, $.function_application],
-    [$._identifier, $.type_name],
-    [$.tuple_constructor, $.tuple_or_parenthesized],
     [$._literal, $._expression],
-    [$._identifier, $.literal_function, $._lhs],
     [$._infix_op_application, $.literal_function],
-    [$._function_name, $._expression, $._lhs],
-    [$.partial_application, $.function_application],
-    [$._function_name, $._lhs],
-    [$._identifier, $._pattern_lhs],
-    [$._infix_op_application, $.watch_expression],
-    [$.symboly_id, $._identifier],
-    [$._identifier, $.__identifier],
-    [$._identifier, $.__identifier, $.literal_function, $._function_name],
-    [$._identifier, $.__identifier, $._function_name],
-    [$.literal_function, $._function_name],
-    [$.imm_wordy_id, $._function_name],
-    [$._identifier, $.__identifier, $._pattern_lhs],
-    [$.imm_symboly_id, $._prefix_op],
-    [$._identifier, $.__identifier, $.literal_function],
-    [$.__identifier, $._op],
     [$.imm_symboly_id, $._op],
-    [$.head_tail_list_pattern, $.init_last_tail_pattern],
-    [$.init_last_tail_pattern], // TODO maybe just make this right-associative?
-    [$.constructor_or_variable_pattern],
     [$._literal, $._literal_pattern],
     [$._expression, $.constructor_or_variable_pattern],
-    [$._identifier, $.__identifier, $._lhs],
     [$.literal_list, $.literal_list_pattern],
-    [$._hash_qualified, $._expression],
-    [$._hash_qualified, $._expression, $._lhs],
-    [$._hash_qualified, $._expression, $.constructor_or_variable_pattern],
-    [$._hash_qualified, $._expression, $.type_signature],
-    [$._identifier, $.__identifier, $._wordy_definition_name, $.literal_function, $._function_name],
-    [$._wordy_definition_name, $.literal_function, $._function_name],
-    [$.__identifier, $._symboly_definition_name, $._op],
-    [$.__identifier, $._wordy_definition_name],
-    [$._identifier, $.__identifier, $._wordy_definition_name],
-    [$.__identifier, $._symboly_definition_name],
-    // [$._expression, $._watch_expression],
+    [$._identifier, $._wordy_definition_name, $.literal_function],
+    [$._identifier, $._wordy_definition_name],
+    [$._wordy_definition_name, $.literal_function],
+    [$._identifier, $._wordy_definition_name, $.literal_function, $._lhs],
+    [$._identifier, $._symboly_definition_name],
+    [$._symboly_definition_name, $._op],
+    // [$.path, $._wordy_definition_name],
 
   ],
   externals: $ => [
@@ -110,6 +79,7 @@ module.exports = grammar({
   rules: {
     unison: $ => repeat(
       choice(
+        // alias($._identifier, $.id),
         $.watch_expression,
         $.test_watch_expression,
         $.type_declaration,
@@ -135,6 +105,7 @@ module.exports = grammar({
     ...destructuring_bind,
     ...delayed,
     ...doc,
+    // ...term$,
 
 
 
@@ -164,3 +135,5 @@ module.exports = grammar({
     test_watch_expression: $ => prec.right(seq($.wordy_id, token.immediate('>'), $._watch_expression)),
   }
 })
+
+const composeRegex = (...res) => new RegExp(res.map(_ => `(${_.source})`).join('|'), 'u')

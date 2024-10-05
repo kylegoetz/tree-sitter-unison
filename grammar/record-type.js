@@ -2,7 +2,7 @@ const { sep } = require('./util')
 
 module.exports = {
   record: $ => seq('{',$._record_fields_block,'}',),
-  record_field: $ => seq(field('name', $.wordy_id), ':', field('type', $._value_type)),
+  record_field: $ => seq(alias($.wordy_id, $.field_name), ':', field('type', $._value_type)),
   _record_fields_inline: $ => seq(sep1(',', $.record_field), optional(',')),
   _record_fields_block: $ => choice($._record_fields_inline, seq(
       $._layout_start,

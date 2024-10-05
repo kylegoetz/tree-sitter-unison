@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2024-10-04
+
+### Fixed
+
+- #82 - allow doc block wherever
+- #84 - Symbols in paths now work
+
+### Changed
+
+- `wordy_id` now called `regular_identifier` in most places
+- `namespace` now includes `path` and optional `regular_identifier`/`operator` child nodes
+- `wordy_id` has been changed to `ability_name` and `type_argument` in ability declarations
+- `wordy_id` has been changed to `constructor_name` in ability constructors
+- `colon` has been added as a named token in ability constructors
+- `wordy_id` has been changed to `field_name` in record fields
+
 ## [1.1.4] - 2024-04-25
 
 ### Fixed

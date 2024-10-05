@@ -1,7 +1,7 @@
 const { sep, sep1 } = require('./util')
 
 module.exports = {
-    
+
     // { E1, E2, ..., En }
     _effect_block: $ => seq(
         $._layout_start,
@@ -9,15 +9,15 @@ module.exports = {
         $._layout_end,
     ),
     _effect_inline: $ => sep1(',', alias($._value_type, $.effect)),
-    
+
     _effect_list: $ => seq(
         '{',
             optional($._effect_inline),
         // optional(choice($.effect_inline, $._effect_block)),
         '}',
     ),
-    
-    /** 
+
+    /**
      * Cannot have effects except as the RHS of an arrow
      * Int
      * Text
@@ -27,7 +27,7 @@ module.exports = {
      */
     forall: $ => seq($.kw_forall, repeat($.wordy_id), '.'),
     _value_type: $ => seq(
-        optional($.forall), 
+        optional($.forall),
         $._type1
     ),
     parenthesized: $ => seq('(', $._value_type, ')'),
@@ -40,7 +40,7 @@ module.exports = {
     // Optional, Optional#abc, woot, #abc
     immediate_hash: $ => token.immediate(/#[a-zA-Z0-9]+/),
     // unit: $ => '()',
-    
+
     // TODO refer back to hashes again. Can it also be ##builtin hash?
     _type_atom: $ => choice(
         $._hash_qualified,
@@ -68,16 +68,16 @@ module.exports = {
         choice($._effect, $._type2a),
     ),
     arrow_symbol: $ => '->',
-    
+
     // { E1, E2, ..., En } T
     _effect: $ => seq($._effect_list, $._type2),
-    
+
     // [{ E1, E2, ..., En }] T
     _computation_type: $ => prec.left(choice($._effect, $._value_type)),
-    
+
     // T -> [{ E1, E2 }] U
     _arrow: $ => seq($._value_type, $.arrow_symbol, $._computation_type),
-    
+
     /**
      * body of an effect/ability declaration:
      * INLINE: name [p1 p2 ... pn] where [constructor, constructor, ...]
@@ -88,8 +88,8 @@ module.exports = {
          ...
      */
     _ebody: $ => seq(
-        field('type_name', $._identifier),
-        repeat(field('type_arg', $.wordy_id)),
+        alias($._identifier, $.ability_name),
+        repeat(alias($.wordy_id, $.type_argument)),
         $.where,
         choice(
             seq($._layout_start, sep1($._layout_semicolon, $.constructor), $._layout_end),
@@ -103,11 +103,11 @@ module.exports = {
      * - foo : A -> { E1, E2 } T
      */
     constructor: $ => seq(
-        field('name', $.wordy_id),
-        ':',
+        alias($.wordy_id, $.constructor_name),
+        alias(':', $.colon),
         field('type', choice($._arrow, $._computation_type)),
     ),
-    
+
     /**
      * Top-level entity.
      * unique ability Throw a where

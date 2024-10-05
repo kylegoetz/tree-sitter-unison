@@ -15,15 +15,15 @@
 (unison (watch_expression (exp_if
   (kw_if)
   (term_declaration (term_definition (wordy_id) (kw_equals) (nat)))
-  (function_application (wordy_id) (operator) (nat))
+  (function_application (regular_identifier) (operator) (nat))
   (kw_then)
   (term_declaration
-    (type_signature (wordy_id) (type_signature_colon) (term_type (wordy_id)))
-    (term_definition (wordy_id) (kw_equals) (parenthetical_exp (nat) (type_signature_colon) (wordy_id)) ))
-  (function_application (wordy_id) (operator) (nat))
+    (type_signature (wordy_id) (type_signature_colon) (term_type (regular_identifier)))
+    (term_definition (wordy_id) (kw_equals) (parenthetical_exp (nat) (type_signature_colon) (regular_identifier)) ))
+  (function_application (regular_identifier) (operator) (nat))
   (kw_else)
   (term_declaration (term_definition (wordy_id) (kw_equals) (nat)))
-  (function_application (wordy_id) (operator) (nat))
+  (function_application (regular_identifier) (operator) (nat))
   )))
 ===
 [Blocks] inline and multiline comments should not affect indentation calculation
