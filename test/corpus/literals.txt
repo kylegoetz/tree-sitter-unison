@@ -161,7 +161,7 @@ x = termLink aUnisonTerm
 ---
 (unison
     (watch_expression (literal_typelink (kw_typelink) (regular_identifier)))
-    (watch_expression (literal_typelink (kw_typelink) (built_in_hash (path) (wordy_id)))))
+    (watch_expression (literal_typelink (kw_typelink) (built_in_hash))))
 ===
 [Literal] Nat
 ===

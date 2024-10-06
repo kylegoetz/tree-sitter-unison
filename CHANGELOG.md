@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 - #82 - allow doc block wherever
 - #84 - Symbols in paths now work
+- #85 - built-ins are now just `built_in_hash` without any child nodes
 
 ### Changed
 
