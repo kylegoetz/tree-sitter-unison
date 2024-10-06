@@ -82,14 +82,10 @@ module.exports = {
 
   _hq_qualified_infix_term: $ => $._hq_qualified_symboly_id,
 
-  built_in_hash: $ => seq(
-    '##',
-    optional(alias(token.immediate(regex.path), $.path)),
-    choice(
-      alias($.imm_wordy_id, $.wordy_id),
-      alias($.imm_symboly_id, $.operator),
-    )
-  ),
+  // Cannot find anything in UCM source to indicate disallowed chars, but based on
+  // experience coding in the UCM source, it can be any non-whitespace (but convention is
+  // to use valid symbols, varids, and dots; here we allow all non-whitespace)
+  built_in_hash: $ => /##\S+/,
 
   _prefix_definition_name: $ => choice(
     $._wordy_definition_name,

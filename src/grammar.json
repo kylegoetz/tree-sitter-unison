@@ -1059,57 +1059,8 @@
       "name": "_hq_qualified_symboly_id"
     },
     "built_in_hash": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "##"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "IMMEDIATE_TOKEN",
-                "content": {
-                  "type": "PATTERN",
-                  "value": "\\.?((([_a-zA-Z\\u{1f400}-\\u{1faff}][_!'a-zA-Z\\u{1f400}-\\u{1faff}]+)|([$%^&*\\-+<>~\\\\\\/:])|(-[!$%^&*\\-=+<~\\\\\\/|:])|([!$%^*=+<>~\\\\\\/:]{2})|(&[!$%^*\\-=+<>~\\\\\\/|:])|(\\|[!$%^&*\\-=+<>~\\\\\\/:])|([!$%^&*\\-=+<>~\\\\/|:]{3,}))\\.)+",
-                  "flags": "u"
-                }
-              },
-              "named": true,
-              "value": "path"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "SYMBOL",
-                "name": "imm_wordy_id"
-              },
-              "named": true,
-              "value": "wordy_id"
-            },
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "SYMBOL",
-                "name": "imm_symboly_id"
-              },
-              "named": true,
-              "value": "operator"
-            }
-          ]
-        }
-      ]
+      "type": "PATTERN",
+      "value": "##\\S+"
     },
     "_prefix_definition_name": {
       "type": "CHOICE",
