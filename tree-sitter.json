@@ -1,0 +1,38 @@
+{
+  "grammars": [
+    {
+      "name": "unison",
+      "camelcase": "Unison",
+      "scope": "source.unison",
+      "path": ".",
+      "file-types": [
+        "u"
+      ],
+      "highlights": [
+        "queries/highlights.scm"
+      ]
+    }
+  ],
+  "metadata": {
+    "version": "1.2.0",
+    "license": "MIT",
+    "description": "Unison grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "Kyle Goetz",
+        "email": "kylegoetz@gmail.com"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/kylegoetz/tree-sitter-unison"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true
+  }
+}
