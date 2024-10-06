@@ -478,29 +478,6 @@
     }
   },
   {
-    "type": "built_in_hash",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "operator",
-          "named": true
-        },
-        {
-          "type": "path",
-          "named": true
-        },
-        {
-          "type": "wordy_id",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "concat_list_pattern",
     "named": true,
     "fields": {},
@@ -7203,10 +7180,6 @@
     "named": false
   },
   {
-    "type": "##",
-    "named": false
-  },
-  {
     "type": "'",
     "named": false
   },
@@ -7268,6 +7241,10 @@
   },
   {
     "type": "blank_pattern",
+    "named": true
+  },
+  {
+    "type": "built_in_hash",
     "named": true
   },
   {

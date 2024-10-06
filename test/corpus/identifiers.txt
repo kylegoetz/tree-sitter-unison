@@ -58,7 +58,7 @@ x = >>=#foo
 ===
 x = ##Text.take
 ---
-(unison (term_declaration (term_definition (wordy_id) (kw_equals) (built_in_hash (path) (wordy_id)))))
+(unison (term_declaration (term_definition (wordy_id) (kw_equals) (built_in_hash))))
 ===
 [Identifier] HQ prefix
 ===
@@ -103,3 +103,15 @@ x = #DCrnCAPS.AD#0
                 (wordy_id)
                 (kw_equals)
                 (hash_qualifier (hash_prefix) (cyclic_index) (hash_cid)))))
+===
+[Identifiers] builtin hash
+===
+> ##Int.+
+---
+(unison (watch_expression (built_in_hash)))
+===
+[Identifiers] builtin hash 2
+===
+> ##ImmutableArray.copyTo!
+---
+(unison (watch_expression (built_in_hash)))
