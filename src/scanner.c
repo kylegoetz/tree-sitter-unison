@@ -1462,36 +1462,30 @@ static Result layout_start(uint32_t column, State *state) {
     }
     // Need to make sure we aren't calculating a layout based on comment col
     if (state->symbols[START]) {
-      if (PEEK == '-') {
-        S_ADVANCE;
-        if (PEEK == '-') {
-          return inline_comment(state);
-        }
-      }
+        // if (PEEK == '-') {
+        //     MARK("layout_start", false, state);
+        //     S_ADVANCE;
+        //     if (PEEK == '-') {
+        //         return inline_comment(state);
+        //     }
+        // }
         switch (PEEK) {
-          case '{': {
-            S_ADVANCE;
-            if (PEEK == '-') {
-              return multiline_comment(state);
-            }
-            goto foo;
-          }
-          /*SYMBOLIC_CASES*/ILLEGAL_LINE_INITIAL_SYMBOLICS: { // Cannot start a layout with a -/+ unless it's part of '->'
-            if (PEEK == '+') {
-              return res_fail;
-            }
-            if (PEEK == '-') { // look to see if -> or -. or -DIGIT
-              S_ADVANCE;
-              if (PEEK == '.') { // if -. see if -.DIGIT
+            case '-': {
+                MARK("layout_start", false, state);
                 S_ADVANCE;
-                if(isdigit(PEEK)) {
-                  return res_fail; // fail so JS can parse
+                if (PEEK == '-') {
+                    return inline_comment(state);
                 }
-              }
-              if (PEEK == '>') { // check if ->
+                if (PEEK == '>') {
+                    return res_fail;
+                }
+                goto foo;
+            }
+            case '{': {
+                MARK("layout_start", false, state);
                 S_ADVANCE;
-                if (!symbolic(PEEK)) {
-                  goto foo;
+                if (PEEK == '-') {
+                    return multiline_comment(state);
                 }
               } else if(isdigit(PEEK)) { // check if -DIGIT
                 return res_fail; // fail so JS can look
