@@ -392,9 +392,10 @@ static bool is_newline(uint32_t c) {
  * Require that the parser determined an error in the previous step (see `all_syms`).
  */
 static bool after_error(State *state) { return all_syms(state->symbols); }
-// !$%^&*-=+<>.~\\/|:
-#define SYMBOLICS_WITHOUT_BAR \
-    case '!': \
+
+// $%^&*-=+<>.~\\/|:
+// Note: `!` can initialize a layout as a bang
+#define ILLEGAL_LINE_INITIAL_SYMBOLICS \
     case '$': \
     case '%': \
     case '^': \
@@ -410,6 +411,10 @@ static bool after_error(State *state) { return all_syms(state->symbols); }
     case '\\': \
     case '/': \
     case ':'
+
+#define SYMBOLICS_WITHOUT_BAR \
+    ILLEGAL_LINE_INITIAL_SYMBOLICS: \
+    case '!' \
 
 #define SYMBOLIC_CASES \
     SYMBOLICS_WITHOUT_BAR: \
@@ -1471,7 +1476,7 @@ static Result layout_start(uint32_t column, State *state) {
             }
             goto foo;
           }
-          SYMBOLIC_CASES: { // Cannot start a layout with a -/+ unless it's part of '->'
+          /*SYMBOLIC_CASES*/ILLEGAL_LINE_INITIAL_SYMBOLICS: { // Cannot start a layout with a -/+ unless it's part of '->'
             if (PEEK == '+') {
               return res_fail;
             }
