@@ -6,11 +6,11 @@
 (unison
     (watch_expression
         (function_application
-            (wordy_id)
+            (regular_identifier)
             (nat))))
 ===
 [misc] Test watch expression
 ===
 foo> 5
 ---
-(unison (test_watch_expression (wordy_id) (nat)))
+(unison (test_watch_expression (regular_identifier) (nat)))

@@ -94,8 +94,8 @@ module.exports = {
 
   _wordy_definition_name: $ => choice(
     // seq(/\+\+\./, alias($.imm_wordy_id, $.wordy_id)),
-      $.wordy_id,
-      seq($.path, alias($.imm_wordy_id, $.wordy_id)),
+      alias($.wordy_id, $.regular_identifier),
+      seq($.path, alias($.imm_wordy_id, $.regular_identifier)),
   ),
   _symboly_definition_name: $ => choice(
       $.operator,

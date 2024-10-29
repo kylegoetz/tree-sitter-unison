@@ -19,20 +19,37 @@ parens = (...rule) => seq('(', ...rule, ')')
   * clauses.
   */
 terminated = ($, rule) => seq(
-  sep1(prec.dynamic(1, choice(';', $._layout_semicolon)), rule),
+  sep1(choice(';', $._layout_semicolon), rule),
   optional(choice(';', $._layout_semicolon)),
 )
 
 layouted_braces = rule => braces(sep(';', rule), optional(';')),
 
-
-open_block_with = ($, opener, start_type) => seq(
-  start_type ?? $._layout_start,//$._layout_start,
-  terminated($, opener),
-  optional(terminated($, $._statement)),
-  // optional(terminated($, rule)), 
-  $._layout_end,
+open_block_with = ($, opener) => choice(
+  // seq(opener, $._expression),
+  seq(opener, $._layout_start, terminated($, $._statement), $._layout_end)
 )
+
+openBlockWith = ($, opener) => seq(
+  opener,
+  $._layout_start
+)
+
+layoutBlock = ($, opener) => seq(
+  opener,
+  $._layout_start,
+  terminated ($, $._statement),
+  optional($._layout_end)
+)
+
+// open_block_with = ($, opener, start_type) => seq(
+//   // start_type ?? $._layout_start,//$._layout_start,
+//   terminated($, opener),
+//   $._layout_start,
+//   optional(terminated($, $._statement)),
+//   // optional(terminated($, rule)),
+//   $._layout_end,
+// )
 
 /**
   * Wrap a repeated rule in a layout.
@@ -44,9 +61,9 @@ open_block_with = ($, opener, start_type) => seq(
   * If explicit braces are provided, the scanner isn't relevant.
   */
 layouted = ($, rule) => choice(
-  layouted_braces(rule),
-  seq($._layout_start, optional(terminated($, rule)), $._layout_end),
-  rule,
+  // layouted_braces(rule),
+  seq($._layout_start, terminated($, rule), $._layout_end),
+  // rule,
 )
 
 layouted_without_end = ($, rule) => choice(
@@ -58,6 +75,7 @@ module.exports = {
   layouted,
   layouted_without_end,
   open_block_with,
+  openBlockWith,
   parens,
   sep,
   sep1,

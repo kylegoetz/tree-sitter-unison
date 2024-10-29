@@ -29,7 +29,7 @@
 (unison
     (watch_expression
         (function_application
-            (path) (wordy_id)
+            (path) (regular_identifier)
             (tuple_or_parenthesized
                 (cases)
                 (pattern (tuple_pattern

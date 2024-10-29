@@ -26,7 +26,7 @@ module.exports = {
   int: $ => /[+-][0-9]+/,
   float: $ => /[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?/,
 
-  literal_text: _ => 
+  literal_text: _ =>
     choice(
       seq(
         '"',
@@ -38,7 +38,7 @@ module.exports = {
         '"',
       ),
       seq(
-        '"""', 
+        '"""',
         repeat(choice(
           '"',
           /[^\\"\n]/,
@@ -48,11 +48,11 @@ module.exports = {
         '"""'
       ),
     ),
-  
+
   // Range: [0, 18446744073709551615]
-  
+
   // Range: [-9223372036854775808, 9223372036854775807]
-  
+
   literal_char: $ => choice(/\?./u, /\?\\[0abfnrtvs\'"]/),
   literal_boolean: $ => choice("true", "false"),
   literal_byte: $ => /0xs[0-9a-fA-F]+/,
@@ -62,7 +62,7 @@ module.exports = {
   // _data_constructor_hash: $ => /#[0-9a-v]+#[0-9a-v]+/,
   // _cyclically_recursive_data_constructor_hash: $ => seq($._cyclically_recursive_hash, token.immediate(/#[0-9a-v]+/)),
   // _builtin_reference: $ => seq(
-    // /##/, 
+    // /##/,
     // optional(token.immediate(regex.path)),
     // choice(token.immediate(regex.varid), token.immediate(regex.symboly_id)),
   // ),
@@ -74,18 +74,18 @@ module.exports = {
     // $._builtin_reference,
   // ),
   literal_list: $ => seq('[', sep(',', $._expression), ']'),
-  
+
   // myFn p1 p2 p3 -> exp
   // lambda_arrow: $ => prec(2, '->'),
   func_name: $ => prec.left(regex.varid),
   func_param: $ => prec.left(regex.varid),
   literal_function: $ => prec('literal_function', seq(
-    field('lhs', repeat1(prec.left(field('param', $.wordy_id)))),
-    $.arrow_symbol, 
+    field('lhs', repeat1(prec.left(field('param', alias($.wordy_id, $.regular_identifier))))),
+    $.arrow_symbol,
     $._expression // func body
   )),
-  
-  
+
+
   tuple_or_parenthesized: $ => seq('(', sep1(',', $._expression), ')'),
   // term: $ => $._regular_identifier,
   literal_termlink: $ => seq($.kw_termlink, $._hash_qualified),

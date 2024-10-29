@@ -8,7 +8,7 @@ poet = "Maya Angelou"
     (term_declaration
         (doc_block)
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (literal_text))))
 

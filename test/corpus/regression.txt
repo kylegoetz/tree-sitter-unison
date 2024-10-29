@@ -6,7 +6,7 @@ x = 1 + 2
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (function_application
                 (nat)
@@ -17,7 +17,7 @@ x = 1 + 2
 ===
 x = ##Foo
 ---
-(unison (term_declaration (term_definition (wordy_id) (kw_equals) (built_in_hash))))
+(unison (term_declaration (term_definition (regular_identifier) (kw_equals) (built_in_hash))))
 ===
 [Regression] issue 24: multiline text literal with an unescaped double quotation mark
 ===
@@ -39,13 +39,13 @@ They cannot be destructuring binds, which cannot happen at the top level. Verifi
 (unison
     (watch_expression
         (term_definition
-            (wordy_id) (kw_equals) (nat))))
+            (regular_identifier) (kw_equals) (nat))))
 ===
 [Regression] Issue 37, docblock can be anywhere an expression is
 ===
 z = {{ test }}
 ---
-(unison (term_declaration (term_definition (wordy_id) (kw_equals) (doc_block))))
+(unison (term_declaration (term_definition (regular_identifier) (kw_equals) (doc_block))))
 ===
 [Regression] Issue 37, anonymous docblock immediately precedes term declaration
 ===
@@ -54,7 +54,7 @@ x = 5
 ---
 (unison (term_declaration
     (doc_block)
-    (term_definition (wordy_id) (kw_equals) (nat))))
+    (term_definition (regular_identifier) (kw_equals) (nat))))
 ===
 [Regression] Issue 39, Parenthesized operators in term declaration (def'n + type sig) fail
 ===
@@ -63,7 +63,7 @@ x = 5
 ---
 (unison (term_declaration
     (type_signature (path) (operator) (type_signature_colon) (term_type (regular_identifier) (arrow_symbol) (regular_identifier) (arrow_symbol) (regular_identifier)))
-    (term_definition (path) (operator) (kw_equals) (function_application (wordy_id) (literal_text)))))
+    (term_definition (path) (operator) (kw_equals) (function_application (regular_identifier) (literal_text)))))
 ===
 [Regression] Issue 46, comment that appears where a fold could be fails
 ===
@@ -95,9 +95,9 @@ lib.base.Float.fromNat.doc =
 (unison
     (comment)
     (term_declaration
-        (type_signature (path) (wordy_id) (type_signature_colon) (term_type (regular_identifier)))
+        (type_signature (path) (regular_identifier) (type_signature_colon) (term_type (regular_identifier)))
         (term_definition
-            (path) (wordy_id)
+            (path) (regular_identifier)
             (kw_equals)
             (use_clause (use) (namespace (regular_identifier)) (regular_identifier))
             (doc_block))))
@@ -106,4 +106,21 @@ lib.base.Float.fromNat.doc =
 ===
 lib.base.Nat.!=.doc = 5
 ---
-(unison (term_declaration (term_definition (path) (wordy_id) (kw_equals) (nat))))
+(unison (term_declaration (term_definition (path) (regular_identifier) (kw_equals) (nat))))
+===
+[Regression] pattern matching guards should be part of a layouted block
+===
+> match true with
+      a
+        | true  ->
+            1
+        | otherwise -> 5
+---
+(unison (watch_expression
+    (match)
+    (literal_boolean)
+    (with)
+    (pattern
+        (constructor_or_variable_pattern (regular_identifier))
+        (guarded_block (pipe) (guard (literal_boolean)) (arrow_symbol) (nat))
+        (guarded_block (pipe) (guard (otherwise)) (arrow_symbol) (nat)))))

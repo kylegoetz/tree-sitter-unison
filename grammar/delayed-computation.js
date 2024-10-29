@@ -32,8 +32,8 @@ module.exports = {
         $.delay_quote,
         $.delay_block,
         $.bang,
-        $.doc_block,
-        $.doc2_block,
+        // $.doc_block,
+        // $.doc2_block,
     ),
 
     _keyword_block: $ => choice(

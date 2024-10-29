@@ -6,7 +6,7 @@ x = foo.bar.baz
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (path)
             (regular_identifier))))
@@ -18,7 +18,7 @@ x = baz
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (regular_identifier))))
 ===
@@ -29,7 +29,7 @@ x = 1 + 1
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (function_application
                 (nat)
@@ -49,7 +49,7 @@ x = >>=#foo
 (unison
         (term_declaration
             (term_definition
-                (wordy_id)
+                (regular_identifier)
                 (kw_equals)
                 (operator)
                 (hash_qualifier (hash_prefix)))))
@@ -58,7 +58,7 @@ x = >>=#foo
 ===
 x = ##Text.take
 ---
-(unison (term_declaration (term_definition (wordy_id) (kw_equals) (built_in_hash))))
+(unison (term_declaration (term_definition (regular_identifier) (kw_equals) (built_in_hash))))
 ===
 [Identifier] HQ prefix
 ===
@@ -67,7 +67,7 @@ x = #2tBjVAuc7
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (hash_qualifier (hash_prefix)))))
 ===
@@ -78,7 +78,7 @@ x = #9ckiC1.a9
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (hash_qualifier (hash_prefix) (cyclic_index)))))
 ===
@@ -89,7 +89,7 @@ x = #ckiC189#1
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (hash_qualifier (hash_prefix) (hash_cid)))))
 ===
@@ -100,7 +100,7 @@ x = #DCrnCAPS.AD#0
 (unison
         (term_declaration
             (term_definition
-                (wordy_id)
+                (regular_identifier)
                 (kw_equals)
                 (hash_qualifier (hash_prefix) (cyclic_index) (hash_cid)))))
 ===
