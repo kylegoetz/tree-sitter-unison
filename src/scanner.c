@@ -203,7 +203,7 @@ typedef struct {
 #endif
 } State;
 
-State state_new(TSLexer *l, const bool * restrict vs, indent_vec *is) {
+static State state_new(TSLexer *l, const bool * restrict vs, indent_vec *is) {
   return (State) {
     .lexer = l,
     .symbols = vs,
@@ -227,7 +227,7 @@ static void debug_indents(indent_vec *indents) {
   }
 }
 
-void debug_state(State *state) {
+static void debug_state(State *state) {
   LOG(VERBOSE, "State { syms = ");
   debug_valid(state->symbols);
   LOG(VERBOSE, "col = %d", state->lexer->get_column(state->lexer));
@@ -237,7 +237,7 @@ void debug_state(State *state) {
 }
 #else
 static void debug_indents(indent_vec *indents) { return; }
-void debug_state(State *state) { return; }
+static void debug_state(State *state) { return; }
 #endif
 
 /**
@@ -451,7 +451,7 @@ typedef struct {
 } Result;
 
 #ifdef DEBUG
-void debug_result(Result res) {
+static void debug_result(Result res) {
   LOG(VERBOSE, "Result { finished = %d", res.finished);
   if (res.finished) {
     LOG(VERBOSE, ", result = %s }\n", sym_names[res.sym]);
