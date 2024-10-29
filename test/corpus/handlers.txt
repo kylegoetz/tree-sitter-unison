@@ -3,7 +3,7 @@
 ===
 a = handle x with foo
 ---
-(unison (term_declaration (term_definition (wordy_id) (kw_equals) (handler (handle) (regular_identifier) (with) (regular_identifier)))))
+(unison (term_declaration (term_definition (regular_identifier) (kw_equals) (handler (handle) (regular_identifier) (with) (regular_identifier)))))
 ===
 [Handlers] multiline 1
 ===
@@ -13,10 +13,10 @@ a = handle
     with foo
 ---
 (unison
-      (term_declaration (term_definition (wordy_id) (kw_equals)
+      (term_declaration (term_definition (regular_identifier) (kw_equals)
             (handler (handle)
-                  (term_declaration (term_definition (wordy_id) (kw_equals) (function_application (nat) (operator) (nat))))
-                  (function_application (regular_identifier) (operator) (function_application (wordy_id) (nat) (float) (int)))
+                  (term_declaration (term_definition (regular_identifier) (kw_equals) (function_application (nat) (operator) (nat))))
+                  (function_application (regular_identifier) (operator) (function_application (regular_identifier) (nat) (float) (int)))
             (with) (regular_identifier)))))
 ===
 [Handlers] multiline 2
@@ -27,9 +27,9 @@ a = handle
     with foo
 ---
 (unison
-      (term_declaration (term_definition (wordy_id) (kw_equals)
+      (term_declaration (term_definition (regular_identifier) (kw_equals)
             (handler (handle)
-                  (term_declaration (term_definition (wordy_id) (kw_equals) (nat)))
+                  (term_declaration (term_definition (regular_identifier) (kw_equals) (nat)))
                   (regular_identifier)
             (with) (regular_identifier)))))
 ===
@@ -41,11 +41,11 @@ a = handle foo with cases
 (unison
       (term_declaration
             (term_definition
-                  (wordy_id)
+                  (regular_identifier)
                   (kw_equals)
                   (handler
                         (handle)
                         (regular_identifier)
                         (with)
                         (cases)
-                        (pattern (ability_pattern (constructor_or_variable_pattern (regular_identifier))) (arrow_symbol) (regular_identifier))))))
+                        (pattern (effect_pattern (effect_pure (var_or_nullary_ctor))) (arrow_symbol) (regular_identifier))))))

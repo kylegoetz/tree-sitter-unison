@@ -31,7 +31,7 @@
         (regular_identifier)
         (with)
         (pattern (nat) (arrow_symbol) (literal_text))
-        (pattern (constructor_or_variable_pattern (regular_identifier)) (arrow_symbol) (literal_text))))
+        (pattern (var_or_nullary_ctor) (arrow_symbol) (literal_text))))
 ===
 [Pattern matching] guard patterns
 ===
@@ -48,12 +48,12 @@
         (match)
         (regular_identifier)
         (with)
-        (pattern (constructor_or_variable_pattern (regular_identifier)) (guard (pipe) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (arrow_symbol) (literal_text)))
-        (pattern (constructor_or_variable_pattern (regular_identifier)) (guard (pipe) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (arrow_symbol) (literal_text)))
-        (pattern (constructor_or_variable_pattern (regular_identifier)) (guard (pipe) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (arrow_symbol) (literal_text)))
+        (pattern (var_or_nullary_ctor) (guarded_block (pipe) (guard (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat)))) (arrow_symbol) (literal_text)))
+        (pattern (var_or_nullary_ctor) (guarded_block (pipe) (guard (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat)))) (arrow_symbol) (literal_text)))
+        (pattern (var_or_nullary_ctor) (guarded_block (pipe) (guard (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat)))) (arrow_symbol) (literal_text)))
         (pattern (blank_pattern) (arrow_symbol) (literal_text)))
     (watch_expression (match) (regular_identifier) (with)
-        (pattern (nat) (guard (pipe) (function_application (nat) (operator) (nat)) (arrow_symbol) (nat)))))
+        (pattern (nat) (guarded_block (pipe) (guard (function_application (nat) (operator) (nat))) (arrow_symbol) (nat)))))
 ===
 [Patterns] match/with
 ===
@@ -75,23 +75,32 @@
         z
 ---
 (unison
-    (watch_expression (match) (regular_identifier) (with) (pattern (constructor_or_variable_pattern (regular_identifier)) (arrow_symbol) (regular_identifier)))
+    (watch_expression (match) (regular_identifier) (with) (pattern (var_or_nullary_ctor) (arrow_symbol) (regular_identifier)))
     (watch_expression (match) (regular_identifier) (with) (pattern (nat) (arrow_symbol) (nat)))
     (watch_expression (match) (regular_identifier) (with) (pattern (nat) (arrow_symbol) (nat)))
     (watch_expression (match) (int) (with) (pattern (int) (arrow_symbol) (int)))
     (watch_expression (match) (regular_identifier) (with)
-        (pattern (constructor_or_variable_pattern (regular_identifier)) (arrow_symbol) (nat))
+        (pattern (var_or_nullary_ctor) (arrow_symbol) (nat))
         (pattern (nat) (arrow_symbol) (nat))
         (pattern (blank_pattern) (arrow_symbol) (nat))
-        (pattern (constructor_or_variable_pattern (path) (regular_identifier) (constructor_or_variable_pattern (regular_identifier)) (constructor_or_variable_pattern (regular_identifier))) (arrow_symbol) (function_application (regular_identifier) (operator) (regular_identifier)))
-        (pattern (constructor_or_variable_pattern (path) (regular_identifier)
-            (tuple_pattern (constructor_or_variable_pattern (path) (regular_identifier) (constructor_or_variable_pattern (regular_identifier)) (constructor_or_variable_pattern (regular_identifier))))
-            (blank_pattern))
+        (pattern
+            (ctor (path) (regular_identifier))
+            (var_or_nullary_ctor)
+            (var_or_nullary_ctor)
+            (arrow_symbol)
+            (function_application (regular_identifier) (operator) (regular_identifier)))
+        (pattern
+            (ctor (path) (regular_identifier))
+            (parenthesized_or_tuple_pattern
+                (ctor (path) (regular_identifier))
+                (var_or_nullary_ctor)
+                (var_or_nullary_ctor))
+            (blank_pattern)
             (arrow_symbol)
             (function_application (regular_identifier) (operator) (regular_identifier))))
     (watch_expression (match) (regular_identifier) (with)
         (pattern (nat) (arrow_symbol)
-            (term_declaration (term_definition (wordy_id) (kw_equals) (nat)))
+            (term_declaration (term_definition (regular_identifier) (kw_equals) (nat)))
             (regular_identifier)))
 )
 ===
@@ -109,10 +118,10 @@
 (unison (watch_expression (match) (regular_identifier) (with)
         (pattern (literal_list_pattern) (arrow_symbol) (nat))
         (pattern (literal_list_pattern (nat)) (arrow_symbol) (nat))
-        (pattern (head_tail_list_pattern (nat) (blank_pattern)) (arrow_symbol) (nat))
-        (pattern (init_last_tail_pattern (blank_pattern) (nat)) (arrow_symbol) (nat))
-        (pattern (concat_list_pattern (literal_list_pattern (nat)) (blank_pattern)) (arrow_symbol) (nat))
-        (pattern (concat_list_pattern (blank_pattern) (literal_list_pattern (nat))) (arrow_symbol) (nat))
+        (pattern (nat) (cons) (blank_pattern) (arrow_symbol) (nat))
+        (pattern (blank_pattern) (snoc) (nat) (arrow_symbol) (nat))
+        (pattern (literal_list_pattern (nat)) (concat) (blank_pattern) (arrow_symbol) (nat))
+        (pattern (blank_pattern)  (concat) (literal_list_pattern (nat)) (arrow_symbol) (nat))
         (pattern (blank_pattern) (arrow_symbol) (int))))
 ===
 [Patterns] cases
@@ -128,12 +137,12 @@
        z
 ---
 (unison
-    (watch_expression (cases) (pattern (constructor_or_variable_pattern (regular_identifier)) (arrow_symbol) (regular_identifier)))
+    (watch_expression (cases) (pattern (var_or_nullary_ctor) (arrow_symbol) (regular_identifier)))
     (watch_expression (cases)
         (pattern (literal_list_pattern) (arrow_symbol) (nat))
-        (pattern (literal_list_pattern (constructor_or_variable_pattern (regular_identifier))) (arrow_symbol) (nat))
+        (pattern (literal_list_pattern (var_or_nullary_ctor)) (arrow_symbol) (nat))
         (pattern (blank_pattern) (arrow_symbol) (nat)))
     (watch_expression (cases)
         (pattern (nat) (arrow_symbol)
-            (term_declaration (term_definition (wordy_id) (kw_equals) (nat)))
+            (term_declaration (term_definition (regular_identifier) (kw_equals) (nat)))
             (regular_identifier))))

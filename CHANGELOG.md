@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file.
 - #82 - allow doc block wherever
 - #84 - Symbols in paths now work
 - #85 - built-ins are now just `built_in_hash` without any child nodes
+- #?? - pattern matching guards now are part of a layouted block
 
 ### Changed
 
@@ -18,6 +19,8 @@ All notable changes to this project will be documented in this file.
 - `wordy_id` has been changed to `constructor_name` in ability constructors
 - `colon` has been added as a named token in ability constructors
 - `wordy_id` has been changed to `field_name` in record fields
+- `guard` has been renamed `guarded_block`
+- the actual guard of a guarded block is its own node now, called `guard`, and can be the parent of various nodes
 
 ## [1.1.4] - 2024-04-25
 

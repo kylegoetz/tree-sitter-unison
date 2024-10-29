@@ -2,14 +2,14 @@
 line comment
 ===
 
-x = 5 
+x = 5
 -- a comment
 
 ---
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (nat)
             (comment))))
@@ -22,7 +22,7 @@ multiline comment
 ---
 (unison
     (comment))
-    
+
 ===
 fold
 ===
@@ -44,7 +44,7 @@ comment with -} nesting
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (nat)
             (comment))))

@@ -6,7 +6,7 @@ y = 5 + 2
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (function_application
                 (nat)
@@ -20,7 +20,7 @@ y = (+) 5 2
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (function_application
                 (operator)
@@ -34,10 +34,10 @@ x = myFunc 1 2
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (function_application
-                (wordy_id)
+                (regular_identifier)
                 (nat)
                 (nat)))))
 ===
@@ -48,7 +48,7 @@ x = 1 <<- 2
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (function_application
                 (nat)

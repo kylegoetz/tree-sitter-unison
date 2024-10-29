@@ -35,8 +35,8 @@ Heap.deleteMin cmp = cases
 (unison
     (term_declaration
         (type_signature
-            (path) (wordy_id) (type_signature_colon) (term_type
-            (forall (kw_forall) (wordy_id) (wordy_id) (wordy_id))
+            (path) (regular_identifier) (type_signature_colon) (term_type
+            (forall (kw_forall) (regular_identifier) (regular_identifier) (regular_identifier))
             (tuple_or_parenthesized_type  (regular_identifier) (arrow_symbol)
             (effect (regular_identifier)) (regular_identifier) (arrow_symbol)
             (effect (regular_identifier)) (regular_identifier)) (arrow_symbol)
@@ -44,29 +44,29 @@ Heap.deleteMin cmp = cases
             (effect (regular_identifier)) (effect (regular_identifier)) (path) (regular_identifier) (regular_identifier)
         ))
         (term_definition
-            (path) (wordy_id) (wordy_id) (kw_equals)
+            (path) (regular_identifier) (regular_identifier) (kw_equals)
             (cases)
             (pattern
-                (constructor_or_variable_pattern (regular_identifier)
-                    (constructor_or_variable_pattern (regular_identifier))
-                    (constructor_or_variable_pattern (regular_identifier))
-                    (constructor_or_variable_pattern (regular_identifier))
-                    (constructor_or_variable_pattern (regular_identifier)))
+                (ctor (regular_identifier))
+                (var_or_nullary_ctor)
+                (var_or_nullary_ctor)
+                (var_or_nullary_ctor)
+                (var_or_nullary_ctor))
                 (arrow_symbol)
                 (function_application
-                    (wordy_id)
+                    (regular_identifier)
                     (function_application
-                        (wordy_id)
+                        (regular_identifier)
                         (tuple_or_parenthesized
                             (function_application
                                 (path)
-                                (wordy_id)
+                                (regular_identifier)
                                 (regular_identifier)
                                 (regular_identifier)
                                 (regular_identifier)))))
             )
             (pattern
-                (constructor_or_variable_pattern (path) (regular_identifier)) (arrow_symbol) (path) (regular_identifier))
+                (ctor (path) (regular_identifier)) (arrow_symbol) (path) (regular_identifier))
         )))
 ===
 [Large] @unison/json Decoder.run
@@ -87,22 +87,22 @@ j =
   j
 ---
 (unison
-    (term_declaration (term_definition (wordy_id) (kw_equals) (literal_text)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (literal_text)))
     (watch_expression (function_application
-        (path) (wordy_id)
+        (path) (regular_identifier)
         (tuple_or_parenthesized
             (function_application
-                (wordy_id)
+                (regular_identifier)
                 (function_application
-                    (path) (wordy_id)
+                    (path) (regular_identifier)
                     (function_application
-                        (path) (wordy_id)
+                        (path) (regular_identifier)
                         (function_application
-                            (path) (wordy_id)
+                            (path) (regular_identifier)
                             (function_application
-                                (path) (wordy_id)
+                                (path) (regular_identifier)
                                 (function_application
-                                    (path) (wordy_id)
+                                    (path) (regular_identifier)
                                     (regular_identifier))))))))
         (regular_identifier))))
 ===
@@ -122,14 +122,14 @@ d =
  (unison
       (term_declaration
         (term_definition
-          (wordy_id)
+          (regular_identifier)
           (kw_equals)
           (use_clause
             (use)
             (namespace (regular_identifier))
             (regular_identifier))
           (function_application
-            (wordy_id)
+            (regular_identifier)
             (literal_text)
             (regular_identifier)
             (literal_text)
@@ -139,26 +139,25 @@ d =
                 (nat)
                 (arrow_symbol)
                 (function_application
-                  (wordy_id)
+                  (regular_identifier)
                   (bang
                     (tuple_or_parenthesized
                       (function_application
-                        (wordy_id)
+                        (regular_identifier)
                         (function_application
-                          (wordy_id)
+                          (regular_identifier)
                           (path)
                           (regular_identifier)))))))
               (pattern
                 (nat)
                 (arrow_symbol)
                 (function_application
-                  (wordy_id)
+                  (regular_identifier)
                   (bang
                     (path)
                     (regular_identifier))))
               (pattern
-                (constructor_or_variable_pattern
-                  (regular_identifier))
+                (var_or_nullary_ctor)
                 (arrow_symbol)
                 (use_clause
                   (use)
@@ -166,19 +165,19 @@ d =
                   (operator))
                 (function_application
                   (path)
-                  (wordy_id)
+                  (regular_identifier)
                   (tuple_or_parenthesized
                     (function_application
                       (literal_text)
                       (operator)
                       (function_application
                         (path)
-                        (wordy_id)
+                        (regular_identifier)
                         (regular_identifier))))))))))
       (watch_expression
         (function_application
           (path)
-          (wordy_id)
+          (regular_identifier)
           (function_application
-            (wordy_id)
+            (regular_identifier)
             (literal_text)))))

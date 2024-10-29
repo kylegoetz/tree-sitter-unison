@@ -29,12 +29,12 @@
 (unison
     (watch_expression
         (function_application
-            (path) (wordy_id)
+            (path) (regular_identifier)
             (tuple_or_parenthesized
                 (cases)
-                (pattern (tuple_pattern
-                    (constructor_or_variable_pattern (regular_identifier))
-                    (constructor_or_variable_pattern (regular_identifier)))
+                (pattern (parenthesized_or_tuple_pattern
+                    (var_or_nullary_ctor)
+                    (var_or_nullary_ctor))
                     (arrow_symbol)
                     (regular_identifier)))
             (literal_list
