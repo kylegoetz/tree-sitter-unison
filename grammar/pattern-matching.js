@@ -1,20 +1,70 @@
-const { layouted, sep } = require('./util')
+const { layouted, sep, sep1, openBlockWith } = require('./util')
 
 module.exports = {
-  
-  _match_with: $ => seq($.match, field('scrutinee', $._expression), $.with),
-  
+
+
   // _pattern_matching: $ => seq(
   //   choice(
   //     seq($.match, field('scrutinee', $._expression), $.with),
   //     $.cases),
   //   layouted($, $.pattern)),
- 
-  _pattern_matching: $ => seq(
-    choice($._match_with, $.cases),
-    layouted($, $.pattern),
+
+  // _pattern_matching: $ => seq(
+    // choice(alias($._match_with, $.match_with), $.cases),
+    // layouted($, $.pattern),
+  // ),
+  _pattern_matching: $ => choice($._match_with, $._lam_case),
+
+  _match_with: $ => prec.right(seq(
+    openBlockWith($, $.match),
+    field('scrutinee', $._expression),
+    optional($._layout_end),
+    openBlockWith($, $.with),
+    $._match_cases,
+    optional($._layout_end),
+  )),
+
+  _lam_case: $ => prec.right(seq(
+    openBlockWith($, $.cases),
+    $._match_cases,
+    optional($._layout_end),
+  )),
+
+  _match_cases: $ => prec.right(sep1($._layout_semicolon, $.pattern)),
+
+  /**
+   * Pattern examples:
+   * 5 -> "foo"
+   * foo | foo == 1 -> "one"
+         | otherwise -> "not one"
+   */
+  // pattern: $ => seq($._pattern_lhs, $._pattern_rhs),
+  pattern: $ => seq($._pattern_root, $._pattern_rhs),
+
+  /**
+   * Without typechecking, we cannot know whether a single wordy_id is an identifier or constructor pattern with 0-arity, so
+   * we only have a constructor pattern here as an option, no wordy_id pattern.
+   */
+  _pattern_lhs: $ => prec.right(choice(
+    alias('_', $.blank_pattern), // unbound
+    $._literal_pattern, // literal
+    $.as_pattern, // varOrAs
+    $.constructor_or_variable_pattern, // nullaryCtor, varOrAs
+    $._list_pattern, // seq literal
+    $.tuple_pattern, //parenthesizedOrTuplePattern
+    $.ability_pattern, // effect
+  )),
+
+  /**
+   * "A pattern's RHS is either one or more guards, or a single unguarded block"
+   * (from Unison's TermParser.hs)
+   */
+  _pattern_rhs: $ => choice(
+    open_block_with($, $.arrow_symbol),
+    layouted($, $.guarded_block),
+    // seq($._layout_start, layouted($, $.guarded_block), $._layout_end),
   ),
-    
+
   _literal_pattern: $ => choice( // Observe Float is not allowed.
     $.literal_boolean,
     $.nat,
@@ -22,13 +72,16 @@ module.exports = {
     $.literal_char,
     $.literal_text,
   ),
-  as_pattern: $ => prec.left(seq($.wordy_id, $.as, $._pattern_lhs)),
-  
-  constructor_or_variable_pattern: $ => prec.left('constructor_or_variable_pattern', seq(
-    prec(2, $._hash_qualified),
-    prec.left(repeat(prec.left($._pattern_lhs))),
+  as_pattern: $ => prec.left(seq(
+    alias($.wordy_id, $.regular_identifier),
+    $.as,
+    $._pattern_lhs)),
+
+  constructor_or_variable_pattern: $ => prec.right('constructor_or_variable_pattern', seq(
+    alias($._hash_qualified, $.hq),
+    repeat(prec.left($._pattern_lhs)),
   )),
-  
+
   _list_pattern: $ => choice(
     $.head_tail_list_pattern,
     $.init_last_tail_pattern,
@@ -39,7 +92,7 @@ module.exports = {
   ability_pattern: $ => choice(
     seq('{', $._pattern_lhs, '}'),
   ),
-  
+
   /**
    * A list pattern can be one of the following:
    * head [List.]+: tail
@@ -60,36 +113,42 @@ module.exports = {
    * - | BOOL_EXPR (OPEN) -> BLOCK (CLOSE)
    * - | OTHERWISE (OPEN) -> BLOCK (CLOSE)
    */
-  guard: $ => prec.right(seq($.pipe, choice($._expression, $.otherwise), open_block_with($, $.arrow_symbol, $._start_before_arrow))),
-  
-  /**
-   * "A pattern's RHS is either one or more guards, or a single unguarded block"
-   * (from Unison's TermParser.hs)
-   */
-  _pattern_rhs: $ => choice(
-    open_block_with($, $.arrow_symbol, $._start_before_arrow),
-    layouted($, $.guard),
+  // guard: $ => prec.right(seq(
+  //   $.pipe,
+  //   choice($._infix_op_application, $.otherwise),
+  //   open_block_with($, $.arrow_symbol, $._start_before_arrow))),
+  guard: $ => choice($._expression, $.otherwise),
+
+  guarded_block: $ => seq($.pipe, $.guard, open_block_with($, $.arrow_symbol)),
+
+  _pattern_root: $ => sep1($.pattern_infix_app, $._pattern_candidates),
+  pattern_infix_app: $ => choice('++', '+:', ':+'),
+  _pattern_constructor: $ => seq($.ctor, 'x', /* prec.right(repeat1($._pattern_leaf))*/),
+  ctor: $ => alias($._hq_qualified_prefix_term, $.ctor_name),
+  _pattern_candidates: $ => choice(
+    // 'x',
+    $._pattern_constructor,
+    // $._pattern_leaf,
   ),
-  
-  /**
-   * Without typechecking, we cannot know whether a single wordy_id is an identifier or constructor pattern with 0-arity, so
-   * we only have a constructor pattern here as an option, no wordy_id pattern.
-   */
-  _pattern_lhs: $ => prec.right(choice(
-    alias('_', $.blank_pattern),
+  varOrAs: $ => seq(alias($.wordy_id, $.regular_identifier), optional(seq(alias('@', $.at_token), $._pattern_leaf))),
+  // wordy_pattern_name: $ => alias($.wordy_id, $.regular_identifier),
+  unbound: $ => '_',
+  seqLiteral: $ => 'TODO',
+  parenthesizedOrTuplePattern: $ => 'TODO',
+  effect: $ => seq(
+    openBlockWith($,'{'),
+    'TODO'
+  ),
+  _pattern_leaf: $ => choice(
     $._literal_pattern,
-    $.as_pattern,
-    $.constructor_or_variable_pattern,
-    $._list_pattern,
-    $.tuple_pattern,
-    $.ability_pattern,
-  )),
-  
-  /**
-   * Pattern examples:
-   * 5 -> "foo"
-   * foo | foo == 1 -> "one"
-         | otherwise -> "not one"
-   */
-  pattern: $ => seq($._pattern_lhs, $._pattern_rhs),
+    // 'x',
+    $.varOrAs,
+    $.unbound,
+    $.seqLiteral,
+    $.parenthesizedOrTuplePattern,
+    $.effect,
+  )
+
+
+
 }

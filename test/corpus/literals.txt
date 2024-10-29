@@ -17,7 +17,7 @@ x = 123
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (nat))))
 ===
@@ -28,7 +28,7 @@ x = 0x003
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (literal_hex))))
 ===
@@ -39,7 +39,7 @@ x = -9223372036854775808
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (int))))
 ===
@@ -50,7 +50,7 @@ x = 1.6777216
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (float))))
 ===
@@ -60,8 +60,8 @@ x = ?a
 x = ?\n
 ---
 (unison
-    (term_declaration (term_definition (wordy_id) (kw_equals) (literal_char)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (literal_char))))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (literal_char)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (literal_char))))
 ===
 [Literal] Boolean
 ===
@@ -70,7 +70,7 @@ x = true
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (literal_boolean))))
 ===
@@ -81,7 +81,7 @@ x = 0xsdeadbeef
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (literal_byte))))
 ===
@@ -92,7 +92,7 @@ x = [1, 2, 3]
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (literal_list
                 (nat)
@@ -106,10 +106,10 @@ y = x -> x + 2
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (literal_function
-                (wordy_id)
+                (regular_identifier)
                 (arrow_symbol)
                 (function_application
                     (regular_identifier)
@@ -123,7 +123,7 @@ x = (true, true, false)
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (tuple_or_parenthesized
                 (literal_boolean)
@@ -137,7 +137,7 @@ x = ()
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (unit))))
 ===
@@ -148,7 +148,7 @@ x = termLink aUnisonTerm
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (literal_termlink
                 (kw_termlink)
@@ -170,7 +170,7 @@ x = 1
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (nat))))
 ===
@@ -201,35 +201,35 @@ x = -1.2e+3
 x = -1.2e-3
 ---
 (unison
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (int)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (int)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float)))
-    (term_declaration (term_definition (wordy_id) (kw_equals) (float))))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (int)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (int)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (float))))
 ===
 [Literal] Unit
 ===
 x = ()
 ---
-(unison (term_declaration (term_definition (wordy_id) (kw_equals) (unit))))
+(unison (term_declaration (term_definition (regular_identifier) (kw_equals) (unit))))
 ===
 [Literal] escape sequences
 ===

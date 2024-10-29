@@ -16,11 +16,12 @@ module.exports = {
     * x = 5
     * myFun p1 ... pn = p1 + ... + pn
     */
-  _lhs: $ => prec('_lhs', seq(field('name', $._prefix_definition_name), repeat(field('param', $.wordy_id)))),
+  _lhs: $ => prec('_lhs', seq(field('name', $._prefix_definition_name), repeat(field('param', alias($.wordy_id, $.regular_identifier))))),
   term_definition: $ => seq(
     $._lhs,
-    $.kw_equals,
-    $._block,
+    open_block_with($, $.kw_equals),
+    // $.kw_equals,
+    // $._block,
     // choice($._expression, $._block),//$._block, // works with $._expression for simple things
   ),
 }

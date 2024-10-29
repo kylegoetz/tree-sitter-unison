@@ -11,7 +11,7 @@ program = do
 (unison
     (term_declaration
         (type_signature
-            (wordy_id)
+            (regular_identifier)
             (type_signature_colon)
             (term_type (delayed
                 (effect
@@ -20,7 +20,7 @@ program = do
                     (regular_identifier))
                 (unit))))
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (delay_block
                 (do)
@@ -28,6 +28,6 @@ program = do
                     (use)
                     (namespace (regular_identifier))
                     (operator))
-                (function_application (wordy_id) (literal_text))
-                (term_declaration (term_definition (wordy_id) (kw_equals) (bang (regular_identifier))))
-                (function_application (wordy_id) (tuple_or_parenthesized (function_application (literal_text) (operator) (regular_identifier))))))))
+                (function_application (regular_identifier) (literal_text))
+                (term_declaration (term_definition (regular_identifier) (kw_equals) (bang (regular_identifier))))
+                (function_application (regular_identifier) (tuple_or_parenthesized (function_application (literal_text) (operator) (regular_identifier))))))))

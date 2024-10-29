@@ -6,7 +6,7 @@ y = if x then 5 else 6
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (exp_if
                 (kw_if)
@@ -23,12 +23,12 @@ mySimpleTerm = if elem 5 myList then "high five" else "no five found"
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (exp_if
                 (kw_if)
                 (function_application
-                    (wordy_id)
+                    (regular_identifier)
                     (nat)
                     (regular_identifier))
                 (kw_then)
@@ -45,12 +45,12 @@ mySimpleTerm = if elem 5 myList
 (unison
     (term_declaration
         (term_definition
-            (wordy_id)
+            (regular_identifier)
             (kw_equals)
             (exp_if
                 (kw_if)
                 (function_application
-                    (wordy_id)
+                    (regular_identifier)
                     (nat)
                         (regular_identifier))
                 (kw_then)

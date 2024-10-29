@@ -48,6 +48,11 @@ module.exports = grammar({
     [$._identifier, $._wordy_definition_name, $.literal_function, $._lhs],
     [$._identifier, $._symboly_definition_name],
     [$._symboly_definition_name, $._op],
+    [$._identifier, $.literal_function],
+    [$._pattern_rhs, $._boolean_exp],
+    [$._pattern_rhs, $._infix_op_application],
+    [$._hq_qualified_wordy_id, $.varOrAs],
+    [$.seqLiteral, $.parenthesizedOrTuplePattern],
     // [$.path, $._wordy_definition_name],
 
   ],
@@ -113,6 +118,7 @@ module.exports = grammar({
       field('term_name', $._prefix_definition_name),
       $.type_signature_colon,
       alias($._value_type, $.term_type),
+      // $._layout_semicolon,
     ),
 
     type_variable: $ => regex.lowercase_varid,
@@ -132,7 +138,7 @@ module.exports = grammar({
       $.term_definition,
     )),
     watch_expression: $ => seq($._watch_start, $._watch_expression),
-    test_watch_expression: $ => prec.right(seq($.wordy_id, token.immediate('>'), $._watch_expression)),
+    test_watch_expression: $ => prec.right(seq(alias($.wordy_id, $.regular_identifier), token.immediate('>'), $._watch_expression)),
   }
 })
 

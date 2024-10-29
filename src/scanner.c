@@ -5,7 +5,7 @@
 #define DEBUG 0
 #endif
 
-#define LOG_LEVEL ERROR
+#define LOG_LEVEL VERBOSE
 typedef enum {
   VERBOSE,
   INFO,
@@ -738,6 +738,7 @@ static Result dedent(uint32_t indent, State *state) {
  * Succeed for `SEMICOLON` if the indent of the next line is equal to the current layout's.
  */
 static Result newline_semicolon(uint32_t indent, State *state) {
+    LOG(VERBOSE, "[newline_semicolon] (indent = %u)\n", indent);
   if (SYM(SEMICOLON) && same_indent(indent, state)) {
     return finish(SEMICOLON, "newline_semicolon");
   }
@@ -1100,64 +1101,98 @@ static Result multiline_comment_success(State *state) {
  * Can appear anywhere. Only call once we've consumed a `{{` (in `multiline_comment`).
  */
 static Result doc_block(State *state) {
-  LOG(INFO, "doc_block (col = %u, peek = %c)\n", COL, PEEK);
-  if (!SYM(DOC_BLOCK)) {
-    return res_fail;
-  }
-  uint16_t level = 0;
-  for (;;) {
-    switch(PEEK) {
-      case '{': {
-        S_ADVANCE;
-        if (PEEK == '{') {
-          S_ADVANCE;
-          ++level;
-        }
-        break;
-      }
-      case '}': {
-        S_ADVANCE;
-        if (PEEK == '}') {
-          S_ADVANCE;
-          if (level == 0) {
-            MARK("doc_block", false, state);
-            return res_finish(DOC_BLOCK);
-          }
-          --level;
-        }
-        break;
-      }
-      case 0: {
-        Result res = eof(state);
-        SHORT_SCANNER;
+    LOG(INFO, "[doc_block] (col = %u, peek = %c)\n", COL, PEEK);
+    if (!SYM(DOC_BLOCK)) {
         return res_fail;
-      }
-      default:
-        S_ADVANCE;
-        break;
     }
-  }
-  while (level > 0 && !is_eof(state)) {
-    if (PEEK == '{') {
-      S_ADVANCE;
-      if (!is_eof(state) && PEEK == '{') {
-        ++level;
-      }
+    uint16_t level = 1;
+    while (!is_eof(state) && level > 0) {
+        switch(PEEK) {
+            case '{': {
+                S_ADVANCE;
+                if (!is_eof(state) && PEEK == '{') {
+                    ++level;
+                }
+                S_ADVANCE;
+                break;
+            }
+            case '}': {
+                S_ADVANCE;
+                if (!is_eof(state) && PEEK == '}') {
+                    --level;
+                }
+                S_ADVANCE;
+                break;
+            }
+            default: S_ADVANCE;
+        }
     }
-    if (PEEK == '}') {
-      S_ADVANCE;
-      if (!is_eof(state) && PEEK == '}') {
-        --level;
-      }
+    if (level == 0) {
+        MARK("doc_block", false, state);
+        return res_finish(DOC_BLOCK);
     }
-    S_ADVANCE;
-  }
-  if (level == 0) {
-    MARK("doc_block", false, state);
-    return res_finish(DOC_BLOCK);
-  }
-  return res_fail;
+    return res_fail;
 }
+// static Result doc_block(State *state) {
+//   LOG(INFO, "doc_block (col = %u, peek = %c)\n", COL, PEEK);
+//   if (!SYM(DOC_BLOCK)) {
+//     return res_fail;
+//   }
+//   uint16_t level = 0;
+//   for (;;) {
+//     LOG(VERBOSE, "[doc_block] loop (peek = %c");
+//     switch(PEEK) {
+//       case '{': {
+//         S_ADVANCE;
+//         if (PEEK == '{') {
+//           S_ADVANCE;
+//           ++level;
+//         }
+//         break;
+//       }
+//       case '}': {
+//         S_ADVANCE;
+//         if (PEEK == '}') {
+//           S_ADVANCE;
+//           if (level == 0) {
+//             MARK("doc_block", false, state);
+//             return res_finish(DOC_BLOCK);
+//           }
+//           --level;
+//         }
+//         break;
+//       }
+//       case 0: {
+//         Result res = eof(state);
+//         SHORT_SCANNER;
+//         return res_fail;
+//       }
+//       default:
+//         S_ADVANCE;
+//         break;
+//     }
+//   }
+//   while (level > 0 && !is_eof(state)) {
+//     if (PEEK == '{') {
+//       S_ADVANCE;
+//       if (!is_eof(state) && PEEK == '{') {
+//         ++level;
+//       }
+//     }
+//     if (PEEK == '}') {
+//       S_ADVANCE;
+//       if (!is_eof(state) && PEEK == '}') {
+//         --level;
+//       }
+//     }
+//     S_ADVANCE;
+//   }
+//   if (level == 0) {
+//     MARK("doc_block", false, state);
+//     return res_finish(DOC_BLOCK);
+//   }
+//   return res_fail;
+// }
 
 /**
  * See `nested_comment`.
@@ -1205,6 +1240,7 @@ static Result brace(State *state) {
   LOG(INFO, "->brace (col = %u, peek = %c)\n", COL, PEEK);
   if (PEEK != '{') return res_fail;
   S_ADVANCE;
+  LOG(INFO, "[brace] after first open brace (peek = %c)\n", PEEK);
   switch (PEEK) {
     case '{': {
       S_ADVANCE;
@@ -1443,25 +1479,28 @@ static Result numeric(State *state) {
  */
 static Result layout_start(uint32_t column, State *state) {
     LOG(INFO, "->layout_start (col = %u, PEEK = %c)\n", COL, PEEK);
-    if (state->symbols[START_AND_ARROW]) {
-      if (PEEK == '-') {
-        S_ADVANCE;
-        if (PEEK == '>') {
-          S_ADVANCE;
-          if (!symbolic(PEEK)) {
-            push(column, state);
-            return finish(START_AND_ARROW, "layout_start before ->");
-          }
-        }
-        else if (PEEK == '-') {
-          return inline_comment(state);
-        }
-        return res_fail;
-      }
-      return res_cont;
-    }
+    uint32_t columna = column;
+    // if (state->symbols[START_AND_ARROW]) {
+    //   if (PEEK == '-') {
+    //     S_ADVANCE;
+    //     if (PEEK == '>') {
+    //       S_ADVANCE;
+    //       if (!symbolic(PEEK)) {
+    //         push(column, state);
+    //         return finish(START_AND_ARROW, "layout_start before ->");
+    //       }
+    //     }
+    //     else if (PEEK == '-') {
+    //       return inline_comment(state);
+    //     }
+    //     return res_fail;
+    //   }
+    //   return res_cont;
+    // }
     // Need to make sure we aren't calculating a layout based on comment col
+    LOG(VERBOSE, "[layout_start] before matching START (col = %u, PEEK = %c)\n", COL, PEEK);
     if (state->symbols[START]) {
+        LOG(VERBOSE, "[layout_start] inside START; col = %u\n", column);
         // if (PEEK == '-') {
         //     MARK("layout_start", false, state);
         //     S_ADVANCE;
@@ -1479,6 +1518,7 @@ static Result layout_start(uint32_t column, State *state) {
                 if (PEEK == '>') {
                     return res_fail;
                 }
+                LOG(VERBOSE, "[layout_start] inside - (col = %u, PEEK = %c)\n", COL, PEEK);
                 goto foo;
             }
             case '{': {
@@ -1487,15 +1527,37 @@ static Result layout_start(uint32_t column, State *state) {
                 if (PEEK == '-') {
                     return multiline_comment(state);
                 }
-              } else if(isdigit(PEEK)) { // check if -DIGIT
-                return res_fail; // fail so JS can look
-              }
+                LOG(VERBOSE, "[layout_start] inside { (col = %u, PEEK = %c)\n", COL, PEEK);
+                goto foo;
             }
-            return res_cont;
-          }
+            // /*SYMBOLIC_CASES*/ILLEGAL_LINE_INITIAL_SYMBOLICS: { // Cannot start a layout with a -/+ unless it's part of '->'
+            // if (PEEK == '+') {
+            //   return res_fail;
+            // }
+            // if (PEEK == '-') { // look to see if -> or -. or -DIGIT
+            //   S_ADVANCE;
+            //   if (PEEK == '.') { // if -. see if -.DIGIT
+            //     S_ADVANCE;
+            //     if(isdigit(PEEK)) {
+            //       return res_fail; // fail so JS can parse
+            //     }
+            //   }
+            //   if (PEEK == '>') { // check if ->
+            //     S_ADVANCE;
+            //     if (!symbolic(PEEK)) {
+            //       goto foo;
+            //     }
+            //   } else if(isdigit(PEEK)) { // check if -DIGIT
+            //     return res_fail; // fail so JS can look
+            //   }
+            // }
+            // return res_cont;
+            // }
         }
+        LOG(VERBOSE, "[layout_start] about to push col = %u\n", columna);
         foo:
-        push(column, state);
+        LOG(VERBOSE, "[layout_start] about to push col = %u\n", columna);
+        push(COL, state);
         return finish(START, "layout_start");
     }
     return res_cont;
@@ -1656,13 +1718,21 @@ static Result init(State *state) {
 
   // res = after_error(state) ? res_fail : res_cont;
   // SHORT_SCANNER;
-
+  /**
+   * It is almost always the right thing to do to start
+   * a new layout if it's possible
+   */
+  if (SYM(START)) {
+      uint32_t indent = count_indent(state);
+      res = layout_start(indent, state);
+      SHORT_SCANNER;
+  }
 
   // res = initialize_init(state);
   // SHORT_SCANNER;
   res = hash(state);
   SHORT_SCANNER;
-  if (SYM(FOLD)) {
+  if (SYM(FOLD) && PEEK == '-') {
     res = fold(state);
     SHORT_SCANNER;
   }
