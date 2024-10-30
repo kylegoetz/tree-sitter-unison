@@ -129,6 +129,11 @@
     }
   },
   {
+    "type": "arrow_symbol",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "as",
     "named": true,
     "fields": {}
@@ -636,6 +641,10 @@
           "named": true
         },
         {
+          "type": "built_in_hash",
+          "named": true
+        },
+        {
           "type": "concat_list_pattern",
           "named": true
         },
@@ -644,11 +653,11 @@
           "named": true
         },
         {
-          "type": "head_tail_list_pattern",
+          "type": "hash_qualifier",
           "named": true
         },
         {
-          "type": "hq",
+          "type": "head_tail_list_pattern",
           "named": true
         },
         {
@@ -680,6 +689,18 @@
           "named": true
         },
         {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
           "type": "tuple_pattern",
           "named": true
         }
@@ -688,21 +709,6 @@
   },
   {
     "type": "ctor",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "ctor_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "ctor_name",
     "named": true,
     "fields": {},
     "children": {
@@ -722,7 +728,7 @@
           "named": true
         },
         {
-          "type": "wordy_id",
+          "type": "regular_identifier",
           "named": true
         }
       ]
@@ -1691,6 +1697,183 @@
         },
         {
           "type": "unit",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "effect_bind",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "blank_pattern",
+          "named": true
+        },
+        {
+          "type": "concat",
+          "named": true
+        },
+        {
+          "type": "cons",
+          "named": true
+        },
+        {
+          "type": "ctor",
+          "named": true
+        },
+        {
+          "type": "effect_pattern",
+          "named": true
+        },
+        {
+          "type": "hash_qualifier",
+          "named": true
+        },
+        {
+          "type": "int",
+          "named": true
+        },
+        {
+          "type": "literal_boolean",
+          "named": true
+        },
+        {
+          "type": "literal_char",
+          "named": true
+        },
+        {
+          "type": "literal_list_pattern",
+          "named": true
+        },
+        {
+          "type": "literal_text",
+          "named": true
+        },
+        {
+          "type": "nat",
+          "named": true
+        },
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "parenthesized_or_tuple_pattern",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
+          "type": "snoc",
+          "named": true
+        },
+        {
+          "type": "var_or_as",
+          "named": true
+        },
+        {
+          "type": "var_or_nullary_ctor",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "effect_pattern",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "effect_bind",
+          "named": true
+        },
+        {
+          "type": "effect_pure",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "effect_pure",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "blank_pattern",
+          "named": true
+        },
+        {
+          "type": "concat",
+          "named": true
+        },
+        {
+          "type": "cons",
+          "named": true
+        },
+        {
+          "type": "ctor",
+          "named": true
+        },
+        {
+          "type": "effect_pattern",
+          "named": true
+        },
+        {
+          "type": "int",
+          "named": true
+        },
+        {
+          "type": "literal_boolean",
+          "named": true
+        },
+        {
+          "type": "literal_char",
+          "named": true
+        },
+        {
+          "type": "literal_list_pattern",
+          "named": true
+        },
+        {
+          "type": "literal_text",
+          "named": true
+        },
+        {
+          "type": "nat",
+          "named": true
+        },
+        {
+          "type": "parenthesized_or_tuple_pattern",
+          "named": true
+        },
+        {
+          "type": "snoc",
+          "named": true
+        },
+        {
+          "type": "var_or_as",
+          "named": true
+        },
+        {
+          "type": "var_or_nullary_ctor",
           "named": true
         }
       ]
@@ -3926,37 +4109,6 @@
     }
   },
   {
-    "type": "hq",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "built_in_hash",
-          "named": true
-        },
-        {
-          "type": "hash_qualifier",
-          "named": true
-        },
-        {
-          "type": "operator",
-          "named": true
-        },
-        {
-          "type": "path",
-          "named": true
-        },
-        {
-          "type": "regular_identifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "init_last_tail_pattern",
     "named": true,
     "fields": {},
@@ -4650,31 +4802,23 @@
       "required": false,
       "types": [
         {
-          "type": "ability_pattern",
-          "named": true
-        },
-        {
-          "type": "as_pattern",
-          "named": true
-        },
-        {
           "type": "blank_pattern",
           "named": true
         },
         {
-          "type": "concat_list_pattern",
+          "type": "concat",
           "named": true
         },
         {
-          "type": "constructor_or_variable_pattern",
+          "type": "cons",
           "named": true
         },
         {
-          "type": "head_tail_list_pattern",
+          "type": "ctor",
           "named": true
         },
         {
-          "type": "init_last_tail_pattern",
+          "type": "effect_pattern",
           "named": true
         },
         {
@@ -4702,7 +4846,19 @@
           "named": true
         },
         {
-          "type": "tuple_pattern",
+          "type": "parenthesized_or_tuple_pattern",
+          "named": true
+        },
+        {
+          "type": "snoc",
+          "named": true
+        },
+        {
+          "type": "var_or_as",
+          "named": true
+        },
+        {
+          "type": "var_or_nullary_ctor",
           "named": true
         }
       ]
@@ -4812,9 +4968,75 @@
     "fields": {}
   },
   {
-    "type": "parenthesizedOrTuplePattern",
+    "type": "parenthesized_or_tuple_pattern",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "blank_pattern",
+          "named": true
+        },
+        {
+          "type": "concat",
+          "named": true
+        },
+        {
+          "type": "cons",
+          "named": true
+        },
+        {
+          "type": "ctor",
+          "named": true
+        },
+        {
+          "type": "effect_pattern",
+          "named": true
+        },
+        {
+          "type": "int",
+          "named": true
+        },
+        {
+          "type": "literal_boolean",
+          "named": true
+        },
+        {
+          "type": "literal_char",
+          "named": true
+        },
+        {
+          "type": "literal_list_pattern",
+          "named": true
+        },
+        {
+          "type": "literal_text",
+          "named": true
+        },
+        {
+          "type": "nat",
+          "named": true
+        },
+        {
+          "type": "parenthesized_or_tuple_pattern",
+          "named": true
+        },
+        {
+          "type": "snoc",
+          "named": true
+        },
+        {
+          "type": "var_or_as",
+          "named": true
+        },
+        {
+          "type": "var_or_nullary_ctor",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "parenthetical_exp",
@@ -5286,11 +5508,23 @@
           "named": true
         },
         {
+          "type": "blank_pattern",
+          "named": true
+        },
+        {
           "type": "built_in_hash",
           "named": true
         },
         {
           "type": "cases",
+          "named": true
+        },
+        {
+          "type": "concat",
+          "named": true
+        },
+        {
+          "type": "cons",
           "named": true
         },
         {
@@ -5310,7 +5544,7 @@
           "named": true
         },
         {
-          "type": "effect",
+          "type": "effect_pattern",
           "named": true
         },
         {
@@ -5370,6 +5604,10 @@
           "named": true
         },
         {
+          "type": "literal_list_pattern",
+          "named": true
+        },
+        {
           "type": "literal_termlink",
           "named": true
         },
@@ -5398,7 +5636,7 @@
           "named": true
         },
         {
-          "type": "parenthesizedOrTuplePattern",
+          "type": "parenthesized_or_tuple_pattern",
           "named": true
         },
         {
@@ -5414,15 +5652,11 @@
           "named": true
         },
         {
-          "type": "pattern_infix_app",
-          "named": true
-        },
-        {
           "type": "regular_identifier",
           "named": true
         },
         {
-          "type": "seqLiteral",
+          "type": "snoc",
           "named": true
         },
         {
@@ -5434,10 +5668,6 @@
           "named": true
         },
         {
-          "type": "unbound",
-          "named": true
-        },
-        {
           "type": "unit",
           "named": true
         },
@@ -5446,7 +5676,11 @@
           "named": true
         },
         {
-          "type": "varOrAs",
+          "type": "var_or_as",
+          "named": true
+        },
+        {
+          "type": "var_or_nullary_ctor",
           "named": true
         },
         {
@@ -5455,11 +5689,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "pattern_infix_app",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "record",
@@ -5557,11 +5786,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "seqLiteral",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "sequence_type",
@@ -6913,11 +7137,6 @@
     "fields": {}
   },
   {
-    "type": "unbound",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "unison",
     "named": true,
     "root": true,
@@ -6994,7 +7213,7 @@
     }
   },
   {
-    "type": "varOrAs",
+    "type": "var_or_as",
     "named": true,
     "fields": {},
     "children": {
@@ -7006,7 +7225,11 @@
           "named": true
         },
         {
-          "type": "effect",
+          "type": "blank_pattern",
+          "named": true
+        },
+        {
+          "type": "effect_pattern",
           "named": true
         },
         {
@@ -7022,6 +7245,10 @@
           "named": true
         },
         {
+          "type": "literal_list_pattern",
+          "named": true
+        },
+        {
           "type": "literal_text",
           "named": true
         },
@@ -7030,7 +7257,7 @@
           "named": true
         },
         {
-          "type": "parenthesizedOrTuplePattern",
+          "type": "parenthesized_or_tuple_pattern",
           "named": true
         },
         {
@@ -7038,15 +7265,11 @@
           "named": true
         },
         {
-          "type": "seqLiteral",
+          "type": "var_or_as",
           "named": true
         },
         {
-          "type": "unbound",
-          "named": true
-        },
-        {
-          "type": "varOrAs",
+          "type": "var_or_nullary_ctor",
           "named": true
         }
       ]
@@ -7363,10 +7586,6 @@
     "named": false
   },
   {
-    "type": "++",
-    "named": false
-  },
-  {
     "type": "+:",
     "named": false
   },
@@ -7375,15 +7594,15 @@
     "named": false
   },
   {
+    "type": "->",
+    "named": false
+  },
+  {
     "type": ".",
     "named": false
   },
   {
     "type": ":",
-    "named": false
-  },
-  {
-    "type": ":+",
     "named": false
   },
   {
@@ -7399,10 +7618,6 @@
     "named": false
   },
   {
-    "type": "TODO",
-    "named": false
-  },
-  {
     "type": "[",
     "named": false
   },
@@ -7411,19 +7626,11 @@
     "named": false
   },
   {
-    "type": "_",
-    "named": false
-  },
-  {
     "type": "ability",
     "named": true
   },
   {
     "type": "and",
-    "named": true
-  },
-  {
-    "type": "arrow_symbol",
     "named": true
   },
   {
@@ -7448,6 +7655,14 @@
   },
   {
     "type": "comment",
+    "named": true
+  },
+  {
+    "type": "concat",
+    "named": true
+  },
+  {
+    "type": "cons",
     "named": true
   },
   {
@@ -7563,6 +7778,10 @@
     "named": true
   },
   {
+    "type": "snoc",
+    "named": true
+  },
+  {
     "type": "structural",
     "named": true
   },
@@ -7595,15 +7814,15 @@
     "named": false
   },
   {
+    "type": "var_or_nullary_ctor",
+    "named": true
+  },
+  {
     "type": "where",
     "named": true
   },
   {
     "type": "with",
-    "named": true
-  },
-  {
-    "type": "wordy_id",
     "named": true
   },
   {

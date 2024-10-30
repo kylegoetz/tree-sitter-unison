@@ -1,25 +1,18 @@
-const { layouted, sep, sep1, openBlockWith } = require("./util");
+const { layouted, sep, sep1, openBlockWith, terminated } = require("./util");
 
 module.exports = {
-  // _pattern_matching: $ => seq(
-  //   choice(
-  //     seq($.match, field('scrutinee', $._expression), $.with),
-  //     $.cases),
-  //   layouted($, $.pattern)),
-
-  // _pattern_matching: $ => seq(
-  // choice(alias($._match_with, $.match_with), $.cases),
-  // layouted($, $.pattern),
-  // ),
   _pattern_matching: ($) => choice($._match_with, $._lam_case),
 
   _match_with: ($) =>
     prec.right(
       seq(
+        // "match",
         openBlockWith($, $.match),
         field("scrutinee", $._expression),
         optional($._layout_end),
         openBlockWith($, $.with),
+        // $.with,
+        // "a -> true",
         $._match_cases,
         optional($._layout_end),
       ),
@@ -38,7 +31,6 @@ module.exports = {
    * foo | foo == 1 -> "one"
          | otherwise -> "not one"
    */
-  // pattern: $ => seq($._pattern_lhs, $._pattern_rhs),
   pattern: ($) => seq($._pattern_root, $._pattern_rhs),
 
   /**
@@ -53,7 +45,7 @@ module.exports = {
         $.as_pattern, // varOrAs
         $.constructor_or_variable_pattern, // nullaryCtor, varOrAs
         $._list_pattern, // seq literal
-        $.tuple_pattern, //parenthesizedOrTuplePattern
+        $.tuple_pattern, //parenthesized_or_tuple_pattern
         $.ability_pattern, // effect
       ),
     ),
@@ -65,7 +57,8 @@ module.exports = {
   _pattern_rhs: ($) =>
     choice(
       open_block_with($, $.arrow_symbol),
-      layouted($, $.guarded_block),
+      seq($._guard_layout_start, terminated($, $.guarded_block), $._layout_end),
+      // prec.right(layouted($, $.guarded_block)), // TODO this is the problem child preventing `2 +: _` from being recognized as a pattern instead after the `2` the space is recognized as LAYOUT_START
       // seq($._layout_start, layouted($, $.guarded_block), $._layout_end),
     ),
 
@@ -86,7 +79,7 @@ module.exports = {
   constructor_or_variable_pattern: ($) =>
     prec.right(
       "constructor_or_variable_pattern",
-      seq(alias($._hash_qualified, $.hq), repeat(prec.left($._pattern_lhs))),
+      seq($._hash_qualified, repeat(prec.left($._pattern_lhs))),
     ),
 
   _list_pattern: ($) =>
@@ -114,7 +107,7 @@ module.exports = {
     prec.right(seq($._pattern_lhs, "+:" /*(List\.)?\+:*/, $._pattern_lhs)),
   init_last_tail_pattern: ($) =>
     prec.right(seq($._pattern_lhs, /(List\.)?:\+/, $._pattern_lhs)),
-  literal_list_pattern: ($) => seq("[", sep(",", $._pattern_lhs), "]"),
+  // literal_list_pattern: ($) => seq("[", sep(",", $._pattern_lhs), "]"),
   concat_list_pattern: ($) =>
     prec.right(seq($._pattern_lhs, /(List\.)?\+\+/, $._pattern_lhs)),
   /**
@@ -131,34 +124,76 @@ module.exports = {
   guarded_block: ($) =>
     seq($.pipe, $.guard, open_block_with($, $.arrow_symbol)),
 
-  _pattern_root: ($) => sep1($.pattern_infix_app, $._pattern_candidates),
-  pattern_infix_app: ($) => choice("++", "+:", ":+"),
-  _pattern_constructor: ($) => seq($.ctor, repeat1($._pattern_leaf)),
-  ctor: ($) => alias($._hq_qualified_prefix_term, $.ctor_name),
-  _pattern_candidates: ($) =>
-    choice(
-      // 'x',
-      $._pattern_constructor,
-      $._pattern_leaf,
+  // _pattern_root: ($) => seq("2", repeat1(seq("+:", "_"))),
+  _pattern_root: ($) =>
+    seq(
+      $._pattern_candidates,
+      repeat(seq($._pattern_infix_app, $._pattern_candidates)),
     ),
-  varOrAs: ($) =>
+
+  _pattern_infix_app: ($) =>
+    choice(alias("++", $.concat), alias("+:", $.cons), alias(":+", $.snoc)),
+  _a: ($) => seq($._pattern_leaf, optional($._a)),
+  _pattern_constructor: ($) => seq($.ctor, $._a /*$._pattern_leaf*/),
+  // $.varOrAs),
+  // repeat(prec.left($._pattern_leaf))),
+  ctor: ($) => prec.right($._hq_qualified_prefix_term),
+  _pattern_candidates: ($) => choice($._pattern_constructor, $._pattern_leaf),
+
+  /*
+   *  NOTE: TermParser.hs says @leaf is optional but to simplify conflicts,
+   * it is mandatory here. To compensate, _identifier is allowed as a pattern.
+   * By this we avoid a parse conflict between `var_or_as` and `_identifier`, which
+   * otherwise are possible parent nodes for a bare `wordy_id`.
+   *
+   * Let `ctor` take care of a bare identifier.
+   */
+  var_or_as: ($) =>
     seq(
       alias($.wordy_id, $.regular_identifier),
-      optional(seq(alias("@", $.at_token), $._pattern_leaf)),
+      seq(alias("@", $.at_token), $._pattern_leaf),
     ),
-  // wordy_pattern_name: $ => alias($.wordy_id, $.regular_identifier),
-  unbound: ($) => "_",
-  seqLiteral: ($) => "TODO",
-  parenthesizedOrTuplePattern: ($) => "TODO",
-  effect: ($) => seq(openBlockWith($, "{"), "TODO"),
+  // unbound: ($) => "_",
+  // Note: Unfortunately the SEMI is disabled here because leaving it in creates a parsing error where
+  literal_list_pattern: ($) =>
+    seq(
+      "[",
+      // openBlockWith($, "["),
+      // repeat(prec.right(choice(",", $._layout_semicolon))),
+      sep(seq(/*optional($._layout_semicolon),*/ ","), $._pattern_root),
+      // repeat(prec.right(choice(",", $._layout_semicolon))),
+      // $._layout_end,
+      "]",
+    ),
+  parenthesized_or_tuple_pattern: ($) =>
+    seq(
+      openBlockWith($, "("),
+      // repeat(prec.right(choice(",", $._layout_semicolon))),
+      sep1(seq(/*optional($._layout_semicolon),*/ ","), $._pattern_root),
+      // repeat(prec.right(choice(",", $._layout_semicolon))),
+      $._layout_end,
+      ")",
+    ),
+
+  effect_pure: ($) => $._pattern_root,
+  effect_bind: ($) =>
+    seq($._hq_qualified_prefix_term, $._a, "->", $._pattern_root),
+
+  effect_pattern: ($) =>
+    seq(
+      openBlockWith($, "{"),
+      choice($.effect_pure, $.effect_bind),
+      $._layout_end,
+      "}",
+    ),
   _pattern_leaf: ($) =>
     choice(
+      alias($.wordy_id, $.var_or_nullary_ctor),
+      $.var_or_as,
       $._literal_pattern,
-      // 'x',
-      $.varOrAs,
-      $.unbound,
-      $.seqLiteral,
-      $.parenthesizedOrTuplePattern,
-      $.effect,
+      alias("_", $.blank_pattern),
+      $.literal_list_pattern,
+      $.parenthesized_or_tuple_pattern,
+      $.effect_pattern,
     ),
 };

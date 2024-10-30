@@ -5,7 +5,7 @@
 #define DEBUG 0
 #endif
 
-#define LOG_LEVEL ERROR
+#define LOG_LEVEL VERBOSE
 typedef enum {
   VERBOSE,
   INFO,
@@ -23,9 +23,9 @@ typedef enum {
 // #include "jtckdint.h" // needed to prevent integer overflow in get_whole
 //#include "maybe.c"
 
-#ifndef __wasm32__
-#include <inttypes.h> // needed for portability of PRId64
-#endif
+// #ifndef __wasm32__
+// #include <inttypes.h> // needed for portability of PRId64
+// #endif
 
 #define ASCII_OFFSET 48
 #define NUMERIC_CASES \
@@ -113,6 +113,7 @@ typedef enum {
     START_AND_ARROW,
     OCTOTHORPE,
     DOC_BLOCK,
+    GUARD_LAYOUT_START,
     FAIL, // always last in list
 } Sym;
 
@@ -1465,8 +1466,9 @@ static Result numeric(State *state) {
 }
 
 /**
- * If the symbol `START` is valid, starting a new layout is almost always indicated.
+ * If the symbol `START` of `GUARD_LAYOUT_START` is valid, starting a new layout is almost always indicated.
  *
+ * If the next character is a pipe, it is a GUARD_LAYOUT_START.
  * If the next character is a left brace, it is either a comment, pragma or an explicit layout. In the comment case, the
  * it must be parsed here.
  * If the next character is a minus, it might be a comment.
@@ -1480,23 +1482,7 @@ static Result numeric(State *state) {
 static Result layout_start(uint32_t column, State *state) {
     LOG(INFO, "->layout_start (col = %u, PEEK = %c)\n", COL, PEEK);
     uint32_t columna = column;
-    // if (state->symbols[START_AND_ARROW]) {
-    //   if (PEEK == '-') {
-    //     S_ADVANCE;
-    //     if (PEEK == '>') {
-    //       S_ADVANCE;
-    //       if (!symbolic(PEEK)) {
-    //         push(column, state);
-    //         return finish(START_AND_ARROW, "layout_start before ->");
-    //       }
-    //     }
-    //     else if (PEEK == '-') {
-    //       return inline_comment(state);
-    //     }
-    //     return res_fail;
-    //   }
-    //   return res_cont;
-    // }
+
     // Need to make sure we aren't calculating a layout based on comment col
     LOG(VERBOSE, "[layout_start] before matching START (col = %u, PEEK = %c)\n", COL, PEEK);
     if (state->symbols[START]) {
@@ -1530,29 +1516,12 @@ static Result layout_start(uint32_t column, State *state) {
                 LOG(VERBOSE, "[layout_start] inside { (col = %u, PEEK = %c)\n", COL, PEEK);
                 goto foo;
             }
-            // /*SYMBOLIC_CASES*/ILLEGAL_LINE_INITIAL_SYMBOLICS: { // Cannot start a layout with a -/+ unless it's part of '->'
-            // if (PEEK == '+') {
-            //   return res_fail;
-            // }
-            // if (PEEK == '-') { // look to see if -> or -. or -DIGIT
-            //   S_ADVANCE;
-            //   if (PEEK == '.') { // if -. see if -.DIGIT
-            //     S_ADVANCE;
-            //     if(isdigit(PEEK)) {
-            //       return res_fail; // fail so JS can parse
-            //     }
-            //   }
-            //   if (PEEK == '>') { // check if ->
-            //     S_ADVANCE;
-            //     if (!symbolic(PEEK)) {
-            //       goto foo;
-            //     }
-            //   } else if(isdigit(PEEK)) { // check if -DIGIT
-            //     return res_fail; // fail so JS can look
-            //   }
-            // }
-            // return res_cont;
-            // }
+            case '|': {
+                LOG(VERBOSE, "[layout_start] found GUARD_LAYOUT_START; about to push col = %u\n", columna);
+                MARK("guard_layout_start", false, state);
+                push(COL, state);
+                return finish(GUARD_LAYOUT_START, "guard_layout_start");
+            }
         }
         LOG(VERBOSE, "[layout_start] about to push col = %u\n", columna);
         foo:
@@ -1613,7 +1582,7 @@ static Result newline_indent(uint32_t indent, State *state) {
  * - starts with `-` (COMMENT, FOLD)
  * - starts with `w` (END)
  * - starts with `>` (WATCH)
- * NOTE: not SYMOP because cannot begin a line with one.
+ * NOTE: not SYMOP because cannot begin a line with one. (TODO I don't think this is true; `a\n\t++ foo` is valid)
  */
 static Result newline_token(uint32_t indent, State *state) {
   (void) indent; //suppress "unused variable" warning
@@ -1660,7 +1629,7 @@ static Result newline(uint32_t indent, State *state) {
   LOG(INFO, "->newline(%u)\n", indent);
   Result res = eof(state);
   SHORT_SCANNER;
-  if(SYM(START)) {
+  if(SYM(START) || SYM(GUARD_LAYOUT_START)) {
     Result res = layout_start(indent, state);
     SHORT_SCANNER;
   }
@@ -1709,8 +1678,8 @@ static Result immediate(uint32_t column, State *state) {
 static Result init(State *state) {
   LOG(INFO, "->init (col = %u, PEEK = %c)\n", COL, PEEK);
 
-  Result res = after_error(state) ? res_fail : res_cont;
-  SHORT_SCANNER;
+  Result res = after_error(state) ? res_fail : res_cont; // TODO remove? do not know why the Haskell parser needs this, but I'm not sure Unison does
+  // SHORT_SCANNER;
 
   res = eof(state);
   SHORT_SCANNER;

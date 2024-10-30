@@ -48,4 +48,4 @@ a = handle foo with cases
                         (regular_identifier)
                         (with)
                         (cases)
-                        (pattern (ability_pattern (constructor_or_variable_pattern (regular_identifier))) (arrow_symbol) (regular_identifier))))))
+                        (pattern (effect_pattern (effect_pure (var_or_nullary_ctor))) (arrow_symbol) (regular_identifier))))))

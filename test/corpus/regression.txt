@@ -121,6 +121,6 @@ lib.base.Nat.!=.doc = 5
     (literal_boolean)
     (with)
     (pattern
-        (constructor_or_variable_pattern (regular_identifier))
+        (var_or_nullary_ctor)
         (guarded_block (pipe) (guard (literal_boolean)) (arrow_symbol) (nat))
         (guarded_block (pipe) (guard (otherwise)) (arrow_symbol) (nat)))))

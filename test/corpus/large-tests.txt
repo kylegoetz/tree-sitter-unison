@@ -47,11 +47,11 @@ Heap.deleteMin cmp = cases
             (path) (regular_identifier) (regular_identifier) (kw_equals)
             (cases)
             (pattern
-                (constructor_or_variable_pattern (regular_identifier)
-                    (constructor_or_variable_pattern (regular_identifier))
-                    (constructor_or_variable_pattern (regular_identifier))
-                    (constructor_or_variable_pattern (regular_identifier))
-                    (constructor_or_variable_pattern (regular_identifier)))
+                (ctor (regular_identifier))
+                (var_or_nullary_ctor)
+                (var_or_nullary_ctor)
+                (var_or_nullary_ctor)
+                (var_or_nullary_ctor))
                 (arrow_symbol)
                 (function_application
                     (regular_identifier)
@@ -66,7 +66,7 @@ Heap.deleteMin cmp = cases
                                 (regular_identifier)))))
             )
             (pattern
-                (constructor_or_variable_pattern (path) (regular_identifier)) (arrow_symbol) (path) (regular_identifier))
+                (ctor (path) (regular_identifier)) (arrow_symbol) (path) (regular_identifier))
         )))
 ===
 [Large] @unison/json Decoder.run
@@ -157,8 +157,7 @@ d =
                     (path)
                     (regular_identifier))))
               (pattern
-                (constructor_or_variable_pattern
-                  (regular_identifier))
+                (var_or_nullary_ctor)
                 (arrow_symbol)
                 (use_clause
                   (use)
