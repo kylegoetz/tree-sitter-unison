@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.0.0] - 2024-10-05
+## [2.0.0] - 2024-10-29
 
 ### Fixed
 
@@ -21,6 +21,10 @@ All notable changes to this project will be documented in this file.
 - `wordy_id` has been changed to `field_name` in record fields
 - `guard` has been renamed `guarded_block`
 - the actual guard of a guarded block is its own node now, called `guard`, and can be the parent of various nodes
+- `ability_pattern` has been renamed `effect_pattern` to be in line with UCM codebase terminology
+- `effect_pattern` now contains either a (new) `effect_pure` or `effect_bind`. The difference is as that between `{ x }` and `{ x -> y }`, respectively
+- `constructor_or_variable_pattern` has been bifurcated into `ctor` and `var_or_as` because they have subtly different rules than anticipated previously so cannot be handled together
+- the list infix patterns have been flattened, so for example `init_last_tail_pattern ( left side . right side )` is now `left side . snoc . right side`. The sructure can be deduced, while now the infix operator is a named node. Another example is `head_tail_list_pattern (left . right)` is now `left cons right`.
 
 ## [1.1.4] - 2024-04-25
 
