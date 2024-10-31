@@ -59,6 +59,7 @@ module.exports = grammar({
     [$._identifier, $._hq_qualified_symboly_id, $._symboly_definition_name],
     [$._identifier, $._hq_qualified_symboly_id],
     [$._identifier, $._pattern_leaf],
+    [$.exp_let, $._statement],
     // [$._hq_qualified_wordy_id, $._symboly_definition_name],
     // [$._hq_qualified_wordy_id, $.varOrAs],
     // [$.seqLiteral, $.parenthesizedOrTuplePattern],

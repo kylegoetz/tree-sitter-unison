@@ -124,7 +124,6 @@ module.exports = {
   guarded_block: ($) =>
     seq($.pipe, $.guard, open_block_with($, $.arrow_symbol)),
 
-  // _pattern_root: ($) => seq("2", repeat1(seq("+:", "_"))),
   _pattern_root: ($) =>
     seq(
       $._pattern_candidates,
@@ -134,15 +133,13 @@ module.exports = {
   _pattern_infix_app: ($) =>
     choice(alias("++", $.concat), alias("+:", $.cons), alias(":+", $.snoc)),
   _a: ($) => seq($._pattern_leaf, optional($._a)),
-  _pattern_constructor: ($) => seq($.ctor, $._a /*$._pattern_leaf*/),
-  // $.varOrAs),
-  // repeat(prec.left($._pattern_leaf))),
+  _pattern_constructor: ($) => seq($.ctor, repeat($._pattern_leaf)),
   ctor: ($) => prec.right($._hq_qualified_prefix_term),
   _pattern_candidates: ($) => choice($._pattern_constructor, $._pattern_leaf),
 
   /*
    *  NOTE: TermParser.hs says @leaf is optional but to simplify conflicts,
-   * it is mandatory here. To compensate, _identifier is allowed as a pattern.
+   * it is mandatory here. To compensate, wordy_id is allowed as a pattern.
    * By this we avoid a parse conflict between `var_or_as` and `_identifier`, which
    * otherwise are possible parent nodes for a bare `wordy_id`.
    *

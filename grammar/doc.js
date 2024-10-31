@@ -1,4 +1,4 @@
 module.exports = {
-  // doc_block: $ => 'TODO',
-  doc2_block: $ => 'TODO 2',
-}
+  doc_block: ($) => "TODO",
+  doc2_block: ($) => "TODO 2",
+};
