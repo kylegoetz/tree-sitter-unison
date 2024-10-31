@@ -353,8 +353,16 @@ static bool indent_exists(State *state) { return state->indents->len != 0; };
 
 /**
  * Require that the current line's indent is equal to the containing layout's, so the line may start a new `decl`.
+ * Note: We should return same_indent if there's no indent and state has no indents. This is because we want a SEMI even
+ * in the case of code like:
+ * foo : MyType(SEMI)
+ * foo = ...
  */
-static bool same_indent(uint32_t indent, State *state) { return indent_exists(state) && indent == VEC_BACK(state->indents); }
+static bool same_indent(uint32_t indent, State *state) {
+    return
+        (indent == 0 && !indent_exists(state))
+        || (indent_exists(state) && indent == VEC_BACK(state->indents));
+}
 
 /**
  * Require that the current line's indent is smaller than the containing layout's, so the layout may be ended.
