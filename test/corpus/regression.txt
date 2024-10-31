@@ -124,3 +124,30 @@ lib.base.Nat.!=.doc = 5
         (var_or_nullary_ctor)
         (guarded_block (pipe) (guard (literal_boolean)) (arrow_symbol) (nat))
         (guarded_block (pipe) (guard (otherwise)) (arrow_symbol) (nat)))))
+===
+[Regression] #91 - infix op can have namespace prefix
+===
+a lib.base.Nat.!= b =
+  use Nat ==
+  Boolean.not (a == b)
+---
+(unison
+    (term_declaration
+        (term_definition
+            (regular_identifier)
+            (path)
+            (operator)
+            (regular_identifier)
+            (kw_equals)
+            (use_clause
+                (use)
+                (namespace (regular_identifier))
+                (operator))
+            (function_application
+                (path)
+                (regular_identifier)
+                (tuple_or_parenthesized
+                    (function_application
+                        (regular_identifier)
+                        (operator)
+                        (regular_identifier)))))))

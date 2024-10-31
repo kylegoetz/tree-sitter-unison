@@ -5904,6 +5904,22 @@
         "required": false,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "operator",
+            "named": true
+          },
+          {
+            "type": "path",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           }
@@ -6407,7 +6423,7 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "and",
@@ -7610,10 +7626,6 @@
     "named": false
   },
   {
-    "type": ">",
-    "named": false
-  },
-  {
     "type": "@",
     "named": false
   },
@@ -7784,6 +7796,14 @@
   {
     "type": "structural",
     "named": true
+  },
+  {
+    "type": "test.io>",
+    "named": false
+  },
+  {
+    "type": "test>",
+    "named": false
   },
   {
     "type": "then",
