@@ -11,6 +11,12 @@
 ===
 [misc] Test watch expression
 ===
-foo> 5
+test> 5
 ---
-(unison (test_watch_expression (regular_identifier) (nat)))
+(unison (test_watch_expression (nat)))
+===
+[misc] test.io watch expression
+===
+test.io> 5
+---
+(unison (test_watch_expression (nat)))
