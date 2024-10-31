@@ -51,7 +51,7 @@ Heap.deleteMin cmp = cases
                 (var_or_nullary_ctor)
                 (var_or_nullary_ctor)
                 (var_or_nullary_ctor)
-                (var_or_nullary_ctor))
+                (var_or_nullary_ctor)
                 (arrow_symbol)
                 (function_application
                     (regular_identifier)

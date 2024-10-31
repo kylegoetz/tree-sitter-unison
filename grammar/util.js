@@ -17,9 +17,11 @@ parens = (...rule) => seq("(", ...rule, ")");
  * clauses.
  */
 terminated = ($, rule) =>
-  seq(
-    sep1(choice(";", $._layout_semicolon), rule),
-    optional(choice(";", $._layout_semicolon)),
+  prec.right(
+    seq(
+      prec.right(sep1(prec.right(choice(";", $._layout_semicolon)), rule)),
+      optional(choice(";", $._layout_semicolon)),
+    ),
   );
 
 (layouted_braces = (rule) => braces(sep(";", rule), optional(";"))),
@@ -35,8 +37,13 @@ layoutBlock = ($, opener) =>
   seq(
     opener,
     $._layout_start,
-    terminated($, $._statement),
-    optional($._layout_end),
+    optional(terminated($, $.use_clause)),
+    // repeat($.use_clause),
+    // optional($._layout_semicolon),
+    sep1($._layout_semicolon, $._statement),
+    // optional($._layout_semicolon),
+    // terminated($, $._statement),
+    $._layout_end,
   );
 
 // open_block_with = ($, opener, start_type) => seq(
@@ -72,7 +79,10 @@ layouted_without_end = ($, rule) =>
     seq($._layout_start, optional(terminated($, rule))),
   );
 
+// layout_block = ($, keyword) => seq(open_block_with($, keyword));
+
 module.exports = {
+  layoutBlock,
   layouted,
   layouted_without_end,
   open_block_with,
