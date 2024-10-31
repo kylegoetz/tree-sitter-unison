@@ -20,14 +20,29 @@ module.exports = {
    * x = 5
    * myFun p1 ... pn = p1 + ... + pn
    */
-  _lhs: ($) =>
-    prec(
-      "_lhs",
-      seq(
-        field("name", $._prefix_definition_name),
-        repeat(field("param", alias($.wordy_id, $.regular_identifier))),
-      ),
+  _lhs: ($) => choice($._infix_lhs, $._prefix_lhs),
+  // _lhs: ($) =>
+  //   prec(
+  //     "_lhs",
+  //     seq(
+  //       field("name", $._prefix_definition_name),
+  //       repeat(field("param", alias($.wordy_id, $.regular_identifier))),
+  //     ),
+  //   ),
+
+  _infix_lhs: ($) =>
+    seq(
+      field("param", $._prefix_definition_name),
+      // " ", // TODO This is a hack to prevent `foo>` from being parsed as PARAM . OP (i.e., the start of an infix function application)
+      field("name", $._symboly_definition_name),
+      field("param", $._prefix_definition_name),
     ),
+  _prefix_lhs: ($) =>
+    seq(
+      field("name", $._prefix_definition_name),
+      repeat(field("param", alias($.wordy_id, $.regular_identifier))),
+    ),
+
   term_definition: ($) =>
     seq(
       $._lhs,

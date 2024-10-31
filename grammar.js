@@ -60,6 +60,12 @@ module.exports = grammar({
     [$._identifier, $._hq_qualified_symboly_id],
     [$._identifier, $._pattern_leaf],
     [$.exp_let, $._statement],
+    [
+      $._identifier,
+      $._wordy_definition_name,
+      $.literal_function,
+      $._prefix_lhs,
+    ],
     // [$._hq_qualified_wordy_id, $._symboly_definition_name],
     // [$._hq_qualified_wordy_id, $.varOrAs],
     // [$.seqLiteral, $.parenthesizedOrTuplePattern],
@@ -143,12 +149,11 @@ module.exports = grammar({
       prec.right(choice($._expression, $.term_definition)),
     watch_expression: ($) => seq($._watch_start, $._watch_expression),
     test_watch_expression: ($) =>
-      prec.right(
-        seq(
-          alias($.wordy_id, $.regular_identifier),
-          token.immediate(">"),
-          $._watch_expression,
-        ),
+      seq(
+        choice("test>", "test.io>"),
+        // alias($.wordy_id, $.regular_identifier),
+        // token.immediate(">"),
+        $._watch_expression,
       ),
   },
 });
