@@ -21,7 +21,7 @@ module.exports = grammar({
   ],
   conflicts,
   externals,
-  extras: ($) => [/\\?\s/, $.comment, $.doc_block],
+  extras: ($) => [/\\?\s/, $.comment],
   rules: {
     unison: ($) =>
       repeat(
