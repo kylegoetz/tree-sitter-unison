@@ -11,14 +11,16 @@ module.exports = {
   term_definition2: ($) => seq(block($, $.kw_equals)),
 
   binding: ($) =>
-    choice(
-      // "s: Int\n    s = (0: Int)",
-      seq(
-        optional(seq($.doc_block, $._layout_semicolon)),
-        optional($.type_signature),
-        alias($.term_definition2, $.term_definition),
-      ),
+    seq(
+      optional(seq($.doc_block, $._layout_semicolon)),
+      $._binding,
     ),
+  _binding: $ => seq(optional($.type_signature),
+    alias($.term_definition2, $.term_definition)),
+  destructuring_bind: $ => seq(
+    $._pattern_root,
+    block($, $.kw_equals)
+  ),
 
   _block_term: ($) => choice($.literal_function, $._infix_app_or_boolean_op),
   literal_function: ($) => lam($, $._term),
