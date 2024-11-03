@@ -66,14 +66,15 @@ module.exports = {
       seq($._identifier, alias($.imm_hash_qualifier, $.hash_qualifier)),
     ),
 
-  _hq_qualified_wordy_id: ($) =>
+  _hq_qualified_wordy_id: $ => choice(
+    $.built_in_hash,
     seq(
       choice(
         alias($.wordy_id, $.regular_identifier),
         seq($.path, alias($.imm_wordy_id, $.regular_identifier)),
       ),
       optional(alias($.imm_hash_qualifier, $.hash_qualifier)),
-    ),
+    )),
 
   _hq_qualified_symboly_id: ($) =>
     seq(
