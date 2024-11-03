@@ -1,30 +1,23 @@
 ===
 [Blocks] block starting with type signature'ified term declaration
 ===
-> if
-      s = 0
-      s > 0
-  then
-    s: Int
-    s = (0: Int)
-    s + 1
-  else
-    s = 0
-    s + 2
+> s: Int
+  s = (0: Int)
 ---
-(unison (watch_expression (exp_if
-  (kw_if)
-  (term_declaration (term_definition (regular_identifier) (kw_equals) (nat)))
-  (function_application (regular_identifier) (operator) (nat))
-  (kw_then)
-  (term_declaration
-    (type_signature (regular_identifier) (type_signature_colon) (term_type (regular_identifier)))
-    (term_definition (regular_identifier) (kw_equals) (parenthetical_exp (nat) (type_signature_colon) (regular_identifier)) ))
-  (function_application (regular_identifier) (operator) (nat))
-  (kw_else)
-  (term_declaration (term_definition (regular_identifier) (kw_equals) (nat)))
-  (function_application (regular_identifier) (operator) (nat))
-  )))
+(unison
+    (watch_expression
+        (term_declaration
+            (type_signature
+                (regular_identifier)
+                (type_signature_colon)
+                (term_type (regular_identifier)))
+            (term_definition
+                (regular_identifier)
+                (kw_equals)
+                (tuple_or_parenthesized
+                    (nat)
+                    (type_signature_colon)
+                    (regular_identifier))))))
 ===
 [Blocks] inline and multiline comments should not affect indentation calculation
 ===
