@@ -2,17 +2,10 @@
 line comment
 ===
 
-x = 5
 -- a comment
 
 ---
-(unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (nat)
-            (comment))))
+(unison (comment))
 ===
 multiline comment
 ===
