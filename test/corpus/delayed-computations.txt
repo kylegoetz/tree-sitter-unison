@@ -2,32 +2,21 @@
 [Delayed] type and block
 ===
 program : '{IO, Exception} ()
-program = do
-  use Text ++
-  printLine "What is your name?"
-  name = !readLine
-  printLine ("Hello, " ++ name)
+program = a
 ---
 (unison
     (term_declaration
         (type_signature
             (regular_identifier)
             (type_signature_colon)
-            (term_type (delayed
-                (effect
-                    (regular_identifier))
-                (effect
-                    (regular_identifier))
-                (unit))))
+            (term_type
+                (delayed
+                    (effect
+                        (regular_identifier))
+                        (effect
+                        (regular_identifier))
+                    (unit))))
         (term_definition
             (regular_identifier)
             (kw_equals)
-            (delay_block
-                (do)
-                (use_clause
-                    (use)
-                    (namespace (regular_identifier))
-                    (operator))
-                (function_application (regular_identifier) (literal_text))
-                (term_declaration (term_definition (regular_identifier) (kw_equals) (bang (regular_identifier))))
-                (function_application (regular_identifier) (tuple_or_parenthesized (function_application (literal_text) (operator) (regular_identifier))))))))
+            (regular_identifier))))
