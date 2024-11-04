@@ -7,15 +7,6 @@ module.exports = {
 
   operator_expression: ($) => seq($._expression, $.operator, $._expression),
 
-  multiline_block: ($) =>
-    seq(optional(seq(sep1($._layout_semicolon, $._statement))), $._expression),
-
-  // _block: $ => seq(
-  //   $.layout_start,
-  //   $.multiline_block,
-  //   $.layout_end,
-  // ),
-
   _block: ($) => layouted($, $._statement),
 
   // let [sm_1] [sm_2] ... [sm_n] [exp]
