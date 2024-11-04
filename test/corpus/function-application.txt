@@ -8,10 +8,9 @@ y = 5 + 2
         (term_definition
             (regular_identifier)
             (kw_equals)
-            (function_application
-                (nat)
-                (operator)
-                (nat)))))
+            (nat)
+            (operator)
+            (nat))))
 ===
 prefix op
 ===
@@ -22,10 +21,9 @@ y = (+) 5 2
         (term_definition
             (regular_identifier)
             (kw_equals)
-            (function_application
-                (operator)
-                (nat)
-                (nat)))))
+            (prefix_operator)
+            (nat)
+            (nat))))
 ===
 regular function
 ===
@@ -36,10 +34,9 @@ x = myFunc 1 2
         (term_definition
             (regular_identifier)
             (kw_equals)
-            (function_application
-                (regular_identifier)
-                (nat)
-                (nat)))))
+            (regular_identifier)
+            (nat)
+            (nat))))
 ===
 infix operator function
 ===
@@ -50,7 +47,6 @@ x = 1 <<- 2
         (term_definition
             (regular_identifier)
             (kw_equals)
-            (function_application
-                (nat)
-                (operator)
-                (nat)))))
+            (nat)
+            (operator)
+            (nat))))
