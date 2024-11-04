@@ -5,9 +5,8 @@
 ---
 (unison
     (watch_expression
-        (function_application
-            (regular_identifier)
-            (nat))))
+        (regular_identifier)
+        (nat)))
 ===
 [misc] Test watch expression
 ===

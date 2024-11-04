@@ -36,13 +36,10 @@ store.stopIfTrue = f a b c
         (term_definition
             (path) (regular_identifier)
             (kw_equals)
-            (function_application
-                (regular_identifier)
-                (function_application
-                    (regular_identifier)
-                    (function_application
-                        (regular_identifier)
-                        (regular_identifier)))))))
+            (regular_identifier)
+            (regular_identifier)
+            (regular_identifier)
+            (regular_identifier))))
 ===
 [Term] type signature with tuple
 ===

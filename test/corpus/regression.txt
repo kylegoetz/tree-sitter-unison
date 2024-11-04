@@ -8,10 +8,9 @@ x = 1 + 2
         (term_definition
             (regular_identifier)
             (kw_equals)
-            (function_application
-                (nat)
-                (operator)
-                (nat)))))
+            (nat)
+            (operator)
+            (nat))))
 ===
 [Regression] Issue 21: built-in hash without path not parsed correctly
 ===
@@ -29,7 +28,7 @@ x = ##Foo
 ===
 > 1 Nat.+ 2
 ---
-(unison (watch_expression (function_application (nat) (path) (operator) (nat))))
+(unison (watch_expression (nat) (path) (operator) (nat)))
 ===
 [Regression] #34 - watch expressions can be binds (term definitions, but types are not allowed as per TermParser.hs, so not term declarations)
 They cannot be destructuring binds, which cannot happen at the top level. Verified via Unison LSP.
@@ -38,8 +37,9 @@ They cannot be destructuring binds, which cannot happen at the top level. Verifi
 ---
 (unison
     (watch_expression
-        (term_definition
-            (regular_identifier) (kw_equals) (nat))))
+        (term_declaration
+            (term_definition
+            (regular_identifier) (kw_equals) (nat)))))
 ===
 [Regression] Issue 37, docblock can be anywhere an expression is
 ===
@@ -63,7 +63,11 @@ x = 5
 ---
 (unison (term_declaration
     (type_signature (path) (operator) (type_signature_colon) (term_type (regular_identifier) (arrow_symbol) (regular_identifier) (arrow_symbol) (regular_identifier)))
-    (term_definition (path) (operator) (kw_equals) (function_application (regular_identifier) (literal_text)))))
+    (term_definition
+        (path) (operator)
+        (kw_equals)
+        (regular_identifier)
+        (literal_text))))
 ===
 [Regression] Issue 46, comment that appears where a fold could be fails
 ===
@@ -143,11 +147,15 @@ a lib.base.Nat.!= b =
                 (use)
                 (namespace (regular_identifier))
                 (operator))
-            (function_application
-                (path)
+            (path)
+            (regular_identifier)
+            (tuple_or_parenthesized
                 (regular_identifier)
-                (tuple_or_parenthesized
-                    (function_application
-                        (regular_identifier)
-                        (operator)
-                        (regular_identifier)))))))
+                (operator)
+                (regular_identifier)))))
+===
+[Regression] watch doc block fails to parse
+===
+> {{}}
+---
+(unison (watch_expression (doc_block)))

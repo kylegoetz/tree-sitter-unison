@@ -22,7 +22,6 @@ x = let y = 5
                         (regular_identifier)
                         (kw_equals)
                         (nat)))
-                (function_application
-                    (regular_identifier)
-                    (operator)
-                    (regular_identifier))))))
+                (regular_identifier)
+                (operator)
+                (regular_identifier)))))

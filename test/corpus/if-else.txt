@@ -27,10 +27,9 @@ mySimpleTerm = if elem 5 myList then "high five" else "no five found"
             (kw_equals)
             (exp_if
                 (kw_if)
-                (function_application
-                    (regular_identifier)
-                    (nat)
-                    (regular_identifier))
+                (regular_identifier)
+                (nat)
+                (regular_identifier)
                 (kw_then)
                 (literal_text)
                 (kw_else)
@@ -49,10 +48,9 @@ mySimpleTerm = if elem 5 myList
             (kw_equals)
             (exp_if
                 (kw_if)
-                (function_application
-                    (regular_identifier)
-                    (nat)
-                        (regular_identifier))
+                (regular_identifier)
+                (nat)
+                (regular_identifier)
                 (kw_then)
                 (literal_text)
                 (kw_else)

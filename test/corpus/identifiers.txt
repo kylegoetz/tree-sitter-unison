@@ -37,7 +37,7 @@ x = 1 + 1
 ===
 [Identifier] hash-qualified symboly id
 ===
-x = >>=#foo
+x = (>>=#foo)
 ---
 (unison
         (term_declaration

@@ -95,9 +95,11 @@ x = [1, 2, 3]
             (regular_identifier)
             (kw_equals)
             (literal_list
+                (open_bracket)
                 (nat)
                 (nat)
-                (nat)))))
+                (nat)
+                (close_bracket)))))
 ===
 [Literal] function
 ===
@@ -111,10 +113,9 @@ y = x -> x + 2
             (literal_function
                 (regular_identifier)
                 (arrow_symbol)
-                (function_application
-                    (regular_identifier)
-                    (operator)
-                    (nat))))))
+                (regular_identifier)
+                (operator)
+                (nat)))))
 ===
 [Literal] tuple
 ===
@@ -139,7 +140,7 @@ x = ()
         (term_definition
             (regular_identifier)
             (kw_equals)
-            (unit))))
+            (tuple_or_parenthesized))))
 ===
 [Literal] termLink
 ===
@@ -224,12 +225,6 @@ x = -1.2e-3
     (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
     (term_declaration (term_definition (regular_identifier) (kw_equals) (float)))
     (term_declaration (term_definition (regular_identifier) (kw_equals) (float))))
-===
-[Literal] Unit
-===
-x = ()
----
-(unison (term_declaration (term_definition (regular_identifier) (kw_equals) (unit))))
 ===
 [Literal] escape sequences
 ===

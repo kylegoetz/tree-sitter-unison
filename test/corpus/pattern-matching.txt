@@ -48,101 +48,182 @@
         (match)
         (regular_identifier)
         (with)
-        (pattern (var_or_nullary_ctor) (guarded_block (pipe) (guard (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat)))) (arrow_symbol) (literal_text)))
-        (pattern (var_or_nullary_ctor) (guarded_block (pipe) (guard (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat)))) (arrow_symbol) (literal_text)))
-        (pattern (var_or_nullary_ctor) (guarded_block (pipe) (guard (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat))) (or) (tuple_or_parenthesized (function_application (regular_identifier) (operator) (nat)))) (arrow_symbol) (literal_text)))
+        (pattern (var_or_nullary_ctor) (guarded_block (pipe) (guard (tuple_or_parenthesized (regular_identifier) (operator) (nat)) (or) (tuple_or_parenthesized (regular_identifier) (operator) (nat))) (arrow_symbol) (literal_text)))
+        (pattern (var_or_nullary_ctor) (guarded_block (pipe) (guard (tuple_or_parenthesized (regular_identifier) (operator) (nat)) (or) (tuple_or_parenthesized (regular_identifier) (operator) (nat))) (arrow_symbol) (literal_text)))
+        (pattern (var_or_nullary_ctor) (guarded_block (pipe) (guard (tuple_or_parenthesized (regular_identifier) (operator) (nat)) (or) (tuple_or_parenthesized (regular_identifier) (operator) (nat))) (arrow_symbol) (literal_text)))
         (pattern (blank_pattern) (arrow_symbol) (literal_text)))
     (watch_expression (match) (regular_identifier) (with)
         (pattern (nat) (guarded_block (pipe) (guard (function_application (nat) (operator) (nat))) (arrow_symbol) (nat)))))
 ===
-[Patterns] match/with
+[Patterns] match x -> x
 ===
 > match x with x -> x
+---
+(unison (watch_expression (match) (regular_identifier) (with) (pattern (var_or_nullary_ctor) (arrow_symbol) (regular_identifier))))
+===
+[Patterns] match 0 -> 1
+===
 > match x with 0 -> 1
-> match x with
+---
+(unison (watch_expression (match) (regular_identifier) (with) (pattern (nat) (arrow_symbol) (nat))))
+===
+[Patterns] pattern with newline layout
+===
+> cases
     0 -> 1
+---
+(unison (watch_expression (cases) (pattern (nat) (arrow_symbol) (nat))))
+===
+[Patterns] matching on int
+===
 > match +0 with
       +0 -> -1
-> match x with
+---
+(unison (watch_expression (match) (int) (with) (pattern (int) (arrow_symbol) (int))))
+===
+[Patterns] blank pattern
+===
+> cases _ -> 1
+---
+(unison (watch_expression (cases) (pattern (blank_pattern) (arrow_symbol) (nat))))
+===
+[Patterns] multiple patterns
+===
+> cases
       x -> 1
       2 -> 7
-      _ -> 3
-      Tuple.Cons x y -> x + y
-      Tuple.Cons (Tuple.Cons x y) _ -> x + y
-> match x with
+---
+(unison (watch_expression (cases)
+    (pattern (var_or_nullary_ctor) (arrow_symbol) (nat))
+    (pattern (nat) (arrow_symbol) (nat))))
+===
+[Patterns] constructor and nested patterns
+===
+> cases
+    Tuple.Cons x y -> x + y
+    Tuple.Cons (Tuple.Cons x y) _ -> x + y
+---
+(unison
+    (watch_expression
+        (cases)
+        (pattern
+            (ctor
+                (path)
+                (regular_identifier))
+            (var_or_nullary_ctor)
+            (var_or_nullary_ctor)
+            (arrow_symbol)
+            (regular_identifier)
+            (operator)
+            (regular_identifier))
+        (pattern
+            (ctor
+                (path)
+                (regular_identifier))
+            (parenthesized_or_tuple_pattern
+                (ctor
+                    (path)
+                    (regular_identifier))
+                (var_or_nullary_ctor)
+                (var_or_nullary_ctor))
+            (blank_pattern)
+            (arrow_symbol)
+            (regular_identifier)
+            (operator)
+            (regular_identifier))))
+===
+[Patterns] newline layout for post-arrow block of RHS of pattern
+===
+> cases
       0 ->
         z = 0
         z
 ---
 (unison
-    (watch_expression (match) (regular_identifier) (with) (pattern (var_or_nullary_ctor) (arrow_symbol) (regular_identifier)))
-    (watch_expression (match) (regular_identifier) (with) (pattern (nat) (arrow_symbol) (nat)))
-    (watch_expression (match) (regular_identifier) (with) (pattern (nat) (arrow_symbol) (nat)))
-    (watch_expression (match) (int) (with) (pattern (int) (arrow_symbol) (int)))
-    (watch_expression (match) (regular_identifier) (with)
-        (pattern (var_or_nullary_ctor) (arrow_symbol) (nat))
-        (pattern (nat) (arrow_symbol) (nat))
-        (pattern (blank_pattern) (arrow_symbol) (nat))
+    (watch_expression
+        (cases)
         (pattern
-            (ctor (path) (regular_identifier))
-            (var_or_nullary_ctor)
-            (var_or_nullary_ctor)
+            (nat)
             (arrow_symbol)
-            (function_application (regular_identifier) (operator) (regular_identifier)))
-        (pattern
-            (ctor (path) (regular_identifier))
-            (parenthesized_or_tuple_pattern
-                (ctor (path) (regular_identifier))
-                (var_or_nullary_ctor)
-                (var_or_nullary_ctor))
-            (blank_pattern)
-            (arrow_symbol)
-            (function_application (regular_identifier) (operator) (regular_identifier))))
-    (watch_expression (match) (regular_identifier) (with)
-        (pattern (nat) (arrow_symbol)
-            (term_declaration (term_definition (regular_identifier) (kw_equals) (nat)))
-            (regular_identifier)))
-)
+            (term_declaration
+                (term_definition
+                    (regular_identifier)
+                    (kw_equals)
+                    (nat)))
+            (regular_identifier))))
 ===
-[Patterns] list patterns
+[Patterns] empty list literal
 ===
-> match x with
-     [] -> 0
-     [1] -> 1
-     2 +: _ -> 2
-     _ :+ 3 -> 3
-     [4] ++ _ -> 4
-     _ ++ [5] -> 5
-     _ -> -1
----
-(unison (watch_expression (match) (regular_identifier) (with)
-        (pattern (literal_list_pattern) (arrow_symbol) (nat))
-        (pattern (literal_list_pattern (nat)) (arrow_symbol) (nat))
-        (pattern (nat) (cons) (blank_pattern) (arrow_symbol) (nat))
-        (pattern (blank_pattern) (snoc) (nat) (arrow_symbol) (nat))
-        (pattern (literal_list_pattern (nat)) (concat) (blank_pattern) (arrow_symbol) (nat))
-        (pattern (blank_pattern)  (concat) (literal_list_pattern (nat)) (arrow_symbol) (nat))
-        (pattern (blank_pattern) (arrow_symbol) (int))))
-===
-[Patterns] cases
-===
-> cases x -> x
-> cases
-     [] -> 0
-     [x] -> 1
-     _ -> 2
-> cases
-     0 ->
-       z = 0
-       z
+> cases [] -> 0
 ---
 (unison
-    (watch_expression (cases) (pattern (var_or_nullary_ctor) (arrow_symbol) (regular_identifier)))
+    (watch_expression
+        (cases)
+        (pattern
+            (literal_list_pattern)
+            (arrow_symbol)
+            (nat))))
+===
+[Patterns] cons pattern
+===
+> cases 2 +: 2 -> 2
+---
+(unison
+    (watch_expression
+        (cases)
+        (pattern
+            (nat)
+            (cons)
+            (nat)
+            (arrow_symbol)
+            (nat))))
+===
+[Patterns] singleton list
+===
+> cases [1] -> 1
+---
+(unison
+    (watch_expression
+        (cases)
+        (pattern
+            (literal_list_pattern
+                (nat))
+            (arrow_symbol)
+            (nat))))
+===
+[Patterns] snoc pattern
+===
+> cases _ :+ 3 -> 3
+---
+(unison
+    (watch_expression
+        (cases)
+        (pattern
+            (blank_pattern)
+            (snoc)
+            (nat)
+            (arrow_symbol)
+            (nat))))
+===
+[Patterns] concat pattern
+===
+> cases [4] ++ _ -> 4
+---
+(unison
+    (watch_expression
+        (cases)
+        (pattern
+            (literal_list_pattern
+                (nat))
+            (concat)
+            (blank_pattern)
+            (arrow_symbol)
+            (nat))))
+===
+[Patterns] cases (aka "lambda") pattern matching
+===
+> cases [] -> 0
+---
+(unison
     (watch_expression (cases)
-        (pattern (literal_list_pattern) (arrow_symbol) (nat))
-        (pattern (literal_list_pattern (var_or_nullary_ctor)) (arrow_symbol) (nat))
-        (pattern (blank_pattern) (arrow_symbol) (nat)))
-    (watch_expression (cases)
-        (pattern (nat) (arrow_symbol)
-            (term_declaration (term_definition (regular_identifier) (kw_equals) (nat)))
-            (regular_identifier))))
+        (pattern (literal_list_pattern) (arrow_symbol) (nat))))

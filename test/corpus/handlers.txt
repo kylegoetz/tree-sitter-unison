@@ -13,11 +13,27 @@ a = handle
     with foo
 ---
 (unison
-      (term_declaration (term_definition (regular_identifier) (kw_equals)
-            (handler (handle)
-                  (term_declaration (term_definition (regular_identifier) (kw_equals) (function_application (nat) (operator) (nat))))
-                  (function_application (regular_identifier) (operator) (function_application (regular_identifier) (nat) (float) (int)))
-            (with) (regular_identifier)))))
+      (term_declaration
+        (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (handler
+                (handle)
+                (term_declaration
+                    (term_definition
+                        (regular_identifier)
+                        (kw_equals)
+                        (nat)
+                        (operator)
+                        (nat)))
+                (regular_identifier)
+                (operator)
+                (regular_identifier)
+                (nat)
+                (float)
+                (int)
+                (with)
+                (regular_identifier)))))
 ===
 [Handlers] multiline 2
 ===
