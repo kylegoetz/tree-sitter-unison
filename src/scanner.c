@@ -935,7 +935,7 @@ static Result operator(State *state) {
   // Process WATCH
   if (COL == 0 && PEEK == '>') {
     S_ADVANCE;
-    if (!symbolic(PEEK)) {
+    if (!symbolic(PEEK) ) {
       MARK("operator", false, state);
       return finish_if_valid(WATCH, "watch", state);
     }
@@ -967,10 +967,9 @@ static Result operator(State *state) {
   bool previous_was_colon = false;
 
   /*
-   * scan until:
-   * - if parenthesized and space, skip all succeeding spaces
-   * - if parenthesized and `)`, return successful operator
-   * - if non-symbolic, succeed without advancing
+   * scan until we encounter a non-symbol char; at that point, if
+   * - whitespace, succeed SYMOP
+   * - non-whitespace, fail since SYMOP must be surrounded by whitespace
    *
    */
   while (!is_eof(state)) {
@@ -997,15 +996,9 @@ static Result operator(State *state) {
       }
       S_ADVANCE;
       MARK("operator", false, state);
-    } else if (parenthesized && PEEK == ' ') {
-      skipspace(state);
-    } else if (parenthesized && PEEK == ')') {
-      S_ADVANCE;
-      MARK("operator", false, state);
-      return finish_if_valid(SYMOP, "symbolic operator", state);
     } else {
       if (found_pipe_or_logical_op(or_count, and_count)) return res_fail;
-      return finish_if_valid(SYMOP, "symbolic operator", state);
+      return isws(PEEK) ? finish_if_valid(SYMOP, "symbolic operator", state) : res_fail;
     }
   }
   if (found_pipe_or_logical_op(or_count, and_count)) return res_fail;
