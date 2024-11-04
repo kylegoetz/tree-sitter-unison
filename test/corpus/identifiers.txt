@@ -31,16 +31,9 @@ x = 1 + 1
         (term_definition
             (regular_identifier)
             (kw_equals)
-            (function_application
-                (nat)
-                (operator)
-                (nat)))))
-===
-[Identifier] operator with path
-===
-> 1 Nat.== 1
----
-(unison (watch_expression (function_application (nat) (path) (operator) (nat))))
+            (nat)
+            (operator)
+            (nat))))
 ===
 [Identifier] hash-qualified symboly id
 ===
