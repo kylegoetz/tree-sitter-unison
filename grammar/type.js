@@ -66,12 +66,12 @@ module.exports = {
   _type_rhs: $ => sep1($.pipe, choice($._value_type, $.record)),
 
   // Record type
-  record: $ => seq('{',$._record_fields_block,'}',),
+  record: $ => seq('{', $._record_fields_block, '}',),
   record_field: $ => seq(alias($.wordy_id, $.field_name), ':', field('type', $._value_type)),
   _record_fields_inline: $ => seq(sep1(',', $.record_field), optional(',')),
   _record_fields_block: $ => choice($._record_fields_inline, seq(
-      $._layout_start,
-      sep($._layout_semicolon, $._record_fields_inline),
-      $._layout_end,
+    $._layout_start,
+    sep($._layout_semicolon, $._record_fields_inline),
+    $._layout_end,
   )),
 }

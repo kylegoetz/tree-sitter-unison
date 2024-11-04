@@ -1,14 +1,23 @@
-const { sep, sep1 } = require("./util");
+const { sep1, block, open_block_with, openBlockWith, layoutBlock } = require("./util");
 
 module.exports = {
   _statement: ($) =>
     choice(
-      prec(2, alias($.binding, $.term_declaration)),
-      $.destructuring_bind,
-      prec(1, $._block_term),
+      prec(3, alias($._binding, $.term_declaration)),
+      prec.right(2, $._block_term),
+      // $.destructuring_bind, // TODO this is a problem where things gravitate toward this instead of block term for RHS of a KW_EQUALS
     ),
+  term_definition2: ($) => prec.right(seq(
+    $._lhs,
+    openBlockWith($, $.kw_equals),
+    $.__block)),
 
-  term_definition2: ($) => seq(block($, $.kw_equals)),
+  __block: $ => seq(
+    optional(seq(sep1($._layout_semicolon, $.use_clause), $._layout_semicolon)),
+    // terminated($, $._statement),
+    seq(prec.right(sep1($._layout_semicolon, $._statement))/*, optional($._layout_semicolon)*/),
+    $._layout_end
+  ),
 
   binding: ($) =>
     seq(
@@ -29,37 +38,17 @@ module.exports = {
   _term2: ($) =>
     choice(alias($.literal_function2, $.literal_function), $._term3),
   _term3: ($) =>
-    prec.right(
-      choice(
-        // alias("0: Int", $.tmp2),
-        seq(
-          choice($._infix_app_or_boolean_op),
-          optional(seq($.type_signature_colon, $._computation_type)),
-        ),
-      ),
-    ),
-  _term4: ($) => prec.right(repeat1($._term_leaf)),
+    prec.right(seq(
+      $._infix_app_or_boolean_op,
+      optional(seq($.type_signature_colon, $._computation_type)),
+    )),
+  _term4: ($) => prec.right(repeat1(prec.right(choice($._hq_qualified_prefix_term, $._term_leaf)))),
 
   _infix_app_or_boolean_op: ($) =>
     prec.right(sep1($._generic_infix_app, $._term4)),
-  _generic_infix_app: ($) => choice("&&", "||", $._infix),
+  _generic_infix_app: ($) => choice($.and, $.or, $._infix),
   _infix: ($) => seq($._hq_qualified_infix_term, optional($._layout_semicolon)),
 };
 
 lam = ($, term) =>
-  seq($._prefix_definition_name, alias("->", $.arrow_symbol), term);
-
-const block = ($, opener) =>
-  seq(
-    opener,
-    $._layout_start,
-    // openBlockWith(opener),
-    // repeat(seq($.use_clause, $._layout_semicolon)),
-    sep1($._layout_semicolon, $.use_clause),
-    optional($._layout_semicolon),
-    // sep($._layout_semicolon, $.use_clause),
-    // optional($._layout_semi)
-    prec.right(sep1($._layout_semicolon, choice(/*"s: Int",*/ $._statement))),
-    optional($._layout_semicolon),
-    $._layout_end,
-  );
+  seq($._prefix_definition_name, alias('->', $.arrow_symbol), term)

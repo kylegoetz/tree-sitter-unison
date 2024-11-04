@@ -3,7 +3,6 @@ const literals = require("./literal");
 const term = require("./term");
 const patterns = require("./pattern-matching");
 const conditionals = require("./conditionals");
-const destructuring = require("./binding");
 const delayed = require("./delayed-computation");
 const expression = require("./expression");
 const blocks = require("./blocks");
@@ -23,7 +22,6 @@ module.exports = {
   ...term,
   ...patterns,
   ...conditionals,
-  ...destructuring,
   ...delayed,
   ...expression,
   ...blocks,

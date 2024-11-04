@@ -21,7 +21,7 @@ const TWO_SYMBOL = composeRegex(/*TWO_SYMBOL_MINUS_NOT_ARROW, TWO_SYMBOL_AND_NOT
 // anything 3+ symbols is an operator
 const THREE_SYMBOL_OR_MORE = /[!$%^&*\-=+<>~\\/|:]{3,}/
 // const SYMBOLIC_PATH_SEGMENT = /[!$%^&*\-=+<>~\\/|:]{3,}/ ///[!$%^&*\-+:]+/
-const SYMBOLIC_PATH_SEGMENT = composeRegex(ONE_SYMBOL , TWO_SYMBOL, THREE_SYMBOL_OR_MORE)
+const SYMBOLIC_PATH_SEGMENT = composeRegex(ONE_SYMBOL, TWO_SYMBOL, THREE_SYMBOL_OR_MORE)
 
 // const NON_TERMINAL_PATH_SEGMENT = /[+]/ //ONE_SYMBOL  // composeRegex(/*VARID,*/ SYMBOLIC_PATH_SEGMENT) //SYMBOLIC_PATH_SEGMENT //composeRegex([WORDY_PATH_SEGMENT, SYMBOLIC_PATH_SEGMENT])
 

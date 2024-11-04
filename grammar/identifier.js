@@ -1,8 +1,8 @@
 const regex = require("./regex");
-const { parens } = require("./util");
+const { parens, paren$ } = require("./util");
 
 module.exports = {
-  wordy_id: ($) => regex.varid,
+  wordy_id: ($) => prec.right(choice(regex.varid)),
   imm_wordy_id: ($) => token.immediate(regex.varid),
 
   symboly_id: ($) => regex.symboly_id,
@@ -66,24 +66,31 @@ module.exports = {
       seq($._identifier, alias($.imm_hash_qualifier, $.hash_qualifier)),
     ),
 
-  _hq_qualified_wordy_id: $ => choice(
+  _hq_qualified_wordy_id: $ => prec.right(choice(
     $.built_in_hash,
+    $.hash_qualifier,
     seq(
       choice(
         alias($.wordy_id, $.regular_identifier),
         seq($.path, alias($.imm_wordy_id, $.regular_identifier)),
       ),
       optional(alias($.imm_hash_qualifier, $.hash_qualifier)),
-    )),
+    ))),
 
   _hq_qualified_symboly_id: ($) =>
     seq(
-      choice($.operator, seq($.path, alias($.imm_symboly_id, $.operator))),
+      choice($.operator, /*'Nat.==',*/ seq(choice(/*'Nat.',*/ $.path), alias($.imm_symboly_id, $.operator))),
       optional(alias($.imm_hash_qualifier, $.hash_qualifier)),
     ),
 
   _hq_qualified_prefix_term: ($) =>
-    choice($._hq_qualified_wordy_id, parens($._hq_qualified_symboly_id)),
+    choice(
+      // '(>>=#foo)',
+      // seq('(', token.immediate('>>=#foo'), token.immediate(')')),
+      // paren$($, '>>=#foo'),
+      $._hq_qualified_wordy_id,
+      paren$($, $._hq_qualified_symboly_id),
+      alias($._parenthesized_operator, $.prefix_operator)),
 
   _hq_qualified_infix_term: ($) => $._hq_qualified_symboly_id,
 
