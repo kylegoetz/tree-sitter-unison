@@ -25,6 +25,8 @@ All notable changes to this project will be documented in this file.
 - `effect_pattern` now contains either a (new) `effect_pure` or `effect_bind`. The difference is as that between `{ x }` and `{ x -> y }`, respectively
 - `constructor_or_variable_pattern` has been bifurcated into `ctor` and `var_or_as` because they have subtly different rules than anticipated previously so cannot be handled together
 - the list infix patterns have been flattened, so for example `init_last_tail_pattern ( left side . right side )` is now `left side . snoc . right side`. The sructure can be deduced, while now the infix operator is a named node. Another example is `head_tail_list_pattern (left . right)` is now `left cons right`.
+- a prefix `operator` (which is surrounded by parentheses) is now called `prefix_operator` instead of just `operator`
+- the introduction of named nodes for `[`, `]`, `(`, and `)`: `open_bracket`, `close_bracket`, `open_parens`, `close_parens`
 
 ## [1.1.4] - 2024-04-25
 
