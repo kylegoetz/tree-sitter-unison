@@ -1,5 +1,36 @@
 [
   {
+    "type": "_data_constructor",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "_data_constructor",
+          "named": true
+        },
+        {
+          "type": "list_constructor",
+          "named": true
+        },
+        {
+          "type": "tuple_constructor",
+          "named": true
+        },
+        {
+          "type": "type_argument",
+          "named": true
+        },
+        {
+          "type": "type_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "ability_declaration",
     "named": true,
     "fields": {},
@@ -62,156 +93,9 @@
     }
   },
   {
-    "type": "ability_pattern",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "ability_pattern",
-          "named": true
-        },
-        {
-          "type": "as_pattern",
-          "named": true
-        },
-        {
-          "type": "blank_pattern",
-          "named": true
-        },
-        {
-          "type": "concat_list_pattern",
-          "named": true
-        },
-        {
-          "type": "constructor_or_variable_pattern",
-          "named": true
-        },
-        {
-          "type": "head_tail_list_pattern",
-          "named": true
-        },
-        {
-          "type": "init_last_tail_pattern",
-          "named": true
-        },
-        {
-          "type": "int",
-          "named": true
-        },
-        {
-          "type": "literal_boolean",
-          "named": true
-        },
-        {
-          "type": "literal_char",
-          "named": true
-        },
-        {
-          "type": "literal_list_pattern",
-          "named": true
-        },
-        {
-          "type": "literal_text",
-          "named": true
-        },
-        {
-          "type": "nat",
-          "named": true
-        },
-        {
-          "type": "tuple_pattern",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "arrow_symbol",
     "named": true,
     "fields": {}
-  },
-  {
-    "type": "as",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "as_pattern",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "ability_pattern",
-          "named": true
-        },
-        {
-          "type": "as",
-          "named": true
-        },
-        {
-          "type": "as_pattern",
-          "named": true
-        },
-        {
-          "type": "blank_pattern",
-          "named": true
-        },
-        {
-          "type": "concat_list_pattern",
-          "named": true
-        },
-        {
-          "type": "constructor_or_variable_pattern",
-          "named": true
-        },
-        {
-          "type": "head_tail_list_pattern",
-          "named": true
-        },
-        {
-          "type": "init_last_tail_pattern",
-          "named": true
-        },
-        {
-          "type": "int",
-          "named": true
-        },
-        {
-          "type": "literal_boolean",
-          "named": true
-        },
-        {
-          "type": "literal_char",
-          "named": true
-        },
-        {
-          "type": "literal_list_pattern",
-          "named": true
-        },
-        {
-          "type": "literal_text",
-          "named": true
-        },
-        {
-          "type": "nat",
-          "named": true
-        },
-        {
-          "type": "regular_identifier",
-          "named": true
-        },
-        {
-          "type": "tuple_pattern",
-          "named": true
-        }
-      ]
-    }
   },
   {
     "type": "bang",
@@ -222,7 +106,23 @@
         "required": false,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
             "type": "and",
+            "named": true
+          },
+          {
+            "type": "arrow_symbol",
             "named": true
           },
           {
@@ -242,7 +142,19 @@
             "named": true
           },
           {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
             "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
             "named": true
           },
           {
@@ -258,7 +170,7 @@
             "named": true
           },
           {
-            "type": "function_application",
+            "type": "forall",
             "named": true
           },
           {
@@ -326,10 +238,6 @@
             "named": true
           },
           {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
@@ -338,11 +246,27 @@
             "named": true
           },
           {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           },
           {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
             "named": true
           },
           {
@@ -352,6 +276,14 @@
           {
             "type": "with",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       }
@@ -378,6 +310,10 @@
         },
         {
           "type": "delay_quote",
+          "named": true
+        },
+        {
+          "type": "doc_block",
           "named": true
         },
         {
@@ -421,6 +357,10 @@
           "named": true
         },
         {
+          "type": "literal_list",
+          "named": true
+        },
+        {
           "type": "literal_termlink",
           "named": true
         },
@@ -453,6 +393,10 @@
           "named": true
         },
         {
+          "type": "prefix_operator",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
@@ -462,73 +406,6 @@
         },
         {
           "type": "with",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "concat_list_pattern",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "ability_pattern",
-          "named": true
-        },
-        {
-          "type": "as_pattern",
-          "named": true
-        },
-        {
-          "type": "blank_pattern",
-          "named": true
-        },
-        {
-          "type": "concat_list_pattern",
-          "named": true
-        },
-        {
-          "type": "constructor_or_variable_pattern",
-          "named": true
-        },
-        {
-          "type": "head_tail_list_pattern",
-          "named": true
-        },
-        {
-          "type": "init_last_tail_pattern",
-          "named": true
-        },
-        {
-          "type": "int",
-          "named": true
-        },
-        {
-          "type": "literal_boolean",
-          "named": true
-        },
-        {
-          "type": "literal_char",
-          "named": true
-        },
-        {
-          "type": "literal_list_pattern",
-          "named": true
-        },
-        {
-          "type": "literal_text",
-          "named": true
-        },
-        {
-          "type": "nat",
-          "named": true
-        },
-        {
-          "type": "tuple_pattern",
           "named": true
         }
       ]
@@ -621,91 +498,9 @@
     }
   },
   {
-    "type": "constructor_or_variable_pattern",
+    "type": "constructor_name",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "ability_pattern",
-          "named": true
-        },
-        {
-          "type": "as_pattern",
-          "named": true
-        },
-        {
-          "type": "blank_pattern",
-          "named": true
-        },
-        {
-          "type": "built_in_hash",
-          "named": true
-        },
-        {
-          "type": "concat_list_pattern",
-          "named": true
-        },
-        {
-          "type": "constructor_or_variable_pattern",
-          "named": true
-        },
-        {
-          "type": "hash_qualifier",
-          "named": true
-        },
-        {
-          "type": "head_tail_list_pattern",
-          "named": true
-        },
-        {
-          "type": "init_last_tail_pattern",
-          "named": true
-        },
-        {
-          "type": "int",
-          "named": true
-        },
-        {
-          "type": "literal_boolean",
-          "named": true
-        },
-        {
-          "type": "literal_char",
-          "named": true
-        },
-        {
-          "type": "literal_list_pattern",
-          "named": true
-        },
-        {
-          "type": "literal_text",
-          "named": true
-        },
-        {
-          "type": "nat",
-          "named": true
-        },
-        {
-          "type": "operator",
-          "named": true
-        },
-        {
-          "type": "path",
-          "named": true
-        },
-        {
-          "type": "regular_identifier",
-          "named": true
-        },
-        {
-          "type": "tuple_pattern",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "ctor",
@@ -716,6 +511,10 @@
       "required": true,
       "types": [
         {
+          "type": "built_in_hash",
+          "named": true
+        },
+        {
           "type": "hash_qualifier",
           "named": true
         },
@@ -725,6 +524,10 @@
         },
         {
           "type": "path",
+          "named": true
+        },
+        {
+          "type": "prefix_operator",
           "named": true
         },
         {
@@ -743,7 +546,23 @@
         "required": false,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
             "type": "and",
+            "named": true
+          },
+          {
+            "type": "arrow_symbol",
             "named": true
           },
           {
@@ -763,7 +582,19 @@
             "named": true
           },
           {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
             "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
             "named": true
           },
           {
@@ -779,7 +610,7 @@
             "named": true
           },
           {
-            "type": "function_application",
+            "type": "forall",
             "named": true
           },
           {
@@ -847,10 +678,6 @@
             "named": true
           },
           {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
@@ -859,11 +686,27 @@
             "named": true
           },
           {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           },
           {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
             "named": true
           },
           {
@@ -873,6 +716,14 @@
           {
             "type": "with",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       }
@@ -902,6 +753,10 @@
           "named": true
         },
         {
+          "type": "delay_quote",
+          "named": true
+        },
+        {
           "type": "destructuring_bind",
           "named": true
         },
@@ -923,10 +778,6 @@
         },
         {
           "type": "float",
-          "named": true
-        },
-        {
-          "type": "function_application",
           "named": true
         },
         {
@@ -994,15 +845,15 @@
           "named": true
         },
         {
-          "type": "parenthetical_exp",
-          "named": true
-        },
-        {
           "type": "path",
           "named": true
         },
         {
           "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "prefix_operator",
           "named": true
         },
         {
@@ -1015,10 +866,6 @@
         },
         {
           "type": "tuple_or_parenthesized",
-          "named": true
-        },
-        {
-          "type": "unit",
           "named": true
         },
         {
@@ -1041,7 +888,23 @@
         "required": false,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
             "type": "and",
+            "named": true
+          },
+          {
+            "type": "arrow_symbol",
             "named": true
           },
           {
@@ -1061,7 +924,19 @@
             "named": true
           },
           {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
             "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
             "named": true
           },
           {
@@ -1077,7 +952,7 @@
             "named": true
           },
           {
-            "type": "function_application",
+            "type": "forall",
             "named": true
           },
           {
@@ -1145,10 +1020,6 @@
             "named": true
           },
           {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
@@ -1157,11 +1028,27 @@
             "named": true
           },
           {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           },
           {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
             "named": true
           },
           {
@@ -1171,6 +1058,14 @@
           {
             "type": "with",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       }
@@ -1197,6 +1092,10 @@
         },
         {
           "type": "delay_quote",
+          "named": true
+        },
+        {
+          "type": "doc_block",
           "named": true
         },
         {
@@ -1240,6 +1139,10 @@
           "named": true
         },
         {
+          "type": "literal_list",
+          "named": true
+        },
+        {
           "type": "literal_termlink",
           "named": true
         },
@@ -1269,6 +1172,10 @@
         },
         {
           "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "prefix_operator",
           "named": true
         },
         {
@@ -1346,7 +1253,23 @@
         "required": false,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
             "type": "and",
+            "named": true
+          },
+          {
+            "type": "arrow_symbol",
             "named": true
           },
           {
@@ -1366,7 +1289,19 @@
             "named": true
           },
           {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
             "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
             "named": true
           },
           {
@@ -1382,7 +1317,7 @@
             "named": true
           },
           {
-            "type": "function_application",
+            "type": "forall",
             "named": true
           },
           {
@@ -1450,10 +1385,6 @@
             "named": true
           },
           {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
@@ -1462,11 +1393,27 @@
             "named": true
           },
           {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           },
           {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
             "named": true
           },
           {
@@ -1476,6 +1423,14 @@
           {
             "type": "with",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       }
@@ -1493,6 +1448,10 @@
           "named": true
         },
         {
+          "type": "blank_pattern",
+          "named": true
+        },
+        {
           "type": "built_in_hash",
           "named": true
         },
@@ -1501,11 +1460,27 @@
           "named": true
         },
         {
-          "type": "constructor_or_variable_pattern",
+          "type": "close_parens",
+          "named": true
+        },
+        {
+          "type": "concat",
+          "named": true
+        },
+        {
+          "type": "cons",
+          "named": true
+        },
+        {
+          "type": "ctor",
           "named": true
         },
         {
           "type": "delay_block",
+          "named": true
+        },
+        {
+          "type": "delay_quote",
           "named": true
         },
         {
@@ -1514,6 +1489,10 @@
         },
         {
           "type": "doc_block",
+          "named": true
+        },
+        {
+          "type": "effect_pattern",
           "named": true
         },
         {
@@ -1526,10 +1505,6 @@
         },
         {
           "type": "float",
-          "named": true
-        },
-        {
-          "type": "function_application",
           "named": true
         },
         {
@@ -1573,6 +1548,10 @@
           "named": true
         },
         {
+          "type": "literal_list_pattern",
+          "named": true
+        },
+        {
           "type": "literal_termlink",
           "named": true
         },
@@ -1593,6 +1572,10 @@
           "named": true
         },
         {
+          "type": "open_parens",
+          "named": true
+        },
+        {
           "type": "operator",
           "named": true
         },
@@ -1601,7 +1584,7 @@
           "named": true
         },
         {
-          "type": "parenthetical_exp",
+          "type": "parenthesized_or_tuple_pattern",
           "named": true
         },
         {
@@ -1613,7 +1596,15 @@
           "named": true
         },
         {
+          "type": "prefix_operator",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
+          "named": true
+        },
+        {
+          "type": "snoc",
           "named": true
         },
         {
@@ -1625,15 +1616,15 @@
           "named": true
         },
         {
-          "type": "tuple_pattern",
-          "named": true
-        },
-        {
-          "type": "unit",
-          "named": true
-        },
-        {
           "type": "use_clause",
+          "named": true
+        },
+        {
+          "type": "var_or_as",
+          "named": true
+        },
+        {
+          "type": "var_or_nullary_ctor",
           "named": true
         },
         {
@@ -1715,6 +1706,10 @@
           "named": true
         },
         {
+          "type": "built_in_hash",
+          "named": true
+        },
+        {
           "type": "concat",
           "named": true
         },
@@ -1768,6 +1763,10 @@
         },
         {
           "type": "path",
+          "named": true
+        },
+        {
+          "type": "prefix_operator",
           "named": true
         },
         {
@@ -1883,458 +1882,20 @@
     "type": "exp_if",
     "named": true,
     "fields": {
-      "else_block": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": ";",
-            "named": false
-          },
-          {
-            "type": "and",
-            "named": true
-          },
-          {
-            "type": "bang",
-            "named": true
-          },
-          {
-            "type": "built_in_hash",
-            "named": true
-          },
-          {
-            "type": "cases",
-            "named": true
-          },
-          {
-            "type": "delay_block",
-            "named": true
-          },
-          {
-            "type": "destructuring_bind",
-            "named": true
-          },
-          {
-            "type": "doc_block",
-            "named": true
-          },
-          {
-            "type": "exp_if",
-            "named": true
-          },
-          {
-            "type": "exp_let",
-            "named": true
-          },
-          {
-            "type": "float",
-            "named": true
-          },
-          {
-            "type": "function_application",
-            "named": true
-          },
-          {
-            "type": "handler",
-            "named": true
-          },
-          {
-            "type": "hash_qualifier",
-            "named": true
-          },
-          {
-            "type": "int",
-            "named": true
-          },
-          {
-            "type": "literal_boolean",
-            "named": true
-          },
-          {
-            "type": "literal_byte",
-            "named": true
-          },
-          {
-            "type": "literal_char",
-            "named": true
-          },
-          {
-            "type": "literal_function",
-            "named": true
-          },
-          {
-            "type": "literal_hex",
-            "named": true
-          },
-          {
-            "type": "literal_list",
-            "named": true
-          },
-          {
-            "type": "literal_termlink",
-            "named": true
-          },
-          {
-            "type": "literal_text",
-            "named": true
-          },
-          {
-            "type": "literal_typelink",
-            "named": true
-          },
-          {
-            "type": "match",
-            "named": true
-          },
-          {
-            "type": "nat",
-            "named": true
-          },
-          {
-            "type": "operator",
-            "named": true
-          },
-          {
-            "type": "or",
-            "named": true
-          },
-          {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
-            "type": "path",
-            "named": true
-          },
-          {
-            "type": "pattern",
-            "named": true
-          },
-          {
-            "type": "regular_identifier",
-            "named": true
-          },
-          {
-            "type": "term_declaration",
-            "named": true
-          },
-          {
-            "type": "tuple_or_parenthesized",
-            "named": true
-          },
-          {
-            "type": "unit",
-            "named": true
-          },
-          {
-            "type": "use_clause",
-            "named": true
-          },
-          {
-            "type": "with",
-            "named": true
-          }
-        ]
-      },
-      "if_block": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": ";",
-            "named": false
-          },
-          {
-            "type": "and",
-            "named": true
-          },
-          {
-            "type": "bang",
-            "named": true
-          },
-          {
-            "type": "built_in_hash",
-            "named": true
-          },
-          {
-            "type": "cases",
-            "named": true
-          },
-          {
-            "type": "delay_block",
-            "named": true
-          },
-          {
-            "type": "destructuring_bind",
-            "named": true
-          },
-          {
-            "type": "doc_block",
-            "named": true
-          },
-          {
-            "type": "exp_if",
-            "named": true
-          },
-          {
-            "type": "exp_let",
-            "named": true
-          },
-          {
-            "type": "float",
-            "named": true
-          },
-          {
-            "type": "function_application",
-            "named": true
-          },
-          {
-            "type": "handler",
-            "named": true
-          },
-          {
-            "type": "hash_qualifier",
-            "named": true
-          },
-          {
-            "type": "int",
-            "named": true
-          },
-          {
-            "type": "literal_boolean",
-            "named": true
-          },
-          {
-            "type": "literal_byte",
-            "named": true
-          },
-          {
-            "type": "literal_char",
-            "named": true
-          },
-          {
-            "type": "literal_function",
-            "named": true
-          },
-          {
-            "type": "literal_hex",
-            "named": true
-          },
-          {
-            "type": "literal_list",
-            "named": true
-          },
-          {
-            "type": "literal_termlink",
-            "named": true
-          },
-          {
-            "type": "literal_text",
-            "named": true
-          },
-          {
-            "type": "literal_typelink",
-            "named": true
-          },
-          {
-            "type": "match",
-            "named": true
-          },
-          {
-            "type": "nat",
-            "named": true
-          },
-          {
-            "type": "operator",
-            "named": true
-          },
-          {
-            "type": "or",
-            "named": true
-          },
-          {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
-            "type": "path",
-            "named": true
-          },
-          {
-            "type": "pattern",
-            "named": true
-          },
-          {
-            "type": "regular_identifier",
-            "named": true
-          },
-          {
-            "type": "term_declaration",
-            "named": true
-          },
-          {
-            "type": "tuple_or_parenthesized",
-            "named": true
-          },
-          {
-            "type": "unit",
-            "named": true
-          },
-          {
-            "type": "use_clause",
-            "named": true
-          },
-          {
-            "type": "with",
-            "named": true
-          }
-        ]
-      },
       "scrutinee": {
         "multiple": true,
         "required": false,
         "types": [
           {
-            "type": "and",
-            "named": true
+            "type": "(",
+            "named": false
           },
           {
-            "type": "bang",
-            "named": true
+            "type": ")",
+            "named": false
           },
           {
-            "type": "built_in_hash",
-            "named": true
-          },
-          {
-            "type": "cases",
-            "named": true
-          },
-          {
-            "type": "delay_block",
-            "named": true
-          },
-          {
-            "type": "doc_block",
-            "named": true
-          },
-          {
-            "type": "exp_if",
-            "named": true
-          },
-          {
-            "type": "exp_let",
-            "named": true
-          },
-          {
-            "type": "float",
-            "named": true
-          },
-          {
-            "type": "function_application",
-            "named": true
-          },
-          {
-            "type": "handler",
-            "named": true
-          },
-          {
-            "type": "hash_qualifier",
-            "named": true
-          },
-          {
-            "type": "int",
-            "named": true
-          },
-          {
-            "type": "literal_boolean",
-            "named": true
-          },
-          {
-            "type": "literal_byte",
-            "named": true
-          },
-          {
-            "type": "literal_char",
-            "named": true
-          },
-          {
-            "type": "literal_function",
-            "named": true
-          },
-          {
-            "type": "literal_hex",
-            "named": true
-          },
-          {
-            "type": "literal_list",
-            "named": true
-          },
-          {
-            "type": "literal_termlink",
-            "named": true
-          },
-          {
-            "type": "literal_text",
-            "named": true
-          },
-          {
-            "type": "literal_typelink",
-            "named": true
-          },
-          {
-            "type": "match",
-            "named": true
-          },
-          {
-            "type": "nat",
-            "named": true
-          },
-          {
-            "type": "operator",
-            "named": true
-          },
-          {
-            "type": "or",
-            "named": true
-          },
-          {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
-            "type": "path",
-            "named": true
-          },
-          {
-            "type": "pattern",
-            "named": true
-          },
-          {
-            "type": "regular_identifier",
-            "named": true
-          },
-          {
-            "type": "tuple_or_parenthesized",
-            "named": true
-          },
-          {
-            "type": "unit",
-            "named": true
-          },
-          {
-            "type": "with",
-            "named": true
-          }
-        ]
-      },
-      "then_block": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": ";",
+            "type": ",",
             "named": false
           },
           {
@@ -2342,6 +1903,10 @@
             "named": true
           },
           {
+            "type": "arrow_symbol",
+            "named": true
+          },
+          {
             "type": "bang",
             "named": true
           },
@@ -2358,11 +1923,19 @@
             "named": true
           },
           {
-            "type": "destructuring_bind",
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
             "named": true
           },
           {
             "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
             "named": true
           },
           {
@@ -2378,7 +1951,7 @@
             "named": true
           },
           {
-            "type": "function_application",
+            "type": "forall",
             "named": true
           },
           {
@@ -2446,10 +2019,6 @@
             "named": true
           },
           {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
@@ -2458,173 +2027,7 @@
             "named": true
           },
           {
-            "type": "regular_identifier",
-            "named": true
-          },
-          {
-            "type": "term_declaration",
-            "named": true
-          },
-          {
-            "type": "tuple_or_parenthesized",
-            "named": true
-          },
-          {
-            "type": "unit",
-            "named": true
-          },
-          {
-            "type": "use_clause",
-            "named": true
-          },
-          {
-            "type": "with",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "kw_else",
-          "named": true
-        },
-        {
-          "type": "kw_if",
-          "named": true
-        },
-        {
-          "type": "kw_then",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "exp_let",
-    "named": true,
-    "fields": {
-      "scrutinee": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "and",
-            "named": true
-          },
-          {
-            "type": "bang",
-            "named": true
-          },
-          {
-            "type": "built_in_hash",
-            "named": true
-          },
-          {
-            "type": "cases",
-            "named": true
-          },
-          {
-            "type": "delay_block",
-            "named": true
-          },
-          {
-            "type": "doc_block",
-            "named": true
-          },
-          {
-            "type": "exp_if",
-            "named": true
-          },
-          {
-            "type": "exp_let",
-            "named": true
-          },
-          {
-            "type": "float",
-            "named": true
-          },
-          {
-            "type": "function_application",
-            "named": true
-          },
-          {
-            "type": "handler",
-            "named": true
-          },
-          {
-            "type": "hash_qualifier",
-            "named": true
-          },
-          {
-            "type": "int",
-            "named": true
-          },
-          {
-            "type": "literal_boolean",
-            "named": true
-          },
-          {
-            "type": "literal_byte",
-            "named": true
-          },
-          {
-            "type": "literal_char",
-            "named": true
-          },
-          {
-            "type": "literal_function",
-            "named": true
-          },
-          {
-            "type": "literal_hex",
-            "named": true
-          },
-          {
-            "type": "literal_list",
-            "named": true
-          },
-          {
-            "type": "literal_termlink",
-            "named": true
-          },
-          {
-            "type": "literal_text",
-            "named": true
-          },
-          {
-            "type": "literal_typelink",
-            "named": true
-          },
-          {
-            "type": "match",
-            "named": true
-          },
-          {
-            "type": "nat",
-            "named": true
-          },
-          {
-            "type": "operator",
-            "named": true
-          },
-          {
-            "type": "or",
-            "named": true
-          },
-          {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
-            "type": "path",
-            "named": true
-          },
-          {
-            "type": "pattern",
+            "type": "prefix_operator",
             "named": true
           },
           {
@@ -2632,7 +2035,19 @@
             "named": true
           },
           {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
             "named": true
           },
           {
@@ -2642,6 +2057,14 @@
           {
             "type": "with",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       }
@@ -2671,6 +2094,10 @@
           "named": true
         },
         {
+          "type": "delay_quote",
+          "named": true
+        },
+        {
           "type": "destructuring_bind",
           "named": true
         },
@@ -2691,7 +2118,353 @@
           "named": true
         },
         {
-          "type": "function_application",
+          "type": "handler",
+          "named": true
+        },
+        {
+          "type": "hash_qualifier",
+          "named": true
+        },
+        {
+          "type": "int",
+          "named": true
+        },
+        {
+          "type": "kw_else",
+          "named": true
+        },
+        {
+          "type": "kw_if",
+          "named": true
+        },
+        {
+          "type": "kw_then",
+          "named": true
+        },
+        {
+          "type": "literal_boolean",
+          "named": true
+        },
+        {
+          "type": "literal_byte",
+          "named": true
+        },
+        {
+          "type": "literal_char",
+          "named": true
+        },
+        {
+          "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
+          "named": true
+        },
+        {
+          "type": "literal_list",
+          "named": true
+        },
+        {
+          "type": "literal_termlink",
+          "named": true
+        },
+        {
+          "type": "literal_text",
+          "named": true
+        },
+        {
+          "type": "literal_typelink",
+          "named": true
+        },
+        {
+          "type": "match",
+          "named": true
+        },
+        {
+          "type": "nat",
+          "named": true
+        },
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "or",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "prefix_operator",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
+          "type": "term_declaration",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized",
+          "named": true
+        },
+        {
+          "type": "use_clause",
+          "named": true
+        },
+        {
+          "type": "with",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "exp_let",
+    "named": true,
+    "fields": {
+      "scrutinee": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "and",
+            "named": true
+          },
+          {
+            "type": "arrow_symbol",
+            "named": true
+          },
+          {
+            "type": "bang",
+            "named": true
+          },
+          {
+            "type": "built_in_hash",
+            "named": true
+          },
+          {
+            "type": "cases",
+            "named": true
+          },
+          {
+            "type": "delay_block",
+            "named": true
+          },
+          {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
+            "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
+            "named": true
+          },
+          {
+            "type": "exp_if",
+            "named": true
+          },
+          {
+            "type": "exp_let",
+            "named": true
+          },
+          {
+            "type": "float",
+            "named": true
+          },
+          {
+            "type": "forall",
+            "named": true
+          },
+          {
+            "type": "handler",
+            "named": true
+          },
+          {
+            "type": "hash_qualifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": true
+          },
+          {
+            "type": "literal_boolean",
+            "named": true
+          },
+          {
+            "type": "literal_byte",
+            "named": true
+          },
+          {
+            "type": "literal_char",
+            "named": true
+          },
+          {
+            "type": "literal_function",
+            "named": true
+          },
+          {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
+            "type": "literal_list",
+            "named": true
+          },
+          {
+            "type": "literal_termlink",
+            "named": true
+          },
+          {
+            "type": "literal_text",
+            "named": true
+          },
+          {
+            "type": "literal_typelink",
+            "named": true
+          },
+          {
+            "type": "match",
+            "named": true
+          },
+          {
+            "type": "nat",
+            "named": true
+          },
+          {
+            "type": "operator",
+            "named": true
+          },
+          {
+            "type": "or",
+            "named": true
+          },
+          {
+            "type": "path",
+            "named": true
+          },
+          {
+            "type": "pattern",
+            "named": true
+          },
+          {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
+            "named": true
+          },
+          {
+            "type": "unit",
+            "named": true
+          },
+          {
+            "type": "with",
+            "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "and",
+          "named": true
+        },
+        {
+          "type": "bang",
+          "named": true
+        },
+        {
+          "type": "built_in_hash",
+          "named": true
+        },
+        {
+          "type": "cases",
+          "named": true
+        },
+        {
+          "type": "delay_block",
+          "named": true
+        },
+        {
+          "type": "delay_quote",
+          "named": true
+        },
+        {
+          "type": "destructuring_bind",
+          "named": true
+        },
+        {
+          "type": "doc_block",
+          "named": true
+        },
+        {
+          "type": "exp_if",
+          "named": true
+        },
+        {
+          "type": "exp_let",
+          "named": true
+        },
+        {
+          "type": "float",
           "named": true
         },
         {
@@ -2763,15 +2536,15 @@
           "named": true
         },
         {
-          "type": "parenthetical_exp",
-          "named": true
-        },
-        {
           "type": "path",
           "named": true
         },
         {
           "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "prefix_operator",
           "named": true
         },
         {
@@ -2787,10 +2560,6 @@
           "named": true
         },
         {
-          "type": "unit",
-          "named": true
-        },
-        {
           "type": "use_clause",
           "named": true
         },
@@ -2800,6 +2569,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "field_name",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "forall",
@@ -2821,10 +2595,10 @@
     }
   },
   {
-    "type": "function_application",
+    "type": "guard",
     "named": true,
     "fields": {
-      "function_name": {
+      "scrutinee": {
         "multiple": true,
         "required": false,
         "types": [
@@ -2837,25 +2611,15 @@
             "named": false
           },
           {
-            "type": "operator",
-            "named": true
+            "type": ",",
+            "named": false
           },
-          {
-            "type": "path",
-            "named": true
-          },
-          {
-            "type": "regular_identifier",
-            "named": true
-          }
-        ]
-      },
-      "scrutinee": {
-        "multiple": true,
-        "required": false,
-        "types": [
           {
             "type": "and",
+            "named": true
+          },
+          {
+            "type": "arrow_symbol",
             "named": true
           },
           {
@@ -2875,7 +2639,19 @@
             "named": true
           },
           {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
             "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
             "named": true
           },
           {
@@ -2891,7 +2667,7 @@
             "named": true
           },
           {
-            "type": "function_application",
+            "type": "forall",
             "named": true
           },
           {
@@ -2959,10 +2735,6 @@
             "named": true
           },
           {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
@@ -2971,11 +2743,27 @@
             "named": true
           },
           {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           },
           {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
             "named": true
           },
           {
@@ -2985,6 +2773,14 @@
           {
             "type": "with",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       }
@@ -3014,6 +2810,10 @@
           "named": true
         },
         {
+          "type": "delay_quote",
+          "named": true
+        },
+        {
           "type": "doc_block",
           "named": true
         },
@@ -3027,10 +2827,6 @@
         },
         {
           "type": "float",
-          "named": true
-        },
-        {
-          "type": "function_application",
           "named": true
         },
         {
@@ -3055,292 +2851,6 @@
         },
         {
           "type": "literal_char",
-          "named": true
-        },
-        {
-          "type": "literal_function",
-          "named": true
-        },
-        {
-          "type": "literal_hex",
-          "named": true
-        },
-        {
-          "type": "literal_list",
-          "named": true
-        },
-        {
-          "type": "literal_termlink",
-          "named": true
-        },
-        {
-          "type": "literal_text",
-          "named": true
-        },
-        {
-          "type": "literal_typelink",
-          "named": true
-        },
-        {
-          "type": "match",
-          "named": true
-        },
-        {
-          "type": "nat",
-          "named": true
-        },
-        {
-          "type": "operator",
-          "named": true
-        },
-        {
-          "type": "or",
-          "named": true
-        },
-        {
-          "type": "parenthetical_exp",
-          "named": true
-        },
-        {
-          "type": "path",
-          "named": true
-        },
-        {
-          "type": "pattern",
-          "named": true
-        },
-        {
-          "type": "regular_identifier",
-          "named": true
-        },
-        {
-          "type": "tuple_or_parenthesized",
-          "named": true
-        },
-        {
-          "type": "unit",
-          "named": true
-        },
-        {
-          "type": "with",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "guard",
-    "named": true,
-    "fields": {
-      "scrutinee": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "and",
-            "named": true
-          },
-          {
-            "type": "bang",
-            "named": true
-          },
-          {
-            "type": "built_in_hash",
-            "named": true
-          },
-          {
-            "type": "cases",
-            "named": true
-          },
-          {
-            "type": "delay_block",
-            "named": true
-          },
-          {
-            "type": "doc_block",
-            "named": true
-          },
-          {
-            "type": "exp_if",
-            "named": true
-          },
-          {
-            "type": "exp_let",
-            "named": true
-          },
-          {
-            "type": "float",
-            "named": true
-          },
-          {
-            "type": "function_application",
-            "named": true
-          },
-          {
-            "type": "handler",
-            "named": true
-          },
-          {
-            "type": "hash_qualifier",
-            "named": true
-          },
-          {
-            "type": "int",
-            "named": true
-          },
-          {
-            "type": "literal_boolean",
-            "named": true
-          },
-          {
-            "type": "literal_byte",
-            "named": true
-          },
-          {
-            "type": "literal_char",
-            "named": true
-          },
-          {
-            "type": "literal_function",
-            "named": true
-          },
-          {
-            "type": "literal_hex",
-            "named": true
-          },
-          {
-            "type": "literal_list",
-            "named": true
-          },
-          {
-            "type": "literal_termlink",
-            "named": true
-          },
-          {
-            "type": "literal_text",
-            "named": true
-          },
-          {
-            "type": "literal_typelink",
-            "named": true
-          },
-          {
-            "type": "match",
-            "named": true
-          },
-          {
-            "type": "nat",
-            "named": true
-          },
-          {
-            "type": "operator",
-            "named": true
-          },
-          {
-            "type": "or",
-            "named": true
-          },
-          {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
-            "type": "path",
-            "named": true
-          },
-          {
-            "type": "pattern",
-            "named": true
-          },
-          {
-            "type": "regular_identifier",
-            "named": true
-          },
-          {
-            "type": "tuple_or_parenthesized",
-            "named": true
-          },
-          {
-            "type": "unit",
-            "named": true
-          },
-          {
-            "type": "with",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "and",
-          "named": true
-        },
-        {
-          "type": "bang",
-          "named": true
-        },
-        {
-          "type": "built_in_hash",
-          "named": true
-        },
-        {
-          "type": "cases",
-          "named": true
-        },
-        {
-          "type": "delay_block",
-          "named": true
-        },
-        {
-          "type": "doc_block",
-          "named": true
-        },
-        {
-          "type": "exp_if",
-          "named": true
-        },
-        {
-          "type": "exp_let",
-          "named": true
-        },
-        {
-          "type": "float",
-          "named": true
-        },
-        {
-          "type": "function_application",
-          "named": true
-        },
-        {
-          "type": "handler",
-          "named": true
-        },
-        {
-          "type": "hash_qualifier",
-          "named": true
-        },
-        {
-          "type": "int",
-          "named": true
-        },
-        {
-          "type": "literal_boolean",
-          "named": true
-        },
-        {
-          "type": "literal_byte",
-          "named": true
-        },
-        {
-          "type": "literal_char",
-          "named": true
-        },
-        {
-          "type": "literal_function",
           "named": true
         },
         {
@@ -3384,10 +2894,6 @@
           "named": true
         },
         {
-          "type": "parenthetical_exp",
-          "named": true
-        },
-        {
           "type": "path",
           "named": true
         },
@@ -3396,15 +2902,15 @@
           "named": true
         },
         {
+          "type": "prefix_operator",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
         {
           "type": "tuple_or_parenthesized",
-          "named": true
-        },
-        {
-          "type": "unit",
           "named": true
         },
         {
@@ -3423,7 +2929,23 @@
         "required": false,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
             "type": "and",
+            "named": true
+          },
+          {
+            "type": "arrow_symbol",
             "named": true
           },
           {
@@ -3443,7 +2965,19 @@
             "named": true
           },
           {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
             "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
             "named": true
           },
           {
@@ -3459,7 +2993,7 @@
             "named": true
           },
           {
-            "type": "function_application",
+            "type": "forall",
             "named": true
           },
           {
@@ -3527,10 +3061,6 @@
             "named": true
           },
           {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
@@ -3539,11 +3069,27 @@
             "named": true
           },
           {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           },
           {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
             "named": true
           },
           {
@@ -3553,6 +3099,14 @@
           {
             "type": "with",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       }
@@ -3586,6 +3140,10 @@
           "named": true
         },
         {
+          "type": "delay_quote",
+          "named": true
+        },
+        {
           "type": "destructuring_bind",
           "named": true
         },
@@ -3603,10 +3161,6 @@
         },
         {
           "type": "float",
-          "named": true
-        },
-        {
-          "type": "function_application",
           "named": true
         },
         {
@@ -3678,10 +3232,6 @@
           "named": true
         },
         {
-          "type": "parenthetical_exp",
-          "named": true
-        },
-        {
           "type": "path",
           "named": true
         },
@@ -3694,6 +3244,10 @@
           "named": true
         },
         {
+          "type": "prefix_operator",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
@@ -3703,10 +3257,6 @@
         },
         {
           "type": "tuple_or_parenthesized",
-          "named": true
-        },
-        {
-          "type": "unit",
           "named": true
         },
         {
@@ -3729,7 +3279,23 @@
         "required": false,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
             "type": "and",
+            "named": true
+          },
+          {
+            "type": "arrow_symbol",
             "named": true
           },
           {
@@ -3749,7 +3315,19 @@
             "named": true
           },
           {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
             "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
             "named": true
           },
           {
@@ -3765,7 +3343,7 @@
             "named": true
           },
           {
-            "type": "function_application",
+            "type": "forall",
             "named": true
           },
           {
@@ -3833,10 +3411,6 @@
             "named": true
           },
           {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
@@ -3845,11 +3419,27 @@
             "named": true
           },
           {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           },
           {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
             "named": true
           },
           {
@@ -3859,6 +3449,14 @@
           {
             "type": "with",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       }
@@ -3888,6 +3486,10 @@
           "named": true
         },
         {
+          "type": "delay_quote",
+          "named": true
+        },
+        {
           "type": "destructuring_bind",
           "named": true
         },
@@ -3905,10 +3507,6 @@
         },
         {
           "type": "float",
-          "named": true
-        },
-        {
-          "type": "function_application",
           "named": true
         },
         {
@@ -3980,15 +3578,15 @@
           "named": true
         },
         {
-          "type": "parenthetical_exp",
-          "named": true
-        },
-        {
           "type": "path",
           "named": true
         },
         {
           "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "prefix_operator",
           "named": true
         },
         {
@@ -4001,14 +3599,6 @@
         },
         {
           "type": "tuple_or_parenthesized",
-          "named": true
-        },
-        {
-          "type": "unit",
-          "named": true
-        },
-        {
-          "type": "use_clause",
           "named": true
         },
         {
@@ -4042,140 +3632,6 @@
     }
   },
   {
-    "type": "head_tail_list_pattern",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "ability_pattern",
-          "named": true
-        },
-        {
-          "type": "as_pattern",
-          "named": true
-        },
-        {
-          "type": "blank_pattern",
-          "named": true
-        },
-        {
-          "type": "concat_list_pattern",
-          "named": true
-        },
-        {
-          "type": "constructor_or_variable_pattern",
-          "named": true
-        },
-        {
-          "type": "head_tail_list_pattern",
-          "named": true
-        },
-        {
-          "type": "init_last_tail_pattern",
-          "named": true
-        },
-        {
-          "type": "int",
-          "named": true
-        },
-        {
-          "type": "literal_boolean",
-          "named": true
-        },
-        {
-          "type": "literal_char",
-          "named": true
-        },
-        {
-          "type": "literal_list_pattern",
-          "named": true
-        },
-        {
-          "type": "literal_text",
-          "named": true
-        },
-        {
-          "type": "nat",
-          "named": true
-        },
-        {
-          "type": "tuple_pattern",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "init_last_tail_pattern",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "ability_pattern",
-          "named": true
-        },
-        {
-          "type": "as_pattern",
-          "named": true
-        },
-        {
-          "type": "blank_pattern",
-          "named": true
-        },
-        {
-          "type": "concat_list_pattern",
-          "named": true
-        },
-        {
-          "type": "constructor_or_variable_pattern",
-          "named": true
-        },
-        {
-          "type": "head_tail_list_pattern",
-          "named": true
-        },
-        {
-          "type": "init_last_tail_pattern",
-          "named": true
-        },
-        {
-          "type": "int",
-          "named": true
-        },
-        {
-          "type": "literal_boolean",
-          "named": true
-        },
-        {
-          "type": "literal_char",
-          "named": true
-        },
-        {
-          "type": "literal_list_pattern",
-          "named": true
-        },
-        {
-          "type": "literal_text",
-          "named": true
-        },
-        {
-          "type": "nat",
-          "named": true
-        },
-        {
-          "type": "tuple_pattern",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "kw_else",
     "named": true,
     "fields": {}
@@ -4196,6 +3652,41 @@
     "fields": {}
   },
   {
+    "type": "list_constructor",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "_data_constructor",
+          "named": true
+        },
+        {
+          "type": "list_constructor",
+          "named": true
+        },
+        {
+          "type": "record",
+          "named": true
+        },
+        {
+          "type": "tuple_constructor",
+          "named": true
+        },
+        {
+          "type": "type_argument",
+          "named": true
+        },
+        {
+          "type": "type_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "literal_boolean",
     "named": true,
     "fields": {}
@@ -4209,32 +3700,28 @@
     "type": "literal_function",
     "named": true,
     "fields": {
-      "lhs": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "regular_identifier",
-            "named": true
-          }
-        ]
-      },
-      "param": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "regular_identifier",
-            "named": true
-          }
-        ]
-      },
       "scrutinee": {
         "multiple": true,
         "required": false,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
             "type": "and",
+            "named": true
+          },
+          {
+            "type": "arrow_symbol",
             "named": true
           },
           {
@@ -4254,7 +3741,19 @@
             "named": true
           },
           {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
             "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
             "named": true
           },
           {
@@ -4270,7 +3769,7 @@
             "named": true
           },
           {
-            "type": "function_application",
+            "type": "forall",
             "named": true
           },
           {
@@ -4338,10 +3837,6 @@
             "named": true
           },
           {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
@@ -4350,11 +3845,27 @@
             "named": true
           },
           {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           },
           {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
             "named": true
           },
           {
@@ -4364,6 +3875,14 @@
           {
             "type": "with",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       }
@@ -4397,7 +3916,19 @@
           "named": true
         },
         {
+          "type": "delay_quote",
+          "named": true
+        },
+        {
+          "type": "delayed",
+          "named": true
+        },
+        {
           "type": "doc_block",
+          "named": true
+        },
+        {
+          "type": "effect",
           "named": true
         },
         {
@@ -4413,7 +3944,7 @@
           "named": true
         },
         {
-          "type": "function_application",
+          "type": "forall",
           "named": true
         },
         {
@@ -4481,10 +4012,6 @@
           "named": true
         },
         {
-          "type": "parenthetical_exp",
-          "named": true
-        },
-        {
           "type": "path",
           "named": true
         },
@@ -4493,11 +4020,27 @@
           "named": true
         },
         {
+          "type": "prefix_operator",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
         {
+          "type": "sequence_type",
+          "named": true
+        },
+        {
           "type": "tuple_or_parenthesized",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized_type",
+          "named": true
+        },
+        {
+          "type": "type_signature_colon",
           "named": true
         },
         {
@@ -4520,7 +4063,23 @@
         "required": false,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
             "type": "and",
+            "named": true
+          },
+          {
+            "type": "arrow_symbol",
             "named": true
           },
           {
@@ -4540,7 +4099,19 @@
             "named": true
           },
           {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
             "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
             "named": true
           },
           {
@@ -4556,7 +4127,7 @@
             "named": true
           },
           {
-            "type": "function_application",
+            "type": "forall",
             "named": true
           },
           {
@@ -4624,10 +4195,6 @@
             "named": true
           },
           {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
@@ -4636,11 +4203,27 @@
             "named": true
           },
           {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           },
           {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
             "named": true
           },
           {
@@ -4650,16 +4233,28 @@
           {
             "type": "with",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       }
     },
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "and",
+          "named": true
+        },
+        {
+          "type": "arrow_symbol",
           "named": true
         },
         {
@@ -4675,11 +4270,27 @@
           "named": true
         },
         {
+          "type": "close_bracket",
+          "named": true
+        },
+        {
           "type": "delay_block",
           "named": true
         },
         {
+          "type": "delay_quote",
+          "named": true
+        },
+        {
+          "type": "delayed",
+          "named": true
+        },
+        {
           "type": "doc_block",
+          "named": true
+        },
+        {
+          "type": "effect",
           "named": true
         },
         {
@@ -4695,7 +4306,7 @@
           "named": true
         },
         {
-          "type": "function_application",
+          "type": "forall",
           "named": true
         },
         {
@@ -4755,15 +4366,15 @@
           "named": true
         },
         {
+          "type": "open_bracket",
+          "named": true
+        },
+        {
           "type": "operator",
           "named": true
         },
         {
           "type": "or",
-          "named": true
-        },
-        {
-          "type": "parenthetical_exp",
           "named": true
         },
         {
@@ -4775,11 +4386,27 @@
           "named": true
         },
         {
+          "type": "prefix_operator",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
         {
+          "type": "sequence_type",
+          "named": true
+        },
+        {
           "type": "tuple_or_parenthesized",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized_type",
+          "named": true
+        },
+        {
+          "type": "type_signature_colon",
           "named": true
         },
         {
@@ -4963,11 +4590,6 @@
     }
   },
   {
-    "type": "operator",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "parenthesized_or_tuple_pattern",
     "named": true,
     "fields": {},
@@ -5047,7 +4669,23 @@
         "required": false,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
             "type": "and",
+            "named": true
+          },
+          {
+            "type": "arrow_symbol",
             "named": true
           },
           {
@@ -5067,7 +4705,19 @@
             "named": true
           },
           {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
             "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
             "named": true
           },
           {
@@ -5083,7 +4733,7 @@
             "named": true
           },
           {
-            "type": "function_application",
+            "type": "forall",
             "named": true
           },
           {
@@ -5151,10 +4801,6 @@
             "named": true
           },
           {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
@@ -5163,11 +4809,27 @@
             "named": true
           },
           {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           },
           {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
             "named": true
           },
           {
@@ -5177,6 +4839,14 @@
           {
             "type": "with",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       }
@@ -5214,10 +4884,6 @@
           "named": true
         },
         {
-          "type": "doc_block",
-          "named": true
-        },
-        {
           "type": "effect",
           "named": true
         },
@@ -5235,10 +4901,6 @@
         },
         {
           "type": "forall",
-          "named": true
-        },
-        {
-          "type": "function_application",
           "named": true
         },
         {
@@ -5357,7 +5019,23 @@
         "required": false,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
             "type": "and",
+            "named": true
+          },
+          {
+            "type": "arrow_symbol",
             "named": true
           },
           {
@@ -5377,7 +5055,19 @@
             "named": true
           },
           {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
             "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
             "named": true
           },
           {
@@ -5393,7 +5083,7 @@
             "named": true
           },
           {
-            "type": "function_application",
+            "type": "forall",
             "named": true
           },
           {
@@ -5461,10 +5151,6 @@
             "named": true
           },
           {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
@@ -5473,11 +5159,27 @@
             "named": true
           },
           {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           },
           {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
             "named": true
           },
           {
@@ -5487,6 +5189,14 @@
           {
             "type": "with",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       }
@@ -5536,6 +5246,10 @@
           "named": true
         },
         {
+          "type": "delay_quote",
+          "named": true
+        },
+        {
           "type": "destructuring_bind",
           "named": true
         },
@@ -5557,10 +5271,6 @@
         },
         {
           "type": "float",
-          "named": true
-        },
-        {
-          "type": "function_application",
           "named": true
         },
         {
@@ -5640,15 +5350,15 @@
           "named": true
         },
         {
-          "type": "parenthetical_exp",
-          "named": true
-        },
-        {
           "type": "path",
           "named": true
         },
         {
           "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "prefix_operator",
           "named": true
         },
         {
@@ -5665,10 +5375,6 @@
         },
         {
           "type": "tuple_or_parenthesized",
-          "named": true
-        },
-        {
-          "type": "unit",
           "named": true
         },
         {
@@ -5786,6 +5492,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "regular_identifier",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "sequence_type",
@@ -5930,7 +5641,23 @@
         "required": false,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
             "type": "and",
+            "named": true
+          },
+          {
+            "type": "arrow_symbol",
             "named": true
           },
           {
@@ -5950,7 +5677,19 @@
             "named": true
           },
           {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
             "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
             "named": true
           },
           {
@@ -5966,7 +5705,7 @@
             "named": true
           },
           {
-            "type": "function_application",
+            "type": "forall",
             "named": true
           },
           {
@@ -6034,10 +5773,6 @@
             "named": true
           },
           {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
@@ -6046,11 +5781,27 @@
             "named": true
           },
           {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           },
           {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
             "named": true
           },
           {
@@ -6060,6 +5811,14 @@
           {
             "type": "with",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       }
@@ -6089,6 +5848,10 @@
           "named": true
         },
         {
+          "type": "delay_quote",
+          "named": true
+        },
+        {
           "type": "destructuring_bind",
           "named": true
         },
@@ -6106,10 +5869,6 @@
         },
         {
           "type": "float",
-          "named": true
-        },
-        {
-          "type": "function_application",
           "named": true
         },
         {
@@ -6181,15 +5940,15 @@
           "named": true
         },
         {
-          "type": "parenthetical_exp",
-          "named": true
-        },
-        {
           "type": "path",
           "named": true
         },
         {
           "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "prefix_operator",
           "named": true
         },
         {
@@ -6202,10 +5961,6 @@
         },
         {
           "type": "tuple_or_parenthesized",
-          "named": true
-        },
-        {
-          "type": "unit",
           "named": true
         },
         {
@@ -6287,7 +6042,23 @@
         "required": false,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
             "type": "and",
+            "named": true
+          },
+          {
+            "type": "arrow_symbol",
             "named": true
           },
           {
@@ -6307,7 +6078,19 @@
             "named": true
           },
           {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
             "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
             "named": true
           },
           {
@@ -6323,7 +6106,7 @@
             "named": true
           },
           {
-            "type": "function_application",
+            "type": "forall",
             "named": true
           },
           {
@@ -6391,10 +6174,6 @@
             "named": true
           },
           {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
@@ -6403,11 +6182,27 @@
             "named": true
           },
           {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           },
           {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
             "named": true
           },
           {
@@ -6417,6 +6212,14 @@
           {
             "type": "with",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       }
@@ -6446,6 +6249,10 @@
           "named": true
         },
         {
+          "type": "delay_quote",
+          "named": true
+        },
+        {
           "type": "doc_block",
           "named": true
         },
@@ -6459,10 +6266,6 @@
         },
         {
           "type": "float",
-          "named": true
-        },
-        {
-          "type": "function_application",
           "named": true
         },
         {
@@ -6530,10 +6333,6 @@
           "named": true
         },
         {
-          "type": "parenthetical_exp",
-          "named": true
-        },
-        {
           "type": "path",
           "named": true
         },
@@ -6542,11 +6341,15 @@
           "named": true
         },
         {
+          "type": "prefix_operator",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
         {
-          "type": "term_definition",
+          "type": "term_declaration",
           "named": true
         },
         {
@@ -6554,11 +6357,42 @@
           "named": true
         },
         {
-          "type": "unit",
+          "type": "with",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "tuple_constructor",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "_data_constructor",
           "named": true
         },
         {
-          "type": "with",
+          "type": "list_constructor",
+          "named": true
+        },
+        {
+          "type": "record",
+          "named": true
+        },
+        {
+          "type": "tuple_constructor",
+          "named": true
+        },
+        {
+          "type": "type_argument",
+          "named": true
+        },
+        {
+          "type": "type_name",
           "named": true
         }
       ]
@@ -6573,7 +6407,23 @@
         "required": false,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
             "type": "and",
+            "named": true
+          },
+          {
+            "type": "arrow_symbol",
             "named": true
           },
           {
@@ -6593,7 +6443,19 @@
             "named": true
           },
           {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
             "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
             "named": true
           },
           {
@@ -6609,7 +6471,7 @@
             "named": true
           },
           {
-            "type": "function_application",
+            "type": "forall",
             "named": true
           },
           {
@@ -6677,10 +6539,6 @@
             "named": true
           },
           {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
@@ -6689,11 +6547,27 @@
             "named": true
           },
           {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           },
           {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
             "named": true
           },
           {
@@ -6703,6 +6577,14 @@
           {
             "type": "with",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       }
@@ -6713,6 +6595,10 @@
       "types": [
         {
           "type": "and",
+          "named": true
+        },
+        {
+          "type": "arrow_symbol",
           "named": true
         },
         {
@@ -6732,7 +6618,19 @@
           "named": true
         },
         {
+          "type": "delay_quote",
+          "named": true
+        },
+        {
+          "type": "delayed",
+          "named": true
+        },
+        {
           "type": "doc_block",
+          "named": true
+        },
+        {
+          "type": "effect",
           "named": true
         },
         {
@@ -6748,7 +6646,7 @@
           "named": true
         },
         {
-          "type": "function_application",
+          "type": "forall",
           "named": true
         },
         {
@@ -6816,10 +6714,6 @@
           "named": true
         },
         {
-          "type": "parenthetical_exp",
-          "named": true
-        },
-        {
           "type": "path",
           "named": true
         },
@@ -6828,11 +6722,27 @@
           "named": true
         },
         {
+          "type": "prefix_operator",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
         {
+          "type": "sequence_type",
+          "named": true
+        },
+        {
           "type": "tuple_or_parenthesized",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized_type",
+          "named": true
+        },
+        {
+          "type": "type_signature_colon",
           "named": true
         },
         {
@@ -6906,71 +6816,9 @@
     }
   },
   {
-    "type": "tuple_pattern",
+    "type": "type_argument",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "ability_pattern",
-          "named": true
-        },
-        {
-          "type": "as_pattern",
-          "named": true
-        },
-        {
-          "type": "blank_pattern",
-          "named": true
-        },
-        {
-          "type": "concat_list_pattern",
-          "named": true
-        },
-        {
-          "type": "constructor_or_variable_pattern",
-          "named": true
-        },
-        {
-          "type": "head_tail_list_pattern",
-          "named": true
-        },
-        {
-          "type": "init_last_tail_pattern",
-          "named": true
-        },
-        {
-          "type": "int",
-          "named": true
-        },
-        {
-          "type": "literal_boolean",
-          "named": true
-        },
-        {
-          "type": "literal_char",
-          "named": true
-        },
-        {
-          "type": "literal_list_pattern",
-          "named": true
-        },
-        {
-          "type": "literal_text",
-          "named": true
-        },
-        {
-          "type": "nat",
-          "named": true
-        },
-        {
-          "type": "tuple_pattern",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "type_constructor",
@@ -7155,7 +7003,6 @@
   {
     "type": "unison",
     "named": true,
-    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -7292,6 +7139,11 @@
     }
   },
   {
+    "type": "var_or_nullary_ctor",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "watch_expression",
     "named": true,
     "fields": {
@@ -7300,7 +7152,23 @@
         "required": false,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
             "type": "and",
+            "named": true
+          },
+          {
+            "type": "arrow_symbol",
             "named": true
           },
           {
@@ -7320,7 +7188,19 @@
             "named": true
           },
           {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
             "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
             "named": true
           },
           {
@@ -7336,7 +7216,7 @@
             "named": true
           },
           {
-            "type": "function_application",
+            "type": "forall",
             "named": true
           },
           {
@@ -7404,10 +7284,6 @@
             "named": true
           },
           {
-            "type": "parenthetical_exp",
-            "named": true
-          },
-          {
             "type": "path",
             "named": true
           },
@@ -7416,11 +7292,27 @@
             "named": true
           },
           {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           },
           {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
             "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
             "named": true
           },
           {
@@ -7430,6 +7322,14 @@
           {
             "type": "with",
             "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
           }
         ]
       }
@@ -7459,6 +7359,10 @@
           "named": true
         },
         {
+          "type": "delay_quote",
+          "named": true
+        },
+        {
           "type": "doc_block",
           "named": true
         },
@@ -7472,10 +7376,6 @@
         },
         {
           "type": "float",
-          "named": true
-        },
-        {
-          "type": "function_application",
           "named": true
         },
         {
@@ -7543,10 +7443,6 @@
           "named": true
         },
         {
-          "type": "parenthetical_exp",
-          "named": true
-        },
-        {
           "type": "path",
           "named": true
         },
@@ -7555,19 +7451,19 @@
           "named": true
         },
         {
+          "type": "prefix_operator",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
         {
-          "type": "term_definition",
+          "type": "term_declaration",
           "named": true
         },
         {
           "type": "tuple_or_parenthesized",
-          "named": true
-        },
-        {
-          "type": "unit",
           "named": true
         },
         {
@@ -7599,10 +7495,6 @@
   },
   {
     "type": ")",
-    "named": false
-  },
-  {
-    "type": "+:",
     "named": false
   },
   {
@@ -7662,6 +7554,14 @@
     "named": true
   },
   {
+    "type": "close_bracket",
+    "named": true
+  },
+  {
+    "type": "close_parens",
+    "named": true
+  },
+  {
     "type": "colon",
     "named": true
   },
@@ -7675,10 +7575,6 @@
   },
   {
     "type": "cons",
-    "named": true
-  },
-  {
-    "type": "constructor_name",
     "named": true
   },
   {
@@ -7700,10 +7596,6 @@
   {
     "type": "false",
     "named": false
-  },
-  {
-    "type": "field_name",
-    "named": true
   },
   {
     "type": "float",
@@ -7770,6 +7662,18 @@
     "named": true
   },
   {
+    "type": "open_bracket",
+    "named": true
+  },
+  {
+    "type": "open_parens",
+    "named": true
+  },
+  {
+    "type": "operator",
+    "named": true
+  },
+  {
     "type": "or",
     "named": true
   },
@@ -7786,7 +7690,7 @@
     "named": true
   },
   {
-    "type": "regular_identifier",
+    "type": "prefix_operator",
     "named": true
   },
   {
@@ -7814,10 +7718,6 @@
     "named": false
   },
   {
-    "type": "type_argument",
-    "named": true
-  },
-  {
     "type": "type_kw",
     "named": true
   },
@@ -7832,10 +7732,6 @@
   {
     "type": "use",
     "named": false
-  },
-  {
-    "type": "var_or_nullary_ctor",
-    "named": true
   },
   {
     "type": "where",

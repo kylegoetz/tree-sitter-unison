@@ -9,7 +9,7 @@ module.exports = {
         $.exp_let,
         $.exp_if,
         $.handler,
-        $.function_application,
+        // $.function_application,
         $._literal,
         $._hash_qualified,
         $._pattern_matching,

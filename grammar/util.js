@@ -8,6 +8,8 @@ braces = (...rule) => seq("{", ...rule, "}");
 
 parens = (...rule) => seq("(", ...rule, ")");
 
+paren$ = ($, ...rule) => seq('(', $._layout_start, ...rule, $._layout_end, ')');
+
 /**
  * Wrap a repeated rule with semicolon rules.
  * Between any two occurences of a rule in a layout, if no explicit semicolon is encountered, delegate to the scanner
@@ -24,12 +26,14 @@ terminated = ($, rule) =>
     ),
   );
 
-(layouted_braces = (rule) => braces(sep(";", rule), optional(";"))),
-  (open_block_with = ($, opener) =>
-    choice(
-      // seq(opener, $._expression),
-      seq(opener, $._layout_start, terminated($, $._statement), $._layout_end),
-    ));
+layouted_braces = (rule) => braces(sep(";", rule), optional(";"));
+
+open_block_with = ($, opener) => seq(
+  opener,
+  $._layout_start,
+  optional(terminated($, $.use_clause)),
+  terminated($, $._statement),
+  optional($._layout_end));
 
 openBlockWith = ($, opener) => seq(opener, $._layout_start);
 
@@ -45,6 +49,23 @@ layoutBlock = ($, opener) =>
     // terminated($, $._statement),
     $._layout_end,
   );
+
+const block = ($, opener) =>
+  seq(
+    opener,
+    $._layout_start,
+    optional(seq(sep1($._layout_semicolon, $.use_clause), $._layout_semicolon)),
+    // repeat(choice('s = 0', 's > 0')),
+    // terminated($, $._statement),
+    sep1($._layout_semicolon, $._statement),
+    $._layout_end,
+    // sep1(
+    //   alias($._layout_semicolon, $.TERMS_STATEMENT_SEMI),
+    //   $._statement,
+    // ),
+    // optional($._layout_semicolon),
+    // optional($._layout_end),
+  )
 
 // open_block_with = ($, opener, start_type) => seq(
 //   // start_type ?? $._layout_start,//$._layout_start,
@@ -82,12 +103,14 @@ layouted_without_end = ($, rule) =>
 // layout_block = ($, keyword) => seq(open_block_with($, keyword));
 
 module.exports = {
+  block,
   layoutBlock,
   layouted,
   layouted_without_end,
   open_block_with,
   openBlockWith,
   parens,
+  paren$,
   sep,
   sep1,
   sep2,

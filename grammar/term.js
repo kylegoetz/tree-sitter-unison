@@ -6,15 +6,7 @@ module.exports = {
    * x : Nat <-- type signature
    * x = 5 <-- term definition
    */
-  // term_declaration: ($) =>
-  //   prec(
-  //     20,
-  //     seq(
-  //       optional(seq($.doc_block, $._layout_semicolon)),
-  //       optional(seq($.type_signature, $._layout_semicolon)),
-  //       $.term_definition,
-  //     ),
-  //   ),
+
 
   /**
    * x = 5

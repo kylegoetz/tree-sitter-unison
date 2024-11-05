@@ -4,7 +4,7 @@ const composeRegex = (...res) => new RegExp(res.map(_ => `(${_.source})`).join('
 
 // id = /[_a-z\p{Emoji}][_!'a-z\p{Emoji}]*/
 
-const varid = /[_a-z\u{1f400}-\u{1faff}][_!'a-z0-9\u{1f400}-\u{1faff}]*/iu
+const varid = /[_a-z\u{1f400}-\u{1faff}]([_!'a-z0-9\u{1f400}-\u{1faff}])*/iu
 const VARID = varid
 const LCASE_VARID = /[_a-z\u{1f400}-\u{1faff}][_!'a-z0-9\u{1f400}-\u{1faff}]*/u
 // const VARID = new RegExp("[a-zA-Z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*", "u")
@@ -31,7 +31,10 @@ const NON_TERMINAL_PATH_SEGMENT = composeRegex(VARID, SYMBOLIC_PATH_SEGMENT)
 // const PATH = new RegExp(`\.?((${NON_TERMINAL_PATH_SEGMENT.source}\.){1,})`)
 
 // Path: ["."] 1*((varid / one-symbol / two-symbol / three-or-more-symbol) ".")
+// const path = /([_a-zA-Z\u{1f400}-\u{1faff}][_!'a-zA-Z\u{1f400}-\u{1faff}]+)\./u  // /\.?((([_a-zA-Z\u{1f400}-\u{1faff}][_!'a-zA-Z\u{1f400}-\u{1faff}]+)|([$%^&*\-+<>~\\\/:])|(-[!$%^&*\-=+<~\\\/|:])|([!$%^*=+<>~\\\/:]{2})|(&[!$%^*\-=+<>~\\\/|:])|(\|[!$%^&*\-=+<>~\\\/:])|([!$%^&*\-=+<>~\\/|:]{3,}))\.)+/u
+
 const path = /\.?((([_a-zA-Z\u{1f400}-\u{1faff}][_!'a-zA-Z\u{1f400}-\u{1faff}]+)|([$%^&*\-+<>~\\\/:])|(-[!$%^&*\-=+<~\\\/|:])|([!$%^*=+<>~\\\/:]{2})|(&[!$%^*\-=+<>~\\\/|:])|(\|[!$%^&*\-=+<>~\\\/:])|([!$%^&*\-=+<>~\\/|:]{3,}))\.)+/u
+// const path = /Nat\./
 
 
 module.exports = {
