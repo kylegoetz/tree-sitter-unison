@@ -8,7 +8,7 @@ module.exports = {
       seq(
         // "match",
         openBlockWith($, $.match),
-        field("scrutinee", $._expression),
+        field("scrutinee", $._term),
         optional($._layout_end),
         openBlockWith($, $.with),
         // $.with,

@@ -159,3 +159,19 @@ a lib.base.Nat.!= b =
 > {{}}
 ---
 (unison (watch_expression (doc_block)))
+===
+[Regression] #103, match scrutinee should be term
+===
+> match foo hit with
+      _   -> a
+---
+(unison
+    (watch_expression
+        (match)
+        (regular_identifier)
+        (regular_identifier)
+        (with)
+        (pattern
+            (blank_pattern)
+            (arrow_symbol)
+            (regular_identifier))))
