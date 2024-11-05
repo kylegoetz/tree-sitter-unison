@@ -1,6 +1,7 @@
 /**
  * Print input and result information.
  */
+#include <stdint.h>
 #ifndef __wasm32__ // disable logging for Zed build
 #define DEBUG 0
 #endif
@@ -1095,6 +1096,7 @@ static Result post_pos_neg_sign(State *state, bool can_be_operator) {
  */
 static Result minus(State *state) {
   LOG(INFO, "->minus\n");
+  uint16_t initialColumn = COL;
   if (PEEK != '-') return res_cont;
   S_ADVANCE;
   switch(PEEK) {
@@ -1106,15 +1108,9 @@ static Result minus(State *state) {
     case '-': { // COMMENT, FOLD
       S_ADVANCE;
       if (PEEK == '-') { // FOLD
-        S_ADVANCE;
-        LOG(VERBOSE, "After advancing, PEEK: %c\n", PEEK);
-        if (is_eof(state) || is_newline(PEEK)) {
-          while(!is_eof(state)) S_ADVANCE;
-          MARK("minus", false, state);
-          return finish_if_valid(FOLD, "fold", state);
-        } else {
-          return res_fail;
-        }
+        while(!is_eof(state)) S_ADVANCE;
+        MARK("minus", false, state);
+        return finish_if_valid(FOLD, "fold", state);
       }
       return inline_comment(state);
     }
