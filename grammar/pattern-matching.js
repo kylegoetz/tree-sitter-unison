@@ -132,15 +132,15 @@ module.exports = {
   //   $.pipe,
   //   choice($._infix_op_application, $.otherwise),
   //   open_block_with($, $.arrow_symbol, $._start_before_arrow))),
-  guard: ($) => choice($._expression, $.otherwise),
+  guard: ($) => choice($._infix_app_or_boolean_op, $.otherwise),
 
   guarded_block: ($) => prec.right(seq($.pipe, $.guard, open_block_with($, $.arrow_symbol))),
 
-  _pattern_root: ($) =>
-    seq(
-      $._pattern_candidates,
-      repeat(seq($._pattern_infix_app, $._pattern_candidates)),
-    ),
+  _pattern_root: ($) => sep1($._pattern_infix_app, $._pattern_candidates),
+  // seq(
+  // $._pattern_candidates,
+  // repeat(seq($._pattern_infix_app, $._pattern_candidates)),
+  // ),
 
   _pattern_infix_app: ($) =>
     choice(alias("++", $.concat), alias("+:", $.cons), alias(":+", $.snoc)),

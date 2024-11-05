@@ -3,9 +3,9 @@ const { sep1, block, open_block_with, openBlockWith, layoutBlock } = require("./
 module.exports = {
   _statement: ($) =>
     choice(
-      prec(3, alias($._binding, $.term_declaration)),
-      prec.right(2, $._block_term),
-      // $.destructuring_bind, // TODO this is a problem where things gravitate toward this instead of block term for RHS of a KW_EQUALS
+      alias($._binding, $.term_declaration),
+      $._block_term,
+      $.destructuring_bind, // TODO this is a problem where things gravitate toward this instead of block term for RHS of a KW_EQUALS
     ),
   term_definition2: ($) => prec.right(seq(
     $._lhs,
@@ -24,12 +24,17 @@ module.exports = {
       optional(seq($.doc_block, $._layout_semicolon)),
       $._binding,
     ),
-  _binding: $ => seq(optional($.type_signature),
+  _binding: $ => seq(
+    optional($.type_signature),
     alias($.term_definition2, $.term_definition)),
+
   destructuring_bind: $ => seq(
+    alias('(', $.open_parens),
     $._pattern_root,
-    block($, $.kw_equals)
+    block($, $.kw_equals),
+    alias(')', $.close_parens),
   ),
+  // destructuring_bind: $ => seq('(', token.immediate('first, second'), token.immediate(')', ' = foo'), //
 
   _block_term: ($) => choice($.literal_function, $._infix_app_or_boolean_op),
   literal_function: ($) => lam($, $._term),

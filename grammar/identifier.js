@@ -79,7 +79,9 @@ module.exports = {
 
   _hq_qualified_symboly_id: ($) =>
     seq(
-      choice($.operator, /*'Nat.==',*/ seq(choice(/*'Nat.',*/ $.path), alias($.imm_symboly_id, $.operator))),
+      choice(
+        $.operator,
+        seq($.path, alias($.imm_symboly_id, $.operator))),
       optional(alias($.imm_hash_qualifier, $.hash_qualifier)),
     ),
 
