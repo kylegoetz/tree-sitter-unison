@@ -1,8 +1,8 @@
-===
+===|||
 infix op functional expression not parsed as such
-===
+===|||
 x = 1 + 2
----
+---|||
 (unison
     (term_declaration
         (term_definition
@@ -11,56 +11,56 @@ x = 1 + 2
             (nat)
             (operator)
             (nat))))
-===
+===|||
 [Regression] Issue 21: built-in hash without path not parsed correctly
-===
+===|||
 x = ##Foo
----
+---|||
 (unison (term_declaration (term_definition (regular_identifier) (kw_equals) (built_in_hash))))
-===
+===|||
 [Regression] issue 24: multiline text literal with an unescaped double quotation mark
-===
+===|||
 > """ foo " bar """
----
+---|||
 (unison (watch_expression (literal_text)))
-===
+===|||
 [Regression] Issue 30, infix ops with path in function application
-===
+===|||
 > 1 Nat.+ 2
----
+---|||
 (unison (watch_expression (nat) (path) (operator) (nat)))
-===
+===|||
 [Regression] #34 - watch expressions can be binds (term definitions, but types are not allowed as per TermParser.hs, so not term declarations)
 They cannot be destructuring binds, which cannot happen at the top level. Verified via Unison LSP.
-===
+===|||
 > z = 5
----
+---|||
 (unison
     (watch_expression
         (term_declaration
             (term_definition
             (regular_identifier) (kw_equals) (nat)))))
-===
+===|||
 [Regression] Issue 37, docblock can be anywhere an expression is
-===
+===|||
 z = {{ test }}
----
+---|||
 (unison (term_declaration (term_definition (regular_identifier) (kw_equals) (doc_block))))
-===
+===|||
 [Regression] Issue 37, anonymous docblock immediately precedes term declaration
-===
+===|||
 {{ howdy }}
 x = 5
----
+---|||
 (unison (term_declaration
     (doc_block)
     (term_definition (regular_identifier) (kw_equals) (nat))))
-===
+===|||
 [Regression] Issue 39, Parenthesized operators in term declaration (def'n + type sig) fail
-===
+===|||
 (Numeric.>=) : Numeric -> Numeric -> Boolean
 (Numeric.>=) = todo "implement"
----
+---|||
 (unison (term_declaration
     (type_signature (path) (operator) (type_signature_colon) (term_type (regular_identifier) (arrow_symbol) (regular_identifier) (arrow_symbol) (regular_identifier)))
     (term_definition
@@ -68,15 +68,15 @@ x = 5
         (kw_equals)
         (regular_identifier)
         (literal_text))))
-===
+===|||
 [Regression] Issue 46, comment that appears where a fold could be fails
-===
+===|||
 -- this is a comment
----
+---|||
 (unison (comment))
-===
+===|||
 [Regression] #82
-===
+===|||
 -- builtin lib.base.Float.fromNat : lib.base.Nat -> lib.base.Float
 
 lib.base.Float.fromNat.doc : Doc
@@ -95,7 +95,7 @@ lib.base.Float.fromNat.doc =
     fromNat maxNat
     ```
   }}
----
+---|||
 (unison
     (comment)
     (term_declaration
@@ -105,21 +105,21 @@ lib.base.Float.fromNat.doc =
             (kw_equals)
             (use_clause (use) (namespace (regular_identifier)) (regular_identifier))
             (doc_block))))
-===
+===|||
 [Regression] 84 path with symboly id fails
-===
+===|||
 lib.base.Nat.!=.doc = 5
----
+---|||
 (unison (term_declaration (term_definition (path) (regular_identifier) (kw_equals) (nat))))
-===
+===|||
 [Regression] pattern matching guards should be part of a layouted block
-===
+===|||
 > match true with
       a
         | true  ->
             1
         | otherwise -> 5
----
+---|||
 (unison (watch_expression
     (match)
     (literal_boolean)
@@ -128,13 +128,13 @@ lib.base.Nat.!=.doc = 5
         (var_or_nullary_ctor)
         (guarded_block (pipe) (guard (literal_boolean)) (arrow_symbol) (nat))
         (guarded_block (pipe) (guard (otherwise)) (arrow_symbol) (nat)))))
-===
+===|||
 [Regression] #91 - infix op can have namespace prefix
-===
+===|||
 a lib.base.Nat.!= b =
   use Nat ==
   Boolean.not (a == b)
----
+---|||
 (unison
     (term_declaration
         (term_definition
@@ -153,18 +153,18 @@ a lib.base.Nat.!= b =
                 (regular_identifier)
                 (operator)
                 (regular_identifier)))))
-===
+===|||
 [Regression] watch doc block fails to parse
-===
+===|||
 > {{}}
----
+---|||
 (unison (watch_expression (doc_block)))
-===
+===|||
 [Regression] #103, match scrutinee should be term
-===
+===|||
 > match foo hit with
       _   -> a
----
+---|||
 (unison
     (watch_expression
         (match)
@@ -175,3 +175,10 @@ a lib.base.Nat.!= b =
             (blank_pattern)
             (arrow_symbol)
             (regular_identifier))))
+===|||
+[Regression] fold that is more than just ---
+===|||
+----This starts a fold
+this should still be fold
+---|||
+(unison (fold))
