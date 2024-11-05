@@ -1,25 +1,40 @@
 ===
-[Binding] destructuring bind
+[Binding] destructuring bind of boxed type
 ===
-> let
-  (Box a) = boxA
-  a
-> let (first, second) = tuple
+x =
+    (Box a) = boxA
+    a
 ---
 (unison
-    (watch_expression (exp_let
-        (kw_let)
-        (destructuring_bind
-            (constructor_or_variable_pattern (regular_identifier) (constructor_or_variable_pattern (regular_identifier)))
-            (kw_equals) (regular_identifier))
-        (regular_identifier)))
-    (watch_expression (exp_let
-        (kw_let)
-        (destructuring_bind (tuple_pattern
-            (constructor_or_variable_pattern (regular_identifier))
-            (constructor_or_variable_pattern (regular_identifier)))
-        (kw_equals)
-        (regular_identifier))))
+    (term_declaration
+        (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (destructuring_bind
+                (constructor_or_variable_pattern
+                    (regular_identifier)
+                    (regular_identifire))
+                (kw_equals)
+                (regular_identifier))
+            (regular_identifier)
+===
+[Binding] destructuring a tuple
+===
+> cases (first, second) -> first
+---
+(unison
+    (term_declaration
+        (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (destructuring_bind
+                (constructor_or_variable_pattern
+                    (regular_identifier)
+                    (constructor_or_variable_pattern
+                        (regular_identifier)))
+                (kw_equals)
+                (regular_identifier))
+            (regular_identifier)))
 )
 ===
 [Binding] destructuring in a lambda
@@ -28,15 +43,17 @@
 ---
 (unison
     (watch_expression
-        (function_application
-            (path) (regular_identifier)
-            (tuple_or_parenthesized
-                (cases)
-                (pattern (parenthesized_or_tuple_pattern
-                    (var_or_nullary_ctor)
-                    (var_or_nullary_ctor))
-                    (arrow_symbol)
-                    (regular_identifier)))
-            (literal_list
-                (tuple_or_parenthesized (nat) (nat))
-                (tuple_or_parenthesized (nat) (nat))))))
+        (path)
+        (regular_identifier)
+        (tuple_or_parenthesized
+            (cases)
+            (pattern (parenthesized_or_tuple_pattern
+                (var_or_nullary_ctor)
+                (var_or_nullary_ctor))
+                (arrow_symbol)
+                (regular_identifier)))
+        (literal_list
+            (open_bracket)
+            (tuple_or_parenthesized (nat) (nat))
+            (tuple_or_parenthesized (nat) (nat))
+            (close_bracket))))

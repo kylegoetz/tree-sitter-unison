@@ -35,11 +35,31 @@
 ===
 [Pattern matching] guard patterns
 ===
-> match a with
+> cases
     oneTwo | (oneTwo === 1) || (oneTwo === 2) -> "one or two"
-    threeFour | (threeFour === 3) || (threeFour === 4) -> "three or four"
-    fiveSix | (fiveSix === 5) || (fiveSix === 6) -> "five or six"
-    _ -> "no match"
+---
+(unison
+    (watch_expression
+        (cases)
+        (pattern
+            (var_or_nullary_ctor)
+            (guarded_block
+                (pipe)
+                (guard
+                    (tuple_or_parenthesized
+                        (regular_identifier)
+                        (operator)
+                        (nat))
+                    (or)
+                    (tuple_or_parenthesized
+                        (regular_identifier)
+                        (operator)
+                        (nat)))
+                    (arrow_symbol)
+                    (literal_text)))))
+===
+[Pattern matching] guard pattern 2
+===
 > match x with
      0 | 1 == 2 -> 123
 ---
@@ -48,12 +68,16 @@
         (match)
         (regular_identifier)
         (with)
-        (pattern (var_or_nullary_ctor) (guarded_block (pipe) (guard (tuple_or_parenthesized (regular_identifier) (operator) (nat)) (or) (tuple_or_parenthesized (regular_identifier) (operator) (nat))) (arrow_symbol) (literal_text)))
-        (pattern (var_or_nullary_ctor) (guarded_block (pipe) (guard (tuple_or_parenthesized (regular_identifier) (operator) (nat)) (or) (tuple_or_parenthesized (regular_identifier) (operator) (nat))) (arrow_symbol) (literal_text)))
-        (pattern (var_or_nullary_ctor) (guarded_block (pipe) (guard (tuple_or_parenthesized (regular_identifier) (operator) (nat)) (or) (tuple_or_parenthesized (regular_identifier) (operator) (nat))) (arrow_symbol) (literal_text)))
-        (pattern (blank_pattern) (arrow_symbol) (literal_text)))
-    (watch_expression (match) (regular_identifier) (with)
-        (pattern (nat) (guarded_block (pipe) (guard (function_application (nat) (operator) (nat))) (arrow_symbol) (nat)))))
+        (pattern
+            (nat)
+            (guarded_block
+                (pipe)
+                (guard
+                    (nat)
+                    (operator)
+                    (nat))
+                (arrow_symbol)
+                (nat)))))
 ===
 [Patterns] match x -> x
 ===
