@@ -60,10 +60,13 @@
     "examples": "script/parse-examples",
     "examples-wasm": "script/parse-examples wasm",
     "scratch": "tree-sitter parse scratch.u -d",
-    "visual": "tree-sitter parse -D scratch.u",
+    "visual": "tree-sitter parse -D scratch-2.u",
     "ci": "tree-sitter generate && tree-sitter build-wasm && tree-sitter test",
     "install": "node-gyp-build",
-    "prebuildify": "prebuildify --napi --strip"
+    "prebuildify": "prebuildify --napi --strip",
+    "watch": "fswatch -o ./grammar ./grammar.js | xargs -n1 -I{} tree-sitter generate",
+    "parse": "tree-sitter parse scratch-2.u --debug 2>&1 | less",
+    "report": "tree-sitter test | ~/Documents/workspace/tree-sitter-test-report/src/main.js"
   },
   "commitlint": {
     "extends": [
@@ -79,5 +82,11 @@
         ]
       ]
     }
-  }
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.unison",
+      "injection-regex": "^unison$"
+    }
+  ]
 }
