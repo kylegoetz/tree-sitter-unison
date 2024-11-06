@@ -19,3 +19,13 @@ test> 5
 test.io> 5
 ---
 (unison (test_watch_expression (nat)))
+===
+[Misc] force
+===
+> x()
+---
+(unison
+    (watch_expression
+        (force
+            (regular_identifier)
+            (unit))))

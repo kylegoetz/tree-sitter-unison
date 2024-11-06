@@ -12,7 +12,7 @@ module.exports = {
   _term_leaf: ($) =>
     prec.right(2,
       choice(
-        // TODO $.force,
+        $.force,
         prec(2, $._hq_qualified_prefix_term),
         $.literal_text,
         $.literal_char,
@@ -52,7 +52,10 @@ module.exports = {
       openBlockWith($, $.kw_then),
       $.__block,
       openBlockWith($, $.kw_else),
-      $.__block))
+      $.__block)),
+
+  // foo()
+  force: $ => seq($._hq_qualified_prefix_term, alias('()', $.unit)),
 };
 
 // const list = ($) => $ => seq('[', ']')

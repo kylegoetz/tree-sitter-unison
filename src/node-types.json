@@ -143,6 +143,10 @@
             "named": true
           },
           {
+            "type": "force",
+            "named": true
+          },
+          {
             "type": "handler",
             "named": true
           },
@@ -295,6 +299,10 @@
         },
         {
           "type": "float",
+          "named": true
+        },
+        {
+          "type": "force",
           "named": true
         },
         {
@@ -588,6 +596,10 @@
             "named": true
           },
           {
+            "type": "force",
+            "named": true
+          },
+          {
             "type": "handler",
             "named": true
           },
@@ -752,6 +764,10 @@
         },
         {
           "type": "float",
+          "named": true
+        },
+        {
+          "type": "force",
           "named": true
         },
         {
@@ -930,6 +946,10 @@
             "named": true
           },
           {
+            "type": "force",
+            "named": true
+          },
+          {
             "type": "handler",
             "named": true
           },
@@ -1082,6 +1102,10 @@
         },
         {
           "type": "float",
+          "named": true
+        },
+        {
+          "type": "force",
           "named": true
         },
         {
@@ -1295,6 +1319,10 @@
             "named": true
           },
           {
+            "type": "force",
+            "named": true
+          },
+          {
             "type": "handler",
             "named": true
           },
@@ -1455,6 +1483,10 @@
         },
         {
           "type": "float",
+          "named": true
+        },
+        {
+          "type": "force",
           "named": true
         },
         {
@@ -1885,6 +1917,10 @@
             "named": true
           },
           {
+            "type": "force",
+            "named": true
+          },
+          {
             "type": "handler",
             "named": true
           },
@@ -2045,6 +2081,10 @@
         },
         {
           "type": "float",
+          "named": true
+        },
+        {
+          "type": "force",
           "named": true
         },
         {
@@ -2235,6 +2275,10 @@
             "named": true
           },
           {
+            "type": "force",
+            "named": true
+          },
+          {
             "type": "handler",
             "named": true
           },
@@ -2398,6 +2442,10 @@
           "named": true
         },
         {
+          "type": "force",
+          "named": true
+        },
+        {
           "type": "handler",
           "named": true
         },
@@ -2525,6 +2573,45 @@
     }
   },
   {
+    "type": "force",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "built_in_hash",
+          "named": true
+        },
+        {
+          "type": "hash_qualifier",
+          "named": true
+        },
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "prefix_operator",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
+          "type": "unit",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "guard",
     "named": true,
     "fields": {
@@ -2598,6 +2685,10 @@
           },
           {
             "type": "forall",
+            "named": true
+          },
+          {
+            "type": "force",
             "named": true
           },
           {
@@ -2757,6 +2848,10 @@
         },
         {
           "type": "float",
+          "named": true
+        },
+        {
+          "type": "force",
           "named": true
         },
         {
@@ -2927,6 +3022,10 @@
             "named": true
           },
           {
+            "type": "force",
+            "named": true
+          },
+          {
             "type": "handler",
             "named": true
           },
@@ -3091,6 +3190,10 @@
         },
         {
           "type": "float",
+          "named": true
+        },
+        {
+          "type": "force",
           "named": true
         },
         {
@@ -3277,6 +3380,10 @@
             "named": true
           },
           {
+            "type": "force",
+            "named": true
+          },
+          {
             "type": "handler",
             "named": true
           },
@@ -3437,6 +3544,10 @@
         },
         {
           "type": "float",
+          "named": true
+        },
+        {
+          "type": "force",
           "named": true
         },
         {
@@ -3668,6 +3779,10 @@
             "named": true
           },
           {
+            "type": "force",
+            "named": true
+          },
+          {
             "type": "handler",
             "named": true
           },
@@ -3844,6 +3959,10 @@
         },
         {
           "type": "forall",
+          "named": true
+        },
+        {
+          "type": "force",
           "named": true
         },
         {
@@ -4034,6 +4153,10 @@
             "named": true
           },
           {
+            "type": "force",
+            "named": true
+          },
+          {
             "type": "handler",
             "named": true
           },
@@ -4210,6 +4333,10 @@
         },
         {
           "type": "forall",
+          "named": true
+        },
+        {
+          "type": "force",
           "named": true
         },
         {
@@ -4661,6 +4788,10 @@
             "named": true
           },
           {
+            "type": "force",
+            "named": true
+          },
+          {
             "type": "handler",
             "named": true
           },
@@ -4845,6 +4976,10 @@
         },
         {
           "type": "float",
+          "named": true
+        },
+        {
+          "type": "force",
           "named": true
         },
         {
@@ -5283,6 +5418,10 @@
             "named": true
           },
           {
+            "type": "force",
+            "named": true
+          },
+          {
             "type": "handler",
             "named": true
           },
@@ -5443,6 +5582,10 @@
         },
         {
           "type": "float",
+          "named": true
+        },
+        {
+          "type": "force",
           "named": true
         },
         {
@@ -5684,6 +5827,10 @@
             "named": true
           },
           {
+            "type": "force",
+            "named": true
+          },
+          {
             "type": "handler",
             "named": true
           },
@@ -5840,6 +5987,10 @@
         },
         {
           "type": "float",
+          "named": true
+        },
+        {
+          "type": "force",
           "named": true
         },
         {
@@ -6011,6 +6162,10 @@
           },
           {
             "type": "forall",
+            "named": true
+          },
+          {
+            "type": "force",
             "named": true
           },
           {
@@ -6186,6 +6341,10 @@
         },
         {
           "type": "forall",
+          "named": true
+        },
+        {
+          "type": "force",
           "named": true
         },
         {
@@ -6580,6 +6739,11 @@
     }
   },
   {
+    "type": "unit",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "use",
     "named": true,
     "fields": {}
@@ -6760,6 +6924,10 @@
             "named": true
           },
           {
+            "type": "force",
+            "named": true
+          },
+          {
             "type": "handler",
             "named": true
           },
@@ -6919,6 +7087,10 @@
           "named": true
         },
         {
+          "type": "force",
+          "named": true
+        },
+        {
           "type": "handler",
           "named": true
         },
@@ -7031,6 +7203,10 @@
   },
   {
     "type": "(",
+    "named": false
+  },
+  {
+    "type": "()",
     "named": false
   },
   {
@@ -7255,10 +7431,6 @@
   },
   {
     "type": "unique",
-    "named": true
-  },
-  {
-    "type": "unit",
     "named": true
   },
   {

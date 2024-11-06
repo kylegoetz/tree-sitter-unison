@@ -2099,6 +2099,10 @@
         "type": "CHOICE",
         "members": [
           {
+            "type": "SYMBOL",
+            "name": "force"
+          },
+          {
             "type": "PREC",
             "value": 2,
             "content": {
@@ -2305,6 +2309,24 @@
           }
         ]
       }
+    },
+    "force": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_hq_qualified_prefix_term"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "STRING",
+            "value": "()"
+          },
+          "named": true,
+          "value": "unit"
+        }
+      ]
     },
     "_expression": {
       "type": "PREC_RIGHT",

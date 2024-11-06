@@ -4,12 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ## [2.0.0] - 2024-10-29
 
+### New
+
+- #86 - add `force`, in which `x()` is parsed as `(force (regular_identifier) (unit))`
+
 ### Fixed
 
 - #82 - allow doc block wherever
 - #84 - Symbols in paths now work
 - #85 - built-ins are now just `built_in_hash` without any child nodes
 - #?? - pattern matching guards now are part of a layouted block
+
 
 ### Changed
 
