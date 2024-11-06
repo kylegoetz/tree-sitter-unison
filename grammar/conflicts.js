@@ -47,4 +47,8 @@ module.exports = ($) => [
   [$.destructuring_bind],
   // [$.literal_list, $._term_list],
   [$._term4, $._hq_qualified_wordy_id],
+  [$._literal_pattern, $._pattern_root],
+  [$._infix_app_or_boolean_op],
+  [$._block_term, $._infix_app_or_boolean_op],
+  [$._infix_app_or_boolean_op, $._literal_pattern],
 ];

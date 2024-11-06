@@ -121,11 +121,9 @@
     (pattern (var_or_nullary_ctor) (arrow_symbol) (nat))
     (pattern (nat) (arrow_symbol) (nat))))
 ===
-[Patterns] constructor and nested patterns
+[Patterns] constructor pattern
 ===
-> cases
-    Tuple.Cons x y -> x + y
-    Tuple.Cons (Tuple.Cons x y) _ -> x + y
+> cases Tuple.Cons x y -> ()
 ---
 (unison
     (watch_expression
@@ -137,9 +135,15 @@
             (var_or_nullary_ctor)
             (var_or_nullary_ctor)
             (arrow_symbol)
-            (regular_identifier)
-            (operator)
-            (regular_identifier))
+            (tuple_or_parenthesized))))
+===
+[Patterns] nested pattern
+===
+> cases Tuple.Cons (Tuple.Cons x y) _ -> ()
+---
+(unison
+    (watch_expression
+        (cases)
         (pattern
             (ctor
                 (path)

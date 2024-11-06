@@ -20,7 +20,9 @@ x =
 ===
 [Binding] destructuring a tuple
 ===
-> cases (first, second) -> first
+x =
+    (first, second) = tuple
+    first
 ---
 (unison
     (term_declaration

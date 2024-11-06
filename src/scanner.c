@@ -115,6 +115,7 @@ typedef enum {
     OCTOTHORPE,
     DOC_BLOCK,
     GUARD_LAYOUT_START,
+    DESTRUCTURE_START,
     FAIL, // always last in list
 } Sym;
 
@@ -139,6 +140,7 @@ static char *sym_names[] = {
     "octothorpe",
     "doc block",
     "guard layout start",
+    "destructure start",
     "fail",
 };
 // #endif

@@ -20,7 +20,8 @@ module.exports = {
 
   _lam_case: ($) =>
     prec.right(
-      seq(openBlockWith($, $.cases), $._match_cases, optional($._layout_end)),
+      seq($.cases, alias($._layout_start, $.START), $._match_cases, optional($._layout_end)),
+      // seq(openBlockWith($, $.cases), $._match_cases, optional($._layout_end)),
     ),
 
   _match_cases: ($) => prec.right(sep1($._layout_semicolon, $.pattern)),
@@ -77,70 +78,19 @@ module.exports = {
   _literal_pattern: ($) =>
     choice(
       // Observe Float is not allowed.
-      alias("0", $.nat), // Strangely this code will not parse without this line: `> match x with 0 | 1 == 2 -> 123`
+      // alias("0", $.nat), // Strangely this code will not parse without this line: `> match x with 0 | 1 == 2 -> 123`
       $.literal_boolean,
       $.nat,
       $.int,
       $.literal_char,
       $.literal_text,
     ),
-  // as_pattern: ($) =>
-  //   prec.left(
-  //     seq(alias($.wordy_id, $.regular_identifier), $.as, $._pattern_lhs),
-  //   ),
 
-  // constructor_or_variable_pattern: ($) =>
-  //   prec.right(
-  //     "constructor_or_variable_pattern",
-  //     seq($._hash_qualified, repeat(prec.left($._pattern_lhs))),
-  //   ),
-
-  // _list_pattern: ($) =>
-  //   choice(
-  //     $.head_tail_list_pattern,
-  //     $.init_last_tail_pattern,
-  //     $.literal_list_pattern,
-  //     $.concat_list_pattern,
-  //   ),
-  // tuple_pattern: ($) => seq("(", sep(",", $._pattern_lhs), ")"),
-  // ability_pattern: ($) => choice(seq("{", $._pattern_lhs, "}")),
-
-  /**
-   * A list pattern can be one of the following:
-   * head [List.]+: tail
-   * init [List.]:+ last
-   * [p_1, p2, ..., p_n] where p_i is a PATTERN
-   * part1 [List.]++ part2 where one of part1 and part2 must be a list of known length, e.g.
-   *   [x, y] ++ rest
-   *   start ++ [x, y]
-   *   BUT NOT a ++ b
-   *   TODO: pare this pattern down to something like choice(seq('head', '++', LIST_LITERAL), ...) instead of seq(choice($.wordy_id, $.list_literal, '++', ...))
-   */
-  // head_tail_list_pattern: ($) =>
-  //   prec.right(seq($._pattern_lhs, "+:" /*(List\.)?\+:*/, $._pattern_lhs)),
-  // init_last_tail_pattern: ($) =>
-  //   prec.right(seq($._pattern_lhs, /(List\.)?:\+/, $._pattern_lhs)),
-  // // literal_list_pattern: ($) => seq("[", sep(",", $._pattern_lhs), "]"),
-  // concat_list_pattern: ($) =>
-  //   prec.right(seq($._pattern_lhs, /(List\.)?\+\+/, $._pattern_lhs)),
-  /**
-   * A guard can be one of the following:
-   * - | BOOL_EXPR (OPEN) -> BLOCK (CLOSE)
-   * - | OTHERWISE (OPEN) -> BLOCK (CLOSE)
-   */
-  // guard: $ => prec.right(seq(
-  //   $.pipe,
-  //   choice($._infix_op_application, $.otherwise),
-  //   open_block_with($, $.arrow_symbol, $._start_before_arrow))),
   guard: ($) => choice($._infix_app_or_boolean_op, $.otherwise),
 
   guarded_block: ($) => prec.right(seq($.pipe, $.guard, open_block_with($, $.arrow_symbol))),
 
   _pattern_root: ($) => sep1($._pattern_infix_app, $._pattern_candidates),
-  // seq(
-  // $._pattern_candidates,
-  // repeat(seq($._pattern_infix_app, $._pattern_candidates)),
-  // ),
 
   _pattern_infix_app: ($) =>
     choice(alias("++", $.concat), alias("+:", $.cons), alias(":+", $.snoc)),
@@ -164,25 +114,41 @@ module.exports = {
     ),
   // unbound: ($) => "_",
   // Note: Unfortunately the SEMI is disabled here because leaving it in creates a parsing error where
-  literal_list_pattern: ($) =>
+  literal_list_pattern: ($) => choice(//'[]',
     seq(
       "[",
       // openBlockWith($, "["),
       // repeat(prec.right(choice(",", $._layout_semicolon))),
-      sep(seq(/*optional($._layout_semicolon),*/ ","), $._pattern_root),
+      sep(alias(',', $.comma), $._pattern_root),
       // repeat(prec.right(choice(",", $._layout_semicolon))),
       // $._layout_end,
       "]",
-    ),
-  parenthesized_or_tuple_pattern: ($) =>
-    seq(
-      openBlockWith($, "("),
-      // repeat(prec.right(choice(",", $._layout_semicolon))),
-      sep1(",", $._pattern_root),
-      // repeat(prec.right(choice(",", $._layout_semicolon))),
-      $._layout_end,
-      ")",
-    ),
+    )),
+  // parenthesized_or_tuple_pattern: ($) => seq(
+  //   alias('(', $.open_parens),
+  //   $._layout_start,
+  //   $.literal_list_pattern,
+  //   alias(',', $.comma),
+  //   alias('_', $.blank_pattern),
+  //   $._layout_end,
+  //   alias(')', $.close_parens)),
+
+  parenthesized_or_tuple_pattern: $ => seq(
+    alias('(', $.open_parens),
+    $._layout_start,
+    sep1(alias(',', $.comma), $._pattern_leaf),
+    $._layout_end,
+    alias(')', $.close_parens)),
+
+  // seq(
+  //   '(',
+  //   // openBlockWith($, "("),
+  //   // repeat(prec.right(choice(",", $._layout_semicolon))),
+  //   sep1(",", choice('[]', '_')),//$._pattern_root),
+  //   // repeat(prec.right(choice(",", $._layout_semicolon))),
+  //   // $._layout_end,
+  //   ")",
+  // ),
 
   effect_pure: ($) => $._pattern_root,
   effect_bind: ($) =>
@@ -204,5 +170,6 @@ module.exports = {
       $.literal_list_pattern,
       $.parenthesized_or_tuple_pattern,
       $.effect_pattern,
+      // '([], _)'
     )),
 };
