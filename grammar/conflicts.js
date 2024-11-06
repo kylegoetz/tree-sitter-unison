@@ -51,4 +51,5 @@ module.exports = ($) => [
   [$._infix_app_or_boolean_op],
   [$._block_term, $._infix_app_or_boolean_op],
   [$._infix_app_or_boolean_op, $._literal_pattern],
+  [$._pattern_constructor, $.effect_bind],
 ];

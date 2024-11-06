@@ -412,6 +412,11 @@
     }
   },
   {
+    "type": "close_parens",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "constructor",
     "named": true,
     "fields": {
@@ -1448,31 +1453,11 @@
           "named": true
         },
         {
-          "type": "blank_pattern",
-          "named": true
-        },
-        {
           "type": "built_in_hash",
           "named": true
         },
         {
           "type": "cases",
-          "named": true
-        },
-        {
-          "type": "close_parens",
-          "named": true
-        },
-        {
-          "type": "concat",
-          "named": true
-        },
-        {
-          "type": "cons",
-          "named": true
-        },
-        {
-          "type": "ctor",
           "named": true
         },
         {
@@ -1489,10 +1474,6 @@
         },
         {
           "type": "doc_block",
-          "named": true
-        },
-        {
-          "type": "effect_pattern",
           "named": true
         },
         {
@@ -1548,10 +1529,6 @@
           "named": true
         },
         {
-          "type": "literal_list_pattern",
-          "named": true
-        },
-        {
           "type": "literal_termlink",
           "named": true
         },
@@ -1569,10 +1546,6 @@
         },
         {
           "type": "nat",
-          "named": true
-        },
-        {
-          "type": "open_parens",
           "named": true
         },
         {
@@ -1604,10 +1577,6 @@
           "named": true
         },
         {
-          "type": "snoc",
-          "named": true
-        },
-        {
           "type": "term_declaration",
           "named": true
         },
@@ -1617,14 +1586,6 @@
         },
         {
           "type": "use_clause",
-          "named": true
-        },
-        {
-          "type": "var_or_as",
-          "named": true
-        },
-        {
-          "type": "var_or_nullary_ctor",
           "named": true
         },
         {
@@ -3912,6 +3873,10 @@
           "named": true
         },
         {
+          "type": "close_parens",
+          "named": true
+        },
+        {
           "type": "delay_block",
           "named": true
         },
@@ -4001,6 +3966,10 @@
         },
         {
           "type": "nat",
+          "named": true
+        },
+        {
+          "type": "open_parens",
           "named": true
         },
         {
@@ -4433,6 +4402,10 @@
           "named": true
         },
         {
+          "type": "comma",
+          "named": true
+        },
+        {
           "type": "concat",
           "named": true
         },
@@ -4590,15 +4563,28 @@
     }
   },
   {
+    "type": "open_parens",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "parenthesized_or_tuple_pattern",
     "named": true,
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "blank_pattern",
+          "named": true
+        },
+        {
+          "type": "close_parens",
+          "named": true
+        },
+        {
+          "type": "comma",
           "named": true
         },
         {
@@ -4639,6 +4625,10 @@
         },
         {
           "type": "nat",
+          "named": true
+        },
+        {
+          "type": "open_parens",
           "named": true
         },
         {
@@ -5589,12 +5579,12 @@
         "required": true,
         "types": [
           {
-            "type": "(",
-            "named": false
+            "type": "close_parens",
+            "named": true
           },
           {
-            "type": ")",
-            "named": false
+            "type": "open_parens",
+            "named": true
           },
           {
             "type": "operator",
@@ -5615,12 +5605,12 @@
         "required": false,
         "types": [
           {
-            "type": "(",
-            "named": false
+            "type": "close_parens",
+            "named": true
           },
           {
-            "type": ")",
-            "named": false
+            "type": "open_parens",
+            "named": true
           },
           {
             "type": "operator",
@@ -6958,12 +6948,12 @@
         "required": true,
         "types": [
           {
-            "type": "(",
-            "named": false
+            "type": "close_parens",
+            "named": true
           },
           {
-            "type": ")",
-            "named": false
+            "type": "open_parens",
+            "named": true
           },
           {
             "type": "operator",
@@ -7558,11 +7548,11 @@
     "named": true
   },
   {
-    "type": "close_parens",
+    "type": "colon",
     "named": true
   },
   {
-    "type": "colon",
+    "type": "comma",
     "named": true
   },
   {
@@ -7663,10 +7653,6 @@
   },
   {
     "type": "open_bracket",
-    "named": true
-  },
-  {
-    "type": "open_parens",
     "named": true
   },
   {

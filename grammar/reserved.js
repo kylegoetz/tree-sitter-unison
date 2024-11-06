@@ -20,6 +20,6 @@ module.exports = {
   kw_typelink: ($) => "typeLink",
   handle: ($) => "handle",
   with: ($) => "with",
-  open_parens: $ => '(',
+  open_parens: $ => prec.right('('),
   close_parens: $ => ')',
 };

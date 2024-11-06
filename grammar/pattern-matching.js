@@ -90,12 +90,12 @@ module.exports = {
 
   guarded_block: ($) => prec.right(seq($.pipe, $.guard, open_block_with($, $.arrow_symbol))),
 
-  _pattern_root: ($) => sep1($._pattern_infix_app, $._pattern_candidates),
+  _pattern_root: ($) => sep1($._pattern_infix_app, choice($._pattern_candidates)),
 
   _pattern_infix_app: ($) =>
     choice(alias("++", $.concat), alias("+:", $.cons), alias(":+", $.snoc)),
   // _a: ($) => seq($._pattern_leaf, optional($._a)),
-  _pattern_constructor: ($) => prec.right(seq(alias($._hq_qualified_prefix_term, $.ctor), repeat1($._pattern_leaf))),
+  _pattern_constructor: ($) => prec.right(seq(alias(choice(/*'Box',*/ $._hq_qualified_prefix_term), $.ctor), repeat1(choice($._pattern_leaf)))),
   // ctor: ($) => prec.right($._hq_qualified_prefix_term),
   _pattern_candidates: ($) => choice($._pattern_constructor, $._pattern_leaf),
 
@@ -133,12 +133,12 @@ module.exports = {
   //   $._layout_end,
   //   alias(')', $.close_parens)),
 
-  parenthesized_or_tuple_pattern: $ => seq(
+  parenthesized_or_tuple_pattern: $ => choice(seq(
     alias('(', $.open_parens),
     $._layout_start,
-    sep1(alias(',', $.comma), $._pattern_leaf),
+    sep1(alias(',', $.comma), choice($._pattern_root)),
     $._layout_end,
-    alias(')', $.close_parens)),
+    alias(')', $.close_parens))),
 
   // seq(
   //   '(',

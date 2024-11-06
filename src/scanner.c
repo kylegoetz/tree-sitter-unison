@@ -964,7 +964,9 @@ static Result operator(State *state) {
       MARK("operator", false, state);
       return finish_if_valid(WATCH, "watch", state);
     }
+    // return res_fail;
   }
+  // return res_cont;
 
   if (PEEK == '(') {
     Result res = paren_symop(state);

@@ -149,16 +149,16 @@
                 (path)
                 (regular_identifier))
             (parenthesized_or_tuple_pattern
+                (open_parens)
                 (ctor
                     (path)
                     (regular_identifier))
                 (var_or_nullary_ctor)
-                (var_or_nullary_ctor))
+                (var_or_nullary_ctor)
+                (close_parens))
             (blank_pattern)
             (arrow_symbol)
-            (regular_identifier)
-            (operator)
-            (regular_identifier))))
+            (tuple_or_parenthesized))))
 ===
 [Patterns] newline layout for post-arrow block of RHS of pattern
 ===
