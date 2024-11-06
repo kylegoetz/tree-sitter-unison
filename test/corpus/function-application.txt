@@ -1,5 +1,5 @@
 ===
-infix op
+[Function Application] infix op
 ===
 y = 5 + 2
 ---
@@ -12,7 +12,7 @@ y = 5 + 2
             (operator)
             (nat))))
 ===
-prefix op
+[Function Application] prefix op
 ===
 y = (+) 5 2
 ---
@@ -25,7 +25,7 @@ y = (+) 5 2
             (nat)
             (nat))))
 ===
-regular function
+[Function Application] regular function
 ===
 x = myFunc 1 2
 ---
@@ -38,7 +38,7 @@ x = myFunc 1 2
             (nat)
             (nat))))
 ===
-infix operator function
+[Function Application] infix operator function
 ===
 x = 1 <<- 2
 ---

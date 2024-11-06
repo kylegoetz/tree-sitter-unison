@@ -62,9 +62,9 @@ x = 5
 (Numeric.>=) = todo "implement"
 ---|||
 (unison (term_declaration
-    (type_signature (path) (operator) (type_signature_colon) (term_type (regular_identifier) (arrow_symbol) (regular_identifier) (arrow_symbol) (regular_identifier)))
+    (type_signature (open_parens) (path) (operator) (close_parens) (type_signature_colon) (term_type (regular_identifier) (arrow_symbol) (regular_identifier) (arrow_symbol) (regular_identifier)))
     (term_definition
-        (path) (operator)
+        (open_parens) (path) (operator) (close_parens)
         (kw_equals)
         (regular_identifier)
         (literal_text))))
