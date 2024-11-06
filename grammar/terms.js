@@ -40,7 +40,7 @@ module.exports = {
     // alias('(', $.open_parens),
     // '([], _)',
     // $._layout_start,
-    $._pattern_root,
+    $.open_parens, $._pattern_root, $.close_parens,
     // optional($._layout_end),
     // choice($._pattern_root, $.tuple_or_parenthesized),
     // alias(')', $.close_parens),
