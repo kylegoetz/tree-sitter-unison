@@ -182,3 +182,23 @@ a lib.base.Nat.!= b =
 this should still be fold
 ---|||
 (unison (fold))
+===|||
+[Regression] <| operator
+===|||
+> a <| b
+---|||
+(unison
+    (watch_expression
+            (regular_identifier)
+            (operator)
+            (regular_identifier)))
+===|||
+[Regression] 2-symbol op ending with &
+===|||
+> a <& b
+---|||
+(unison
+    (watch_expression
+            (regular_identifier)
+            (operator)
+            (regular_identifier)))
