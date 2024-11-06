@@ -20,7 +20,7 @@ module.exports = {
       ),
     ),
 
-  operator_as_parameter: ($) => seq("(", $.operator, ")"),
+  // operator_as_parameter: ($) => seq("(", $.operator, ")"),
   parenthetical_exp: ($) =>
     prec(
       -10,

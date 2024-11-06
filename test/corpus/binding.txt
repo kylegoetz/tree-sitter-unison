@@ -30,10 +30,12 @@ x =
             (regular_identifier)
             (kw_equals)
             (destructuring_bind
-                (constructor_or_variable_pattern
-                    (regular_identifier)
-                    (constructor_or_variable_pattern
-                        (regular_identifier)))
+                (parenthesized_or_tuple_pattern
+                    (open_parens)
+                    (var_or_nullary_ctor)
+                    (comma)
+                    (var_or_nullary_ctor)
+                    (close_parens))
                 (kw_equals)
                 (regular_identifier))
             (regular_identifier)))
@@ -49,9 +51,13 @@ x =
         (regular_identifier)
         (tuple_or_parenthesized
             (cases)
-            (pattern (parenthesized_or_tuple_pattern
-                (var_or_nullary_ctor)
-                (var_or_nullary_ctor))
+            (pattern
+                (parenthesized_or_tuple_pattern
+                    (open_parens)
+                    (var_or_nullary_ctor)
+                    (comma)
+                    (var_or_nullary_ctor)
+                    (close_parens))
                 (arrow_symbol)
                 (regular_identifier)))
         (literal_list

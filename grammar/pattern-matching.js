@@ -20,7 +20,7 @@ module.exports = {
 
   _lam_case: ($) =>
     prec.right(
-      seq($.cases, alias($._layout_start, $.START), $._match_cases, optional($._layout_end)),
+      seq($.cases, $._layout_start, $._match_cases, optional($._layout_end)),
       // seq(openBlockWith($, $.cases), $._match_cases, optional($._layout_end)),
     ),
 

@@ -11,7 +11,7 @@ module.exports = ($) => [
   $._in,
   $._indent,
   $._empty,
-  $.operator,
+  $.DEPRECATED_operator,
   $._parenthesized_operator,
   $._watch_start,
   $._start_before_arrow,

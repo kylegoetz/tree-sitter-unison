@@ -27,6 +27,7 @@ All notable changes to this project will be documented in this file.
 - the list infix patterns have been flattened, so for example `init_last_tail_pattern ( left side . right side )` is now `left side . snoc . right side`. The sructure can be deduced, while now the infix operator is a named node. Another example is `head_tail_list_pattern (left . right)` is now `left cons right`.
 - a prefix `operator` (which is surrounded by parentheses) is now called `prefix_operator` instead of just `operator`
 - the introduction of named nodes for `[`, `]`, `(`, and `)`: `open_bracket`, `close_bracket`, `open_parens`, `close_parens`
+- the introduction of named node `comma` in tuple patterns
 
 ## [1.1.4] - 2024-04-25
 

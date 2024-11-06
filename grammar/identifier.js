@@ -29,20 +29,7 @@ module.exports = {
       alias($.symboly_id, $.operator),
     ),
 
-  // $.wordy_id,
-  // alias(regex.symboly_id, $.operator),
-  // $.__identifier,
-  // ),
   path: ($) => regex.path,
-
-  // __identifier: $ => prec.left(choice(
-  //   seq($.path, $.imm_wordy_id,),//alias($.imm_wordy_id, $.wordy_id)),
-  //   $.wordy_id,
-  //   seq($.path, alias($.imm_symboly_id, $.operator)),
-  //   alias(regex.symboly_id, $.operator),//$.operator,
-  // )),
-
-  // namespace: $ => token(regex.namespace),
 
   hash_qualifier: ($) =>
     seq(
@@ -80,16 +67,13 @@ module.exports = {
   _hq_qualified_symboly_id: ($) =>
     seq(
       choice(
-        $.operator,
+        alias($.symboly_id, $.operator),
         seq($.path, alias($.imm_symboly_id, $.operator))),
       optional(alias($.imm_hash_qualifier, $.hash_qualifier)),
     ),
 
   _hq_qualified_prefix_term: ($) =>
     choice(
-      // '(>>=#foo)',
-      // seq('(', token.immediate('>>=#foo'), token.immediate(')')),
-      // paren$($, '>>=#foo'),
       $._hq_qualified_wordy_id,
       paren$($, $._hq_qualified_symboly_id),
       alias($._parenthesized_operator, $.prefix_operator)),
@@ -102,14 +86,13 @@ module.exports = {
   built_in_hash: ($) => /##\S+/,
 
   _prefix_definition_name: ($) =>
-    choice($._wordy_definition_name, parens($._symboly_definition_name)),
+    choice($._wordy_definition_name, seq($.open_parens, $._symboly_definition_name, $.close_parens)),
 
   _wordy_definition_name: ($) =>
     choice(
-      // seq(/\+\+\./, alias($.imm_wordy_id, $.wordy_id)),
       alias($.wordy_id, $.regular_identifier),
       seq($.path, alias($.imm_wordy_id, $.regular_identifier)),
     ),
   _symboly_definition_name: ($) =>
-    choice($.operator, seq($.path, alias($.imm_symboly_id, $.operator))),
+    choice(alias($.symboly_id, $.operator), seq($.path, alias($.imm_symboly_id, $.operator))),
 };

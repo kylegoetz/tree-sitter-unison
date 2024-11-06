@@ -1,5 +1,5 @@
 ===
-line comment
+[Comment] line comment
 ===
 
 -- a comment
@@ -7,7 +7,7 @@ line comment
 ---
 (unison (comment))
 ===
-multiline comment
+[Comment] multiline comment
 ===
 {-
     this is a multiline comment
@@ -17,7 +17,7 @@ multiline comment
     (comment))
 
 ===
-fold
+[Comment] fold
 ===
 
 ---
@@ -27,7 +27,7 @@ x = 5
 (unison
     (fold))
 ===
-nested multiline comment
+[Comment] nested multiline comment
 ===
 x = 5 {- this is a
     multiline {-
