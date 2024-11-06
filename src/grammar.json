@@ -3864,14 +3864,9 @@
       "type": "PREC_RIGHT",
       "value": 0,
       "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "PATTERN",
-            "value": "[_a-z\\u{1f400}-\\u{1faff}]([_!'a-z0-9\\u{1f400}-\\u{1faff}])*",
-            "flags": "iu"
-          }
-        ]
+        "type": "PATTERN",
+        "value": "[_a-z\\u{1f400}-\\u{1faff}]([_!'a-z0-9\\u{1f400}-\\u{1faff}])*",
+        "flags": "iu"
       }
     },
     "imm_wordy_id": {
@@ -4437,84 +4432,12 @@
       "literal_list_pattern"
     ],
     [
-      "_identifier",
-      "_wordy_definition_name",
-      "literal_function"
-    ],
-    [
-      "_identifier",
-      "_wordy_definition_name"
-    ],
-    [
-      "_wordy_definition_name",
-      "literal_function"
-    ],
-    [
-      "_identifier",
-      "_wordy_definition_name",
-      "literal_function",
-      "_lhs"
-    ],
-    [
-      "_identifier",
-      "_symboly_definition_name"
-    ],
-    [
-      "_identifier",
-      "literal_function"
-    ],
-    [
       "_pattern_rhs",
       "_boolean_exp"
     ],
     [
       "_hq_qualified_wordy_id",
-      "_pattern_leaf"
-    ],
-    [
-      "_identifier",
-      "_hq_qualified_wordy_id",
-      "_pattern_leaf"
-    ],
-    [
-      "_hq_qualified_wordy_id",
       "_wordy_definition_name"
-    ],
-    [
-      "_hq_qualified_wordy_id",
-      "_wordy_definition_name",
-      "literal_function"
-    ],
-    [
-      "_identifier",
-      "_hq_qualified_wordy_id"
-    ],
-    [
-      "_hq_qualified_symboly_id",
-      "_symboly_definition_name"
-    ],
-    [
-      "_identifier",
-      "_hq_qualified_symboly_id",
-      "_symboly_definition_name"
-    ],
-    [
-      "_identifier",
-      "_hq_qualified_symboly_id"
-    ],
-    [
-      "_identifier",
-      "_pattern_leaf"
-    ],
-    [
-      "exp_let",
-      "_statement"
-    ],
-    [
-      "_identifier",
-      "_wordy_definition_name",
-      "literal_function",
-      "_prefix_lhs"
     ],
     [
       "_literal",
@@ -4530,28 +4453,6 @@
     ],
     [
       "_literal_pattern",
-      "_term_leaf"
-    ],
-    [
-      "_identifier",
-      "_wordy_definition_name",
-      "_prefix_lhs"
-    ],
-    [
-      "literal_function2",
-      "_term"
-    ],
-    [
-      "_identifier",
-      "_hq_qualified_wordy_id",
-      "_wordy_definition_name"
-    ],
-    [
-      "_identifier",
-      "_prefix_lhs"
-    ],
-    [
-      "_literal_pattern",
       "_number"
     ],
     [
@@ -4563,26 +4464,7 @@
       "_link"
     ],
     [
-      "destructuring_bind"
-    ],
-    [
-      "_term4",
-      "_hq_qualified_wordy_id"
-    ],
-    [
-      "_literal_pattern",
-      "_pattern_root"
-    ],
-    [
       "_infix_app_or_boolean_op"
-    ],
-    [
-      "_block_term",
-      "_infix_app_or_boolean_op"
-    ],
-    [
-      "_infix_app_or_boolean_op",
-      "_literal_pattern"
     ],
     [
       "_pattern_constructor",
