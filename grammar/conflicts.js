@@ -15,4 +15,5 @@ module.exports = ($) => [
   [$._literal, $._link],
   [$._infix_app_or_boolean_op],
   [$._pattern_constructor, $.effect_bind],
+  [$._identifier, $._wordy_definition_name],
 ];

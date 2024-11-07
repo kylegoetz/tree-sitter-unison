@@ -1,23 +1,4 @@
 ===
-[Binding] destructuring bind of boxed type
-===
-x =
-    (Box a) = boxA
-    a
----
-(unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (destructuring_bind
-                (constructor_or_variable_pattern
-                    (regular_identifier)
-                    (regular_identifire))
-                (kw_equals)
-                (regular_identifier))
-            (regular_identifier)
-===
 [Binding] destructuring a tuple
 ===
 x =

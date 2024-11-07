@@ -1,0 +1,175 @@
+<html>
+        <body>
+            <table>
+                <thead>
+                    <tr>
+                        <th>file</th>
+                        <th>test</th>
+                        <th>result</th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>abilities:</td><td/><td/></tr>
+<tr><td/><td>✓ [32m[Abilities] one line structural ability[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Abilities] unique ability[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Abilities] optional `unique`[0m</td><td>PASS</td></tr>
+<tr><td>binding:</td><td/><td/></tr>
+<tr><td/><td>✗ [31m[Binding] destructuring bind of boxed type[0m</td><td>FAIL</td></tr>
+<tr><td/><td>✓ [32m[Binding] destructuring a tuple[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Binding] destructuring in a lambda[0m</td><td>PASS</td></tr>
+<tr><td>blocks:</td><td/><td/></tr>
+<tr><td/><td>✓ [32m[Blocks] block starting with type signature'ified term declaration[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Blocks] inline and multiline comments should not affect indentation calculation[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Blocks] term rewrite[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Blocks] case rewrite[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Blocks] type rewrite[0m</td><td>PASS</td></tr>
+<tr><td>comment:</td><td/><td/></tr>
+<tr><td/><td>✓ [32m[Comment] line comment[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Comment] multiline comment[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Comment] fold[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Comment] nested multiline comment[0m</td><td>PASS</td></tr>
+<tr><td>conditionals:</td><td/><td/></tr>
+<tr><td/><td>✓ [32m[Conditionals] single-line `if` expression[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Conditionals] multiline `if`[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Conditionals] Boolean operations[0m</td><td>PASS</td></tr>
+<tr><td>delayed-computations:</td><td/><td/></tr>
+<tr><td/><td>✓ [32m[Delayed] type and block[0m</td><td>PASS</td></tr>
+<tr><td>documentation:</td><td/><td/></tr>
+<tr><td/><td>✓ [32m[Docs] simple[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Docs] complex[0m</td><td>PASS</td></tr>
+<tr><td>function-application:</td><td/><td/></tr>
+<tr><td/><td>✓ [32m[Function Application] infix op[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Function Application] prefix op[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Function Application] regular function[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Function Application] infix operator function[0m</td><td>PASS</td></tr>
+<tr><td>handlers:</td><td/><td/></tr>
+<tr><td/><td>✓ [32m[Handlers] one line[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Handlers] multiline 1[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Handlers] multiline 2[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Handlers] with cases[0m</td><td>PASS</td></tr>
+<tr><td>identifiers:</td><td/><td/></tr>
+<tr><td/><td>✓ [32midentifier: relative[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32midentifier: simple[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32midentifier: symop[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Identifier] hash-qualified symboly id[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Identifier] HQ built in[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Identifier] HQ prefix[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Identifier] HQ prefix and cycle[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Identifier] HQ prefix and cid[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Identifier] HQ prefix, cycle, and cid[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Identifiers] builtin hash[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Identifiers] builtin hash 2[0m</td><td>PASS</td></tr>
+<tr><td>if-else:</td><td/><td/></tr>
+<tr><td/><td>✓ [32m[Conditional] simple one line if/else with no complex expressions[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Conditional] one line if/else[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Conditional] if/then/else[0m</td><td>PASS</td></tr>
+<tr><td>let:</td><td/><td/></tr>
+<tr><td/><td>✓ [32mLet block[0m</td><td>PASS</td></tr>
+<tr><td>literals:</td><td/><td/></tr>
+<tr><td/><td>✓ [32m[Literal] text[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Literal] Nat[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Literal] Nat (hex)[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Literal] Int[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Literal] Float[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Literal] Char[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Literal] Boolean[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Literal] Byte[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Literal] list literal[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Literal] function[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Literal] tuple[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Literal] unit[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Literal] termLink[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Literal] typeLink[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Literal] Nat[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Literal] numbers[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Literal] escape sequences[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Literal] illegal float[0m</td><td>PASS</td></tr>
+<tr><td>misc:</td><td/><td/></tr>
+<tr><td/><td>✓ [32m[misc] Watch expression[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[misc] Test watch expression[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[misc] test.io watch expression[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Misc] force[0m</td><td>PASS</td></tr>
+<tr><td>pattern-matching:</td><td/><td/></tr>
+<tr><td/><td>✓ [32m[Pattern matching] simple[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Pattern matching] with variables[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Pattern matching] guard patterns[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Pattern matching] guard pattern 2[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Patterns] match x -> x[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Patterns] match 0 -> 1[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Patterns] pattern with newline layout[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Patterns] matching on int[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Patterns] blank pattern[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Patterns] multiple patterns[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Patterns] constructor pattern[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Patterns] nested pattern[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Patterns] newline layout for post-arrow block of RHS of pattern[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Patterns] empty list literal[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Patterns] cons pattern[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Patterns] singleton list[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Patterns] snoc pattern[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Patterns] concat pattern[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Patterns] cases (aka "lambda") pattern matching[0m</td><td>PASS</td></tr>
+<tr><td>regression:</td><td/><td/></tr>
+<tr><td/><td>✓ [32minfix op functional expression not parsed as such[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Regression] Issue 21: built-in hash without path not parsed correctly[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Regression] issue 24: multiline text literal with an unescaped double quotation mark[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Regression] Issue 30, infix ops with path in function application[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Regression] #34 - watch expressions can be binds (term definitions, but types are not allowed as per TermParser.hs, so not term declarations)</td><td>PASS</td></tr>
+
+<tr><td/><td>✓ [32m[Regression] Issue 37, docblock can be anywhere an expression is[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Regression] Issue 37, anonymous docblock immediately precedes term declaration[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Regression] Issue 39, Parenthesized operators in term declaration (def'n + type sig) fail[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Regression] Issue 46, comment that appears where a fold could be fails[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Regression] #82[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Regression] 84 path with symboly id fails[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Regression] pattern matching guards should be part of a layouted block[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Regression] #91 - infix op can have namespace prefix[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Regression] watch doc block fails to parse[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Regression] #103, match scrutinee should be term[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Regression] fold that is more than just ---[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Regression] <| operator[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Regression] 2-symbol op ending with &[0m</td><td>PASS</td></tr>
+<tr><td>term_declaration:</td><td/><td/></tr>
+<tr><td/><td>✓ [32msimple term declaration[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Term] Declaration[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Term] type signature with complex abilities clause[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Term] type signature with tuple[0m</td><td>PASS</td></tr>
+<tr><td>types:</td><td/><td/></tr>
+<tr><td/><td>✓ [32m[Types] structural type[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Types] unique type[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Types] type tag (no type constructor)[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Types] type name with namespace/qualifier[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Types] Record type, single line[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Types] Record type, multiline[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[Types] optional `unique` keyword[0m</td><td>PASS</td></tr>
+<tr><td>use:</td><td/><td/></tr>
+<tr><td/><td>✓ [32m[use] namespace with path and no names[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[use] operators[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[use] name with tick mark[0m</td><td>PASS</td></tr>
+<tr><td/><td>✓ [32m[use] namespace with a path component and an operator name[0m</td><td>PASS</td></tr>
+
+
+
+
+
+<tr><td>1. [Binding] destructuring bind of boxed type:</td><td/><td/></tr>
+
+<tr><td/><td>(unison</td><td>FAIL</td></tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>

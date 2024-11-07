@@ -28,4 +28,36 @@ module.exports = {
 
   // handle [block] with [block]
   handler: ($) => seq($.handle, $._block, $.with, $._block),
+
+  rewrite_block: $ => seq(
+    $.rewrite,
+    $._layout_start,
+    seq($._rewrite_type, repeat(seq($._layout_semicolon, $._rewrite_type))),
+    $._layout_end),
+
+  _rewrite_type: $ => choice(
+    $.rewrite_term,
+    $.rewrite_case,
+    $.rewrite_type,
+  ),
+  _rewrite_term_like: $ => seq(
+    $._term,
+    $.rewrite_arrow,
+    $._layout_start,
+    $.__layout_block
+  ),
+
+  rewrite_term: $ => seq($.term, $._rewrite_term_like),
+  rewrite_case: $ => seq($.case, $._rewrite_term_like),
+  rewrite_type: $ => seq(
+    $.signature,
+    optional(seq(
+      repeat1($._prefix_definition_name),
+      alias('.', $.dot))),
+    $._computation_type,
+    $.rewrite_arrow,
+    $._layout_start,
+    $._computation_type,
+    $._layout_end,
+  ),
 };

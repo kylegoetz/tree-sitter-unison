@@ -22,4 +22,9 @@ module.exports = {
   with: ($) => "with",
   open_parens: $ => prec.right('('),
   close_parens: $ => ')',
+  rewrite: $ => '@rewrite',
+  term: $ => 'term',
+  case: $ => 'case',
+  signature: $ => 'signature',
+  rewrite_arrow: $ => '==>',
 };
