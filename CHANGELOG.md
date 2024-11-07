@@ -6,7 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ### New
 
-- GH-50 - term rewrite blocks
+- GH-50 - term rewrite blocks, including adding
+  - reserved keyword leafs `term` ("term"), `signature` ("signature"), `rewrite` ("rewrite"), `dot` ("."), and `rewrite_arrow` ("==>")
+  - named nodes `rewrite_case`, `rewrite_term`, `rewrite_type`, and `rewrite_block`. The fourth is an entire rewrite block beginning with `@rewrite`, and it, inter alia, includes at least one of the other three as a child node
 - GH-85 - a built-in hash is a single unit, no longer `*PATH_SEGMENT . REGULAR_ID`
 - GH-86 - add `force`, in which `x()` is parsed as `(force (regular_identifier) (unit))`
 - GH-90 - liberal recognition of `_layout_semicolon` at ends of lines with equal indentation levels, which helps with parsing in many places
