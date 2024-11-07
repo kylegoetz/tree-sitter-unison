@@ -1,25 +1,38 @@
 !*/
 node_modules
+.jj
 *.log
 log
 log.html
 .unisonHistory
+.gitattributes
 
 # OS-specific
 .DS_Store
 
 # IDE-specific
 .vscode
+.editorconfig
 
 # app specific
+Makefile
+*.swift
+pyproject.toml
 src/*
 !src/tree_sitter
 !src/tree_sitter/parser.h
 scratch.u
 *.wasm
+*.py
+bindings/c
+bindings/go
+bindings/python
+bindings/swift
 target/
 build/
 Cargo.lock
+setup.py
+test.html
 
 !grammar.json
 !parser.c

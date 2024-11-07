@@ -39,6 +39,7 @@ module.exports = {
     choice(
       $.exp_let,
       $.handler,
+      $.rewrite_block,
       $.exp_if,
       $._pattern_matching, // this is match and lam case
     ),

@@ -2,19 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.0.0] - 2024-10-29
+## [2.0.0] - 2024-11-06
 
 ### New
 
-- #86 - add `force`, in which `x()` is parsed as `(force (regular_identifier) (unit))`
+- GH-50 - term rewrite blocks
+- GH-85 - a built-in hash is a single unit, no longer `*PATH_SEGMENT . REGULAR_ID`
+- GH-86 - add `force`, in which `x()` is parsed as `(force (regular_identifier) (unit))`
+- GH-90 - liberal recognition of `_layout_semicolon` at ends of lines with equal indentation levels, which helps with parsing in many places
+- GH-91 - infix symops can have namespace/path prefix
 
 ### Fixed
 
-- #82 - allow doc block wherever
-- #84 - Symbols in paths now work
-- #85 - built-ins are now just `built_in_hash` without any child nodes
+- GH-80 - parsing folds of more than three hyphens
+- GH-84 - Symbols in paths now work
+- GH-85 - built-ins are now just `built_in_hash` without any child nodes
+- GH-92 - test watch expressions can only have `test` and `test.io` as prefix for `>`
+- GH-95 - doc blocks can only appear two ways (syntax sugar before a top-level `binding` and in similar places as a `literal`)
+- GH-96 - enable built-in hashes
+- GH-97 - separate a term `binding` from a top-level `binding` (latter has the doc block syntax sugar)
+- GH-98 - +4 is correctly tokenized as `int` rather than `symboly_id . nat`
 - #?? - pattern matching guards now are part of a layouted block
-
+- GH-103 - `match` scrutinee now correctly categorized as `_term` rather than `_expression`
+- GH-105 - two-char symbols ending in `&` or `|` now parse as two-char symbols
 
 ### Changed
 

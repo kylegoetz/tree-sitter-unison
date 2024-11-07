@@ -1,5 +1,4 @@
 {
-  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "unison",
   "rules": {
     "unison": {
@@ -2242,6 +2241,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "rewrite_block"
+        },
+        {
+          "type": "SYMBOL",
           "name": "exp_if"
         },
         {
@@ -2683,6 +2686,162 @@
         {
           "type": "SYMBOL",
           "name": "_block"
+        }
+      ]
+    },
+    "rewrite_block": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "rewrite"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_layout_start"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_rewrite_type"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_layout_semicolon"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_rewrite_type"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_layout_end"
+        }
+      ]
+    },
+    "_rewrite_type": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "rewrite_term"
+        }
+      ]
+    },
+    "_rewrite_term_like": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_term"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "rewrite_arrow"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_layout_start"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "__layout_block"
+        }
+      ]
+    },
+    "rewrite_term": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "term"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_rewrite_term_like"
+        }
+      ]
+    },
+    "rewrite_case": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "case"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_rewrite_term_like"
+        }
+      ]
+    },
+    "rewrite_type": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "signature"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "REPEAT1",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_prefix_definition_name"
+                  }
+                },
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_dot"
+                  },
+                  "named": true,
+                  "value": "dot"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_computation_type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "rewrite_arrow"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_layout_start"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_computation_type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_layout_end"
         }
       ]
     },
@@ -3881,6 +4040,26 @@
     "close_parens": {
       "type": "STRING",
       "value": ")"
+    },
+    "rewrite": {
+      "type": "STRING",
+      "value": "@rewrite"
+    },
+    "term": {
+      "type": "STRING",
+      "value": "term"
+    },
+    "case": {
+      "type": "STRING",
+      "value": "case"
+    },
+    "signature": {
+      "type": "STRING",
+      "value": "signature"
+    },
+    "rewrite_arrow": {
+      "type": "STRING",
+      "value": "==>"
     },
     "wordy_id": {
       "type": "PREC_RIGHT",

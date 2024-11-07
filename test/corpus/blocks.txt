@@ -34,3 +34,25 @@
     (comment)
     (pattern (nat) (arrow_symbol) (literal_text))
     (pattern (nat) (arrow_symbol) (literal_text))))
+===
+[Blocks] simple rewrite
+===
+x =
+    @rewrite term x + 1 ==> Nat.increment x
+---
+(unison
+    (term_declaration
+        (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (rewrite_block
+                (rewrite)
+                (rewrite_term
+                    (term)
+                    (regular_identifier)
+                    (operator)
+                    (nat)
+                    (rewrite_arrow)
+                    (path)
+                    (regular_identifier)
+                    (regular_identifier))))))
