@@ -38,7 +38,7 @@ module.exports = {
   _rewrite_type: $ => choice(
     $.rewrite_term,
     $.rewrite_case,
-    // $.rewrite_type,
+    $.rewrite_type,
   ),
   _rewrite_term_like: $ => seq(
     $._term,
@@ -53,7 +53,7 @@ module.exports = {
     $.signature,
     optional(seq(
       repeat1($._prefix_definition_name),
-      alias($._dot, $.dot))),
+      alias('.', $.dot))),
     $._computation_type,
     $.rewrite_arrow,
     $._layout_start,

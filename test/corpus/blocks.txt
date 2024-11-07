@@ -76,3 +76,28 @@ x =
                     (regular_identifier)
                     (rewrite_arrow)
                     (regular_identifier))))))
+===
+[Blocks] type rewrite
+===
+x =
+    @rewrite
+        signature e a . Either e a ==> Optional a
+---
+(unison
+    (term_declaration
+        (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (rewrite_block
+                (rewrite)
+                    (rewrite_type
+                        (signature)
+                        (regular_identifier)
+                        (regular_identifier)
+                        (dot)
+                        (regular_identifier)
+                        (regular_identifier)
+                        (regular_identifier)
+                        (rewrite_arrow)
+                        (regular_identifier)
+                        (regular_identifier))))))

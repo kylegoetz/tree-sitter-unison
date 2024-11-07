@@ -2741,6 +2741,10 @@
         {
           "type": "SYMBOL",
           "name": "rewrite_case"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "rewrite_type"
         }
       ]
     },
@@ -2814,8 +2818,8 @@
                 {
                   "type": "ALIAS",
                   "content": {
-                    "type": "SYMBOL",
-                    "name": "_dot"
+                    "type": "STRING",
+                    "value": "."
                   },
                   "named": true,
                   "value": "dot"
@@ -4674,6 +4678,10 @@
     [
       "_pattern_constructor",
       "effect_bind"
+    ],
+    [
+      "_identifier",
+      "_wordy_definition_name"
     ]
   ],
   "precedences": [

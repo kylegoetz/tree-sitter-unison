@@ -5746,6 +5746,10 @@
         {
           "type": "rewrite_term",
           "named": true
+        },
+        {
+          "type": "rewrite_type",
+          "named": true
         }
       ]
     }
@@ -6533,6 +6537,85 @@
         },
         {
           "type": "with",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "rewrite_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "arrow_symbol",
+          "named": true
+        },
+        {
+          "type": "built_in_hash",
+          "named": true
+        },
+        {
+          "type": "close_parens",
+          "named": true
+        },
+        {
+          "type": "delayed",
+          "named": true
+        },
+        {
+          "type": "dot",
+          "named": true
+        },
+        {
+          "type": "effect",
+          "named": true
+        },
+        {
+          "type": "forall",
+          "named": true
+        },
+        {
+          "type": "hash_qualifier",
+          "named": true
+        },
+        {
+          "type": "open_parens",
+          "named": true
+        },
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
+          "type": "rewrite_arrow",
+          "named": true
+        },
+        {
+          "type": "sequence_type",
+          "named": true
+        },
+        {
+          "type": "signature",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized_type",
+          "named": true
+        },
+        {
+          "type": "unit",
           "named": true
         }
       ]
