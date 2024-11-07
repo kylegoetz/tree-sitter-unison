@@ -35,7 +35,7 @@
     (pattern (nat) (arrow_symbol) (literal_text))
     (pattern (nat) (arrow_symbol) (literal_text))))
 ===
-[Blocks] simple rewrite
+[Blocks] term rewrite
 ===
 x =
     @rewrite term x + 1 ==> Nat.increment x
@@ -56,3 +56,6 @@ x =
                     (path)
                     (regular_identifier)
                     (regular_identifier))))))
+===
+[Blocks]
+===
