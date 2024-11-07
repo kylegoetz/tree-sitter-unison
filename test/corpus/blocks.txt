@@ -57,5 +57,22 @@ x =
                     (regular_identifier)
                     (regular_identifier))))))
 ===
-[Blocks]
+[Blocks] case rewrite
 ===
+x =
+  @rewrite
+    case Left e ==> None
+---
+(unison
+    (term_declaration
+        (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (rewrite_block
+                (rewrite)
+                (rewrite_case
+                    (case)
+                    (regular_identifier)
+                    (regular_identifier)
+                    (rewrite_arrow)
+                    (regular_identifier))))))

@@ -37,7 +37,7 @@ module.exports = {
 
   _rewrite_type: $ => choice(
     $.rewrite_term,
-    // $.rewrite_case,
+    $.rewrite_case,
     // $.rewrite_type,
   ),
   _rewrite_term_like: $ => seq(

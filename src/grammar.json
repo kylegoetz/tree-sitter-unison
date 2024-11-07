@@ -2737,6 +2737,10 @@
         {
           "type": "SYMBOL",
           "name": "rewrite_term"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "rewrite_case"
         }
       ]
     },
