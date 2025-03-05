@@ -202,3 +202,26 @@ this should still be fold
             (regular_identifier)
             (operator)
             (regular_identifier)))
+===|||
+[Regression] Issue 121: pattern following effect pattern fails to be recognized as a pattern
+===|||
+a = cases
+    { a } -> 2
+    a -> 2
+---|||
+(unison
+    (term_declaration
+        (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (cases)
+            (pattern 
+                (effect_pattern
+                    (effect_pure
+                        (var_or_nullary_ctor)))
+                (arrow_symbol)
+                (nat))
+            (pattern
+                (var_or_nullary_ctor)
+                (arrow_symbol)
+                (nat)))))
