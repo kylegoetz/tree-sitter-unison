@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.1] - 2025-03-05
+
+### Fixed
+
+- GH-121 - improved match/case block layout end detection
+
 ## [2.0.0] - 2024-11-06
 
 ### New

@@ -16,7 +16,7 @@
       "url": "https://github.com/zetashift"
     }
   ],
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Unison grammar for tree-sitter",
   "repository": "github:kylegoetz/tree-sitter-unison",
   "main": "bindings/node",
