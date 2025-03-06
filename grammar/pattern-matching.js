@@ -1,4 +1,4 @@
-const { layouted, sep, sep1, openBlockWith, terminated } = require("./util");
+const { sep, sep1, openBlockWith } = require("./util");
 
 module.exports = {
   _pattern_matching: ($) => choice($._match_with, $._lam_case),
@@ -6,13 +6,10 @@ module.exports = {
   _match_with: ($) =>
     prec.right(
       seq(
-        // "match",
         openBlockWith($, $.match),
         field("scrutinee", $._term),
         optional($._layout_end),
         openBlockWith($, $.with),
-        // $.with,
-        // "a -> true",
         $._match_cases,
         optional($._layout_end),
       ),
@@ -21,7 +18,6 @@ module.exports = {
   _lam_case: ($) =>
     prec.right(
       seq($.cases, $._layout_start, $._match_cases, optional($._layout_end)),
-      // seq(openBlockWith($, $.cases), $._match_cases, optional($._layout_end)),
     ),
 
   _match_cases: ($) => prec.right(sep1($._layout_semicolon, $.pattern)),
@@ -94,9 +90,7 @@ module.exports = {
 
   _pattern_infix_app: ($) =>
     choice(alias("++", $.concat), alias("+:", $.cons), alias(":+", $.snoc)),
-  // _a: ($) => seq($._pattern_leaf, optional($._a)),
-  _pattern_constructor: ($) => prec.right(seq(alias(choice(/*'Box',*/ $._hq_qualified_prefix_term), $.ctor), repeat1(choice($._pattern_leaf)))),
-  // ctor: ($) => prec.right($._hq_qualified_prefix_term),
+  _pattern_constructor: ($) => prec.right(seq(alias(choice($._hq_qualified_prefix_term), $.ctor), repeat1(choice($._pattern_leaf)))),
   _pattern_candidates: ($) => choice($._pattern_constructor, $._pattern_leaf),
 
   /*
@@ -139,16 +133,6 @@ module.exports = {
     sep1(alias(',', $.comma), choice($._pattern_root)),
     $._layout_end,
     alias(')', $.close_parens))),
-
-  // seq(
-  //   '(',
-  //   // openBlockWith($, "("),
-  //   // repeat(prec.right(choice(",", $._layout_semicolon))),
-  //   sep1(",", choice('[]', '_')),//$._pattern_root),
-  //   // repeat(prec.right(choice(",", $._layout_semicolon))),
-  //   // $._layout_end,
-  //   ")",
-  // ),
 
   effect_pure: ($) => $._pattern_root,
   effect_bind: ($) =>
