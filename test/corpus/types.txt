@@ -114,3 +114,17 @@ type UserId = Phone Nat | Email Text
         (pipe)
         (regular_identifier)
         (regular_identifier)))
+===
+[Types] bare record type declaration
+===
+type Task = { id : Nat }
+---
+(unison
+    (type_declaration
+        (type_kw)
+        (type_constructor (type_name (regular_identifier)))
+        (kw_equals)
+        (record
+            (record_field
+                (field_name)
+                (regular_identifier)))))
