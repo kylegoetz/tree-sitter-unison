@@ -1,5 +1,4 @@
 {
-  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "unison",
   "rules": {
     "unison": {
@@ -3108,20 +3107,20 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "structural"
-            },
-            {
               "type": "CHOICE",
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "unique"
+                  "name": "structural"
                 },
                 {
-                  "type": "BLANK"
+                  "type": "SYMBOL",
+                  "name": "unique"
                 }
               ]
+            },
+            {
+              "type": "BLANK"
             }
           ]
         },
