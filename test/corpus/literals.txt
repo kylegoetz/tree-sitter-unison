@@ -58,8 +58,10 @@ x = 1.6777216
 ===
 x = ?a
 x = ?\n
+x = ?=%
 ---
 (unison
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (literal_char)))
     (term_declaration (term_definition (regular_identifier) (kw_equals) (literal_char)))
     (term_declaration (term_definition (regular_identifier) (kw_equals) (literal_char))))
 ===

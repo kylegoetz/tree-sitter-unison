@@ -42,7 +42,11 @@ module.exports = {
 
   // Range: [-9223372036854775808, 9223372036854775807]
 
-  literal_char: ($) => choice(/\?./u, /\?\\[0abfnrtvs\'"]/),
+  literal_char: ($) => choice(
+    /\?\\[0abfnrtvs\'"\\]/,
+    /\?=./u,
+    /\?[^\\=]/u,
+  ),
   literal_boolean: ($) => choice("true", "false"),
   literal_byte: ($) => /0xs[0-9a-fA-F]+/,
   literal_hex: ($) => /0x[0-9a-fA-F]+/,
