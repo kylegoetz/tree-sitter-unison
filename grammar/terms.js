@@ -10,19 +10,15 @@ const {
 module.exports = {
   _statement: $ =>
     choice(
-      alias($._binding, $.term_declaration),
-      $.destructuring_bind, // TODO this is a problem where things gravitate toward this instead of block term for RHS of a KW_EQUALS
       $._block_term,
+      alias($._binding, $.term_declaration),
+      $.destructuring_bind,
     ),
-  term_definition2: $ =>
-    prec.right(seq($._lhs, openBlockWith($, $.kw_equals), $.__block)),
+  term_definition2: $ => prec.right(seq($._lhs, layoutBlock($, $.kw_equals))),
 
+  // This exists because of the if/then/else definition. See that definition for more info.
   __block: $ =>
     seq(
-      optional(
-        seq(sep1($._layout_semicolon, $.use_clause), $._layout_semicolon),
-      ),
-      // terminated($, $._statement),
       seq(
         prec.right(sep1($._layout_semicolon, choice($._statement))),
         optional($._layout_semicolon),

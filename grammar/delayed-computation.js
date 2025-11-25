@@ -21,7 +21,7 @@ module.exports = {
         $.literal_hex,
         $.literal_boolean,
         $._link,
-        prec(1, $.tuple_or_parenthesized),
+        prec(3, $.tuple_or_parenthesized),
         $._keyword_block,
         $.literal_list,
         $.delay_quote,
@@ -44,16 +44,18 @@ module.exports = {
       $._pattern_matching, // this is match and lam case
     ),
 
-
-  exp_if: ($) => //'temporarily commented out for compilation sake during testing'
-    // prec.right(seq(block($, $.kw_if), block($, $.kw_then), layoutBlock($, $.kw_else))),
-    prec.right(seq(
-      openBlockWith($, $.kw_if),
-      $.__block,
-      openBlockWith($, $.kw_then),
-      $.__block,
-      openBlockWith($, $.kw_else),
-      $.__block)),
+  // Note: do not convert this to use layoutBlock because there is an infinite loop when running `tree-sitter generate`
+  exp_if: $ =>
+    prec.right(
+      seq(
+        openBlockWith($, $.kw_if),
+        $.__block,
+        openBlockWith($, $.kw_then),
+        $.__block,
+        openBlockWith($, $.kw_else),
+        $.__block,
+      ),
+    ),
 
   // foo()
   force: $ => seq($._hq_qualified_prefix_term, alias('()', $.unit)),

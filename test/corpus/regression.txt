@@ -434,3 +434,54 @@ x =
           (nat)
           (nat)))
       (regular_identifier))))
+
+===
+[Regression] GH-143 - tuple expr in case branch return
+===
+swap = cases
+  (x, y) -> (y, x)
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (cases)
+      (pattern
+        (parenthesized_or_tuple_pattern
+          (open_parens)
+          (var_or_nullary_ctor)
+          (comma)
+          (var_or_nullary_ctor)
+          (close_parens))
+        (arrow_symbol)
+        (tuple_or_parenthesized
+          (regular_identifier)
+          (regular_identifier))))))
+
+===
+[Regression] GH-142 - destructuring bind issue
+===
+y =
+  (x, _) = someFunction()
+  x
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (destructuring_bind
+        (parenthesized_or_tuple_pattern
+          (open_parens)
+          (var_or_nullary_ctor)
+          (comma)
+          (blank_pattern)
+          (close_parens))
+        (kw_equals)
+        (force
+          (regular_identifier)
+          (unit)))
+      (regular_identifier))))

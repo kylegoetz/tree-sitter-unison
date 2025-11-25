@@ -255,3 +255,22 @@
 (unison
     (watch_expression (cases)
         (pattern (literal_list_pattern) (arrow_symbol) (nat))))
+===
+[Patterns] cases returning tuple expression
+===
+> cases (x, y) -> (y, x)
+---
+(unison
+    (watch_expression
+        (cases)
+        (pattern
+            (parenthesized_or_tuple_pattern
+                (open_parens)
+                (var_or_nullary_ctor)
+                (comma)
+                (var_or_nullary_ctor)
+                (close_parens))
+            (arrow_symbol)
+            (tuple_or_parenthesized
+                (regular_identifier)
+                (regular_identifier)))))
