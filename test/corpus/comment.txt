@@ -41,3 +41,22 @@ comment with -} nesting
             (kw_equals)
             (nat)
             (comment))))
+
+===
+[Comment] before type signature
+===
+-- Bytes literal
+someBytes : Bytes
+someBytes = 0xsdeadbeef
+---
+(unison
+    (comment)
+    (term_declaration
+        (type_signature
+            (regular_identifier)
+            (type_signature_colon)
+            (term_type (regular_identifier)))
+        (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (literal_byte))))
