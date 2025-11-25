@@ -58,8 +58,10 @@ x = 1.6777216
 ===
 x = ?a
 x = ?\n
+x = ?=%
 ---
 (unison
+    (term_declaration (term_definition (regular_identifier) (kw_equals) (literal_char)))
     (term_declaration (term_definition (regular_identifier) (kw_equals) (literal_char)))
     (term_declaration (term_definition (regular_identifier) (kw_equals) (literal_char))))
 ===
@@ -116,6 +118,23 @@ y = x -> x + 2
                 (regular_identifier)
                 (operator)
                 (nat)))))
+===
+[Literal] multi-parameter function
+===
+y = acc x -> acc + x
+---
+(unison
+    (term_declaration
+        (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (literal_function
+                (regular_identifier)
+                (regular_identifier)
+                (arrow_symbol)
+                (regular_identifier)
+                (operator)
+                (regular_identifier)))))
 ===
 [Literal] tuple
 ===
