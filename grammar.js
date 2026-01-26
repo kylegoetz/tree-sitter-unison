@@ -24,15 +24,26 @@ module.exports = grammar({
   extras: ($) => [/\\?\s/, $.comment],
   rules: {
     unison: ($) =>
-      repeat(
-        choice(
-          $.watch_expression,
-          $.test_watch_expression,
-          $.type_declaration,
-          alias($.binding, $.term_declaration),
-          $.fold,
-          $.use_clause,
-          alias($.effect_declaration, $.ability_declaration),
+      choice(
+        seq(repeat($._top_item), $.namespace_pragma, repeat($._top_item)),
+        repeat($._top_item),
+      ),
+    _top_item: ($) =>
+      choice(
+        $.watch_expression,
+        $.test_watch_expression,
+        $.type_declaration,
+        alias($.binding, $.term_declaration),
+        $.fold,
+        $.use_clause,
+        alias($.effect_declaration, $.ability_declaration),
+      ),
+    namespace_pragma: ($) =>
+      prec.right(
+        seq(
+          $.kw_namespace,
+          alias($._identifier, $.namespace),
+          optional($._layout_semicolon),
         ),
       ),
     ...bindings,

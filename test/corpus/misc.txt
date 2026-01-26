@@ -1,4 +1,45 @@
 ===
+[misc] namespace pragma
+===
+namespace mynamespace
+x = 5
+---
+(unison
+    (namespace_pragma (kw_namespace) (namespace (regular_identifier)))
+    (term_declaration
+        (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (nat))))
+===
+[misc] namespace pragma mid-file
+===
+x = 5
+namespace My.Namespace
+sum x y = x + y
+> sum 1 2
+---
+(unison
+    (term_declaration
+        (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (nat)))
+    (namespace_pragma (kw_namespace) (namespace (path) (regular_identifier)))
+    (term_declaration
+        (term_definition
+            (regular_identifier)
+            (regular_identifier)
+            (regular_identifier)
+            (kw_equals)
+            (regular_identifier)
+            (operator)
+            (regular_identifier)))
+    (watch_expression
+        (regular_identifier)
+        (nat)
+        (nat)))
+===
 [misc] Watch expression
 ===
 > square 4
