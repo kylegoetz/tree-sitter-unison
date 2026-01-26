@@ -4726,6 +4726,25 @@
     }
   },
   {
+    "type": "namespace_pragma",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "kw_namespace",
+          "named": true
+        },
+        {
+          "type": "namespace",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "open_parens",
     "named": true,
     "fields": {}
@@ -7748,6 +7767,10 @@
           "named": true
         },
         {
+          "type": "namespace_pragma",
+          "named": true
+        },
+        {
           "type": "term_declaration",
           "named": true
         },
@@ -8388,6 +8411,10 @@
   },
   {
     "type": "kw_let",
+    "named": true
+  },
+  {
+    "type": "kw_namespace",
     "named": true
   },
   {

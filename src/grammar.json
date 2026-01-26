@@ -3,60 +3,126 @@
   "name": "unison",
   "rules": {
     "unison": {
-      "type": "REPEAT",
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_top_item"
+              }
+            },
+            {
+              "type": "SYMBOL",
+              "name": "namespace_pragma"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_top_item"
+              }
+            }
+          ]
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_top_item"
+          }
+        }
+      ]
+    },
+    "_top_item": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "watch_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "test_watch_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "type_declaration"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "documented_binding"
+          },
+          "named": true,
+          "value": "term_declaration"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "binding"
+          },
+          "named": true,
+          "value": "term_declaration"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "fold"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "documented_use_clause"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "use_clause"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "effect_declaration"
+          },
+          "named": true,
+          "value": "ability_declaration"
+        }
+      ]
+    },
+    "namespace_pragma": {
+      "type": "PREC_RIGHT",
+      "value": 0,
       "content": {
-        "type": "CHOICE",
+        "type": "SEQ",
         "members": [
           {
             "type": "SYMBOL",
-            "name": "watch_expression"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "test_watch_expression"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "type_declaration"
+            "name": "kw_namespace"
           },
           {
             "type": "ALIAS",
             "content": {
               "type": "SYMBOL",
-              "name": "documented_binding"
+              "name": "_identifier"
             },
             "named": true,
-            "value": "term_declaration"
+            "value": "namespace"
           },
           {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "binding"
-            },
-            "named": true,
-            "value": "term_declaration"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "fold"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "documented_use_clause"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "use_clause"
-          },
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "effect_declaration"
-            },
-            "named": true,
-            "value": "ability_declaration"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_layout_semicolon"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         ]
       }
@@ -3975,6 +4041,10 @@
     "kw_typelink": {
       "type": "STRING",
       "value": "typeLink"
+    },
+    "kw_namespace": {
+      "type": "STRING",
+      "value": "namespace"
     },
     "handle": {
       "type": "STRING",

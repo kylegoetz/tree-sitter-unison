@@ -18,6 +18,7 @@ module.exports = {
   type_signature_colon: ($) => ":",
   kw_termlink: ($) => "termLink",
   kw_typelink: ($) => "typeLink",
+  kw_namespace: ($) => "namespace",
   handle: ($) => "handle",
   with: ($) => "with",
   open_parens: $ => prec.right('('),
