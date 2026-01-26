@@ -43,7 +43,6 @@ module.exports = grammar({
         seq(
           $.kw_namespace,
           alias($._identifier, $.namespace),
-          optional($._layout_semicolon),
         ),
       ),
     ...bindings,

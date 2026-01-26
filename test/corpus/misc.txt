@@ -17,7 +17,7 @@ x = 5
 x = 5
 namespace My.Namespace
 sum x y = x + y
-> sum 1 2
+> sum x 2
 ---
 (unison
     (term_declaration
@@ -37,7 +37,7 @@ sum x y = x + y
             (regular_identifier)))
     (watch_expression
         (regular_identifier)
-        (nat)
+        (regular_identifier)
         (nat)))
 ===
 [misc] Watch expression
