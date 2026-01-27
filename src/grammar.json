@@ -3091,20 +3091,20 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "structural"
-            },
-            {
               "type": "CHOICE",
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "unique"
+                  "name": "structural"
                 },
                 {
-                  "type": "BLANK"
+                  "type": "SYMBOL",
+                  "name": "unique"
                 }
               ]
+            },
+            {
+              "type": "BLANK"
             }
           ]
         },
