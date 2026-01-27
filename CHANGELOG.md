@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file.
 
 ### New
 
-- GH-133 - namespace pragma (@skykanin)
+- GH-114 - namespace pragma (@skykanin)
 - GH-135 - doc block can precede use_clause now, and such a use_clause is wrapped in `documented_use_clause` with existing `doc_block` and `use_clause` children (@fmguerreiro)
 
 ## [2.0.1] - 2025-03-05
