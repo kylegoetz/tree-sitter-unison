@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.0] - 2026-01-27
+
+### Fixed
+
+- GH-134 - multiline literals handled correctly when opened by more than three double quotation marks
+
+### New
+
+- GH-133 - namespace pragma (@skykanin)
+- GH-135 - doc block can precede use_clause now, and such a use_clause is wrapped in `documented_use_clause` with existing `doc_block` and `use_clause` children (@fmguerreiro)
+
 ## [2.0.1] - 2025-03-05
 
 ### Fixed
