@@ -1,14 +1,17 @@
 ===
-[Literal] text
+[Literal] single-line text
 ===
 > "Test"
+---
+(unison (watch_expression (literal_text)))
+===
+[Literal] multi-line text
+===
 > """
  this is multiline
  """
 ---
-(unison
-    (watch_expression (literal_text))
-    (watch_expression (literal_text)))
+(unison (watch_expression (literal_text)))
 ===
 [Literal] Nat
 ===

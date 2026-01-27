@@ -4649,11 +4649,6 @@
     }
   },
   {
-    "type": "literal_text",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "literal_typelink",
     "named": true,
     "fields": {},
@@ -8212,14 +8207,6 @@
     "named": false
   },
   {
-    "type": "\"",
-    "named": false
-  },
-  {
-    "type": "\"\"\"",
-    "named": false
-  },
-  {
     "type": "'",
     "named": false
   },
@@ -8305,7 +8292,8 @@
   },
   {
     "type": "comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "concat",
@@ -8393,6 +8381,10 @@
   },
   {
     "type": "literal_hex",
+    "named": true
+  },
+  {
+    "type": "literal_text",
     "named": true
   },
   {

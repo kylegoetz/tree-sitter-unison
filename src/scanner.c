@@ -116,6 +116,7 @@ typedef enum {
     DOC_BLOCK,
     GUARD_LAYOUT_START,
     DESTRUCTURE_START,
+    TEXT_LITERAL,
     FAIL, // always last in list
 } Sym;
 
@@ -141,6 +142,7 @@ static char *sym_names[] = {
     "doc block",
     "guard layout start",
     "destructure start",
+    "text literal",
     "fail",
 };
 // #endif
@@ -1376,6 +1378,76 @@ static Result handle_negative(State *state) {
   return post_pos_neg_sign(state, true);
 }
 
+/**
+ * Call only after consuming all adjacent quotation marks and have determined it's a single char
+ * Two chars should already be handled by calling function (inline_tokens).
+ * Scan until we encounter an unescaped single quotation mark.
+ * Fail if encounter newline or EOF.
+ */
+static Result single_line_text_literal(State *state) {
+  LOG(VERBOSE, "[single_line_text_literal] peek = %c", PEEK);
+  while(!is_eof(state) && !is_newline(PEEK)) {
+    if(PEEK == '\\') {
+      S_ADVANCE;
+      S_ADVANCE;
+    } else {
+      if (PEEK == '"') {
+        S_ADVANCE;
+        MARK("single_line_text_literal", false, state);
+        return finish(TEXT_LITERAL, "text literal");
+      } else {
+        S_ADVANCE;
+      }
+    }
+    // if(PEEK == '"') {
+    // }
+  }
+  return res_fail;
+}
+
+static Result multiline_text_literal(int qmark_count, State *state) {
+  LOG(VERBOSE, "[multiline_text_literal] qmark_count = %u, peek = %c", qmark_count, PEEK);
+  int j = 0;
+  while (!is_eof(state) && j < qmark_count) {
+    if (PEEK == '"') {
+      ++j;
+      LOG(VERBOSE, "found %u closing closing quotation marks\n", j);
+    } else {
+      LOG(VERBOSE, "found a non-quotation mark (%c); restarting closing count\n", PEEK);
+      j = 0;
+    }
+    S_ADVANCE;
+  }
+  if(j == qmark_count) {
+    MARK("text literal", false, state);
+    return finish(TEXT_LITERAL, "text literal");
+  }
+  else {
+    return res_fail;
+  }
+}
+
+static Result text_literal(State *state) {
+  if(SYM(TEXT_LITERAL)) {
+    LOG(VERBOSE, "looking at text literal\n");
+    S_ADVANCE;
+    int i = 1;
+    while(PEEK == '"') { ++i; S_ADVANCE; }
+    LOG(VERBOSE, "text literal that starts with %u quotation marks\n", i);
+    if (i == 1) {
+      return single_line_text_literal(state);
+    }
+    else if (i == 2) { // empty text literal
+      MARK("inline_tokens", false, state);
+      return finish(TEXT_LITERAL, "text literal");
+    }
+    else {
+      return multiline_text_literal(i, state);
+    }
+  }
+  return res_cont;  
+}
+
 /** Parse special tokens before the first newline that can't be reliably detected by tree-sitter:
  *   TODO revisit whether we want to use `inline_tokens` at all
  *   - `where` here is just for the actual valid token
@@ -1397,6 +1469,10 @@ static Result inline_tokens(State *state) {
   //   return res_fail;
   // }
   switch (PEEK) {
+    case '"': { // consume a text literal, failing if malformed or disallowed
+      Result res = text_literal(state);
+      SHORT_SCANNER;
+    }
     case 'w': {
       Result res = where_or_with(state);
       SHORT_SCANNER;
@@ -1640,6 +1716,7 @@ static Result newline_indent(uint32_t indent, State *state) {
  * - starts with `-` (COMMENT, FOLD)
  * - starts with `w` (END)
  * - starts with `>` (WATCH)
+ * - starts with `"` (TEXT_LITERAL)
  * NOTE: not SYMOP because cannot begin a line with one. (TODO I don't think this is true; `a\n\t++ foo` is valid)
  */
 static Result newline_token(uint32_t indent, State *state) {
@@ -1670,6 +1747,10 @@ static Result newline_token(uint32_t indent, State *state) {
     }
     case 'w': {
       Result res = where_or_with(state);
+      SHORT_SCANNER;
+    }
+    case '"': {
+      Result res = text_literal(state);
       SHORT_SCANNER;
     }
   }
