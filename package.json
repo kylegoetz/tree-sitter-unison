@@ -40,8 +40,8 @@
     "src/**"
   ],
   "dependencies": {
-    "node-addon-api": "^7.1.0",
-    "node-gyp-build": "^4.8.0"
+    "node-addon-api": "^8.5.0",
+    "node-gyp-build": "^4.8.4"
   },
   "peerDependencies": {
     "tree-sitter": "^0.21.1"
@@ -52,10 +52,10 @@
     }
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.2.2",
-    "@commitlint/config-conventional": "^19.2.2",
-    "tree-sitter-cli": "^0.22.5",
-    "web-tree-sitter": "^0.22.5",
+    "@commitlint/cli": "^20.4.0",
+    "@commitlint/config-conventional": "^20.4.0",
+    "tree-sitter-cli": "^0.26.3",
+    "web-tree-sitter": "^0.26.3",
     "prebuildify": "^6.0.0"
   },
   "scripts": {
