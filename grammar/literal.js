@@ -25,11 +25,7 @@ module.exports = {
   nat: ($) => /[0-9]+/,
   int: ($) => /[+-][0-9]+/,
   float: ($) => /[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?/,
-  literal_char: ($) => choice(
-    /\?\\[0abfnrtvs\'"\\]/,
-    /\?=./u,
-    /\?[^\\=]/u,
-  ),
+  literal_char: ($) => choice(/\?./u, /\?\\[0abfnrtvs\'"]/),
   literal_boolean: ($) => choice("true", "false"),
   literal_byte: ($) => /0xs[0-9a-fA-F]+/,
   literal_hex: ($) => /0x[0-9a-fA-F]+/,

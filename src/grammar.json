@@ -1,5 +1,4 @@
 {
-  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "unison",
   "rules": {
     "unison": {
@@ -637,17 +636,12 @@
       "members": [
         {
           "type": "PATTERN",
-          "value": "\\?\\\\[0abfnrtvs\\'\"\\\\]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "\\?=.",
+          "value": "\\?.",
           "flags": "u"
         },
         {
           "type": "PATTERN",
-          "value": "\\?[^\\\\=]",
-          "flags": "u"
+          "value": "\\?\\\\[0abfnrtvs\\'\"]"
         }
       ]
     },
@@ -4818,6 +4812,5 @@
     }
   ],
   "inline": [],
-  "supertypes": [],
-  "reserved": {}
+  "supertypes": []
 }
