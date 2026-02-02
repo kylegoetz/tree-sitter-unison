@@ -1629,6 +1629,25 @@
     }
   },
   {
+    "type": "documented_use_clause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "doc_block",
+          "named": true
+        },
+        {
+          "type": "use_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "effect",
     "named": true,
     "fields": {},
@@ -3715,6 +3734,10 @@
           "named": true
         },
         {
+          "type": "use_clause",
+          "named": true
+        },
+        {
           "type": "with",
           "named": true
         }
@@ -4649,11 +4672,6 @@
     }
   },
   {
-    "type": "literal_text",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "literal_typelink",
     "named": true,
     "fields": {},
@@ -4706,6 +4724,25 @@
         },
         {
           "type": "regular_identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "namespace_pragma",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "kw_namespace",
+          "named": true
+        },
+        {
+          "type": "namespace",
           "named": true
         }
       ]
@@ -5047,10 +5084,6 @@
           "named": true
         },
         {
-          "type": "destructuring_bind",
-          "named": true
-        },
-        {
           "type": "doc_block",
           "named": true
         },
@@ -5180,10 +5213,6 @@
         },
         {
           "type": "tuple_or_parenthesized",
-          "named": true
-        },
-        {
-          "type": "use_clause",
           "named": true
         },
         {
@@ -7726,7 +7755,15 @@
           "named": true
         },
         {
+          "type": "documented_use_clause",
+          "named": true
+        },
+        {
           "type": "fold",
+          "named": true
+        },
+        {
+          "type": "namespace_pragma",
           "named": true
         },
         {
@@ -8212,14 +8249,6 @@
     "named": false
   },
   {
-    "type": "\"",
-    "named": false
-  },
-  {
-    "type": "\"\"\"",
-    "named": false
-  },
-  {
     "type": "'",
     "named": false
   },
@@ -8305,7 +8334,8 @@
   },
   {
     "type": "comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "concat",
@@ -8380,6 +8410,10 @@
     "named": true
   },
   {
+    "type": "kw_namespace",
+    "named": true
+  },
+  {
     "type": "kw_termlink",
     "named": true
   },
@@ -8393,6 +8427,10 @@
   },
   {
     "type": "literal_hex",
+    "named": true
+  },
+  {
+    "type": "literal_text",
     "named": true
   },
   {
