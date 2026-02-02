@@ -31,3 +31,10 @@ poet = "Maya Angelou"
 }}
 ---
 (unison (watch_expression (doc_block)))
+===
+[Docs] top-level doc (above use clause)
+===
+{{ Doc at top level }}
+use base List
+---
+(unison (documented_use_clause (doc_block) (use_clause (use) (namespace (regular_identifier)) (regular_identifier))))

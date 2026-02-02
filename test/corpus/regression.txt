@@ -225,3 +225,17 @@ a = cases
                 (var_or_nullary_ctor)
                 (arrow_symbol)
                 (nat)))))
+===|||
+[Regression] #134 multi-line quotation mark text literal that opens with more than three " needs balanced ending
+===|||
+x = """"
+foo
+bar"""
+baz""""
+---|||
+(unison
+    (term_declaration
+        (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (literal_text))))

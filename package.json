@@ -14,9 +14,13 @@
     {
       "name": "zetashift",
       "url": "https://github.com/zetashift"
+    },
+    {
+      "name": "Nicholas",
+      "url": "https://github.com/skykanin"
     }
   ],
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Unison grammar for tree-sitter",
   "repository": "github:kylegoetz/tree-sitter-unison",
   "main": "bindings/node",

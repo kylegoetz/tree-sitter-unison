@@ -20,20 +20,16 @@ module.exports = {
 
   __block: ($) =>
     seq(
-      seq(
-        prec.right(sep1($._layout_semicolon, choice($._statement))),
-        optional($._layout_semicolon),
-      ),
+      prec.right(sep1($._layout_semicolon, $._statement)),
+      optional($._layout_semicolon),
       $._layout_end,
     ),
 
   __layout_block: ($) =>
     prec.right(
       seq(
-        seq(
-          sep1($._layout_semicolon, $._statement),
-          optional($._layout_semicolon),
-        ),
+        sep1($._layout_semicolon, $._statement),
+        optional($._layout_semicolon),
         optional($._layout_end),
       ),
     ),
@@ -47,7 +43,7 @@ module.exports = {
     ),
   destructuring_bind: ($) =>
     seq(
-      choice($.parenthesized_or_tuple_pattern),
+      $.parenthesized_or_tuple_pattern,
       openBlockWith($, $.kw_equals),
       $.__layout_block,
     ),

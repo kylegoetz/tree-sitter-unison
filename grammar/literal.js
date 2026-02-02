@@ -21,27 +21,10 @@ module.exports = {
       $.unit,
     ),
   unit: ($) => "()",
-  // literal_text: $ => /".+?"/,
 
   nat: ($) => /[0-9]+/,
   int: ($) => /[+-][0-9]+/,
   float: ($) => /[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?/,
-
-  literal_text: (_) =>
-    choice(
-      // /"(?:\\"|.)*?"/, // <-- this fails for the one line if/else test by parsing a longer string than it should
-      seq('"', repeat(choice(/[^\\"\n]/, /\\(\^)?./, /\\\n\s*\\/)), '"'),
-      seq(
-        '"""',
-        repeat(choice('"', /[^\\"\n]/, /\\(\^)?./, /\\\n\s*\\/)),
-        '"""',
-      ),
-    ),
-
-  // Range: [0, 18446744073709551615]
-
-  // Range: [-9223372036854775808, 9223372036854775807]
-
   literal_char: ($) => choice(
     /\?\\[0abfnrtvs\'"\\]/,
     /\?=./u,
