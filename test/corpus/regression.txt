@@ -215,7 +215,7 @@ a = cases
             (regular_identifier)
             (kw_equals)
             (cases)
-            (pattern 
+            (pattern
                 (effect_pattern
                     (effect_pure
                         (var_or_nullary_ctor)))
@@ -239,3 +239,15 @@ baz""""
             (regular_identifier)
             (kw_equals)
             (literal_text))))
+===|||
+[Regression] GH-139: underscores in path names
+===|||
+lib.unison_base_3_0_0.Nat.gcd = 5
+---|||
+(unison
+  (term_declaration
+    (term_definition
+      (path)
+      (regular_identifier)
+      (kw_equals)
+      (nat))))
