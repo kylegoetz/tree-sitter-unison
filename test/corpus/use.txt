@@ -28,3 +28,188 @@ use Search lubIndexOf'
 use base.List ++
 ---
 (unison (use_clause (use) (namespace (path) (regular_identifier)) (operator)))
+
+===
+[use] namespace with multiple operators
+===
+use Nat + - *
+---
+(unison (use_clause (use) (namespace (regular_identifier)) (operator) (operator) (operator)))
+
+===
+[use] use clause mixed with bindings in let block
+===
+complexCalculation input =
+  let
+    step1 = input * 2
+    use Nat + - *
+    step2 = 10
+    result = step2 + step1
+    result
+---
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (exp_let
+        (kw_let)
+        (term_declaration
+          (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (regular_identifier)
+            (operator)
+            (nat)))
+        (use_clause
+          (use)
+          (namespace (regular_identifier))
+          (operator)
+          (operator)
+          (operator))
+        (term_declaration
+          (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (nat)))
+        (term_declaration
+          (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (regular_identifier)
+            (operator)
+            (regular_identifier)))
+        (regular_identifier)))))
+
+===
+[use] multiple use clauses in let block
+===
+example =
+  let
+    use base.List
+    xs = [1, 2, 3]
+    use Nat +
+    sum = 1 + 2
+    sum
+---
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (exp_let
+        (kw_let)
+        (use_clause
+          (use)
+          (namespace (path) (regular_identifier)))
+        (term_declaration
+          (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (literal_list
+              (open_bracket)
+              (nat)
+              (nat)
+              (nat)
+              (close_bracket))))
+        (use_clause
+          (use)
+          (namespace (regular_identifier))
+          (operator))
+        (term_declaration
+          (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (nat)
+            (operator)
+            (nat)))
+        (regular_identifier)))))
+
+===
+[use] use clause at start of let block
+===
+atStart = let
+  use Nat +
+  x = 1 + 2
+  x
+---
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (exp_let
+        (kw_let)
+        (use_clause
+          (use)
+          (namespace (regular_identifier))
+          (operator))
+        (term_declaration
+          (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (nat)
+            (operator)
+            (nat)))
+        (regular_identifier)))))
+
+===
+[use] use clause in middle of let block
+===
+inMiddle = let
+  x = 5
+  use Nat *
+  y = x * 2
+  y
+---
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (exp_let
+        (kw_let)
+        (term_declaration
+          (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (nat)))
+        (use_clause
+          (use)
+          (namespace (regular_identifier))
+          (operator))
+        (term_declaration
+          (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (regular_identifier)
+            (operator)
+            (nat)))
+        (regular_identifier)))))
+
+===
+[use] use clause at end of let block
+===
+atEnd = let
+  x = 5
+  use Nat +
+  x
+---
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (exp_let
+        (kw_let)
+        (term_declaration
+          (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (nat)))
+        (use_clause
+          (use)
+          (namespace (regular_identifier))
+          (operator))
+        (regular_identifier)))))

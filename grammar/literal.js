@@ -78,7 +78,7 @@ module.exports = {
     ),
   */
 
-  tuple_or_parenthesized: ($) => seq(openBlockWith($, '('), sep(',', $._term), $._layout_end, ')'),
+  tuple_or_parenthesized: ($) => prec.dynamic(1, seq(openBlockWith($, '('), sep(',', $._term), $._layout_end, ')')),
   // seq("(", sep1(",", choice(/*alias("0: Int", $.tmp),*/ $._term)), ")"),
   // term: $ => $._regular_identifier,
   literal_termlink: ($) => seq($.kw_termlink, $._hash_qualified),

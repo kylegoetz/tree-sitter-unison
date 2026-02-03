@@ -239,3 +239,75 @@ baz""""
             (regular_identifier)
             (kw_equals)
             (literal_text))))
+===|||
+[Regression] base.Nat.gcd pattern matching with nested definition
+===|||
+Nat.gcd : Nat -> Nat ->{Abort} Nat
+Nat.gcd x y =
+  use Nat ==
+  go x y = match y with
+    0 -> x
+    _ -> go y (Nat.mod x y)
+  if x == 0 || y == 0 then abort else go x y
+---|||
+(unison
+    (term_declaration
+        (type_signature
+            (path)
+            (regular_identifier)
+            (type_signature_colon)
+            (term_type
+                (regular_identifier)
+                (arrow_symbol)
+                (regular_identifier)
+                (arrow_symbol)
+                (effect (regular_identifier))
+                (regular_identifier)))
+        (term_definition
+            (path)
+            (regular_identifier)
+            (regular_identifier)
+            (regular_identifier)
+            (kw_equals)
+            (use_clause
+                (use)
+                (namespace (regular_identifier))
+                (operator))
+            (term_declaration
+                (term_definition
+                    (regular_identifier)
+                    (regular_identifier)
+                    (regular_identifier)
+                    (kw_equals)
+                    (match)
+                    (regular_identifier)
+                    (with)
+                    (pattern
+                        (nat)
+                        (arrow_symbol)
+                        (regular_identifier))
+                    (pattern
+                        (blank_pattern)
+                        (arrow_symbol)
+                        (regular_identifier)
+                        (regular_identifier)
+                        (tuple_or_parenthesized
+                            (path)
+                            (regular_identifier)
+                            (regular_identifier)
+                            (regular_identifier)))))
+            (exp_if
+                (kw_if)
+                (regular_identifier)
+                (operator)
+                (nat)
+                (or)
+                (regular_identifier)
+                (operator)
+                (nat)
+                (kw_then)
+                (regular_identifier)
+                (kw_else)
+                (regular_identifier)
+                (regular_identifier)
+                (regular_identifier)))))

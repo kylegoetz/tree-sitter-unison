@@ -60,7 +60,7 @@ module.exports = {
         $._layout_end,
       ),
       // open_block_with($, $.arrow_symbol),
-      seq(openBlockWith($, $.arrow_symbol), $.__block),
+      seq(openBlockWith($, $.arrow_symbol), $._pattern_rhs_block),
       // seq(
       //   $._layout_start,
       //   // terminated($, $.guarded_block),
@@ -70,6 +70,21 @@ module.exports = {
       // // prec.right(layouted($, $.guarded_block)), // TODO this is the problem child preventing `2 +: _` from being recognized as a pattern instead after the `2` the space is recognized as LAYOUT_START
       // // seq($._layout_start, layouted($, $.guarded_block), $._layout_end),
     )),
+
+  _pattern_rhs_block: ($) =>
+    seq(
+      seq(
+        prec.right(sep1($._layout_semicolon, choice($._pattern_rhs_statement))),
+        optional($._layout_semicolon),
+      ),
+      $._layout_end,
+    ),
+
+  _pattern_rhs_statement: ($) =>
+    choice(
+      prec(1, $._block_term),
+      alias($._binding, $.term_declaration),
+    ),
 
   _literal_pattern: ($) =>
     choice(

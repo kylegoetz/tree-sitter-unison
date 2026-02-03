@@ -21,7 +21,7 @@ module.exports = {
         $.literal_hex,
         $.literal_boolean,
         $._link,
-        prec(1, $.tuple_or_parenthesized),
+        prec(3, $.tuple_or_parenthesized),
         $._keyword_block,
         $.literal_list,
         $.delay_quote,
