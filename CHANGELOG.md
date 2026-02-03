@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.1] - 2026-02-02
+
+### Fixed
+
+- GH-139 - regex no longer fails for identifiers containing an underscore followed by numbers in their path
+
 ## [2.1.0] - 2026-01-27
 
 ### Fixed
