@@ -38,3 +38,4 @@ test.html
 !parser.c
 !node-types.json
 !jtckdint.h
+!scanner.c
