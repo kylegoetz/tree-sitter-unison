@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.3] - 2026-02-04
+
+### Fixed
+
+- GH-141 - use clauses can occuur anywhere in a block, not just the first line
+
 ## [2.1.2] - 2026-02-04
 
 ### Fixed
