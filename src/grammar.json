@@ -479,8 +479,11 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_prefix_definition_name"
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_prefix_definition_name"
+          }
         },
         {
           "type": "ALIAS",
@@ -501,8 +504,11 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_prefix_definition_name"
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_prefix_definition_name"
+          }
         },
         {
           "type": "ALIAS",
@@ -4687,6 +4693,14 @@
     [
       "_identifier",
       "_wordy_definition_name"
+    ],
+    [
+      "literal_function",
+      "_prefix_lhs"
+    ],
+    [
+      "literal_function",
+      "_infix_lhs"
     ]
   ],
   "precedences": [

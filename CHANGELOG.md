@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.2] - 2026-02-04
+
+### Fixed
+
+- GH-140 - function literals allow multiple parameters
+
 ## [2.1.1] - 2026-02-02
 
 ### Fixed
