@@ -18,4 +18,5 @@ module.exports = $ => [
   [$._identifier, $._wordy_definition_name],
   [$.literal_function, $._prefix_lhs],
   [$.literal_function, $._infix_lhs],
+  [$.exp_let],
 ]

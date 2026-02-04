@@ -251,3 +251,35 @@ lib.unison_base_3_0_0.Nat.gcd = 5
       (regular_identifier)
       (kw_equals)
       (nat))))
+
+===
+[Regression] 141 - use clause in block
+===
+complexCalculation input =
+  let
+    result = 5
+    use Nat + - *
+    result
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (exp_let
+        (kw_let)
+        (term_declaration
+          (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (nat)))
+        (use_clause
+          (use)
+          (namespace
+            (regular_identifier))
+          (operator)
+          (operator)
+          (operator))
+        (regular_identifier)))))
