@@ -1,14 +1,14 @@
-const sep = (sep, rule) => optional(seq(rule, repeat(seq(sep, rule))));
+const sep = (sep, rule) => optional(seq(rule, repeat(seq(sep, rule))))
 
-sep1 = (sep, rule) => seq(rule, repeat(seq(sep, rule)));
+sep1 = (sep, rule) => seq(rule, repeat(seq(sep, rule)))
 
-sep2 = (sep, rule) => seq(rule, repeat1(seq(sep, rule)));
+sep2 = (sep, rule) => seq(rule, repeat1(seq(sep, rule)))
 
-braces = (...rule) => seq("{", ...rule, "}");
+braces = (...rule) => seq('{', ...rule, '}')
 
-parens = (...rule) => seq("(", ...rule, ")");
+parens = (...rule) => seq('(', ...rule, ')')
 
-paren$ = ($, ...rule) => seq('(', $._layout_start, ...rule, $._layout_end, ')');
+paren$ = ($, ...rule) => seq('(', $._layout_start, ...rule, $._layout_end, ')')
 
 /**
  * Wrap a repeated rule with semicolon rules.
@@ -21,21 +21,23 @@ paren$ = ($, ...rule) => seq('(', $._layout_start, ...rule, $._layout_end, ')');
 terminated = ($, rule) =>
   prec.right(
     seq(
-      prec.right(sep1(prec.right(choice(";", $._layout_semicolon)), rule)),
-      optional(choice(";", $._layout_semicolon)),
+      prec.right(sep1(prec.right(choice(';', $._layout_semicolon)), rule)),
+      optional(choice(';', $._layout_semicolon)),
     ),
-  );
+  )
 
-layouted_braces = (rule) => braces(sep(";", rule), optional(";"));
+layouted_braces = rule => braces(sep(';', rule), optional(';'))
 
-open_block_with = ($, opener) => seq(
-  opener,
-  $._layout_start,
-  optional(terminated($, $.use_clause)),
-  terminated($, $._statement),
-  optional($._layout_end));
+open_block_with = ($, opener) =>
+  seq(
+    opener,
+    $._layout_start,
+    optional(terminated($, $.use_clause)),
+    terminated($, $._statement),
+    optional($._layout_end),
+  )
 
-openBlockWith = ($, opener) => seq(opener, $._layout_start);
+openBlockWith = ($, opener) => seq(opener, $._layout_start)
 
 layoutBlock = ($, opener) =>
   seq(
@@ -51,7 +53,7 @@ layoutBlock = ($, opener) =>
     // optional($._layout_semicolon),
     // terminated($, $._statement),
     $._layout_end,
-  );
+  )
 
 const block = ($, opener) =>
   seq(
@@ -93,7 +95,7 @@ layouted = ($, rule) =>
     // layouted_braces(rule),
     seq($._layout_start, terminated($, rule), $._layout_end),
     rule,
-  );
+  )
 
 // guardLayouted = seq()
 
@@ -101,7 +103,7 @@ layouted_without_end = ($, rule) =>
   choice(
     layouted_braces(rule),
     seq($._layout_start, optional(terminated($, rule))),
-  );
+  )
 
 // layout_block = ($, keyword) => seq(open_block_with($, keyword));
 
@@ -118,4 +120,4 @@ module.exports = {
   sep1,
   sep2,
   terminated,
-};
+}
