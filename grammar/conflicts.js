@@ -1,4 +1,4 @@
-module.exports = ($) => [
+module.exports = $ => [
   [$._value_type],
   [$._type2],
   [$._type1, $.constructor],
