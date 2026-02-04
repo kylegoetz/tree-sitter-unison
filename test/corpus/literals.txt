@@ -240,3 +240,21 @@ x = -1.2e-3
 > 1.7976931348623157E+309
 ---
 (unison (watch_expression (float)))
+===
+[Literal] fn with two lambda params
+===
+add = x y -> x + y
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (literal_function
+        (regular_identifier)
+        (regular_identifier)
+        (arrow_symbol)
+        (regular_identifier)
+        (operator)
+        (regular_identifier)))))

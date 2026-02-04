@@ -16,4 +16,6 @@ module.exports = ($) => [
   [$._infix_app_or_boolean_op],
   [$._pattern_constructor, $.effect_bind],
   [$._identifier, $._wordy_definition_name],
-];
+  [$.literal_function, $._prefix_lhs],
+  [$.literal_function, $._infix_lhs],
+]
