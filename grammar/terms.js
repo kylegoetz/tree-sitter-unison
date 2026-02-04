@@ -30,20 +30,6 @@ module.exports = {
       $._layout_end,
     ),
 
-  __layout_block: $ =>
-    prec.right(
-      seq(
-        optional(
-          seq(sep1($._layout_semicolon, $.use_clause), $._layout_semicolon),
-        ),
-        seq(
-          sep1($._layout_semicolon, $._statement),
-          optional($._layout_semicolon),
-        ),
-        optional($._layout_end),
-      ),
-    ),
-
   binding: $ => $._binding,
   documented_binding: $ => seq($.doc_block, $._layout_semicolon, $._binding),
   _binding: $ =>
@@ -55,8 +41,7 @@ module.exports = {
     choice(
       seq(
         choice($.parenthesized_or_tuple_pattern),
-        openBlockWith($, $.kw_equals),
-        $.__layout_block,
+        layoutBlock($, $.kw_equals),
       ),
     ),
 

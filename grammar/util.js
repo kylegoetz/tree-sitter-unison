@@ -43,15 +43,10 @@ layoutBlock = ($, opener) =>
   seq(
     opener,
     $._layout_start,
-    // optional(terminated($, $.use_clause)),
-    // repeat($.use_clause),
-    // optional($._layout_semicolon),
     sep1(
       $._layout_semicolon,
       choice($._statement, terminated($, $.use_clause)),
     ),
-    // optional($._layout_semicolon),
-    // terminated($, $._statement),
     $._layout_end,
   )
 

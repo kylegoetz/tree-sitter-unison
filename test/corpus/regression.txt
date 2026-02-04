@@ -394,3 +394,43 @@ complexCalculation input =
           (operator)
           (operator))
         (regular_identifier)))))
+
+===
+[Regression] 141 - use clause in former layout block
+===
+x =
+  (a, b) =
+    n = 5
+    use c d e
+    (1, 2)
+  a
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (destructuring_bind
+        (parenthesized_or_tuple_pattern
+          (open_parens)
+          (var_or_nullary_ctor)
+          (comma)
+          (var_or_nullary_ctor)
+          (close_parens))
+        (kw_equals)
+        (term_declaration
+          (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (nat)))
+        (use_clause
+          (use)
+          (namespace
+            (regular_identifier))
+          (regular_identifier)
+          (regular_identifier))
+        (tuple_or_parenthesized
+          (nat)
+          (nat)))
+      (regular_identifier))))
