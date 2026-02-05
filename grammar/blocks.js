@@ -1,9 +1,7 @@
 const { KEYWORD } = require("./precedences");
-const funcApp = require("./function-application");
 const { sep, layouted, layoutBlock } = require("./util");
 
 module.exports = {
-  ...funcApp,
 
   operator_expression: ($) => seq($._expression, alias($.symboly_id, $.operator), $._expression),
 
