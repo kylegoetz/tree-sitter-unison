@@ -1,4 +1,5 @@
 const { sep, sep1, layoutBlock } = require('./util')
+const { lowercase_varid } = require('./regex')
 
 module.exports = {
   _pattern_matching: ($) => choice($._match_with, $._lam_case),
@@ -102,13 +103,19 @@ module.exports = {
   guarded_block: $ =>
     prec.right(seq($.pipe, $.guard, layoutBlock($, $.arrow_symbol))),
 
-  _pattern_root: ($) => sep1($._pattern_infix_app, choice($._pattern_candidates)),
 
   _pattern_infix_app: ($) =>
     choice(alias("++", $.concat), alias("+:", $.cons), alias(":+", $.snoc)),
-  _pattern_constructor: ($) => prec.right(seq(alias(choice($._hq_qualified_prefix_term), $.ctor), repeat1(choice($._pattern_leaf)))),
-  _pattern_candidates: ($) => choice($._pattern_constructor, $._pattern_leaf),
+  _pattern_root: $ => sep1($._pattern_infix_app, $._pattern_candidates),
 
+  _pattern_constructor: $ =>
+    prec.right(
+      seq(
+        alias($._hq_qualified_prefix_term, $.ctor),
+        repeat1(choice($._pattern_leaf)),
+      ),
+    ),
+  _pattern_candidates: $ => choice($._pattern_constructor, $._pattern_leaf),
   /*
    *  NOTE: TermParser.hs says @leaf is optional but to simplify conflicts,
    * it is mandatory here. To compensate, wordy_id is allowed as a pattern.
@@ -117,49 +124,50 @@ module.exports = {
    *
    * Let `ctor` take care of a bare identifier.
    */
-  var_or_as: ($) =>
+  var_or_as: $ =>
     seq(
-      alias($.wordy_id, $.regular_identifier),
-      seq(alias("@", $.at_token), $._pattern_leaf),
+      alias(lowercase_varid, $.regular_identifier),
+      optional(seq(alias('@', $.at_token), $._pattern_leaf)),
     ),
   // unbound: ($) => "_",
   // Note: Unfortunately the SEMI is disabled here because leaving it in creates a parsing error where
-  literal_list_pattern: ($) => choice(//'[]',
+  literal_list_pattern: $ =>
+    choice(
+      //'[]',
+      seq(
+        '[',
+        // openBlockWith($, "["),
+        // repeat(prec.right(choice(",", $._layout_semicolon))),
+        sep(alias(',', $.comma), $._pattern_root),
+        // repeat(prec.right(choice(",", $._layout_semicolon))),
+        // $._layout_end,
+        ']',
+      ),
+    ),
+  parenthesized_or_tuple_pattern: $ =>
     seq(
-      "[",
-      // openBlockWith($, "["),
-      // repeat(prec.right(choice(",", $._layout_semicolon))),
-      sep(alias(',', $.comma), $._pattern_root),
-      // repeat(prec.right(choice(",", $._layout_semicolon))),
-      // $._layout_end,
-      "]",
-    )),
-  // parenthesized_or_tuple_pattern: ($) => seq(
-  //   alias('(', $.open_parens),
-  //   $._layout_start,
-  //   $.literal_list_pattern,
-  //   alias(',', $.comma),
-  //   alias('_', $.blank_pattern),
-  //   $._layout_end,
-  //   alias(')', $.close_parens)),
+      alias('(', $.open_parens),
+      $._layout_start,
+      sep1(alias(',', $.comma), choice($._pattern_root)),
+      $._layout_end,
+      alias(')', $.close_parens),
+    ),
 
-  parenthesized_or_tuple_pattern: $ => choice(seq(
-    alias('(', $.open_parens),
-    $._layout_start,
-    sep1(alias(',', $.comma), choice($._pattern_root)),
-    $._layout_end,
-    alias(')', $.close_parens))),
-
-  effect_pure: ($) => $._pattern_root,
-  effect_bind: ($) =>
-    seq($._hq_qualified_prefix_term, repeat1($._pattern_leaf), "->", $._pattern_root),
-
-  effect_pattern: ($) =>
+  effect_pure: $ => $._pattern_root,
+  effect_bind: $ =>
     seq(
-      openBlockWith($, "{"),
+      $._hq_qualified_prefix_term,
+      repeat1($._pattern_leaf),
+      '->',
+      $._pattern_root,
+    ),
+
+  effect_pattern: $ =>
+    seq(
+      openBlockWith($, '{'),
       choice($.effect_pure, $.effect_bind),
       $._layout_end,
-      "}",
+      '}',
     ),
   _pattern_leaf: ($) =>
     prec(2, choice(

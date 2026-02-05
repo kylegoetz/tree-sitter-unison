@@ -19,10 +19,8 @@ module.exports = {
   // This exists because of the if/then/else definition. See that definition for more info.
   __block: $ =>
     seq(
-      seq(
-        prec.right(sep1($._layout_semicolon, choice($._statement))),
-        optional($._layout_semicolon),
-      ),
+      prec.right(sep1($._layout_semicolon, $._statement)),
+      optional($._layout_semicolon),
       $._layout_end,
     ),
 
@@ -34,7 +32,8 @@ module.exports = {
       alias($.term_definition2, $.term_definition),
     ),
   destructuring_bind: $ =>
-    choice(
+    prec.dynamic(
+      1,
       seq(
         choice($.parenthesized_or_tuple_pattern),
         layoutBlock($, $.kw_equals),
@@ -59,6 +58,8 @@ module.exports = {
     prec.right(sep1($._generic_infix_app, choice($._term4))),
   _generic_infix_app: $ => choice($.and, $.or, $._infix),
   _infix: $ => seq($._hq_qualified_infix_term, optional($._layout_semicolon)),
+
+  var_or_nullary_ctor: $ => $._hq_qualified_infix_term,
 }
 
 lam = ($, term) =>

@@ -2,8 +2,8 @@ const regex = require("./regex");
 const { parens, paren$ } = require("./util");
 
 module.exports = {
-  wordy_id: ($) => prec.right(regex.varid),
   imm_wordy_id: ($) => token.immediate(regex.varid),
+  wordy_id: $ => regex.varid,
 
   symboly_id: ($) => regex.symboly_id,
   imm_symboly_id: ($) => token.immediate(regex.symboly_id),

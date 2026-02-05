@@ -3,9 +3,9 @@ const { openBlockWith, block, open_block_with, layoutBlock, sep, sep1 } = requir
 module.exports = {
   delay_quote: ($) => seq("'", $._term_leaf),
 
-  delay_block: $ => prec.right(open_block_with($, $.do)),
 
   bang: ($) => seq("!", $._term_leaf),
+  delay_block: $ => layoutBlock($, $.do),
 
   _number: $ => choice($.float, $.nat, $.int),
   _link: $ => choice($.literal_termlink, $.literal_typelink),

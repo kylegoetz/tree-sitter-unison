@@ -45,7 +45,7 @@ layoutBlock = ($, opener) =>
     $._layout_start,
     sep1(
       $._layout_semicolon,
-      choice($._statement, terminated($, $.use_clause)),
+      choice($.destructuring_bind, $._statement, terminated($, $.use_clause)),
     ),
     $._layout_end,
   )

@@ -18,5 +18,11 @@ module.exports = $ => [
   [$._identifier, $._wordy_definition_name],
   [$.literal_function, $._prefix_lhs],
   [$.literal_function, $._infix_lhs],
-  [$.exp_let],
+  [$.delay_block],
+  [$._statement, $.delay_block],
+  [$.exp_let, $._statement],
+  [$._statement, $.term_definition2],
+  [$.destructuring_bind, $._statement],
+  [$._rewrite_term_like, $._statement],
+  [$._statement, $.guarded_block],
 ]
