@@ -488,11 +488,6 @@
     }
   },
   {
-    "type": "constructor_name",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "ctor",
     "named": true,
     "fields": {},
@@ -2610,11 +2605,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "field_name",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "forall",
@@ -5320,11 +5310,6 @@
     }
   },
   {
-    "type": "regular_identifier",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "rewrite_block",
     "named": true,
     "fields": {},
@@ -7886,11 +7871,6 @@
     }
   },
   {
-    "type": "var_or_nullary_ctor",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "watch_expression",
     "named": true,
     "fields": {
@@ -8338,6 +8318,10 @@
     "named": true
   },
   {
+    "type": "constructor_name",
+    "named": true
+  },
+  {
     "type": "cyclic_index",
     "named": true
   },
@@ -8360,6 +8344,10 @@
   {
     "type": "false",
     "named": false
+  },
+  {
+    "type": "field_name",
+    "named": true
   },
   {
     "type": "float",
@@ -8462,6 +8450,10 @@
     "named": true
   },
   {
+    "type": "regular_identifier",
+    "named": true
+  },
+  {
     "type": "rewrite",
     "named": true
   },
@@ -8512,6 +8504,10 @@
   {
     "type": "use",
     "named": false
+  },
+  {
+    "type": "var_or_nullary_ctor",
+    "named": true
   },
   {
     "type": "where",
