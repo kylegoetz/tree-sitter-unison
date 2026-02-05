@@ -1,4 +1,4 @@
-const { sep, sep1, openBlockWith } = require("./util");
+const { sep, sep1, layoutBlock } = require('./util')
 
 module.exports = {
   _pattern_matching: ($) => choice($._match_with, $._lam_case),
@@ -99,7 +99,8 @@ module.exports = {
 
   guard: ($) => choice($._infix_app_or_boolean_op, $.otherwise),
 
-  guarded_block: ($) => prec.right(seq($.pipe, $.guard, open_block_with($, $.arrow_symbol))),
+  guarded_block: $ =>
+    prec.right(seq($.pipe, $.guard, layoutBlock($, $.arrow_symbol))),
 
   _pattern_root: ($) => sep1($._pattern_infix_app, choice($._pattern_candidates)),
 

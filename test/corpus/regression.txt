@@ -485,3 +485,44 @@ y =
           (regular_identifier)
           (unit)))
       (regular_identifier))))
+
+===
+[Regression] GH-144 Guarded block
+===
+x = cases
+  n
+    | otherwise ->
+      n2 = getOrUpdate (n - 2) do fibonacci (n - 2)
+      a
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (cases)
+      (pattern
+        (var_or_nullary_ctor)
+        (guarded_block
+          (pipe)
+          (guard
+            (otherwise))
+          (arrow_symbol)
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (regular_identifier)
+              (tuple_or_parenthesized
+                (regular_identifier)
+                (operator)
+                (nat))
+              (delay_block
+                (do)
+                (regular_identifier)
+                (tuple_or_parenthesized
+                  (regular_identifier)
+                  (operator)
+                  (nat)))))
+          (regular_identifier))))))
