@@ -204,7 +204,8 @@ lib.base.Nat.!=.doc = 5
     (literal_boolean)
     (with)
     (pattern
-      (var_or_nullary_ctor)
+      (var_or_as
+        (regular_identifier))
       (guarded_block
         (pipe)
         (guard
@@ -325,11 +326,13 @@ a = cases
       (pattern
         (effect_pattern
           (effect_pure
-            (var_or_nullary_ctor)))
+            (var_or_as
+              (regular_identifier))))
         (arrow_symbol)
         (nat))
       (pattern
-        (var_or_nullary_ctor)
+        (var_or_as
+          (regular_identifier))
         (arrow_symbol)
         (nat)))))
 
@@ -414,9 +417,11 @@ x =
       (destructuring_bind
         (parenthesized_or_tuple_pattern
           (open_parens)
-          (var_or_nullary_ctor)
+          (var_or_as
+            (regular_identifier))
           (comma)
-          (var_or_nullary_ctor)
+          (var_or_as
+            (regular_identifier))
           (close_parens))
         (kw_equals)
         (term_declaration
@@ -451,9 +456,11 @@ swap = cases
       (pattern
         (parenthesized_or_tuple_pattern
           (open_parens)
-          (var_or_nullary_ctor)
+          (var_or_as
+            (regular_identifier))
           (comma)
-          (var_or_nullary_ctor)
+          (var_or_as
+            (regular_identifier))
           (close_parens))
         (arrow_symbol)
         (tuple_or_parenthesized
@@ -476,7 +483,8 @@ y =
       (destructuring_bind
         (parenthesized_or_tuple_pattern
           (open_parens)
-          (var_or_nullary_ctor)
+          (var_or_as
+            (regular_identifier))
           (comma)
           (blank_pattern)
           (close_parens))
@@ -503,7 +511,8 @@ x = cases
       (kw_equals)
       (cases)
       (pattern
-        (var_or_nullary_ctor)
+        (var_or_as
+          (regular_identifier))
         (guarded_block
           (pipe)
           (guard
@@ -526,3 +535,32 @@ x = cases
                   (operator)
                   (nat)))))
           (regular_identifier))))))
+
+===
+[Regression] destructuring, unexplained cause
+===
+a =
+  unsafeRun! do
+    (Arr a) = arr1
+    0
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (regular_identifier)
+      (delay_block
+        (do)
+        (destructuring_bind
+          (parenthesized_or_tuple_pattern
+            (open_parens)
+            (ctor
+              (regular_identifier))
+            (var_or_as
+              (regular_identifier))
+            (close_parens))
+          (kw_equals)
+          (regular_identifier))
+        (nat)))))

@@ -5,44 +5,54 @@ x =
     (first, second) = tuple
     first
 ---
+
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (destructuring_bind
-                (parenthesized_or_tuple_pattern
-                    (open_parens)
-                    (var_or_nullary_ctor)
-                    (comma)
-                    (var_or_nullary_ctor)
-                    (close_parens))
-                (kw_equals)
-                (regular_identifier))
-            (regular_identifier)))
-)
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (destructuring_bind
+        (parenthesized_or_tuple_pattern
+          (open_parens)
+          (var_or_as
+            (regular_identifier))
+          (comma)
+          (var_or_as
+            (regular_identifier))
+          (close_parens))
+        (kw_equals)
+        (regular_identifier))
+      (regular_identifier))))
+
 ===
 [Binding] destructuring in a lambda
 ===
 > List.map (cases (first, second) -> second) [(1, 2), (3, 4)]
 ---
+
 (unison
-    (watch_expression
-        (path)
-        (regular_identifier)
-        (tuple_or_parenthesized
-            (cases)
-            (pattern
-                (parenthesized_or_tuple_pattern
-                    (open_parens)
-                    (var_or_nullary_ctor)
-                    (comma)
-                    (var_or_nullary_ctor)
-                    (close_parens))
-                (arrow_symbol)
-                (regular_identifier)))
-        (literal_list
-            (open_bracket)
-            (tuple_or_parenthesized (nat) (nat))
-            (tuple_or_parenthesized (nat) (nat))
-            (close_bracket))))
+  (watch_expression
+    (path)
+    (regular_identifier)
+    (tuple_or_parenthesized
+      (cases)
+      (pattern
+        (parenthesized_or_tuple_pattern
+          (open_parens)
+          (var_or_as
+            (regular_identifier))
+          (comma)
+          (var_or_as
+            (regular_identifier))
+          (close_parens))
+        (arrow_symbol)
+        (regular_identifier)))
+    (literal_list
+      (open_bracket)
+      (tuple_or_parenthesized
+        (nat)
+        (nat))
+      (tuple_or_parenthesized
+        (nat)
+        (nat))
+      (close_bracket))))
