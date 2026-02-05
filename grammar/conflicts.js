@@ -19,12 +19,4 @@ module.exports = $ => [
   [$.literal_function, $._prefix_lhs],
   [$.literal_function, $._infix_lhs],
   [$.exp_let],
-  [$.destructuring_bind, $._block_term],
-  [$.destructuring_bind, $._binding],
-  [$.destructuring_bind, $.binding],
-  [$.tuple_or_parenthesized, $.parenthesized_or_tuple_pattern],
-  [$._statement, $.delay_block],
-  [$._statement, $.exp_let],
-  [$._statement, $.__block],
-  [$._statement, $.guarded_block],
 ]
