@@ -155,12 +155,7 @@ module.exports = {
 
   effect_pure: $ => $._pattern_root,
   effect_bind: $ =>
-    seq(
-      $._hq_qualified_prefix_term,
-      repeat1($._pattern_leaf),
-      '->',
-      $._pattern_root,
-    ),
+    seq(repeat($._pattern_leaf), alias('->', $.effect_arrow), $._pattern_root),
 
   effect_pattern: $ =>
     seq(
@@ -169,15 +164,17 @@ module.exports = {
       $._layout_end,
       '}',
     ),
-  _pattern_leaf: ($) =>
-    prec(2, choice(
-      alias($.wordy_id, $.var_or_nullary_ctor),
-      $.var_or_as,
-      $._literal_pattern,
-      alias("_", $.blank_pattern),
-      $.literal_list_pattern,
-      $.parenthesized_or_tuple_pattern,
-      $.effect_pattern,
-      // '([], _)'
-    )),
-};
+  _pattern_leaf: $ =>
+    prec(
+      2,
+      choice(
+        $.var_or_nullary_ctor,
+        $.var_or_as,
+        $._literal_pattern,
+        alias('_', $.blank_pattern),
+        $.literal_list_pattern,
+        $.parenthesized_or_tuple_pattern,
+        $.effect_pattern,
+      ),
+    ),
+}

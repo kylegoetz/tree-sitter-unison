@@ -14,7 +14,6 @@ module.exports = $ => [
   [$._literal, $._number],
   [$._literal, $._link],
   [$._infix_app_or_boolean_op],
-  [$._pattern_constructor, $.effect_bind],
   [$._identifier, $._wordy_definition_name],
   [$.literal_function, $._prefix_lhs],
   [$.literal_function, $._infix_lhs],
@@ -25,4 +24,5 @@ module.exports = $ => [
   [$.destructuring_bind, $._statement],
   [$._rewrite_term_like, $._statement],
   [$._statement, $.guarded_block],
+  [$.var_or_nullary_ctor, $._pattern_constructor],
 ]

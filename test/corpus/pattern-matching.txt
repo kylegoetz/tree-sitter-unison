@@ -69,7 +69,8 @@
   (watch_expression
     (cases)
     (pattern
-      (var_or_nullary_ctor)
+      (var_or_nullary_ctor
+        (regular_identifier))
       (guarded_block
         (pipe)
         (guard

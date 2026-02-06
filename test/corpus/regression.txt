@@ -564,3 +564,28 @@ a =
           (kw_equals)
           (regular_identifier))
         (nat)))))
+
+===
+[Regression] GH-145 - 0-ary effect binding pattern
+===
+a =
+  cases
+    { b -> c } -> ()
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (cases)
+      (pattern
+        (effect_pattern
+          (effect_bind
+            (var_or_as
+              (regular_identifier))
+            (effect_arrow)
+            (var_or_as
+              (regular_identifier))))
+        (arrow_symbol)
+        (tuple_or_parenthesized)))))

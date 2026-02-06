@@ -59,7 +59,7 @@ module.exports = {
   _generic_infix_app: $ => choice($.and, $.or, $._infix),
   _infix: $ => seq($._hq_qualified_infix_term, optional($._layout_semicolon)),
 
-  var_or_nullary_ctor: $ => $._hq_qualified_infix_term,
+  var_or_nullary_ctor: $ => $._hq_qualified_prefix_term,
 }
 
 lam = ($, term) =>
