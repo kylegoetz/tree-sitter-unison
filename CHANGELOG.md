@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.??] - 2026-??
+
+### Fixed
+
+- ??
+
+### New
+
+- The "->" in an effect is now a named node, `effect_arrow`.
+- A `var_or_nullary_ctor` may have a new child node, `regular_identifier`
+
 ## [2.1.3] - 2026-02-04
 
 ### Fixed
