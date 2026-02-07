@@ -189,7 +189,7 @@ inMiddle = let
         (regular_identifier)))))
 
 ===
-[use] use clause at end of let block
+[use] ABC use clause at end of let block
 ===
 atEnd = let
   x = 5

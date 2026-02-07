@@ -10,9 +10,9 @@ const {
 module.exports = {
   _statement: $ =>
     choice(
-      $._block_term,
-      alias($._binding, $.term_declaration),
-      $.destructuring_bind,
+      prec.dynamic(3, $._block_term),
+      prec.dynamic(3, alias($._binding, $.term_declaration)),
+      prec.dynamic(2, $.destructuring_bind),
     ),
   term_definition2: $ => prec.right(seq($._lhs, layoutBlock($, $.kw_equals))),
 

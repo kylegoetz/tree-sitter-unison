@@ -1,14 +1,14 @@
-const { sep, sep1, layoutBlock } = require('./util')
+const { sep, sep1, layoutBlock, openBlockWith } = require('./util')
 const { lowercase_varid } = require('./regex')
 
 module.exports = {
-  _pattern_matching: ($) => choice($._match_with, $._lam_case),
+  _pattern_matching: $ => choice($._match_with, $._lam_case),
 
-  _match_with: ($) =>
+  _match_with: $ =>
     prec.right(
       seq(
         openBlockWith($, $.match),
-        field("scrutinee", $._term),
+        field('scrutinee', $._term),
         optional($._layout_end),
         openBlockWith($, $.with),
         $._match_cases,
@@ -16,12 +16,12 @@ module.exports = {
       ),
     ),
 
-  _lam_case: ($) =>
+  _lam_case: $ =>
     prec.right(
       seq($.cases, $._layout_start, $._match_cases, optional($._layout_end)),
     ),
 
-  _match_cases: ($) => prec.right(sep1($._layout_semicolon, $.pattern)),
+  _match_cases: $ => prec.right(sep1($._layout_semicolon, $.pattern)),
 
   /**
    * Pattern examples:
@@ -29,8 +29,7 @@ module.exports = {
    * foo | foo == 1 -> "one"
          | otherwise -> "not one"
    */
-  pattern: ($) => seq(
-    $._pattern_root, prec.right($._pattern_rhs)),
+  pattern: $ => seq($._pattern_root, prec.right($._pattern_rhs)),
 
   /**
    * Without typechecking, we cannot know whether a single wordy_id is an identifier or constructor pattern with 0-arity, so
@@ -53,26 +52,28 @@ module.exports = {
    * "A pattern's RHS is either one or more guards, or a single unguarded block"
    * (from Unison's TermParser.hs)
    */
-  _pattern_rhs: ($) =>
-    prec.right(choice(
-      seq(
-        $._guard_layout_start,
-        sep1($._layout_semicolon, $.guarded_block),
-        $._layout_end,
+  _pattern_rhs: $ =>
+    prec.right(
+      choice(
+        seq(
+          $._guard_layout_start,
+          sep1($._layout_semicolon, $.guarded_block),
+          $._layout_end,
+        ),
+        // open_block_with($, $.arrow_symbol),
+        seq(openBlockWith($, $.arrow_symbol), $._pattern_rhs_block),
+        // seq(
+        //   $._layout_start,
+        //   // terminated($, $.guarded_block),
+        //   sep1($._layout_semicolon, $.guarded_block),
+        //   // optional($._layout_semicolon),
+        //   $._layout_end),
+        // // prec.right(layouted($, $.guarded_block)), // TODO this is the problem child preventing `2 +: _` from being recognized as a pattern instead after the `2` the space is recognized as LAYOUT_START
+        // // seq($._layout_start, layouted($, $.guarded_block), $._layout_end),
       ),
-      // open_block_with($, $.arrow_symbol),
-      seq(openBlockWith($, $.arrow_symbol), $._pattern_rhs_block),
-      // seq(
-      //   $._layout_start,
-      //   // terminated($, $.guarded_block),
-      //   sep1($._layout_semicolon, $.guarded_block),
-      //   // optional($._layout_semicolon),
-      //   $._layout_end),
-      // // prec.right(layouted($, $.guarded_block)), // TODO this is the problem child preventing `2 +: _` from being recognized as a pattern instead after the `2` the space is recognized as LAYOUT_START
-      // // seq($._layout_start, layouted($, $.guarded_block), $._layout_end),
-    )),
+    ),
 
-  _pattern_rhs_block: ($) =>
+  _pattern_rhs_block: $ =>
     seq(
       seq(
         prec.right(sep1($._layout_semicolon, choice($._pattern_rhs_statement))),
@@ -81,13 +82,10 @@ module.exports = {
       $._layout_end,
     ),
 
-  _pattern_rhs_statement: ($) =>
-    choice(
-      prec(1, $._block_term),
-      alias($._binding, $.term_declaration),
-    ),
+  _pattern_rhs_statement: $ =>
+    choice(prec(1, $._block_term), alias($._binding, $.term_declaration)),
 
-  _literal_pattern: ($) =>
+  _literal_pattern: $ =>
     choice(
       // Observe Float is not allowed.
       // alias("0", $.nat), // Strangely this code will not parse without this line: `> match x with 0 | 1 == 2 -> 123`
@@ -98,14 +96,13 @@ module.exports = {
       $.literal_text,
     ),
 
-  guard: ($) => choice($._infix_app_or_boolean_op, $.otherwise),
+  guard: $ => choice($._infix_app_or_boolean_op, $.otherwise),
 
   guarded_block: $ =>
     prec.right(seq($.pipe, $.guard, layoutBlock($, $.arrow_symbol))),
 
-
-  _pattern_infix_app: ($) =>
-    choice(alias("++", $.concat), alias("+:", $.cons), alias(":+", $.snoc)),
+  _pattern_infix_app: $ =>
+    choice(alias('++', $.concat), alias('+:', $.cons), alias(':+', $.snoc)),
   _pattern_root: $ => sep1($._pattern_infix_app, $._pattern_candidates),
 
   _pattern_constructor: $ =>
@@ -144,10 +141,13 @@ module.exports = {
         ']',
       ),
     ),
-  parenthesized_or_tuple_pattern: $ =>
+  parenthesized_or_tuple_pattern: (
+    $, //parenOrTuple($, $._pattern_root),
+  ) =>
     seq(
-      alias('(', $.open_parens),
-      $._layout_start,
+      openBlockWith($, alias('(', $.open_parens)),
+      // alias('(', $.open_parens),
+      // $._layout_start,
       sep1(alias(',', $.comma), choice($._pattern_root)),
       $._layout_end,
       alias(')', $.close_parens),

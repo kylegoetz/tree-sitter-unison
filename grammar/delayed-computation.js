@@ -1,19 +1,31 @@
-const { openBlockWith, block, open_block_with, layoutBlock, sep, sep1 } = require("./util");
+const {
+  openBlockWith,
+  block,
+  open_block_with,
+  layoutBlock,
+  sep,
+  sep1,
+} = require('./util')
+const regex = require('./regex')
 
 module.exports = {
-  delay_quote: ($) => seq("'", $._term_leaf),
+  delay_quote: $ => seq("'", $._term_leaf),
 
-
-  bang: ($) => seq("!", $._term_leaf),
+  bang: $ => seq('!', $._term_leaf),
   delay_block: $ => layoutBlock($, $.do),
 
   _number: $ => choice($.float, $.nat, $.int),
   _link: $ => choice($.literal_termlink, $.literal_typelink),
-  _term_leaf: ($) =>
-    prec.right(2,
+  _term_leaf: $ =>
+    prec.dynamic(
+      2,
       choice(
         $.force,
-        prec(2, $._hq_qualified_prefix_term),
+        // 'a',
+        // /[_a-z\u{1f400}-\u{1faff}]([_!'a-z0-9\u{1f400}-\u{1faff}])*/iu,
+        // alias(regex.varid, $.hackkk),
+        // 'a',
+        $._hq_qualified_prefix_term,
         $.literal_text,
         $.literal_char,
         $._number,
@@ -21,7 +33,7 @@ module.exports = {
         $.literal_hex,
         $.literal_boolean,
         $._link,
-        prec(3, $.tuple_or_parenthesized),
+        prec.dynamic(3, $.tuple_or_parenthesized),
         $._keyword_block,
         $.literal_list,
         $.delay_quote,
@@ -30,12 +42,13 @@ module.exports = {
         $.doc_block,
       ),
     ),
-  literal_list: $ => seq(
-    alias('[', $.open_bracket),
-    sep(',', $._term),
-    alias(']', $.close_bracket),
-  ),
-  _keyword_block: ($) =>
+  literal_list: $ =>
+    seq(
+      alias('[', $.open_bracket),
+      sep(',', $._term),
+      alias(']', $.close_bracket),
+    ),
+  _keyword_block: $ =>
     choice(
       $.exp_let,
       $.handler,
@@ -59,7 +72,7 @@ module.exports = {
 
   // foo()
   force: $ => seq($._hq_qualified_prefix_term, alias('()', $.unit)),
-};
+}
 
 // const list = ($) => $ => seq('[', ']')
 

@@ -1,12 +1,12 @@
-const regex = require("./regex");
-const { parens, paren$ } = require("./util");
+const regex = require('./regex')
+const { parens, paren$ } = require('./util')
 
 module.exports = {
-  imm_wordy_id: ($) => token.immediate(regex.varid),
+  imm_wordy_id: $ => token.immediate(regex.varid),
   wordy_id: $ => regex.varid,
 
-  symboly_id: ($) => regex.symboly_id,
-  imm_symboly_id: ($) => token.immediate(regex.symboly_id),
+  symboly_id: $ => regex.symboly_id,
+  imm_symboly_id: $ => token.immediate(regex.symboly_id),
 
   /**
    * Accounts for qualified, unqualified (and absolute) identfiers,
@@ -16,7 +16,7 @@ module.exports = {
    * `Nat.++`
    * .Foo.bar`
    */
-  _identifier: ($) =>
+  _identifier: $ =>
     choice(
       seq(
         $.path,
@@ -29,23 +29,23 @@ module.exports = {
       alias($.symboly_id, $.operator),
     ),
 
-  path: ($) => regex.path,
+  path: $ => regex.path,
 
-  hash_qualifier: ($) =>
+  hash_qualifier: $ =>
     seq(
       alias(/#[a-vA-V0-9]+/, $.hash_prefix),
       optional(alias($._dot, $.cyclic_index)),
       optional($.hash_cid),
     ),
 
-  imm_hash_qualifier: ($) =>
+  imm_hash_qualifier: $ =>
     seq(
       alias(token.immediate(/#[a-zA-Z0-9]+/), $.hash_prefix),
       optional(alias($._dot, $.cyclic_index)),
       optional($.hash_cid),
     ),
 
-  _hash_qualified: ($) =>
+  _hash_qualified: $ =>
     choice(
       $._identifier,
       $.built_in_hash,
@@ -53,45 +53,65 @@ module.exports = {
       seq($._identifier, alias($.imm_hash_qualifier, $.hash_qualifier)),
     ),
 
-  _hq_qualified_wordy_id: $ => prec.right(choice(
-    $.built_in_hash,
-    $.hash_qualifier,
-    seq(
+  _hq_qualified_wordy_id: $ =>
+    prec.right(
       choice(
-        alias($.wordy_id, $.regular_identifier),
-        seq($.path, alias($.imm_wordy_id, $.regular_identifier)),
+        // alias('a', $.hack),
+        $.built_in_hash,
+        $.hash_qualifier,
+        seq(
+          choice(
+            alias(regex.varid, $.regular_identifier),
+            // $.wordy_id,
+            // choice(alias('a', $.achkkasasd), $.wordy_id),
+            // alias(
+            // choice(alias('a', $.achkkasasd), $.wordy_id),
+            // $.regular_identifier,
+            // ),
+            seq($.path, alias($.imm_wordy_id, $.regular_identifier)),
+          ),
+          optional(alias($.imm_hash_qualifier, $.hash_qualifier)),
+        ),
       ),
-      optional(alias($.imm_hash_qualifier, $.hash_qualifier)),
-    ))),
+    ),
 
-  _hq_qualified_symboly_id: ($) =>
+  _hq_qualified_symboly_id: $ =>
     seq(
       choice(
         alias($.symboly_id, $.operator),
-        seq($.path, alias($.symboly_id, $.operator))),
-      optional(alias($.imm_hash_qualifier, $.hash_qualifier))),
+        seq($.path, alias($.symboly_id, $.operator)),
+      ),
+      optional(alias($.imm_hash_qualifier, $.hash_qualifier)),
+    ),
 
-  _hq_qualified_prefix_term: ($) =>
+  _hq_qualified_prefix_term: $ =>
     choice(
       $._hq_qualified_wordy_id,
       paren$($, $._hq_qualified_symboly_id),
-      alias($._parenthesized_operator, $.prefix_operator)),
+      alias($._parenthesized_operator, $.prefix_operator),
+    ),
 
-  _hq_qualified_infix_term: ($) => $._hq_qualified_symboly_id,
+  _hq_qualified_infix_term: $ => $._hq_qualified_symboly_id,
 
   // Cannot find anything in UCM source to indicate disallowed chars, but based on
   // experience coding in the UCM source, it can be any non-whitespace (but convention is
   // to use valid symbols, varids, and dots; here we allow all non-whitespace)
-  built_in_hash: ($) => /##\S+/,
+  built_in_hash: $ => /##\S+/,
 
-  _prefix_definition_name: ($) =>
-    choice($._wordy_definition_name, seq($.open_parens, $._symboly_definition_name, $.close_parens)),
+  _prefix_definition_name: $ =>
+    choice(
+      $._wordy_definition_name,
+      seq($.open_parens, $._symboly_definition_name, $.close_parens),
+    ),
 
-  _wordy_definition_name: ($) =>
+  _wordy_definition_name: $ =>
     choice(
       alias($.wordy_id, $.regular_identifier),
       seq($.path, alias($.imm_wordy_id, $.regular_identifier)),
     ),
-  _symboly_definition_name: ($) =>
-    choice(alias($.symboly_id, $.operator), seq($.path, alias($.imm_symboly_id, $.operator))),
-};
+  _symboly_definition_name: $ =>
+    choice(
+      alias($.symboly_id, $.operator),
+      seq($.path, alias($.imm_symboly_id, $.operator)),
+    ),
+}

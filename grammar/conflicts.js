@@ -25,4 +25,13 @@ module.exports = $ => [
   [$._rewrite_term_like, $._statement],
   [$._statement, $.guarded_block],
   [$.var_or_nullary_ctor, $._pattern_constructor],
+  [$.wordy_id, $._hq_qualified_wordy_id],
+  [$._term_leaf, $._watch_expression],
+  [$._literal_pattern, $._term_leaf],
+  [$._pattern_constructor, $._term_leaf],
+  [$.var_or_nullary_ctor, $._term_leaf],
+  [$._term_leaf, $._hq_qualified_wordy_id],
+  [$._term_leaf, $.wordy_id, $._hq_qualified_wordy_id],
+  [$.parenthesized_or_tuple_pattern],
+  [$.tuple_or_parenthesized, $.parenthesized_or_tuple_pattern],
 ]

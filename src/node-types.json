@@ -488,6 +488,11 @@
     }
   },
   {
+    "type": "constructor_name",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "ctor",
     "named": true,
     "fields": {},
@@ -2585,6 +2590,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "field_name",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "forall",
@@ -5288,6 +5298,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "regular_identifier",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "rewrite_block",
@@ -8333,10 +8348,6 @@
     "named": true
   },
   {
-    "type": "constructor_name",
-    "named": true
-  },
-  {
     "type": "cyclic_index",
     "named": true
   },
@@ -8363,10 +8374,6 @@
   {
     "type": "false",
     "named": false
-  },
-  {
-    "type": "field_name",
-    "named": true
   },
   {
     "type": "float",
@@ -8466,10 +8473,6 @@
   },
   {
     "type": "prefix_operator",
-    "named": true
-  },
-  {
-    "type": "regular_identifier",
     "named": true
   },
   {

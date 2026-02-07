@@ -41,12 +41,14 @@ openBlockWith = ($, opener) => seq(opener, $._layout_start)
 
 layoutBlock = ($, opener) =>
   seq(
-    opener,
-    $._layout_start,
-    sep1(
-      $._layout_semicolon,
-      choice($.destructuring_bind, $._statement, terminated($, $.use_clause)),
-    ),
+    openBlockWith($, opener),
+    repeat(seq(choice($._statement, $.use_clause), $._layout_semicolon)),
+    // sep(
+    // $._layout_semicolon,
+    // prec.dynamic(1, choice($._statement, $.use_clause)),
+    // ),
+    // $._layout_semicolon,
+    $._block_term,
     $._layout_end,
   )
 
@@ -99,6 +101,27 @@ layouted_without_end = ($, rule) =>
     layouted_braces(rule),
     seq($._layout_start, optional(terminated($, rule))),
   )
+
+seq$ = ($, opener, ender, rule) =>
+  seq(
+    openBlockWith($, opener),
+    redundant($),
+    repeat(
+      seq(
+        rule,
+        optional($._layout_semicolon),
+        alias(',', $.comma),
+        redundant($),
+      ),
+    ),
+    redundant($),
+    ender,
+    $._layout_end,
+  )
+
+redundant = $ => optional(repeat1(choice(',')))
+
+parenOrTuple = ($, rule) => seq$($, '(', ')', rule)
 
 // layout_block = ($, keyword) => seq(open_block_with($, keyword));
 
