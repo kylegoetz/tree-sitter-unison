@@ -1010,9 +1010,18 @@ static Result operator(State *state) {
     if(arrow_has_begun && PEEK == '>') { // If we were parsing -> as an operator, fail becasue it's not'
         return res_fail;
     }
-    if(PEEK == '-' && is_on_first_char) {
-        arrow_has_begun = true;
+    if(PEEK == '-') {
+    	if(is_on_first_char) {
+     		arrow_has_begun = true;
+     	} else {
+      	if(arrow_has_begun) {
+       		while(!is_eof(state) && !is_newline(PEEK)) S_ADVANCE;
+       		MARK("operator", false, state);
+         	return finish(COMMENT, "operator");
+       	}
+      }
     }
+
     if (!symbolic(PEEK) && previous_was_colon) {
       return res_fail; // This means we just recognized a `:` by itself, which is not an operator but part of a type signature.
     }
@@ -1053,9 +1062,9 @@ static Result operator(State *state) {
  * The following cases must be handled:
  // * 2. SYMOP that begins with +/- and is terminated by whitespace or ')', the latter of which indicates a parenthetical operator
  // * 3. post-sign symbolic chars as SYMOP
- // * 4.
+ // * 4. COMMENT
  */
-static Result post_pos_neg_sign(State *state, bool can_be_operator) {
+static Result post_pos_neg_sign(State *state, bool can_be_operator, bool is_neg) {
   (void) can_be_operator; // suppresses "unused variable" warning
   LOG(INFO, "->post_pos_neg_sign; PEEK = %c\n", PEEK);
   Result res = res_fail;
@@ -1063,6 +1072,10 @@ static Result post_pos_neg_sign(State *state, bool can_be_operator) {
   if (isws(PEEK) || is_eof(state) || PEEK == ')') {
     MARK("post_pos_neg_sign", false, state);
     return finish_if_valid(SYMOP, "+/-", state);
+  } else if(PEEK == '-' && is_neg) {
+  	while(!is_eof(state) && !is_newline(PEEK)) S_ADVANCE;
+   MARK("post_pos_neg_sign", false, state);
+   return finish(COMMENT, "post_pos_neg_sign");
   }
   switch(PEEK) {
     case '>':
@@ -1112,7 +1125,7 @@ static Result minus(State *state) {
     NUMERIC_CASES:
       return res_fail;
     case '.': {
-      return post_pos_neg_sign(state, false);
+      return post_pos_neg_sign(state, false, true);
     }
     case '-': { // COMMENT, FOLD
       S_ADVANCE;
@@ -1375,7 +1388,7 @@ static Result handle_negative(State *state) {
   LOG(VERBOSE, "->handle_negative; PEEK = %c\n", PEEK);
   if (PEEK != '-' && PEEK != '+') return res_cont;
   S_ADVANCE;
-  return post_pos_neg_sign(state, true);
+  return post_pos_neg_sign(state, true, PEEK == '-');
 }
 
 /**
@@ -1805,8 +1818,6 @@ static Result immediate(uint32_t column, State *state) {
   SHORT_SCANNER;
   res = repeat_end(column, state);
   SHORT_SCANNER;
-  res = numeric(state);
-  SHORT_SCANNER;
   return inline_tokens(state);
 }
 
@@ -1847,6 +1858,9 @@ static Result init(State *state) {
   if (SYM(FOLD) && PEEK == '-') {
     res = fold(state);
     SHORT_SCANNER;
+  } else if(SYM(COMMENT) && PEEK == '-') {
+  	res = comment(state);
+   	SHORT_SCANNER;
   }
 
   // if (state->symbols[QQ_BODY]) {
