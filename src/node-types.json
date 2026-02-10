@@ -1072,7 +1072,7 @@
     }
   },
   {
-    "type": "exp_if",
+    "type": "else_block",
     "named": true,
     "fields": {},
     "children": {
@@ -1137,14 +1137,6 @@
         },
         {
           "type": "kw_else",
-          "named": true
-        },
-        {
-          "type": "kw_if",
-          "named": true
-        },
-        {
-          "type": "kw_then",
           "named": true
         },
         {
@@ -1225,6 +1217,33 @@
         },
         {
           "type": "tuple_or_parenthesized",
+          "named": true
+        },
+        {
+          "type": "use_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "exp_if",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "else_block",
+          "named": true
+        },
+        {
+          "type": "if_block",
+          "named": true
+        },
+        {
+          "type": "then_block",
           "named": true
         }
       ]
@@ -1923,6 +1942,161 @@
         },
         {
           "type": "hash_prefix",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "if_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "and",
+          "named": true
+        },
+        {
+          "type": "bang",
+          "named": true
+        },
+        {
+          "type": "built_in_hash",
+          "named": true
+        },
+        {
+          "type": "delay_block",
+          "named": true
+        },
+        {
+          "type": "delay_quote",
+          "named": true
+        },
+        {
+          "type": "destructuring_bind",
+          "named": true
+        },
+        {
+          "type": "doc_block",
+          "named": true
+        },
+        {
+          "type": "exp_if",
+          "named": true
+        },
+        {
+          "type": "exp_let",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "force",
+          "named": true
+        },
+        {
+          "type": "handler",
+          "named": true
+        },
+        {
+          "type": "hash_qualifier",
+          "named": true
+        },
+        {
+          "type": "int",
+          "named": true
+        },
+        {
+          "type": "kw_if",
+          "named": true
+        },
+        {
+          "type": "literal_boolean",
+          "named": true
+        },
+        {
+          "type": "literal_byte",
+          "named": true
+        },
+        {
+          "type": "literal_char",
+          "named": true
+        },
+        {
+          "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
+          "named": true
+        },
+        {
+          "type": "literal_list",
+          "named": true
+        },
+        {
+          "type": "literal_termlink",
+          "named": true
+        },
+        {
+          "type": "literal_text",
+          "named": true
+        },
+        {
+          "type": "literal_typelink",
+          "named": true
+        },
+        {
+          "type": "match_expression",
+          "named": true
+        },
+        {
+          "type": "match_expression_lambda",
+          "named": true
+        },
+        {
+          "type": "nat",
+          "named": true
+        },
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "or",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "prefix_operator",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
+          "type": "rewrite_block",
+          "named": true
+        },
+        {
+          "type": "term_declaration",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized",
+          "named": true
+        },
+        {
+          "type": "use_clause",
           "named": true
         }
       ]
@@ -4106,6 +4280,161 @@
         },
         {
           "type": "tuple_or_parenthesized",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "then_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "and",
+          "named": true
+        },
+        {
+          "type": "bang",
+          "named": true
+        },
+        {
+          "type": "built_in_hash",
+          "named": true
+        },
+        {
+          "type": "delay_block",
+          "named": true
+        },
+        {
+          "type": "delay_quote",
+          "named": true
+        },
+        {
+          "type": "destructuring_bind",
+          "named": true
+        },
+        {
+          "type": "doc_block",
+          "named": true
+        },
+        {
+          "type": "exp_if",
+          "named": true
+        },
+        {
+          "type": "exp_let",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "force",
+          "named": true
+        },
+        {
+          "type": "handler",
+          "named": true
+        },
+        {
+          "type": "hash_qualifier",
+          "named": true
+        },
+        {
+          "type": "int",
+          "named": true
+        },
+        {
+          "type": "kw_then",
+          "named": true
+        },
+        {
+          "type": "literal_boolean",
+          "named": true
+        },
+        {
+          "type": "literal_byte",
+          "named": true
+        },
+        {
+          "type": "literal_char",
+          "named": true
+        },
+        {
+          "type": "literal_function",
+          "named": true
+        },
+        {
+          "type": "literal_hex",
+          "named": true
+        },
+        {
+          "type": "literal_list",
+          "named": true
+        },
+        {
+          "type": "literal_termlink",
+          "named": true
+        },
+        {
+          "type": "literal_text",
+          "named": true
+        },
+        {
+          "type": "literal_typelink",
+          "named": true
+        },
+        {
+          "type": "match_expression",
+          "named": true
+        },
+        {
+          "type": "match_expression_lambda",
+          "named": true
+        },
+        {
+          "type": "nat",
+          "named": true
+        },
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "or",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "prefix_operator",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
+          "type": "rewrite_block",
+          "named": true
+        },
+        {
+          "type": "term_declaration",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized",
+          "named": true
+        },
+        {
+          "type": "use_clause",
           "named": true
         }
       ]
