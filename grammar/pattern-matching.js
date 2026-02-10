@@ -1,4 +1,4 @@
-const { sep, sep1, layoutBlock } = require('./util')
+const { sep, sep1, layoutBlock, openBlockWith } = require('./util')
 const { lowercase_varid } = require('./regex')
 
 module.exports = {
@@ -131,7 +131,7 @@ module.exports = {
   var_or_as: $ =>
     seq(
       alias(lowercase_varid, $.regular_identifier),
-      optional(seq(alias('@', $.at_token), $._pattern_leaf)),
+      seq(alias('@', $.at_token), $._pattern_leaf),
     ),
   // unbound: ($) => "_",
   // Note: Unfortunately the SEMI is disabled here because leaving it in creates a parsing error where
@@ -150,8 +150,7 @@ module.exports = {
     ),
   parenthesized_or_tuple_pattern: $ =>
     seq(
-      alias('(', $.open_parens),
-      $._layout_start,
+      openBlockWith($, alias('(', $.open_parens)),
       sep1(alias(',', $.comma), choice($._pattern_root)),
       $._layout_end,
       alias(')', $.close_parens),
@@ -173,7 +172,6 @@ module.exports = {
       2,
       choice(
         $.var_or_nullary_ctor,
-        $.var_or_as,
         $._literal_pattern,
         alias('_', $.blank_pattern),
         $.literal_list_pattern,

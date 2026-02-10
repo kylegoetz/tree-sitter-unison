@@ -205,7 +205,7 @@ lib.base.Nat.!=.doc = 5
       (literal_boolean)
       (with)
       (pattern
-        (var_or_as
+        (var_or_nullary_ctor
           (regular_identifier))
         (guarded_block
           (pipe)
@@ -329,12 +329,12 @@ a = cases
         (pattern
           (effect_pattern
             (effect_pure
-              (var_or_as
+              (var_or_nullary_ctor
                 (regular_identifier))))
           (arrow_symbol)
           (nat))
         (pattern
-          (var_or_as
+          (var_or_nullary_ctor
             (regular_identifier))
           (arrow_symbol)
           (nat))))))
@@ -420,10 +420,10 @@ x =
       (destructuring_bind
         (parenthesized_or_tuple_pattern
           (open_parens)
-          (var_or_as
+          (var_or_nullary_ctor
             (regular_identifier))
           (comma)
-          (var_or_as
+          (var_or_nullary_ctor
             (regular_identifier))
           (close_parens))
         (kw_equals)
@@ -460,10 +460,10 @@ swap = cases
         (pattern
           (parenthesized_or_tuple_pattern
             (open_parens)
-            (var_or_as
+            (var_or_nullary_ctor
               (regular_identifier))
             (comma)
-            (var_or_as
+            (var_or_nullary_ctor
               (regular_identifier))
             (close_parens))
           (arrow_symbol)
@@ -487,7 +487,7 @@ y =
       (destructuring_bind
         (parenthesized_or_tuple_pattern
           (open_parens)
-          (var_or_as
+          (var_or_nullary_ctor
             (regular_identifier))
           (comma)
           (blank_pattern)
@@ -516,7 +516,7 @@ x = cases
       (match_expression_lambda
         (cases)
         (pattern
-          (var_or_as
+          (var_or_nullary_ctor
             (regular_identifier))
           (guarded_block
             (pipe)
@@ -563,7 +563,7 @@ a =
             (open_parens)
             (ctor
               (regular_identifier))
-            (var_or_as
+            (var_or_nullary_ctor
               (regular_identifier))
             (close_parens))
           (kw_equals)
@@ -588,10 +588,10 @@ a =
         (pattern
           (effect_pattern
             (effect_bind
-              (var_or_as
+              (var_or_nullary_ctor
                 (regular_identifier))
               (effect_arrow)
-              (var_or_as
+              (var_or_nullary_ctor
                 (regular_identifier))))
           (arrow_symbol)
           (tuple_or_parenthesized))))))
@@ -602,7 +602,15 @@ a =
 x = do (a)
 ---
 
-(unison)
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (delay_block
+        (do)
+        (tuple_or_parenthesized
+          (regular_identifier))))))
 
 ===
 [Regression] GH-147 - in-line comments
@@ -675,10 +683,10 @@ a =
               (at_token)
               (parenthesized_or_tuple_pattern
                 (open_parens)
-                (var_or_as
+                (var_or_nullary_ctor
                   (regular_identifier))
                 (comma)
-                (var_or_as
+                (var_or_nullary_ctor
                   (regular_identifier))
                 (close_parens))
               (kw_equals)

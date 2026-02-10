@@ -285,6 +285,11 @@
     }
   },
   {
+    "type": "constructor_name",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "ctor",
     "named": true,
     "fields": {},
@@ -825,10 +830,6 @@
           "named": true
         },
         {
-          "type": "var_or_as",
-          "named": true
-        },
-        {
           "type": "var_or_nullary_ctor",
           "named": true
         }
@@ -978,10 +979,6 @@
           "named": true
         },
         {
-          "type": "var_or_as",
-          "named": true
-        },
-        {
           "type": "var_or_nullary_ctor",
           "named": true
         }
@@ -1065,10 +1062,6 @@
         },
         {
           "type": "snoc",
-          "named": true
-        },
-        {
-          "type": "var_or_as",
           "named": true
         },
         {
@@ -1391,6 +1384,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "field_name",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "forall",
@@ -2383,10 +2381,6 @@
           "named": true
         },
         {
-          "type": "var_or_as",
-          "named": true
-        },
-        {
           "type": "var_or_nullary_ctor",
           "named": true
         }
@@ -2812,10 +2806,6 @@
           "named": true
         },
         {
-          "type": "var_or_as",
-          "named": true
-        },
-        {
           "type": "var_or_nullary_ctor",
           "named": true
         }
@@ -3000,10 +2990,6 @@
         },
         {
           "type": "tuple_or_parenthesized",
-          "named": true
-        },
-        {
-          "type": "var_or_as",
           "named": true
         },
         {
@@ -4630,69 +4616,6 @@
     }
   },
   {
-    "type": "var_or_as",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "at_token",
-          "named": true
-        },
-        {
-          "type": "blank_pattern",
-          "named": true
-        },
-        {
-          "type": "effect_pattern",
-          "named": true
-        },
-        {
-          "type": "int",
-          "named": true
-        },
-        {
-          "type": "literal_boolean",
-          "named": true
-        },
-        {
-          "type": "literal_char",
-          "named": true
-        },
-        {
-          "type": "literal_list_pattern",
-          "named": true
-        },
-        {
-          "type": "literal_text",
-          "named": true
-        },
-        {
-          "type": "nat",
-          "named": true
-        },
-        {
-          "type": "parenthesized_or_tuple_pattern",
-          "named": true
-        },
-        {
-          "type": "regular_identifier",
-          "named": true
-        },
-        {
-          "type": "var_or_as",
-          "named": true
-        },
-        {
-          "type": "var_or_nullary_ctor",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "var_or_nullary_ctor",
     "named": true,
     "fields": {},
@@ -4972,10 +4895,6 @@
     "named": true
   },
   {
-    "type": "constructor_name",
-    "named": true
-  },
-  {
     "type": "cyclic_index",
     "named": true
   },
@@ -5002,10 +4921,6 @@
   {
     "type": "false",
     "named": false
-  },
-  {
-    "type": "field_name",
-    "named": true
   },
   {
     "type": "float",

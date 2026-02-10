@@ -10,10 +10,9 @@ module.exports = {
   _number: $ => choice($.float, $.nat, $.int),
   _link: $ => choice($.literal_termlink, $.literal_typelink),
   _term_leaf: ($) =>
-    prec.right(2,
       choice(
         $.force,
-        prec(2, $._hq_qualified_prefix_term),
+        $._hq_qualified_prefix_term,
         $.literal_text,
         $.literal_char,
         $._number,
@@ -21,7 +20,7 @@ module.exports = {
         $.literal_hex,
         $.literal_boolean,
         $._link,
-        prec(3, $.tuple_or_parenthesized),
+        $.tuple_or_parenthesized,
         $._keyword_block,
         $.literal_list,
         $.delay_quote,
@@ -29,7 +28,6 @@ module.exports = {
         $.bang,
         $.doc_block,
       ),
-    ),
   literal_list: $ => seq(
     alias('[', $.open_bracket),
     sep(',', $._term),

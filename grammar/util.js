@@ -41,12 +41,9 @@ openBlockWith = ($, opener) => seq(opener, $._layout_start)
 
 layoutBlock = ($, opener) =>
   seq(
-    opener,
-    $._layout_start,
-    sep1(
-      $._layout_semicolon,
-      choice($.destructuring_bind, $._statement, terminated($, $.use_clause)),
-    ),
+    openBlockWith($, opener),
+    repeat(seq(choice($._statement, $.use_clause), $._layout_semicolon)),
+    $._block_term,
     $._layout_end,
   )
 

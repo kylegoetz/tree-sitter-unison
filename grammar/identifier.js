@@ -58,7 +58,7 @@ module.exports = {
     $.hash_qualifier,
     seq(
       choice(
-        alias($.wordy_id, $.regular_identifier),
+        alias(regex.varid, $.regular_identifier),
         seq($.path, alias($.imm_wordy_id, $.regular_identifier)),
       ),
       optional(alias($.imm_hash_qualifier, $.hash_qualifier)),
