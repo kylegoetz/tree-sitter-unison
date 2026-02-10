@@ -710,3 +710,27 @@ a =
       (operator)
       (path)
       (regular_identifier))))
+
+===
+[Regression] GH-152 - pattern matching with nested use clause in RHS
+===
+a = cases
+  _ ->
+    use foo +
+    true
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (match_expression_lambda
+        (cases)
+        (pattern
+          (blank_pattern)
+          (arrow_symbol)
+          (regular_identifier)
+          (regular_identifier)
+          (operator)
+          (literal_boolean))))))
