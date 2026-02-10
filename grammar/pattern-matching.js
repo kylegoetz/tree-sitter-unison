@@ -2,16 +2,20 @@ const { sep, sep1, layoutBlock } = require('./util')
 const { lowercase_varid } = require('./regex')
 
 module.exports = {
-  _pattern_matching: ($) => choice($._match_with, $._lam_case),
+  _pattern_matching: $ =>
+    choice(
+      alias($._match_with, $.match_expression),
+      alias($._lam_case, $.match_expression_lambda),
+    ),
 
-  _match_with: ($) =>
+  _match_with: $ =>
     prec.right(
       seq(
         openBlockWith($, $.match),
-        field("scrutinee", $._term),
+        field('scrutinee', $._term),
         optional($._layout_end),
-        openBlockWith($, $.with),
-        $._match_cases,
+        $.with,
+        optional(seq($._layout_start, $._match_cases)),
         optional($._layout_end),
       ),
     ),

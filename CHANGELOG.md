@@ -6,12 +6,14 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
-- ??
+- GH-155 - match/with does not require any patterns
 
 ### New
 
 - The "->" in an effect is now a named node, `effect_arrow`.
 - A `var_or_nullary_ctor` may have a new child node, `regular_identifier`
+- the formerly anonymous match/with node is now named: `match_expression`
+- the formerly anonymous lambda pattern matching (cases ...) is now named `match_expression_lambda`
 
 ## [2.1.3] - 2026-02-04
 

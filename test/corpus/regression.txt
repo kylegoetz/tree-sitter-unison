@@ -616,3 +616,23 @@ a =
       (comment)
       (comment)
       (comment))))
+
+===
+GH-155 Void.absurdly
+===
+Void.absurdly v = match v() with
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (path)
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (match_expression
+        (match)
+        (force
+          (regular_identifier)
+          (unit))
+        (with)))))
