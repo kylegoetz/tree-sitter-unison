@@ -88,11 +88,12 @@ a = handle foo with cases
         (handle)
         (regular_identifier)
         (with)
-        (cases)
-        (pattern
-          (effect_pattern
-            (effect_pure
-              (var_or_as
-                (regular_identifier))))
-          (arrow_symbol)
-          (regular_identifier))))))
+        (match_expression_lambda
+          (cases)
+          (pattern
+            (effect_pattern
+              (effect_pure
+                (var_or_as
+                  (regular_identifier))))
+            (arrow_symbol)
+            (regular_identifier)))))))

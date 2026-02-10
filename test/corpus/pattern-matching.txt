@@ -11,29 +11,30 @@
 
 (unison
   (watch_expression
-    (match)
-    (regular_identifier)
-    (with)
-    (pattern
-      (literal_text)
-      (arrow_symbol)
-      (literal_text))
-    (pattern
-      (literal_text)
-      (arrow_symbol)
-      (literal_text))
-    (pattern
-      (literal_text)
-      (arrow_symbol)
-      (literal_text))
-    (pattern
-      (literal_text)
-      (arrow_symbol)
-      (literal_text))
-    (pattern
-      (blank_pattern)
-      (arrow_symbol)
-      (literal_text))))
+    (match_expression
+      (match)
+      (regular_identifier)
+      (with)
+      (pattern
+        (literal_text)
+        (arrow_symbol)
+        (literal_text))
+      (pattern
+        (literal_text)
+        (arrow_symbol)
+        (literal_text))
+      (pattern
+        (literal_text)
+        (arrow_symbol)
+        (literal_text))
+      (pattern
+        (literal_text)
+        (arrow_symbol)
+        (literal_text))
+      (pattern
+        (blank_pattern)
+        (arrow_symbol)
+        (literal_text)))))
 
 ===
 [Pattern matching] with variables
@@ -45,18 +46,19 @@
 
 (unison
   (watch_expression
-    (match)
-    (regular_identifier)
-    (with)
-    (pattern
-      (nat)
-      (arrow_symbol)
-      (literal_text))
-    (pattern
-      (var_or_as
-        (regular_identifier))
-      (arrow_symbol)
-      (literal_text))))
+    (match_expression
+      (match)
+      (regular_identifier)
+      (with)
+      (pattern
+        (nat)
+        (arrow_symbol)
+        (literal_text))
+      (pattern
+        (var_or_as
+          (regular_identifier))
+        (arrow_symbol)
+        (literal_text)))))
 
 ===
 [Pattern matching] guard patterns
@@ -67,24 +69,25 @@
 
 (unison
   (watch_expression
-    (cases)
-    (pattern
-      (var_or_nullary_ctor
-        (regular_identifier))
-      (guarded_block
-        (pipe)
-        (guard
-          (tuple_or_parenthesized
-            (regular_identifier)
-            (operator)
-            (nat))
-          (or)
-          (tuple_or_parenthesized
-            (regular_identifier)
-            (operator)
-            (nat)))
-        (arrow_symbol)
-        (literal_text)))))
+    (match_expression_lambda
+      (cases)
+      (pattern
+        (var_or_nullary_ctor
+          (regular_identifier))
+        (guarded_block
+          (pipe)
+          (guard
+            (tuple_or_parenthesized
+              (regular_identifier)
+              (operator)
+              (nat))
+            (or)
+            (tuple_or_parenthesized
+              (regular_identifier)
+              (operator)
+              (nat)))
+          (arrow_symbol)
+          (literal_text))))))
 
 ===
 [Pattern matching] guard pattern 2
@@ -95,19 +98,20 @@
 
 (unison
   (watch_expression
-    (match)
-    (regular_identifier)
-    (with)
-    (pattern
-      (nat)
-      (guarded_block
-        (pipe)
-        (guard
-          (nat)
-          (operator)
-          (nat))
-        (arrow_symbol)
-        (nat)))))
+    (match_expression
+      (match)
+      (regular_identifier)
+      (with)
+      (pattern
+        (nat)
+        (guarded_block
+          (pipe)
+          (guard
+            (nat)
+            (operator)
+            (nat))
+          (arrow_symbol)
+          (nat))))))
 
 ===
 [Patterns] match x -> x
@@ -117,14 +121,15 @@
 
 (unison
   (watch_expression
-    (match)
-    (regular_identifier)
-    (with)
-    (pattern
-      (var_or_as
-        (regular_identifier))
-      (arrow_symbol)
-      (regular_identifier))))
+    (match_expression
+      (match)
+      (regular_identifier)
+      (with)
+      (pattern
+        (var_or_as
+          (regular_identifier))
+        (arrow_symbol)
+        (regular_identifier)))))
 
 ===
 [Patterns] match 0 -> 1
@@ -134,13 +139,14 @@
 
 (unison
   (watch_expression
-    (match)
-    (regular_identifier)
-    (with)
-    (pattern
-      (nat)
-      (arrow_symbol)
-      (nat))))
+    (match_expression
+      (match)
+      (regular_identifier)
+      (with)
+      (pattern
+        (nat)
+        (arrow_symbol)
+        (nat)))))
 
 ===
 [Patterns] pattern with newline layout
@@ -151,11 +157,12 @@
 
 (unison
   (watch_expression
-    (cases)
-    (pattern
-      (nat)
-      (arrow_symbol)
-      (nat))))
+    (match_expression_lambda
+      (cases)
+      (pattern
+        (nat)
+        (arrow_symbol)
+        (nat)))))
 
 ===
 [Patterns] matching on int
@@ -166,13 +173,14 @@
 
 (unison
   (watch_expression
-    (match)
-    (int)
-    (with)
-    (pattern
+    (match_expression
+      (match)
       (int)
-      (arrow_symbol)
-      (int))))
+      (with)
+      (pattern
+        (int)
+        (arrow_symbol)
+        (int)))))
 
 ===
 [Patterns] blank pattern
@@ -182,11 +190,12 @@
 
 (unison
   (watch_expression
-    (cases)
-    (pattern
-      (blank_pattern)
-      (arrow_symbol)
-      (nat))))
+    (match_expression_lambda
+      (cases)
+      (pattern
+        (blank_pattern)
+        (arrow_symbol)
+        (nat)))))
 
 ===
 [Patterns] multiple patterns
@@ -198,16 +207,17 @@
 
 (unison
   (watch_expression
-    (cases)
-    (pattern
-      (var_or_as
-        (regular_identifier))
-      (arrow_symbol)
-      (nat))
-    (pattern
-      (nat)
-      (arrow_symbol)
-      (nat))))
+    (match_expression_lambda
+      (cases)
+      (pattern
+        (var_or_as
+          (regular_identifier))
+        (arrow_symbol)
+        (nat))
+      (pattern
+        (nat)
+        (arrow_symbol)
+        (nat)))))
 
 ===
 [Patterns] constructor pattern
@@ -217,17 +227,18 @@
 
 (unison
   (watch_expression
-    (cases)
-    (pattern
-      (ctor
-        (path)
-        (regular_identifier))
-      (var_or_as
-        (regular_identifier))
-      (var_or_as
-        (regular_identifier))
-      (arrow_symbol)
-      (tuple_or_parenthesized))))
+    (match_expression_lambda
+      (cases)
+      (pattern
+        (ctor
+          (path)
+          (regular_identifier))
+        (var_or_as
+          (regular_identifier))
+        (var_or_as
+          (regular_identifier))
+        (arrow_symbol)
+        (tuple_or_parenthesized)))))
 
 ===
 [Patterns] nested pattern
@@ -237,24 +248,25 @@
 
 (unison
   (watch_expression
-    (cases)
-    (pattern
-      (ctor
-        (path)
-        (regular_identifier))
-      (parenthesized_or_tuple_pattern
-        (open_parens)
+    (match_expression_lambda
+      (cases)
+      (pattern
         (ctor
           (path)
           (regular_identifier))
-        (var_or_as
-          (regular_identifier))
-        (var_or_as
-          (regular_identifier))
-        (close_parens))
-      (blank_pattern)
-      (arrow_symbol)
-      (tuple_or_parenthesized))))
+        (parenthesized_or_tuple_pattern
+          (open_parens)
+          (ctor
+            (path)
+            (regular_identifier))
+          (var_or_as
+            (regular_identifier))
+          (var_or_as
+            (regular_identifier))
+          (close_parens))
+        (blank_pattern)
+        (arrow_symbol)
+        (tuple_or_parenthesized)))))
 
 ===
 [Patterns] newline layout for post-arrow block of RHS of pattern
@@ -267,16 +279,17 @@
 
 (unison
   (watch_expression
-    (cases)
-    (pattern
-      (nat)
-      (arrow_symbol)
-      (term_declaration
-        (term_definition
-          (regular_identifier)
-          (kw_equals)
-          (nat)))
-      (regular_identifier))))
+    (match_expression_lambda
+      (cases)
+      (pattern
+        (nat)
+        (arrow_symbol)
+        (term_declaration
+          (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (nat)))
+        (regular_identifier)))))
 
 ===
 [Patterns] empty list literal
@@ -286,11 +299,12 @@
 
 (unison
   (watch_expression
-    (cases)
-    (pattern
-      (literal_list_pattern)
-      (arrow_symbol)
-      (nat))))
+    (match_expression_lambda
+      (cases)
+      (pattern
+        (literal_list_pattern)
+        (arrow_symbol)
+        (nat)))))
 
 ===
 [Patterns] cons pattern
@@ -300,13 +314,14 @@
 
 (unison
   (watch_expression
-    (cases)
-    (pattern
-      (nat)
-      (cons)
-      (nat)
-      (arrow_symbol)
-      (nat))))
+    (match_expression_lambda
+      (cases)
+      (pattern
+        (nat)
+        (cons)
+        (nat)
+        (arrow_symbol)
+        (nat)))))
 
 ===
 [Patterns] singleton list
@@ -316,12 +331,13 @@
 
 (unison
   (watch_expression
-    (cases)
-    (pattern
-      (literal_list_pattern
-        (nat))
-      (arrow_symbol)
-      (nat))))
+    (match_expression_lambda
+      (cases)
+      (pattern
+        (literal_list_pattern
+          (nat))
+        (arrow_symbol)
+        (nat)))))
 
 ===
 [Patterns] snoc pattern
@@ -331,13 +347,14 @@
 
 (unison
   (watch_expression
-    (cases)
-    (pattern
-      (blank_pattern)
-      (snoc)
-      (nat)
-      (arrow_symbol)
-      (nat))))
+    (match_expression_lambda
+      (cases)
+      (pattern
+        (blank_pattern)
+        (snoc)
+        (nat)
+        (arrow_symbol)
+        (nat)))))
 
 ===
 [Patterns] concat pattern
@@ -347,14 +364,15 @@
 
 (unison
   (watch_expression
-    (cases)
-    (pattern
-      (literal_list_pattern
-        (nat))
-      (concat)
-      (blank_pattern)
-      (arrow_symbol)
-      (nat))))
+    (match_expression_lambda
+      (cases)
+      (pattern
+        (literal_list_pattern
+          (nat))
+        (concat)
+        (blank_pattern)
+        (arrow_symbol)
+        (nat)))))
 
 ===
 [Patterns] cases (aka "lambda") pattern matching
@@ -364,11 +382,12 @@
 
 (unison
   (watch_expression
-    (cases)
-    (pattern
-      (literal_list_pattern)
-      (arrow_symbol)
-      (nat))))
+    (match_expression_lambda
+      (cases)
+      (pattern
+        (literal_list_pattern)
+        (arrow_symbol)
+        (nat)))))
 
 ===
 [Patterns] cases returning tuple expression
@@ -378,17 +397,18 @@
 
 (unison
   (watch_expression
-    (cases)
-    (pattern
-      (parenthesized_or_tuple_pattern
-        (open_parens)
-        (var_or_as
-          (regular_identifier))
-        (comma)
-        (var_or_as
-          (regular_identifier))
-        (close_parens))
-      (arrow_symbol)
-      (tuple_or_parenthesized
-        (regular_identifier)
-        (regular_identifier)))))
+    (match_expression_lambda
+      (cases)
+      (pattern
+        (parenthesized_or_tuple_pattern
+          (open_parens)
+          (var_or_as
+            (regular_identifier))
+          (comma)
+          (var_or_as
+            (regular_identifier))
+          (close_parens))
+        (arrow_symbol)
+        (tuple_or_parenthesized
+          (regular_identifier)
+          (regular_identifier))))))

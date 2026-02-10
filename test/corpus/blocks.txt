@@ -4,20 +4,23 @@
 > s: Int
   s = (0: Int)
 ---
+
 (unison
-    (watch_expression
-        (term_declaration
-            (type_signature
-                (regular_identifier)
-                (type_signature_colon)
-                (term_type (regular_identifier)))
-            (term_definition
-                (regular_identifier)
-                (kw_equals)
-                (tuple_or_parenthesized
-                    (nat)
-                    (type_signature_colon)
-                    (regular_identifier))))))
+  (watch_expression
+    (term_declaration
+      (type_signature
+        (regular_identifier)
+        (type_signature_colon)
+        (term_type
+          (regular_identifier)))
+      (term_definition
+        (regular_identifier)
+        (kw_equals)
+        (tuple_or_parenthesized
+          (nat)
+          (type_signature_colon)
+          (regular_identifier))))))
+
 ===
 [Blocks] inline and multiline comments should not affect indentation calculation
 ===
@@ -27,35 +30,46 @@
      0 -> "hi"
      1 -> "bye"
 ---
+
 (unison
   (watch_expression
-    (cases)
-    (comment)
-    (comment)
-    (pattern (nat) (arrow_symbol) (literal_text))
-    (pattern (nat) (arrow_symbol) (literal_text))))
+    (match_expression_lambda
+      (cases)
+      (comment)
+      (comment)
+      (pattern
+        (nat)
+        (arrow_symbol)
+        (literal_text))
+      (pattern
+        (nat)
+        (arrow_symbol)
+        (literal_text)))))
+
 ===
 [Blocks] term rewrite
 ===
 x =
     @rewrite term x + 1 ==> Nat.increment x
 ---
+
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (rewrite_block
-                (rewrite)
-                (rewrite_term
-                    (term)
-                    (regular_identifier)
-                    (operator)
-                    (nat)
-                    (rewrite_arrow)
-                    (path)
-                    (regular_identifier)
-                    (regular_identifier))))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (rewrite_block
+        (rewrite)
+        (rewrite_term
+          (term)
+          (regular_identifier)
+          (operator)
+          (nat)
+          (rewrite_arrow)
+          (path)
+          (regular_identifier)
+          (regular_identifier))))))
+
 ===
 [Blocks] case rewrite
 ===
@@ -63,19 +77,21 @@ x =
   @rewrite
     case Left e ==> None
 ---
+
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (rewrite_block
-                (rewrite)
-                (rewrite_case
-                    (case)
-                    (regular_identifier)
-                    (regular_identifier)
-                    (rewrite_arrow)
-                    (regular_identifier))))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (rewrite_block
+        (rewrite)
+        (rewrite_case
+          (case)
+          (regular_identifier)
+          (regular_identifier)
+          (rewrite_arrow)
+          (regular_identifier))))))
+
 ===
 [Blocks] type rewrite
 ===
@@ -83,21 +99,22 @@ x =
     @rewrite
         signature e a . Either e a ==> Optional a
 ---
+
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (rewrite_block
-                (rewrite)
-                    (rewrite_type
-                        (signature)
-                        (regular_identifier)
-                        (regular_identifier)
-                        (dot)
-                        (regular_identifier)
-                        (regular_identifier)
-                        (regular_identifier)
-                        (rewrite_arrow)
-                        (regular_identifier)
-                        (regular_identifier))))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (rewrite_block
+        (rewrite)
+        (rewrite_type
+          (signature)
+          (regular_identifier)
+          (regular_identifier)
+          (dot)
+          (regular_identifier)
+          (regular_identifier)
+          (regular_identifier)
+          (rewrite_arrow)
+          (regular_identifier)
+          (regular_identifier))))))

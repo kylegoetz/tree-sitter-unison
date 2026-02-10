@@ -35,18 +35,19 @@ x =
     (path)
     (regular_identifier)
     (tuple_or_parenthesized
-      (cases)
-      (pattern
-        (parenthesized_or_tuple_pattern
-          (open_parens)
-          (var_or_as
-            (regular_identifier))
-          (comma)
-          (var_or_as
-            (regular_identifier))
-          (close_parens))
-        (arrow_symbol)
-        (regular_identifier)))
+      (match_expression_lambda
+        (cases)
+        (pattern
+          (parenthesized_or_tuple_pattern
+            (open_parens)
+            (var_or_as
+              (regular_identifier))
+            (comma)
+            (var_or_as
+              (regular_identifier))
+            (close_parens))
+          (arrow_symbol)
+          (regular_identifier))))
     (literal_list
       (open_bracket)
       (tuple_or_parenthesized

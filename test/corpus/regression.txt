@@ -200,24 +200,25 @@ lib.base.Nat.!=.doc = 5
 
 (unison
   (watch_expression
-    (match)
-    (literal_boolean)
-    (with)
-    (pattern
-      (var_or_as
-        (regular_identifier))
-      (guarded_block
-        (pipe)
-        (guard
-          (literal_boolean))
-        (arrow_symbol)
-        (nat))
-      (guarded_block
-        (pipe)
-        (guard
-          (otherwise))
-        (arrow_symbol)
-        (nat)))))
+    (match_expression
+      (match)
+      (literal_boolean)
+      (with)
+      (pattern
+        (var_or_as
+          (regular_identifier))
+        (guarded_block
+          (pipe)
+          (guard
+            (literal_boolean))
+          (arrow_symbol)
+          (nat))
+        (guarded_block
+          (pipe)
+          (guard
+            (otherwise))
+          (arrow_symbol)
+          (nat))))))
 
 ===
 [Regression] #91 - infix op can have namespace prefix
@@ -266,14 +267,15 @@ a lib.base.Nat.!= b =
 
 (unison
   (watch_expression
-    (match)
-    (regular_identifier)
-    (regular_identifier)
-    (with)
-    (pattern
-      (blank_pattern)
-      (arrow_symbol)
-      (regular_identifier))))
+    (match_expression
+      (match)
+      (regular_identifier)
+      (regular_identifier)
+      (with)
+      (pattern
+        (blank_pattern)
+        (arrow_symbol)
+        (regular_identifier)))))
 
 ===
 [Regression] fold that is more than just ---
@@ -322,19 +324,20 @@ a = cases
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (cases)
-      (pattern
-        (effect_pattern
-          (effect_pure
-            (var_or_as
-              (regular_identifier))))
-        (arrow_symbol)
-        (nat))
-      (pattern
-        (var_or_as
-          (regular_identifier))
-        (arrow_symbol)
-        (nat)))))
+      (match_expression_lambda
+        (cases)
+        (pattern
+          (effect_pattern
+            (effect_pure
+              (var_or_as
+                (regular_identifier))))
+          (arrow_symbol)
+          (nat))
+        (pattern
+          (var_or_as
+            (regular_identifier))
+          (arrow_symbol)
+          (nat))))))
 
 ===
 [Regression] #134 multi-line quotation mark text literal that opens with more than three " needs balanced ending
@@ -452,20 +455,21 @@ swap = cases
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (cases)
-      (pattern
-        (parenthesized_or_tuple_pattern
-          (open_parens)
-          (var_or_as
-            (regular_identifier))
-          (comma)
-          (var_or_as
-            (regular_identifier))
-          (close_parens))
-        (arrow_symbol)
-        (tuple_or_parenthesized
-          (regular_identifier)
-          (regular_identifier))))))
+      (match_expression_lambda
+        (cases)
+        (pattern
+          (parenthesized_or_tuple_pattern
+            (open_parens)
+            (var_or_as
+              (regular_identifier))
+            (comma)
+            (var_or_as
+              (regular_identifier))
+            (close_parens))
+          (arrow_symbol)
+          (tuple_or_parenthesized
+            (regular_identifier)
+            (regular_identifier)))))))
 
 ===
 [Regression] GH-142 - destructuring bind issue
@@ -509,32 +513,33 @@ x = cases
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (cases)
-      (pattern
-        (var_or_as
-          (regular_identifier))
-        (guarded_block
-          (pipe)
-          (guard
-            (otherwise))
-          (arrow_symbol)
-          (term_declaration
-            (term_definition
-              (regular_identifier)
-              (kw_equals)
-              (regular_identifier)
-              (tuple_or_parenthesized
+      (match_expression_lambda
+        (cases)
+        (pattern
+          (var_or_as
+            (regular_identifier))
+          (guarded_block
+            (pipe)
+            (guard
+              (otherwise))
+            (arrow_symbol)
+            (term_declaration
+              (term_definition
                 (regular_identifier)
-                (operator)
-                (nat))
-              (delay_block
-                (do)
+                (kw_equals)
                 (regular_identifier)
                 (tuple_or_parenthesized
                   (regular_identifier)
                   (operator)
-                  (nat)))))
-          (regular_identifier))))))
+                  (nat))
+                (delay_block
+                  (do)
+                  (regular_identifier)
+                  (tuple_or_parenthesized
+                    (regular_identifier)
+                    (operator)
+                    (nat)))))
+            (regular_identifier)))))))
 
 ===
 [Regression] destructuring, unexplained cause
@@ -578,17 +583,18 @@ a =
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (cases)
-      (pattern
-        (effect_pattern
-          (effect_bind
-            (var_or_as
-              (regular_identifier))
-            (effect_arrow)
-            (var_or_as
-              (regular_identifier))))
-        (arrow_symbol)
-        (tuple_or_parenthesized)))))
+      (match_expression_lambda
+        (cases)
+        (pattern
+          (effect_pattern
+            (effect_bind
+              (var_or_as
+                (regular_identifier))
+              (effect_arrow)
+              (var_or_as
+                (regular_identifier))))
+          (arrow_symbol)
+          (tuple_or_parenthesized))))))
 
 ===
 [Regression] GH-146 - issue closing layout of do block
