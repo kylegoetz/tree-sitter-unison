@@ -19,8 +19,9 @@ module.exports = {
   // This exists because of the if/then/else definition. See that definition for more info.
   __block: $ =>
     seq(
-      prec.right(sep1($._layout_semicolon, $._statement)),
-      optional($._layout_semicolon),
+      $._layout_start,
+      repeat(seq(choice($._statement, $.use_clause), $._layout_semicolon)),
+      $._block_term,
       $._layout_end,
     ),
 

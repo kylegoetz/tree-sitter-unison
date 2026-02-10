@@ -734,3 +734,33 @@ a = cases
           (regular_identifier)
           (operator)
           (literal_boolean))))))
+
+===
+GH-156
+===
+a =
+    if true
+    then true
+    else
+      use Nat / ==
+      true
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (exp_if
+        (kw_if)
+        (literal_boolean)
+        (kw_then)
+        (literal_boolean)
+        (kw_else)
+        (use_clause
+          (use)
+          (namespace
+            (regular_identifier))
+          (operator)
+          (operator))
+        (literal_boolean)))))
