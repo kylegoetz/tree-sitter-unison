@@ -665,7 +665,15 @@
           "named": true
         },
         {
+          "type": "at_token",
+          "named": true
+        },
+        {
           "type": "bang",
+          "named": true
+        },
+        {
+          "type": "blank_pattern",
           "named": true
         },
         {
@@ -686,6 +694,10 @@
         },
         {
           "type": "doc_block",
+          "named": true
+        },
+        {
+          "type": "effect_pattern",
           "named": true
         },
         {
@@ -742,6 +754,10 @@
         },
         {
           "type": "literal_list",
+          "named": true
+        },
+        {
+          "type": "literal_list_pattern",
           "named": true
         },
         {
@@ -806,6 +822,14 @@
         },
         {
           "type": "use_clause",
+          "named": true
+        },
+        {
+          "type": "var_or_as",
+          "named": true
+        },
+        {
+          "type": "var_or_nullary_ctor",
           "named": true
         }
       ]
@@ -3087,6 +3111,41 @@
     }
   },
   {
+    "type": "regular_identifier",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "built_in_hash",
+          "named": true
+        },
+        {
+          "type": "hash_qualifier",
+          "named": true
+        },
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "prefix_operator",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "rewrite_block",
     "named": true,
     "fields": {},
@@ -5046,10 +5105,6 @@
   },
   {
     "type": "prefix_operator",
-    "named": true
-  },
-  {
-    "type": "regular_identifier",
     "named": true
   },
   {

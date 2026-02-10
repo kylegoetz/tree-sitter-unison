@@ -642,3 +642,63 @@ Void.absurdly v = match v() with
           (regular_identifier)
           (unit))
         (with)))))
+
+===
+[Regression] GH-151 - destructuring bind that is an as-pattern fails
+===
+a =
+  Bag.fromOccurrenceList << List.flatMap
+    (p -> let
+      q@(b, n) = f p
+      if Universal.lt n 1 then [] else [q]) << Bag.occurrenceList
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (path)
+      (regular_identifier)
+      (operator)
+      (path)
+      (regular_identifier)
+      (tuple_or_parenthesized
+        (literal_function
+          (regular_identifier)
+          (arrow_symbol)
+          (exp_let
+            (kw_let)
+            (destructuring_bind
+              (regular_identifier
+                (regular_identifier))
+              (at_token)
+              (parenthesized_or_tuple_pattern
+                (open_parens)
+                (var_or_as
+                  (regular_identifier))
+                (comma)
+                (var_or_as
+                  (regular_identifier))
+                (close_parens))
+              (kw_equals)
+              (regular_identifier)
+              (regular_identifier))
+            (exp_if
+              (kw_if)
+              (path)
+              (regular_identifier)
+              (regular_identifier)
+              (nat)
+              (kw_then)
+              (literal_list
+                (open_bracket)
+                (close_bracket))
+              (kw_else)
+              (literal_list
+                (open_bracket)
+                (regular_identifier)
+                (close_bracket))))))
+      (operator)
+      (path)
+      (regular_identifier))))

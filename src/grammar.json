@@ -461,6 +461,33 @@
             "type": "CHOICE",
             "members": [
               {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_hq_qualified_prefix_term"
+                    },
+                    "named": true,
+                    "value": "regular_identifier"
+                  },
+                  {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "STRING",
+                      "value": "@"
+                    },
+                    "named": true,
+                    "value": "at_token"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_pattern_leaf"
+                  }
+                ]
+              },
+              {
                 "type": "SYMBOL",
                 "name": "parenthesized_or_tuple_pattern"
               }
