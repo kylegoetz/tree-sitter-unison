@@ -3,37 +3,47 @@
 ===
 y = if x then 5 else 6
 ---
+
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (exp_if
-                (kw_if)
-                (regular_identifier)
-                (kw_then)
-                (nat)
-                (kw_else)
-                (nat)))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (exp_if
+        (if_block
+          (kw_if)
+          (regular_identifier))
+        (then_block
+          (kw_then)
+          (nat))
+        (else_block
+          (kw_else)
+          (nat))))))
+
 ===
 [Conditional] one line if/else
 ===
 mySimpleTerm = if elem 5 myList then "high five" else "no five found"
 ---
+
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (exp_if
-                (kw_if)
-                (regular_identifier)
-                (nat)
-                (regular_identifier)
-                (kw_then)
-                (literal_text)
-                (kw_else)
-                (literal_text)))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (exp_if
+        (if_block
+          (kw_if)
+          (regular_identifier)
+          (nat)
+          (regular_identifier))
+        (then_block
+          (kw_then)
+          (literal_text))
+        (else_block
+          (kw_else)
+          (literal_text))))))
+
 ===
 [Conditional] if/then/else
 ===
@@ -41,17 +51,21 @@ mySimpleTerm = if elem 5 myList
                then "high five"
                else "no five found"
 ---
+
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (exp_if
-                (kw_if)
-                (regular_identifier)
-                (nat)
-                (regular_identifier)
-                (kw_then)
-                (literal_text)
-                (kw_else)
-                (literal_text)))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (exp_if
+        (if_block
+          (kw_if)
+          (regular_identifier)
+          (nat)
+          (regular_identifier))
+        (then_block
+          (kw_then)
+          (literal_text))
+        (else_block
+          (kw_else)
+          (literal_text))))))

@@ -693,20 +693,23 @@ a =
               (regular_identifier)
               (regular_identifier))
             (exp_if
-              (kw_if)
-              (path)
-              (regular_identifier)
-              (regular_identifier)
-              (nat)
-              (kw_then)
-              (literal_list
-                (open_bracket)
-                (close_bracket))
-              (kw_else)
-              (literal_list
-                (open_bracket)
+              (if_block
+                (kw_if)
+                (path)
                 (regular_identifier)
-                (close_bracket))))))
+                (regular_identifier)
+                (nat))
+              (then_block
+                (kw_then)
+                (literal_list
+                  (open_bracket)
+                  (close_bracket)))
+              (else_block
+                (kw_else)
+                (literal_list
+                  (open_bracket)
+                  (regular_identifier)
+                  (close_bracket)))))))
       (operator)
       (path)
       (regular_identifier))))
@@ -752,15 +755,47 @@ a =
       (regular_identifier)
       (kw_equals)
       (exp_if
-        (kw_if)
-        (literal_boolean)
-        (kw_then)
-        (literal_boolean)
-        (kw_else)
-        (use_clause
-          (use)
-          (namespace
-            (regular_identifier))
-          (operator)
-          (operator))
-        (literal_boolean)))))
+        (if_block
+          (kw_if)
+          (literal_boolean))
+        (then_block
+          (kw_then)
+          (literal_boolean))
+        (else_block
+          (kw_else)
+          (use_clause
+            (use)
+            (namespace
+              (regular_identifier))
+            (operator)
+            (operator))
+          (literal_boolean))))))
+
+===
+GH-157 - layout issues with if/then/else
+===
+a =
+  hours = if true then true else true
+  true
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (term_declaration
+        (term_definition
+          (regular_identifier)
+          (kw_equals)
+          (exp_if
+            (if_block
+              (kw_if)
+              (literal_boolean))
+            (then_block
+              (kw_then)
+              (literal_boolean))
+            (else_block
+              (kw_else)
+              (literal_boolean)))))
+      (literal_boolean))))

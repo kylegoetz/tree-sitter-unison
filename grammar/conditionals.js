@@ -10,17 +10,18 @@ module.exports = {
   kw_if: $ => prec(KEYWORD, 'if'),
   kw_then: $ => prec(KEYWORD, 'then'),
   kw_else: $ => prec(KEYWORD, 'else'),
-
-  // Note: do not convert this to use layoutBlock because there is an infinite loop when running `tree-sitter generate`
-  exp_if: $ =>
-    prec.right(
+  if_block: $ => seq($.kw_if, $.__block),
+  then_block: $ => seq($.kw_then, $.__block),
+  else_block: $ =>
+    seq(
+      $.kw_else,
       seq(
-        openBlockWith($, $.kw_if),
-        $.__block,
-        openBlockWith($, $.kw_then),
-        $.__block,
-        openBlockWith($, $.kw_else),
-        $.__block,
+        $._layout_start,
+        repeat(seq(choice($._statement, $.use_clause), $._layout_semicolon)),
+        $._block_term,
+        optional($._layout_end),
       ),
     ),
+  // Note: do not convert this to use layoutBlock because there is an infinite loop when running `tree-sitter generate`
+  exp_if: $ => prec.right(seq($.if_block, $.then_block, $.else_block)),
 }

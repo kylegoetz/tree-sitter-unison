@@ -23,4 +23,6 @@ module.exports = $ => [
   [$._pattern_constructor, $._term_leaf],
   [$.var_or_nullary_ctor, $._term_leaf],
   [$.wordy_id, $._hq_qualified_wordy_id],
+  [$.else_block],
+  [$._statement, $.else_block],
 ]
