@@ -1,15 +1,14 @@
-const literals = require("./literal");
-const { KEYWORD } = require("./precedences");
+const literals = require('./literal')
+const { KEYWORD } = require('./precedences')
 
 module.exports = {
-  _expression: ($) =>
+  _expression: $ =>
     prec.right(
       choice(
         $.literal_function,
         $.exp_let,
         $.exp_if,
         $.handler,
-        // $.function_application,
         $._literal,
         $._hash_qualified,
         $._pattern_matching,
@@ -21,14 +20,14 @@ module.exports = {
     ),
 
   // operator_as_parameter: ($) => seq("(", $.operator, ")"),
-  parenthetical_exp: ($) =>
+  parenthetical_exp: $ =>
     prec(
       -10,
       seq(
-        "(",
+        '(',
         $._expression,
         optional(seq($.type_signature_colon, $._value_type)),
-        ")",
+        ')',
       ),
     ),
-};
+}

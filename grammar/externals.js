@@ -21,5 +21,4 @@ module.exports = $ => [
   $._destructuring_bind_start,
   $.literal_text,
   $.DUMMY,
-  // $.pipe, // This is required in conjunction with GUARD_LAYOUT_START
 ]
