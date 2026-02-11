@@ -47,7 +47,7 @@ module.exports = {
           sep1($._layout_semicolon, $.guarded_block),
           $._layout_end,
         ),
-        seq(openBlockWith($, $.arrow_symbol), $._pattern_rhs_block),
+        layoutBlock($, $.arrow_symbol),
       ),
     ),
 

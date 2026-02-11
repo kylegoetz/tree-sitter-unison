@@ -1103,8 +1103,37 @@
                 ]
               },
               {
+                "type": "REPEAT",
+                "content": {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "_statement"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "use_clause"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "_layout_semicolon"
+                    }
+                  ]
+                }
+              },
+              {
                 "type": "SYMBOL",
-                "name": "_pattern_rhs_block"
+                "name": "_block_term"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_layout_end"
               }
             ]
           }

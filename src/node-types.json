@@ -2974,6 +2974,10 @@
           "named": true
         },
         {
+          "type": "destructuring_bind",
+          "named": true
+        },
+        {
           "type": "doc_block",
           "named": true
         },
@@ -3095,6 +3099,10 @@
         },
         {
           "type": "tuple_or_parenthesized",
+          "named": true
+        },
+        {
+          "type": "use_clause",
           "named": true
         }
       ]

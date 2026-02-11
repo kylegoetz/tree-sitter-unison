@@ -852,3 +852,13 @@ a = cases
             (path)
             (regular_identifier)
             (regular_identifier)))))))
+===
+GH-159 - pattern case RHS should be a layout block
+===
+a =
+  cases
+    _ ->
+      use Int * +
+      ()
+---
+(unison)
