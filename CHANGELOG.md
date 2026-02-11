@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - GH-147 - case where in-line comment not recognized
 - GH-151 - destructuring bind of form `a@(...)` parses
 - GH-152 - pattern matching RHS allows use clause anywhere
+- GH-154 - pattern LHS can be made up of comma-delimited patterns
 - GH-155 - match/with does not require any patterns
 - GH-156 - if/then/else blocks allow use clause anywhere
 - GH-157 - `if_exp` layout issues
@@ -25,6 +26,8 @@ All notable changes to this project will be documented in this file.
 - the formerly anonymous lambda pattern matching (cases ...) is now named `match_expression_lambda`
 - `exp_if` now wraps the if/then/else blocks in `if_block`, `then_block`, and `else_block`
 - some `var_or_nullary_ctor` will be seen as `var_or_as` now (prompts future change of the former to just `nullary_ctor`)
+- `pattern` has been renamed `pattern_case` to reflect Unison terminology and to allow an anonymous node to be renamed `pattern` (the children of a pattern's LHS, formerly calld `_pattern_candidates`)
+- The above means that `destructuring_bind`s will often have `pattern` now wrapping `var_or_nullary_ctor`. The same goes for descendants of `effect_pattern`.
 
 ## [2.1.3] - 2026-02-04
 

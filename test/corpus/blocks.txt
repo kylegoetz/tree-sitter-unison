@@ -37,12 +37,14 @@
       (cases)
       (comment)
       (comment)
-      (pattern
-        (nat)
+      (pattern_case
+        (pattern
+          (nat))
         (arrow_symbol)
         (literal_text))
-      (pattern
-        (nat)
+      (pattern_case
+        (pattern
+          (nat))
         (arrow_symbol)
         (literal_text)))))
 

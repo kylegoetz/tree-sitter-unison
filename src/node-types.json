@@ -939,10 +939,6 @@
           "named": true
         },
         {
-          "type": "ctor",
-          "named": true
-        },
-        {
           "type": "effect_arrow",
           "named": true
         },
@@ -976,6 +972,10 @@
         },
         {
           "type": "parenthesized_or_tuple_pattern",
+          "named": true
+        },
+        {
+          "type": "pattern",
           "named": true
         },
         {
@@ -1014,12 +1014,8 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
-        {
-          "type": "blank_pattern",
-          "named": true
-        },
         {
           "type": "comma",
           "named": true
@@ -1033,47 +1029,11 @@
           "named": true
         },
         {
-          "type": "ctor",
-          "named": true
-        },
-        {
-          "type": "effect_pattern",
-          "named": true
-        },
-        {
-          "type": "int",
-          "named": true
-        },
-        {
-          "type": "literal_boolean",
-          "named": true
-        },
-        {
-          "type": "literal_char",
-          "named": true
-        },
-        {
-          "type": "literal_list_pattern",
-          "named": true
-        },
-        {
-          "type": "literal_text",
-          "named": true
-        },
-        {
-          "type": "nat",
-          "named": true
-        },
-        {
-          "type": "parenthesized_or_tuple_pattern",
+          "type": "pattern",
           "named": true
         },
         {
           "type": "snoc",
-          "named": true
-        },
-        {
-          "type": "var_or_nullary_ctor",
           "named": true
         }
       ]
@@ -2507,10 +2467,6 @@
       "required": false,
       "types": [
         {
-          "type": "blank_pattern",
-          "named": true
-        },
-        {
           "type": "comma",
           "named": true
         },
@@ -2523,47 +2479,11 @@
           "named": true
         },
         {
-          "type": "ctor",
-          "named": true
-        },
-        {
-          "type": "effect_pattern",
-          "named": true
-        },
-        {
-          "type": "int",
-          "named": true
-        },
-        {
-          "type": "literal_boolean",
-          "named": true
-        },
-        {
-          "type": "literal_char",
-          "named": true
-        },
-        {
-          "type": "literal_list_pattern",
-          "named": true
-        },
-        {
-          "type": "literal_text",
-          "named": true
-        },
-        {
-          "type": "nat",
-          "named": true
-        },
-        {
-          "type": "parenthesized_or_tuple_pattern",
+          "type": "pattern",
           "named": true
         },
         {
           "type": "snoc",
-          "named": true
-        },
-        {
-          "type": "var_or_nullary_ctor",
           "named": true
         }
       ]
@@ -2839,7 +2759,7 @@
           "named": true
         },
         {
-          "type": "pattern",
+          "type": "pattern_case",
           "named": true
         },
         {
@@ -2862,7 +2782,7 @@
           "named": true
         },
         {
-          "type": "pattern",
+          "type": "pattern_case",
           "named": true
         }
       ]
@@ -2924,10 +2844,6 @@
       "required": true,
       "types": [
         {
-          "type": "blank_pattern",
-          "named": true
-        },
-        {
           "type": "close_parens",
           "named": true
         },
@@ -2941,6 +2857,33 @@
         },
         {
           "type": "cons",
+          "named": true
+        },
+        {
+          "type": "open_parens",
+          "named": true
+        },
+        {
+          "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "snoc",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "pattern",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "blank_pattern",
           "named": true
         },
         {
@@ -2976,15 +2919,7 @@
           "named": true
         },
         {
-          "type": "open_parens",
-          "named": true
-        },
-        {
           "type": "parenthesized_or_tuple_pattern",
-          "named": true
-        },
-        {
-          "type": "snoc",
           "named": true
         },
         {
@@ -2995,7 +2930,7 @@
     }
   },
   {
-    "type": "pattern",
+    "type": "pattern_case",
     "named": true,
     "fields": {},
     "children": {
@@ -3015,10 +2950,6 @@
           "named": true
         },
         {
-          "type": "blank_pattern",
-          "named": true
-        },
-        {
           "type": "built_in_hash",
           "named": true
         },
@@ -3035,10 +2966,6 @@
           "named": true
         },
         {
-          "type": "ctor",
-          "named": true
-        },
-        {
           "type": "delay_block",
           "named": true
         },
@@ -3048,10 +2975,6 @@
         },
         {
           "type": "doc_block",
-          "named": true
-        },
-        {
-          "type": "effect_pattern",
           "named": true
         },
         {
@@ -3111,10 +3034,6 @@
           "named": true
         },
         {
-          "type": "literal_list_pattern",
-          "named": true
-        },
-        {
           "type": "literal_termlink",
           "named": true
         },
@@ -3147,11 +3066,11 @@
           "named": true
         },
         {
-          "type": "parenthesized_or_tuple_pattern",
+          "type": "path",
           "named": true
         },
         {
-          "type": "path",
+          "type": "pattern",
           "named": true
         },
         {
@@ -3176,10 +3095,6 @@
         },
         {
           "type": "tuple_or_parenthesized",
-          "named": true
-        },
-        {
-          "type": "var_or_nullary_ctor",
           "named": true
         }
       ]

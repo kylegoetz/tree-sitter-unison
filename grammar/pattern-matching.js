@@ -25,18 +25,18 @@ module.exports = {
       seq($.cases, $._layout_start, $._match_cases, optional($._layout_end)),
     ),
 
-  _match_cases: $ => prec.right(sep1($._layout_semicolon, $.pattern)),
+  _match_cases: $ => prec.right(sep1($._layout_semicolon, $.pattern_case)),
 
   /**
-   * Pattern examples:
+   * Case examples:
    * 5 -> "foo"
    * foo | foo == 1 -> "one"
          | otherwise -> "not one"
    */
-  pattern: $ => seq($._pattern_root, prec.right($._pattern_rhs)),
+  pattern_case: $ => seq($._pattern_root, prec.right($._pattern_rhs)),
 
   /**
-   * "A pattern's RHS is either one or more guards, or a single unguarded block"
+   * "A case's RHS is either one or more guards, or a single unguarded block"
    * (from Unison's TermParser.hs)
    */
   _pattern_rhs: $ =>
@@ -76,7 +76,7 @@ module.exports = {
   _pattern_root: $ =>
     sep1(
       $._pattern_infix_app,
-      sep1(alias(',', $.comma), $._pattern_candidates),
+      sep1(alias(',', $.comma), alias($._pattern_candidates, $.pattern)),
     ),
 
   _pattern_constructor: $ =>

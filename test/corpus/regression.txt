@@ -204,9 +204,10 @@ lib.base.Nat.!=.doc = 5
       (match)
       (literal_boolean)
       (with)
-      (pattern
-        (var_or_nullary_ctor
-          (regular_identifier))
+      (pattern_case
+        (pattern
+          (var_or_nullary_ctor
+            (regular_identifier)))
         (guarded_block
           (pipe)
           (guard
@@ -272,8 +273,9 @@ a lib.base.Nat.!= b =
       (regular_identifier)
       (regular_identifier)
       (with)
-      (pattern
-        (blank_pattern)
+      (pattern_case
+        (pattern
+          (blank_pattern))
         (arrow_symbol)
         (regular_identifier)))))
 
@@ -326,16 +328,19 @@ a = cases
       (kw_equals)
       (match_expression_lambda
         (cases)
-        (pattern
-          (effect_pattern
-            (effect_pure
-              (var_or_nullary_ctor
-                (regular_identifier))))
+        (pattern_case
+          (pattern
+            (effect_pattern
+              (effect_pure
+                (pattern
+                  (var_or_nullary_ctor
+                    (regular_identifier))))))
           (arrow_symbol)
           (nat))
-        (pattern
-          (var_or_nullary_ctor
-            (regular_identifier))
+        (pattern_case
+          (pattern
+            (var_or_nullary_ctor
+              (regular_identifier)))
           (arrow_symbol)
           (nat))))))
 
@@ -420,11 +425,13 @@ x =
       (destructuring_bind
         (parenthesized_or_tuple_pattern
           (open_parens)
-          (var_or_nullary_ctor
-            (regular_identifier))
+          (pattern
+            (var_or_nullary_ctor
+              (regular_identifier)))
           (comma)
-          (var_or_nullary_ctor
-            (regular_identifier))
+          (pattern
+            (var_or_nullary_ctor
+              (regular_identifier)))
           (close_parens))
         (kw_equals)
         (term_declaration
@@ -457,15 +464,18 @@ swap = cases
       (kw_equals)
       (match_expression_lambda
         (cases)
-        (pattern
-          (parenthesized_or_tuple_pattern
-            (open_parens)
-            (var_or_nullary_ctor
-              (regular_identifier))
-            (comma)
-            (var_or_nullary_ctor
-              (regular_identifier))
-            (close_parens))
+        (pattern_case
+          (pattern
+            (parenthesized_or_tuple_pattern
+              (open_parens)
+              (pattern
+                (var_or_nullary_ctor
+                  (regular_identifier)))
+              (comma)
+              (pattern
+                (var_or_nullary_ctor
+                  (regular_identifier)))
+              (close_parens)))
           (arrow_symbol)
           (tuple_or_parenthesized
             (regular_identifier)
@@ -487,10 +497,12 @@ y =
       (destructuring_bind
         (parenthesized_or_tuple_pattern
           (open_parens)
-          (var_or_nullary_ctor
-            (regular_identifier))
+          (pattern
+            (var_or_nullary_ctor
+              (regular_identifier)))
           (comma)
-          (blank_pattern)
+          (pattern
+            (blank_pattern))
           (close_parens))
         (kw_equals)
         (force
@@ -515,9 +527,10 @@ x = cases
       (kw_equals)
       (match_expression_lambda
         (cases)
-        (pattern
-          (var_or_nullary_ctor
-            (regular_identifier))
+        (pattern_case
+          (pattern
+            (var_or_nullary_ctor
+              (regular_identifier)))
           (guarded_block
             (pipe)
             (guard
@@ -561,10 +574,11 @@ a =
         (destructuring_bind
           (parenthesized_or_tuple_pattern
             (open_parens)
-            (ctor
-              (regular_identifier))
-            (var_or_nullary_ctor
-              (regular_identifier))
+            (pattern
+              (ctor
+                (regular_identifier))
+              (var_or_nullary_ctor
+                (regular_identifier)))
             (close_parens))
           (kw_equals)
           (regular_identifier))
@@ -585,14 +599,16 @@ a =
       (kw_equals)
       (match_expression_lambda
         (cases)
-        (pattern
-          (effect_pattern
-            (effect_bind
-              (var_or_nullary_ctor
-                (regular_identifier))
-              (effect_arrow)
-              (var_or_nullary_ctor
-                (regular_identifier))))
+        (pattern_case
+          (pattern
+            (effect_pattern
+              (effect_bind
+                (var_or_nullary_ctor
+                  (regular_identifier))
+                (effect_arrow)
+                (pattern
+                  (var_or_nullary_ctor
+                    (regular_identifier))))))
           (arrow_symbol)
           (tuple_or_parenthesized))))))
 
@@ -683,11 +699,13 @@ a =
               (at_token)
               (parenthesized_or_tuple_pattern
                 (open_parens)
-                (var_or_nullary_ctor
-                  (regular_identifier))
+                (pattern
+                  (var_or_nullary_ctor
+                    (regular_identifier)))
                 (comma)
-                (var_or_nullary_ctor
-                  (regular_identifier))
+                (pattern
+                  (var_or_nullary_ctor
+                    (regular_identifier)))
                 (close_parens))
               (kw_equals)
               (regular_identifier)
@@ -730,8 +748,9 @@ a = cases
       (kw_equals)
       (match_expression_lambda
         (cases)
-        (pattern
-          (blank_pattern)
+        (pattern_case
+          (pattern
+            (blank_pattern))
           (arrow_symbol)
           (regular_identifier)
           (regular_identifier)
@@ -814,14 +833,16 @@ a = cases
       (kw_equals)
       (match_expression_lambda
         (cases)
-        (pattern
-          (var_or_nullary_ctor
-            (regular_identifier))
+        (pattern_case
+          (pattern
+            (var_or_nullary_ctor
+              (regular_identifier)))
           (comma)
-          (ctor
-            (regular_identifier))
-          (var_or_nullary_ctor
-            (regular_identifier))
+          (pattern
+            (ctor
+              (regular_identifier))
+            (var_or_nullary_ctor
+              (regular_identifier)))
           (arrow_symbol)
           (regular_identifier)
           (tuple_or_parenthesized

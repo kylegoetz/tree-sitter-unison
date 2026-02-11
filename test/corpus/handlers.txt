@@ -90,10 +90,12 @@ a = handle foo with cases
         (with)
         (match_expression_lambda
           (cases)
-          (pattern
-            (effect_pattern
-              (effect_pure
-                (var_or_nullary_ctor
-                  (regular_identifier))))
+          (pattern_case
+            (pattern
+              (effect_pattern
+                (effect_pure
+                  (pattern
+                    (var_or_nullary_ctor
+                      (regular_identifier))))))
             (arrow_symbol)
             (regular_identifier)))))))

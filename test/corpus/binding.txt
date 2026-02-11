@@ -14,11 +14,13 @@ x =
       (destructuring_bind
         (parenthesized_or_tuple_pattern
           (open_parens)
-          (var_or_nullary_ctor
-            (regular_identifier))
+          (pattern
+            (var_or_nullary_ctor
+              (regular_identifier)))
           (comma)
-          (var_or_nullary_ctor
-            (regular_identifier))
+          (pattern
+            (var_or_nullary_ctor
+              (regular_identifier)))
           (close_parens))
         (kw_equals)
         (regular_identifier))
@@ -37,15 +39,18 @@ x =
     (tuple_or_parenthesized
       (match_expression_lambda
         (cases)
-        (pattern
-          (parenthesized_or_tuple_pattern
-            (open_parens)
-            (var_or_nullary_ctor
-              (regular_identifier))
-            (comma)
-            (var_or_nullary_ctor
-              (regular_identifier))
-            (close_parens))
+        (pattern_case
+          (pattern
+            (parenthesized_or_tuple_pattern
+              (open_parens)
+              (pattern
+                (var_or_nullary_ctor
+                  (regular_identifier)))
+              (comma)
+              (pattern
+                (var_or_nullary_ctor
+                  (regular_identifier)))
+              (close_parens)))
           (arrow_symbol)
           (regular_identifier))))
     (literal_list
