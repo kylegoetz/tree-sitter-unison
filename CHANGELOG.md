@@ -2,11 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.??] - 2026-??
+## [2.2.0] - 2026-02-
 
 ### Fixed
 
+- GH-144 - guarded blocks layout works
+- GH-145 - effect pattern matching of form { a -> b } parse
+- GH-146 - sometimes destructuring bind at EOL not recognized
+- GH-147 - case where in-line comment not recognized
+- GH-151 - destructuring bind of form `a@(...)` parses
+- GH-152 - pattern matching RHS allows use clause anywhere
 - GH-155 - match/with does not require any patterns
+- GH-156 - if/then/else blocks allow use clause anywhere
+- GH-157 - `if_exp` layout issues
+- do block with destructuring bind works
 
 ### New
 
@@ -14,6 +23,8 @@ All notable changes to this project will be documented in this file.
 - A `var_or_nullary_ctor` may have a new child node, `regular_identifier`
 - the formerly anonymous match/with node is now named: `match_expression`
 - the formerly anonymous lambda pattern matching (cases ...) is now named `match_expression_lambda`
+- `exp_if` now wraps the if/then/else blocks in `if_block`, `then_block`, and `else_block`
+- some `var_or_nullary_ctor` will be seen as `var_or_as` now (prompts future change of the former to just `nullary_ctor`)
 
 ## [2.1.3] - 2026-02-04
 
