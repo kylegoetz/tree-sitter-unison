@@ -1500,42 +1500,50 @@
           ]
         },
         {
-          "type": "SEQ",
+          "type": "CHOICE",
           "members": [
             {
-              "type": "CHOICE",
+              "type": "SEQ",
               "members": [
                 {
-                  "type": "SYMBOL",
-                  "name": "_pattern_root"
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "_pattern_root"
+                    }
+                  ]
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "ALIAS",
+                        "content": {
+                          "type": "STRING",
+                          "value": ","
+                        },
+                        "named": true,
+                        "value": "comma"
+                      },
+                      {
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "SYMBOL",
+                            "name": "_pattern_root"
+                          }
+                        ]
+                      }
+                    ]
+                  }
                 }
               ]
             },
             {
-              "type": "REPEAT",
-              "content": {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "ALIAS",
-                    "content": {
-                      "type": "STRING",
-                      "value": ","
-                    },
-                    "named": true,
-                    "value": "comma"
-                  },
-                  {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "SYMBOL",
-                        "name": "_pattern_root"
-                      }
-                    ]
-                  }
-                ]
-              }
+              "type": "BLANK"
             }
           ]
         },
@@ -2643,6 +2651,10 @@
           },
           "named": true,
           "value": "term_type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_layout_semicolon"
         }
       ]
     },
@@ -4505,6 +4517,10 @@
     ],
     [
       "_pattern_root"
+    ],
+    [
+      "tuple_or_parenthesized",
+      "parenthesized_or_tuple_pattern"
     ]
   ],
   "precedences": [
