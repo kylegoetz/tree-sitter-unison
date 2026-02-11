@@ -1458,7 +1458,7 @@ static Result text_literal(State *state) {
       return multiline_text_literal(i, state);
     }
   }
-  return res_cont;
+  return res_cont;  
 }
 
 /** Parse special tokens before the first newline that can't be reliably detected by tree-sitter:
