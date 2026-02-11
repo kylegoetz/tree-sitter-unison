@@ -996,3 +996,11 @@ a d =
               (otherwise))
             (arrow_symbol)
             (tuple_or_parenthesized)))))))
+===
+GH-163
+===
+a = b do
+  x = atLeastOne (gen.oneOf [?., ?-]) ()
+  true
+---
+(unison)

@@ -2036,6 +2036,10 @@
         {
           "type": "SYMBOL",
           "name": "doc_block"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "unit"
         }
       ]
     },
@@ -2130,8 +2134,11 @@
         {
           "type": "ALIAS",
           "content": {
-            "type": "STRING",
-            "value": "()"
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "STRING",
+              "value": "()"
+            }
           },
           "named": true,
           "value": "unit"

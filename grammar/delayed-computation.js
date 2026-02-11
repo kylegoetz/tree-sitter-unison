@@ -33,6 +33,7 @@ module.exports = {
       $.delay_block,
       $.bang,
       $.doc_block,
+      $.unit,
     ),
   literal_list: $ =>
     seq(
@@ -49,5 +50,6 @@ module.exports = {
       $._pattern_matching, // this is match and lam case
     ),
 
-  force: $ => seq($._hq_qualified_prefix_term, alias('()', $.unit)),
+  force: $ =>
+    seq($._hq_qualified_prefix_term, alias(token.immediate('()'), $.unit)),
 }
