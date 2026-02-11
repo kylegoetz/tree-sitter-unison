@@ -26,4 +26,5 @@ module.exports = $ => [
   [$.else_block],
   [$._statement, $.else_block],
   [$._pattern_root],
+  [$.tuple_or_parenthesized, $.parenthesized_or_tuple_pattern],
 ]

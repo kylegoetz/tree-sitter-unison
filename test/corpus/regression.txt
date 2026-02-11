@@ -921,6 +921,7 @@ a = cases
               (close_parens)))
           (arrow_symbol)
           (regular_identifier))))))
+
 ===
 GH-161 - typedef consumes start of following termdef
 ===
@@ -964,3 +965,34 @@ time.UTCOffset.fromIso8601 t =
               (blank_pattern))
             (arrow_symbol)
             (regular_identifier)))))))
+
+===
+GH-162
+===
+a d =
+  match () with
+    ()
+      | otherwise         -> ()
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (match_expression
+        (match)
+        (tuple_or_parenthesized)
+        (with)
+        (pattern_case
+          (pattern
+            (parenthesized_or_tuple_pattern
+              (open_parens)
+              (close_parens)))
+          (guarded_block
+            (pipe)
+            (guard
+              (otherwise))
+            (arrow_symbol)
+            (tuple_or_parenthesized)))))))

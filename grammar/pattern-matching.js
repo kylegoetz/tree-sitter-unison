@@ -34,7 +34,6 @@ module.exports = {
          | otherwise -> "not one"
    */
   pattern_case: $ => seq($._pattern_root, prec.right($._pattern_rhs)),
-
   /**
    * "A case's RHS is either one or more guards, or a single unguarded block"
    * (from Unison's TermParser.hs)
@@ -90,7 +89,7 @@ module.exports = {
   parenthesized_or_tuple_pattern: $ =>
     seq(
       openBlockWith($, alias('(', $.open_parens)),
-      sep1(alias(',', $.comma), choice($._pattern_root)),
+      sep(alias(',', $.comma), choice($._pattern_root)),
       $._layout_end,
       alias(')', $.close_parens),
     ),
