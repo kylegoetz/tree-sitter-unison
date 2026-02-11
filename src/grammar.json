@@ -1415,39 +1415,10 @@
         {
           "type": "SYMBOL",
           "name": "_pattern_leaf"
-        }
-      ]
-    },
-    "var_or_as": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[_a-z\\u{1f400}-\\u{1faff}][_!'a-z0-9\\u{1f400}-\\u{1faff}]*",
-            "flags": "u"
-          },
-          "named": true,
-          "value": "regular_identifier"
         },
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "STRING",
-                "value": "@"
-              },
-              "named": true,
-              "value": "at_token"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_pattern_leaf"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "_hqNamey"
         }
       ]
     },
@@ -1648,6 +1619,41 @@
         {
           "type": "STRING",
           "value": "}"
+        }
+      ]
+    },
+    "_hqNamey": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "var_or_nullary_ctor"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "STRING",
+                    "value": "@"
+                  },
+                  "named": true,
+                  "value": "at_token"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_pattern_leaf"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },

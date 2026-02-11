@@ -883,13 +883,41 @@ a =
             (operator)
             (operator))
           (tuple_or_parenthesized))))))
+
 ===
-GH-160
+GH-160 - as pattern in pattern case
 ===
-time.OffsetDateTime.convertOffset :
-  UTCOffset -> OffsetDateTime -> OffsetDateTime
-time.OffsetDateTime.convertOffset = cases
-  o@(UTCOffset new), OffsetDateTime (UTCOffset old) dt ->
-    OffsetDateTime o (LocalDateTime.addDuration dt (minutes (new Int.- old)))
+a : b -> c
+a = cases
+  o@(UTCOffset new) -> a
 ---
-(unison)
+
+(unison
+  (term_declaration
+    (type_signature
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (regular_identifier)
+        (arrow_symbol)
+        (regular_identifier)))
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (match_expression_lambda
+        (cases)
+        (pattern_case
+          (pattern
+            (var_or_nullary_ctor
+              (regular_identifier))
+            (at_token)
+            (parenthesized_or_tuple_pattern
+              (open_parens)
+              (pattern
+                (ctor
+                  (regular_identifier))
+                (var_or_nullary_ctor
+                  (regular_identifier)))
+              (close_parens)))
+          (arrow_symbol)
+          (regular_identifier))))))

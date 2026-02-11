@@ -74,20 +74,8 @@ module.exports = {
         repeat1(choice($._pattern_leaf)),
       ),
     ),
-  _pattern_candidates: $ => choice($._pattern_constructor, $._pattern_leaf),
-  /*
-   *  NOTE: TermParser.hs says @leaf is optional but to simplify conflicts,
-   * it is mandatory here. To compensate, wordy_id is allowed as a pattern.
-   * By this we avoid a parse conflict between `var_or_as` and `_identifier`, which
-   * otherwise are possible parent nodes for a bare `wordy_id`.
-   *
-   * Let `ctor` take care of a bare identifier.
-   */
-  var_or_as: $ =>
-    seq(
-      alias(lowercase_varid, $.regular_identifier),
-      seq(alias('@', $.at_token), $._pattern_leaf),
-    ),
+  _pattern_candidates: $ =>
+    choice($._pattern_constructor, $._pattern_leaf, $._hqNamey),
 
   // Note: Unfortunately the SEMI is disabled here because leaving it in creates a parsing error where
   literal_list_pattern: $ =>
@@ -118,10 +106,16 @@ module.exports = {
       $._layout_end,
       '}',
     ),
+  _hqNamey: $ =>
+    seq(
+      $.var_or_nullary_ctor,
+      optional(seq(alias('@', $.at_token), $._pattern_leaf)),
+    ),
   _pattern_leaf: $ =>
     prec(
       2,
       choice(
+        // $.var_or_as,
         $.var_or_nullary_ctor,
         $._literal_pattern,
         alias('_', $.blank_pattern),

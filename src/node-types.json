@@ -2883,6 +2883,10 @@
       "required": true,
       "types": [
         {
+          "type": "at_token",
+          "named": true
+        },
+        {
           "type": "blank_pattern",
           "named": true
         },
