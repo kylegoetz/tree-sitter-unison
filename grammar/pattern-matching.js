@@ -51,18 +51,6 @@ module.exports = {
       ),
     ),
 
-  _pattern_rhs_block: $ =>
-    seq(
-      seq(
-        prec.right(sep1($._layout_semicolon, choice($._pattern_rhs_statement))),
-        optional($._layout_semicolon),
-      ),
-      $._layout_end,
-    ),
-
-  _pattern_rhs_statement: $ =>
-    choice(prec(1, $._block_term), alias($._binding, $.term_declaration)),
-
   _literal_pattern: $ =>
     choice($.literal_boolean, $.nat, $.int, $.literal_char, $.literal_text),
 

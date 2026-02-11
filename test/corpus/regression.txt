@@ -883,3 +883,13 @@ a =
             (operator)
             (operator))
           (tuple_or_parenthesized))))))
+===
+GH-160
+===
+time.OffsetDateTime.convertOffset :
+  UTCOffset -> OffsetDateTime -> OffsetDateTime
+time.OffsetDateTime.convertOffset = cases
+  o@(UTCOffset new), OffsetDateTime (UTCOffset old) dt ->
+    OffsetDateTime o (LocalDateTime.addDuration dt (minutes (new Int.- old)))
+---
+(unison)
