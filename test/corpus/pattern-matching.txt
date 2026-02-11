@@ -255,7 +255,7 @@
           (var_or_nullary_ctor
             (regular_identifier)))
         (arrow_symbol)
-        (tuple_or_parenthesized)))))
+        (unit)))))
 
 ===
 [Patterns] nested pattern
@@ -285,7 +285,7 @@
             (close_parens))
           (blank_pattern))
         (arrow_symbol)
-        (tuple_or_parenthesized)))))
+        (unit)))))
 
 ===
 [Patterns] newline layout for post-arrow block of RHS of pattern

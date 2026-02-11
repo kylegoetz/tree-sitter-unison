@@ -610,7 +610,7 @@ a =
                   (var_or_nullary_ctor
                     (regular_identifier))))))
           (arrow_symbol)
-          (tuple_or_parenthesized))))))
+          (unit))))))
 
 ===
 [Regression] GH-146 - issue closing layout of do block
@@ -882,7 +882,7 @@ a =
               (regular_identifier))
             (operator)
             (operator))
-          (tuple_or_parenthesized))))))
+          (unit))))))
 
 ===
 GH-160 - as pattern in pattern case
@@ -983,7 +983,7 @@ a d =
       (kw_equals)
       (match_expression
         (match)
-        (tuple_or_parenthesized)
+        (unit)
         (with)
         (pattern_case
           (pattern
@@ -995,7 +995,8 @@ a d =
             (guard
               (otherwise))
             (arrow_symbol)
-            (tuple_or_parenthesized)))))))
+            (unit)))))))
+
 ===
 GH-163
 ===
@@ -1003,4 +1004,27 @@ a = b do
   x = atLeastOne (gen.oneOf [?., ?-]) ()
   true
 ---
-(unison)
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (regular_identifier)
+      (delay_block
+        (do)
+        (term_declaration
+          (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (regular_identifier)
+            (tuple_or_parenthesized
+              (path)
+              (regular_identifier)
+              (literal_list
+                (open_bracket)
+                (literal_char)
+                (literal_char)
+                (close_bracket)))
+            (unit)))
+        (literal_boolean)))))

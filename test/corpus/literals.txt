@@ -197,7 +197,7 @@ x = ()
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (tuple_or_parenthesized))))
+      (unit))))
 
 ===
 [Literal] termLink
