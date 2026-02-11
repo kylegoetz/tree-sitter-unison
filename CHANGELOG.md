@@ -16,6 +16,7 @@ All notable changes to this project will be documented in this file.
 - GH-155 - match/with does not require any patterns
 - GH-156 - if/then/else blocks allow use clause anywhere
 - GH-157 - `if_exp` layout issues
+- GH-160 - pattern case can have as notation
 - do block with destructuring bind works
 
 ### New
