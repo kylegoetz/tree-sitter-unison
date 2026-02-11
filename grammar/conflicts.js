@@ -25,4 +25,5 @@ module.exports = $ => [
   [$.wordy_id, $._hq_qualified_wordy_id],
   [$.else_block],
   [$._statement, $.else_block],
+  [$._pattern_root],
 ]

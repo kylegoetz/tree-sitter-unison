@@ -73,7 +73,11 @@ module.exports = {
 
   _pattern_infix_app: $ =>
     choice(alias('++', $.concat), alias('+:', $.cons), alias(':+', $.snoc)),
-  _pattern_root: $ => sep1($._pattern_infix_app, $._pattern_candidates),
+  _pattern_root: $ =>
+    sep1(
+      $._pattern_infix_app,
+      sep1(alias(',', $.comma), $._pattern_candidates),
+    ),
 
   _pattern_constructor: $ =>
     prec.right(

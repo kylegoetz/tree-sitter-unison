@@ -799,3 +799,35 @@ a =
               (kw_else)
               (literal_boolean)))))
       (literal_boolean))))
+
+===
+GH-154 - pattern LHS representing a multi-param lambda
+===
+a = cases
+  n, UTCOffset o -> UTCOffset (o Int.- Nat.toInt n)
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (match_expression_lambda
+        (cases)
+        (pattern
+          (var_or_nullary_ctor
+            (regular_identifier))
+          (comma)
+          (ctor
+            (regular_identifier))
+          (var_or_nullary_ctor
+            (regular_identifier))
+          (arrow_symbol)
+          (regular_identifier)
+          (tuple_or_parenthesized
+            (regular_identifier)
+            (path)
+            (operator)
+            (path)
+            (regular_identifier)
+            (regular_identifier)))))))

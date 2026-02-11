@@ -1340,8 +1340,34 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_pattern_candidates"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_pattern_candidates"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "STRING",
+                      "value": ","
+                    },
+                    "named": true,
+                    "value": "comma"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_pattern_candidates"
+                  }
+                ]
+              }
+            }
+          ]
         },
         {
           "type": "REPEAT",
@@ -1353,8 +1379,34 @@
                 "name": "_pattern_infix_app"
               },
               {
-                "type": "SYMBOL",
-                "name": "_pattern_candidates"
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_pattern_candidates"
+                  },
+                  {
+                    "type": "REPEAT",
+                    "content": {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "ALIAS",
+                          "content": {
+                            "type": "STRING",
+                            "value": ","
+                          },
+                          "named": true,
+                          "value": "comma"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "_pattern_candidates"
+                        }
+                      ]
+                    }
+                  }
+                ]
               }
             ]
           }
@@ -4482,6 +4534,9 @@
     [
       "_statement",
       "else_block"
+    ],
+    [
+      "_pattern_root"
     ]
   ],
   "precedences": [
