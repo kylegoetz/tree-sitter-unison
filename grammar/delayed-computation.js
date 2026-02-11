@@ -38,7 +38,7 @@ module.exports = {
   literal_list: $ =>
     seq(
       alias('[', $.open_bracket),
-      sep(',', $._term),
+      sep(alias(',', $.comma), alias($._term, $.list_element)),
       alias(']', $.close_bracket),
     ),
   _keyword_block: $ =>

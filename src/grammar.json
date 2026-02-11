@@ -1090,17 +1090,12 @@
             "type": "SEQ",
             "members": [
               {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "arrow_symbol"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "_layout_start"
-                  }
-                ]
+                "type": "SYMBOL",
+                "name": "arrow_symbol"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_layout_start"
               },
               {
                 "type": "REPEAT",
@@ -1132,8 +1127,16 @@
                 "name": "_block_term"
               },
               {
-                "type": "SYMBOL",
-                "name": "_layout_end"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_layout_semicolon"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
               }
             ]
           }
@@ -2071,8 +2074,13 @@
                     "type": "SEQ",
                     "members": [
                       {
-                        "type": "STRING",
-                        "value": ","
+                        "type": "ALIAS",
+                        "content": {
+                          "type": "STRING",
+                          "value": ","
+                        },
+                        "named": true,
+                        "value": "comma"
                       },
                       {
                         "type": "SYMBOL",
@@ -4528,6 +4536,10 @@
     [
       "tuple_or_parenthesized",
       "parenthesized_or_tuple_pattern"
+    ],
+    [
+      "_statement",
+      "_pattern_rhs"
     ]
   ],
   "precedences": [

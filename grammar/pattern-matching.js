@@ -46,7 +46,13 @@ module.exports = {
           sep1($._layout_semicolon, $.guarded_block),
           $._layout_end,
         ),
-        layoutBlock($, $.arrow_symbol),
+        seq(
+          $.arrow_symbol,
+          $._layout_start,
+          repeat(seq(choice($._statement, $.use_clause), $._layout_semicolon)),
+          $._block_term,
+          optional($._layout_semicolon),
+        ),
       ),
     ),
 

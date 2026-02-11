@@ -58,6 +58,7 @@ x =
       (tuple_or_parenthesized
         (nat)
         (nat))
+      (comma)
       (tuple_or_parenthesized
         (nat)
         (nat))
