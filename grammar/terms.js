@@ -9,10 +9,13 @@ const {
 
 module.exports = {
   _statement: $ =>
-    choice(
-      $._block_term,
-      alias($._binding, $.term_declaration),
-      $.destructuring_bind,
+    prec(
+      2,
+      choice(
+        $._block_term,
+        alias($._binding, $.term_declaration),
+        $.destructuring_bind,
+      ),
     ),
   term_definition2: $ => prec.right(seq($._lhs, layoutBlock($, $.kw_equals))),
 
@@ -63,7 +66,7 @@ module.exports = {
   _term4: $ => repeat1($._term_leaf),
 
   _infix_app_or_boolean_op: $ =>
-    prec.right(sep1($._generic_infix_app, choice($._term4))),
+    prec.left(sep1($._generic_infix_app, $._term4)),
   _generic_infix_app: $ => choice($.and, $.or, $._infix),
   _infix: $ => seq($._hq_qualified_infix_term, optional($._layout_semicolon)),
 

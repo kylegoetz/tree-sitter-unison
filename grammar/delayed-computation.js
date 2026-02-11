@@ -11,7 +11,7 @@ module.exports = {
   delay_quote: $ => seq("'", $._term_leaf),
 
   bang: $ => seq('!', $._term_leaf),
-  delay_block: $ => layoutBlock($, $.do),
+  delay_block: $ => prec.right(layoutBlock($, $.do)),
 
   _number: $ => choice($.float, $.nat, $.int),
   _link: $ => choice($.literal_termlink, $.literal_typelink),
@@ -38,7 +38,9 @@ module.exports = {
   literal_list: $ =>
     seq(
       alias('[', $.open_bracket),
-      sep(',', $._term),
+      $._layout_start,
+      sep(seq(optional($._layout_semicolon), alias(',', $.comma)), $._term),
+      $._layout_end,
       alias(']', $.close_bracket),
     ),
   _keyword_block: $ =>

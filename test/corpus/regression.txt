@@ -1028,3 +1028,35 @@ a = b do
                 (close_bracket)))
             (unit)))
         (literal_boolean)))))
+
+===
+GH-166 - correctly closing do blocks
+===
+test.gen.either a b = pick [do Left a(), do Right b()]
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (path)
+      (regular_identifier)
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (regular_identifier)
+      (literal_list
+        (open_bracket)
+        (delay_block
+          (do)
+          (regular_identifier))
+        (force
+          (regular_identifier)
+          (unit))
+        (comma)
+        (delay_block
+          (do)
+          (regular_identifier))
+        (force
+          (regular_identifier)
+          (unit))
+        (close_bracket)))))

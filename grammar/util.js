@@ -44,7 +44,7 @@ layoutBlock = ($, opener) =>
     openBlockWith($, opener),
     repeat(seq(choice($._statement, $.use_clause), $._layout_semicolon)),
     $._block_term,
-    $._layout_end,
+    optional($._layout_end),
   )
 
 const block = ($, opener) =>

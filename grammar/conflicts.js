@@ -27,4 +27,8 @@ module.exports = $ => [
   [$._statement, $.else_block],
   [$._pattern_root],
   [$.tuple_or_parenthesized, $.parenthesized_or_tuple_pattern],
+  // [$.delay_block],
+  // [$._statement, $.]
+  [$.destructuring_bind],
+  [$._rewrite_term_like],
 ]

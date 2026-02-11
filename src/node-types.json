@@ -2348,6 +2348,10 @@
           "named": true
         },
         {
+          "type": "comma",
+          "named": true
+        },
+        {
           "type": "delay_block",
           "named": true
         },
