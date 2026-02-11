@@ -17,6 +17,9 @@ All notable changes to this project will be documented in this file.
 - GH-156 - if/then/else blocks allow use clause anywhere
 - GH-157 - `if_exp` layout issues
 - GH-160 - pattern case can have as notation
+- GH-161 -
+- GH-162 -
+- GH-163 - `unit` is included as a `_term_leaf`. This greatly simplifies parsing function application vs relying on recognizing an empty `tuple_or_parenthesized`.
 - do block with destructuring bind works
 
 ### New
@@ -29,6 +32,7 @@ All notable changes to this project will be documented in this file.
 - some `var_or_nullary_ctor` will be seen as `var_or_as` now (prompts future change of the former to just `nullary_ctor`)
 - `pattern` has been renamed `pattern_case` to reflect Unison terminology and to allow an anonymous node to be renamed `pattern` (the children of a pattern's LHS, formerly calld `_pattern_candidates`)
 - The above means that `destructuring_bind`s will often have `pattern` now wrapping `var_or_nullary_ctor`. The same goes for descendants of `effect_pattern`.
+- `()` is often parsed as `unit` rather than an empty `tuple_or_parenthesized` (due to #163 fix)
 
 ## [2.1.3] - 2026-02-04
 
