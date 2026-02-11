@@ -921,3 +921,46 @@ a = cases
               (close_parens)))
           (arrow_symbol)
           (regular_identifier))))))
+===
+GH-161 - typedef consumes start of following termdef
+===
+time.UTCOffset.fromIso8601 : Text -> Optional UTCOffset
+time.UTCOffset.fromIso8601 t =
+  toOptional! do match Optional.toAbort (Pattern.run iso8601Timezone t) with
+    _                          -> abort
+---
+
+(unison
+  (term_declaration
+    (type_signature
+      (path)
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (regular_identifier)
+        (arrow_symbol)
+        (regular_identifier)
+        (regular_identifier)))
+    (term_definition
+      (path)
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (regular_identifier)
+      (delay_block
+        (do)
+        (match_expression
+          (match)
+          (path)
+          (regular_identifier)
+          (tuple_or_parenthesized
+            (path)
+            (regular_identifier)
+            (regular_identifier)
+            (regular_identifier))
+          (with)
+          (pattern_case
+            (pattern
+              (blank_pattern))
+            (arrow_symbol)
+            (regular_identifier)))))))
