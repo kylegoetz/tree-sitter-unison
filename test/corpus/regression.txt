@@ -752,9 +752,11 @@ a = cases
           (pattern
             (blank_pattern))
           (arrow_symbol)
-          (regular_identifier)
-          (regular_identifier)
-          (operator)
+          (use_clause
+            (use)
+            (namespace
+              (regular_identifier))
+            (operator))
           (literal_boolean))))))
 
 ===
@@ -852,6 +854,7 @@ a = cases
             (path)
             (regular_identifier)
             (regular_identifier)))))))
+
 ===
 GH-159 - pattern case RHS should be a layout block
 ===
@@ -861,4 +864,22 @@ a =
       use Int * +
       ()
 ---
-(unison)
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (match_expression_lambda
+        (cases)
+        (pattern_case
+          (pattern
+            (blank_pattern))
+          (arrow_symbol)
+          (use_clause
+            (use)
+            (namespace
+              (regular_identifier))
+            (operator)
+            (operator))
+          (tuple_or_parenthesized))))))
