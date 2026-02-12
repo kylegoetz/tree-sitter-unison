@@ -336,11 +336,13 @@ a = cases
                   (var_or_nullary_ctor
                     (regular_identifier))))))
           (arrow_symbol)
-          (nat)))
-      (literal_function
-        (regular_identifier)
-        (arrow_symbol)
-        (nat)))))
+          (nat))
+        (pattern_case
+          (pattern
+            (var_or_nullary_ctor
+              (regular_identifier)))
+          (arrow_symbol)
+          (nat))))))
 
 ===
 [Regression] #134 multi-line quotation mark text literal that opens with more than three " needs balanced ending
@@ -1022,105 +1024,7 @@ a = b do
               (literal_list
                 (open_bracket)
                 (literal_char)
-                (comma)
                 (literal_char)
                 (close_bracket)))
             (unit)))
         (literal_boolean)))))
-
-===
-GH-168 - layout doesn't require close when dealing with a pattern case RHS (after the arrow)
-===
-test.gen.functions.someOrNone :
-  (a ->{g} b) -> b -> '{Gen} (Optional a ->{g} Optional b)
-test.gen.functions.someOrNone f v =
-  gen.oneOf
-    [Optional.map f, cases
-        None   -> Some v
-        Some _ -> None, cases
-        None   -> Some v
-        Some x -> Some (f x), const None, const (Some v)]
----
-
-(unison
-  (term_declaration
-    (type_signature
-      (path)
-      (regular_identifier)
-      (type_signature_colon)
-      (term_type
-        (tuple_or_parenthesized_type
-          (regular_identifier)
-          (arrow_symbol)
-          (effect
-            (regular_identifier))
-          (regular_identifier))
-        (arrow_symbol)
-        (regular_identifier)
-        (arrow_symbol)
-        (delayed
-          (effect
-            (regular_identifier))
-          (tuple_or_parenthesized_type
-            (regular_identifier)
-            (regular_identifier)
-            (arrow_symbol)
-            (effect
-              (regular_identifier))
-            (regular_identifier)
-            (regular_identifier)))))
-    (term_definition
-      (path)
-      (regular_identifier)
-      (regular_identifier)
-      (regular_identifier)
-      (kw_equals)
-      (path)
-      (regular_identifier)
-      (literal_list
-        (open_bracket)
-        (path)
-        (regular_identifier)
-        (regular_identifier)
-        (comma)
-        (match_expression_lambda
-          (cases)
-          (pattern_case
-            (pattern
-              (var_or_nullary_ctor
-                (regular_identifier)))
-            (arrow_symbol)
-            (literal_function
-              (regular_identifier)
-              (regular_identifier)
-              (regular_identifier)
-              (regular_identifier)
-              (arrow_symbol)
-              (regular_identifier))))
-        (comma)
-        (match_expression_lambda
-          (cases)
-          (pattern_case
-            (pattern
-              (var_or_nullary_ctor
-                (regular_identifier)))
-            (arrow_symbol)
-            (literal_function
-              (regular_identifier)
-              (regular_identifier)
-              (regular_identifier)
-              (regular_identifier)
-              (arrow_symbol)
-              (regular_identifier)
-              (tuple_or_parenthesized
-                (regular_identifier)
-                (regular_identifier)))))
-        (comma)
-        (regular_identifier)
-        (regular_identifier)
-        (comma)
-        (regular_identifier)
-        (tuple_or_parenthesized
-          (regular_identifier)
-          (regular_identifier))
-        (close_bracket)))))

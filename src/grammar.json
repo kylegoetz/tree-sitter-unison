@@ -1090,12 +1090,17 @@
             "type": "SEQ",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "arrow_symbol"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_layout_start"
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "arrow_symbol"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_layout_start"
+                  }
+                ]
               },
               {
                 "type": "REPEAT",
@@ -1127,16 +1132,8 @@
                 "name": "_block_term"
               },
               {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "_layout_semicolon"
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
+                "type": "SYMBOL",
+                "name": "_layout_end"
               }
             ]
           }
@@ -2074,13 +2071,8 @@
                     "type": "SEQ",
                     "members": [
                       {
-                        "type": "ALIAS",
-                        "content": {
-                          "type": "STRING",
-                          "value": ","
-                        },
-                        "named": true,
-                        "value": "comma"
+                        "type": "STRING",
+                        "value": ","
                       },
                       {
                         "type": "SYMBOL",
@@ -4536,10 +4528,6 @@
     [
       "tuple_or_parenthesized",
       "parenthesized_or_tuple_pattern"
-    ],
-    [
-      "_statement",
-      "_pattern_rhs"
     ]
   ],
   "precedences": [

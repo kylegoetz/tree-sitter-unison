@@ -3,71 +3,38 @@
 ===
 use base.List
 ---
-
 (unison
-  (use_clause
-    (use)
-    (namespace
-      (path)
-      (regular_identifier))))
+    (use_clause
+        (use)
+        (namespace (path) (regular_identifier))))
 
 ===
 [use] operators
 ===
 use Universal == < > >=
 ---
-
-(unison
-  (use_clause
-    (use)
-    (namespace
-      (regular_identifier))
-    (operator)
-    (operator)
-    (operator)
-    (operator)))
+(unison (use_clause (use) (namespace (regular_identifier)) (operator) (operator) (operator) (operator)))
 
 ===
 [use] name with tick mark
 ===
 use Search lubIndexOf'
 ---
-
-(unison
-  (use_clause
-    (use)
-    (namespace
-      (regular_identifier))
-    (regular_identifier)))
+(unison (use_clause (use) (namespace (regular_identifier)) (regular_identifier)))
 
 ===
 [use] namespace with a path component and an operator name
 ===
 use base.List ++
 ---
-
-(unison
-  (use_clause
-    (use)
-    (namespace
-      (path)
-      (regular_identifier))
-    (operator)))
+(unison (use_clause (use) (namespace (path) (regular_identifier)) (operator)))
 
 ===
 [use] namespace with multiple operators
 ===
 use Nat + - *
 ---
-
-(unison
-  (use_clause
-    (use)
-    (namespace
-      (regular_identifier))
-    (operator)
-    (operator)
-    (operator)))
+(unison (use_clause (use) (namespace (regular_identifier)) (operator) (operator) (operator)))
 
 ===
 [use] use clause mixed with bindings in let block
@@ -80,7 +47,6 @@ complexCalculation input =
     result = step2 + step1
     result
 ---
-
 (unison
   (term_declaration
     (term_definition
@@ -98,8 +64,7 @@ complexCalculation input =
             (nat)))
         (use_clause
           (use)
-          (namespace
-            (regular_identifier))
+          (namespace (regular_identifier))
           (operator)
           (operator)
           (operator))
@@ -128,7 +93,6 @@ example =
     sum = 1 + 2
     sum
 ---
-
 (unison
   (term_declaration
     (term_definition
@@ -138,9 +102,7 @@ example =
         (kw_let)
         (use_clause
           (use)
-          (namespace
-            (path)
-            (regular_identifier)))
+          (namespace (path) (regular_identifier)))
         (term_declaration
           (term_definition
             (regular_identifier)
@@ -148,15 +110,12 @@ example =
             (literal_list
               (open_bracket)
               (nat)
-              (comma)
               (nat)
-              (comma)
               (nat)
               (close_bracket))))
         (use_clause
           (use)
-          (namespace
-            (regular_identifier))
+          (namespace (regular_identifier))
           (operator))
         (term_declaration
           (term_definition
@@ -175,7 +134,6 @@ atStart = let
   x = 1 + 2
   x
 ---
-
 (unison
   (term_declaration
     (term_definition
@@ -185,8 +143,7 @@ atStart = let
         (kw_let)
         (use_clause
           (use)
-          (namespace
-            (regular_identifier))
+          (namespace (regular_identifier))
           (operator))
         (term_declaration
           (term_definition
@@ -206,7 +163,6 @@ inMiddle = let
   y = x * 2
   y
 ---
-
 (unison
   (term_declaration
     (term_definition
@@ -221,8 +177,7 @@ inMiddle = let
             (nat)))
         (use_clause
           (use)
-          (namespace
-            (regular_identifier))
+          (namespace (regular_identifier))
           (operator))
         (term_declaration
           (term_definition
@@ -241,7 +196,6 @@ atEnd = let
   use Nat +
   x
 ---
-
 (unison
   (term_declaration
     (term_definition
@@ -256,7 +210,6 @@ atEnd = let
             (nat)))
         (use_clause
           (use)
-          (namespace
-            (regular_identifier))
+          (namespace (regular_identifier))
           (operator))
         (regular_identifier)))))

@@ -131,9 +131,7 @@ x = [1, 2, 3]
       (literal_list
         (open_bracket)
         (nat)
-        (comma)
         (nat)
-        (comma)
         (nat)
         (close_bracket)))))
 
@@ -160,20 +158,18 @@ y = x -> x + 2
 ===
 y = acc x -> acc + x
 ---
-
 (unison
-  (term_declaration
-    (term_definition
-      (regular_identifier)
-      (kw_equals)
-      (literal_function
-        (regular_identifier)
-        (regular_identifier)
-        (arrow_symbol)
-        (regular_identifier)
-        (operator)
-        (regular_identifier)))))
-
+    (term_declaration
+        (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (literal_function
+                (regular_identifier)
+                (regular_identifier)
+                (arrow_symbol)
+                (regular_identifier)
+                (operator)
+                (regular_identifier)))))
 ===
 [Literal] tuple
 ===
