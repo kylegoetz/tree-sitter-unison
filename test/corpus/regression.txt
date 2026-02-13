@@ -50,8 +50,7 @@ x = ##Foo
     (nat)))
 
 ===
-[Regression] #34 - watch expressions can be binds (term definitions, but types are not allowed as per TermParser.hs, so not term declarations)
-They cannot be destructuring binds, which cannot happen at the top level. Verified via Unison LSP.
+[Regression] #34 - watch expressions can be binds (term definitions, but types are not allowed as per TermParser.hs, so not term declarations). They cannot be destructuring binds, which cannot happen at the top level. Verified via Unison LSP.
 ===
 > z = 5
 ---
