@@ -161,14 +161,13 @@ module.exports = {
       "}",
     ),
   _pattern_leaf: ($) =>
-    prec(2, choice(
+    choice(
       alias($.wordy_id, $.var_or_nullary_ctor),
-      $.var_or_as,
-      $._literal_pattern,
-      alias("_", $.blank_pattern),
-      $.literal_list_pattern,
-      $.parenthesized_or_tuple_pattern,
-      $.effect_pattern,
-      // '([], _)'
-    )),
+      prec(2, $.var_or_as),
+      prec(2, $._literal_pattern),
+      prec(2, alias("_", $.blank_pattern)),
+      prec(2, $.literal_list_pattern),
+      prec(2, $.parenthesized_or_tuple_pattern),
+      prec(2, $.effect_pattern),
+    ),
 };

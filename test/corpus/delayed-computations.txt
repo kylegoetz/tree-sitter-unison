@@ -20,3 +20,55 @@ program = a
             (regular_identifier)
             (kw_equals)
             (regular_identifier))))
+===
+[Delayed] do block with parenthesized variable
+===
+x = do (a)
+---
+(unison
+    (term_declaration
+        (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (delay_block
+                (do)
+                (tuple_or_parenthesized
+                    (regular_identifier))))))
+===
+[Delayed] do block with parenthesized literal
+===
+x = do (true)
+---
+(unison
+    (term_declaration
+        (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (delay_block
+                (do)
+                (tuple_or_parenthesized
+                    (literal_boolean))))))
+===
+[Delayed] do block with destructuring bind
+===
+x = do
+  (a, b) = tuple
+  a
+---
+(unison
+    (term_declaration
+        (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (delay_block
+                (do)
+                (destructuring_bind
+                    (parenthesized_or_tuple_pattern
+                        (open_parens)
+                        (var_or_nullary_ctor)
+                        (comma)
+                        (var_or_nullary_ctor)
+                        (close_parens))
+                    (kw_equals)
+                    (regular_identifier)))
+            (regular_identifier))))

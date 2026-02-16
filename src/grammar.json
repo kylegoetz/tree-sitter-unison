@@ -1,5 +1,4 @@
 {
-  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "unison",
   "rules": {
     "unison": {
@@ -1725,29 +1724,37 @@
       ]
     },
     "_pattern_leaf": {
-      "type": "PREC",
-      "value": 2,
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "wordy_id"
-            },
-            "named": true,
-            "value": "var_or_nullary_ctor"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "wordy_id"
           },
-          {
+          "named": true,
+          "value": "var_or_nullary_ctor"
+        },
+        {
+          "type": "PREC",
+          "value": 2,
+          "content": {
             "type": "SYMBOL",
             "name": "var_or_as"
-          },
-          {
+          }
+        },
+        {
+          "type": "PREC",
+          "value": 2,
+          "content": {
             "type": "SYMBOL",
             "name": "_literal_pattern"
-          },
-          {
+          }
+        },
+        {
+          "type": "PREC",
+          "value": 2,
+          "content": {
             "type": "ALIAS",
             "content": {
               "type": "STRING",
@@ -1755,21 +1762,33 @@
             },
             "named": true,
             "value": "blank_pattern"
-          },
-          {
+          }
+        },
+        {
+          "type": "PREC",
+          "value": 2,
+          "content": {
             "type": "SYMBOL",
             "name": "literal_list_pattern"
-          },
-          {
+          }
+        },
+        {
+          "type": "PREC",
+          "value": 2,
+          "content": {
             "type": "SYMBOL",
             "name": "parenthesized_or_tuple_pattern"
-          },
-          {
+          }
+        },
+        {
+          "type": "PREC",
+          "value": 2,
+          "content": {
             "type": "SYMBOL",
             "name": "effect_pattern"
           }
-        ]
-      }
+        }
+      ]
     },
     "_boolean_exp": {
       "type": "PREC_LEFT",
@@ -4620,6 +4639,10 @@
       "parenthesized_or_tuple_pattern"
     ],
     [
+      "_pattern_leaf",
+      "_hq_qualified_wordy_id"
+    ],
+    [
       "_statement",
       "delay_block"
     ],
@@ -4813,6 +4836,5 @@
     }
   ],
   "inline": [],
-  "supertypes": [],
-  "reserved": {}
+  "supertypes": []
 }
