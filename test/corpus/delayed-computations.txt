@@ -65,10 +65,14 @@ x = do
                 (destructuring_bind
                     (parenthesized_or_tuple_pattern
                         (open_parens)
-                        (var_or_nullary_ctor)
+                        (pattern
+                            (var_or_nullary_ctor
+                                (regular_identifier)))
                         (comma)
-                        (var_or_nullary_ctor)
+                        (pattern
+                            (var_or_nullary_ctor
+                                (regular_identifier)))
                         (close_parens))
                     (kw_equals)
-                    (regular_identifier)))
-            (regular_identifier))))
+                    (regular_identifier))
+                (regular_identifier)))))

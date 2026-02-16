@@ -26,11 +26,11 @@ module.exports = {
   ...expression,
   ...blocks,
 
-  type_signature: ($) =>
+  type_signature: $ =>
     seq(
-      field("term_name", $._prefix_definition_name),
+      field('term_name', $._prefix_definition_name),
       $.type_signature_colon,
       alias($._value_type, $.term_type),
-      // $._layout_semicolon,
+      $._layout_semicolon,
     ),
-};
+}

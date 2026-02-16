@@ -32,8 +32,8 @@ const SYMBOLIC_PATH_SEGMENT = composeRegex(ONE_SYMBOL, TWO_SYMBOL, THREE_SYMBOL_
 // const PATH = new RegExp(`\.?((${NON_TERMINAL_PATH_SEGMENT.source})\.){1,}`, 'u') // new RegExp(NON_TERMINAL_PATH_SEGMENT.source + '.') //new RegExp(`\.?((${NON_TERMINAL_PATH_SEGMENT.source})\.){1,}`, 'u')
 // const NON_TERMINAL_PATH_SEGMENT = /foo/
 const NON_TERMINAL_PATH_SEGMENT = composeRegex(VARID, SYMBOLIC_PATH_SEGMENT)
-const path = /\.?((([_a-zA-Z\u{1f400}-\u{1faff}][_!'a-zA-Z\u{1f400}-\u{1faff}]+)|([$%^&*\-+<>~\\\/:])|(-[!$%^&*\-=+<~\\\/|:])|([!$%^*=+<>~\\\/:]{2})|(&[!$%^*\-=+<>~\\\/|:])|(\|[!$%^&*\-=+<>~\\\/:])|([!$%^&*\-=+<>~\\/|:]{3,}))\.)+/u
-
+const path =
+  /\.?((([_a-zA-Z\u{1f400}-\u{1faff}][_!'a-zA-Z0-9\u{1f400}-\u{1faff}]+)|([$%^&*\-+<>~\\\/:])|(-[!$%^&*\-=+<~\\\/|:])|([!$%^*=+<>~\\\/:]{2})|(&[!$%^*\-=+<>~\\\/|:])|(\|[!$%^&*\-=+<>~\\\/:])|([!$%^&*\-=+<>~\\/|:]{3,}))\.)+/u
 
 module.exports = {
   path,

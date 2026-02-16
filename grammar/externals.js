@@ -1,4 +1,4 @@
-module.exports = ($) => [
+module.exports = $ => [
   $._layout_semicolon,
   $._layout_start,
   $._layout_end,
@@ -21,5 +21,4 @@ module.exports = ($) => [
   $._destructuring_bind_start,
   $.literal_text,
   $.DUMMY,
-  // $.pipe, // This is required in conjunction with GUARD_LAYOUT_START
-];
+]

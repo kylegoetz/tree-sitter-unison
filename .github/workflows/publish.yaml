@@ -5,10 +5,19 @@ on:
 concurrency:
   group: ${{github.workflow}}-${{github.ref}}
   cancel-in-progress: true
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
 jobs:
+  github:
+    uses: tree-sitter/workflows/.github/workflows/release.yml@main
+    # with:
+      # release-body: CHANGELOG.md
   npm:
     uses: tree-sitter/workflows/.github/workflows/package-npm.yml@main
-    with:
-      node-version: 21.5.0
+    # with:
+      # generate: true
+      # attestations: true
     secrets:
       NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

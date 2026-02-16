@@ -2,6 +2,56 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.0] - 2026-02-
+
+### Fixed
+
+- GH-144 - guarded blocks layout works
+- GH-145 - effect pattern matching of form { a -> b } parse
+- GH-146 - sometimes destructuring bind at EOL not recognized
+- GH-147 - case where in-line comment not recognized
+- GH-151 - destructuring bind of form `a@(...)` parses
+- GH-152 - pattern matching RHS allows use clause anywhere
+- GH-154 - pattern LHS can be made up of comma-delimited patterns
+- GH-155 - match/with does not require any patterns
+- GH-156 - if/then/else blocks allow use clause anywhere
+- GH-157 - `if_exp` layout issues
+- GH-160 - pattern case can have as notation
+- GH-161 -
+- GH-162 -
+- GH-163 - `unit` is included as a `_term_leaf`. This greatly simplifies parsing function application vs relying on recognizing an empty `tuple_or_parenthesized`.
+- do block with destructuring bind works
+
+### New
+
+- The "->" in an effect is now a named node, `effect_arrow`.
+- A `var_or_nullary_ctor` may have a new child node, `regular_identifier`
+- the formerly anonymous match/with node is now named: `match_expression`
+- the formerly anonymous lambda pattern matching (cases ...) is now named `match_expression_lambda`
+- `exp_if` now wraps the if/then/else blocks in `if_block`, `then_block`, and `else_block`
+- some `var_or_nullary_ctor` will be seen as `var_or_as` now (prompts future change of the former to just `nullary_ctor`)
+- `pattern` has been renamed `pattern_case` to reflect Unison terminology and to allow an anonymous node to be renamed `pattern` (the children of a pattern's LHS, formerly calld `_pattern_candidates`)
+- The above means that `destructuring_bind`s will often have `pattern` now wrapping `var_or_nullary_ctor`. The same goes for descendants of `effect_pattern`.
+- `()` is often parsed as `unit` rather than an empty `tuple_or_parenthesized` (due to #163 fix)
+
+## [2.1.3] - 2026-02-04
+
+### Fixed
+
+- GH-141 - use clauses can occuur anywhere in a block, not just the first line
+
+## [2.1.2] - 2026-02-04
+
+### Fixed
+
+- GH-140 - function literals allow multiple parameters
+
+## [2.1.1] - 2026-02-02
+
+### Fixed
+
+- GH-139 - regex no longer fails for identifiers containing an underscore followed by numbers in their path
+
 ## [2.1.0] - 2026-01-27
 
 ### Fixed
