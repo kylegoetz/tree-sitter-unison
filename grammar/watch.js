@@ -3,7 +3,9 @@ module.exports = {
   watch_expression: ($) =>
     seq(
       $._watch_start,
-      $._watch_expression
+      $._layout_start,
+      $._watch_expression,
+      optional($._layout_end),
     ),
   test_watch_expression: ($) =>
     seq(choice("test>", "test.io>"), $._watch_expression),

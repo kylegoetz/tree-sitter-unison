@@ -171,6 +171,23 @@ y = acc x -> acc + x
                 (operator)
                 (regular_identifier)))))
 ===
+[Literal] multi-parameter function
+===
+y = acc x -> acc + x
+---
+(unison
+    (term_declaration
+        (term_definition
+            (regular_identifier)
+            (kw_equals)
+            (literal_function
+                (regular_identifier)
+                (regular_identifier)
+                (arrow_symbol)
+                (regular_identifier)
+                (operator)
+                (regular_identifier)))))
+===
 [Literal] tuple
 ===
 x = (true, true, false)
