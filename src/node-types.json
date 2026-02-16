@@ -1,36 +1,5 @@
 [
   {
-    "type": "_data_constructor",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "_data_constructor",
-          "named": true
-        },
-        {
-          "type": "list_constructor",
-          "named": true
-        },
-        {
-          "type": "tuple_constructor",
-          "named": true
-        },
-        {
-          "type": "type_argument",
-          "named": true
-        },
-        {
-          "type": "type_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "ability_declaration",
     "named": true,
     "fields": {},
@@ -2162,41 +2131,6 @@
     "fields": {}
   },
   {
-    "type": "list_constructor",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "_data_constructor",
-          "named": true
-        },
-        {
-          "type": "list_constructor",
-          "named": true
-        },
-        {
-          "type": "record",
-          "named": true
-        },
-        {
-          "type": "tuple_constructor",
-          "named": true
-        },
-        {
-          "type": "type_argument",
-          "named": true
-        },
-        {
-          "type": "type_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "literal_boolean",
     "named": true,
     "fields": {}
@@ -2975,161 +2909,6 @@
         },
         {
           "type": "snoc",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "parenthetical_exp",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "and",
-          "named": true
-        },
-        {
-          "type": "arrow_symbol",
-          "named": true
-        },
-        {
-          "type": "bang",
-          "named": true
-        },
-        {
-          "type": "built_in_hash",
-          "named": true
-        },
-        {
-          "type": "delay_block",
-          "named": true
-        },
-        {
-          "type": "delayed",
-          "named": true
-        },
-        {
-          "type": "effect",
-          "named": true
-        },
-        {
-          "type": "exp_if",
-          "named": true
-        },
-        {
-          "type": "exp_let",
-          "named": true
-        },
-        {
-          "type": "float",
-          "named": true
-        },
-        {
-          "type": "forall",
-          "named": true
-        },
-        {
-          "type": "handler",
-          "named": true
-        },
-        {
-          "type": "hash_qualifier",
-          "named": true
-        },
-        {
-          "type": "int",
-          "named": true
-        },
-        {
-          "type": "literal_boolean",
-          "named": true
-        },
-        {
-          "type": "literal_byte",
-          "named": true
-        },
-        {
-          "type": "literal_char",
-          "named": true
-        },
-        {
-          "type": "literal_function",
-          "named": true
-        },
-        {
-          "type": "literal_hex",
-          "named": true
-        },
-        {
-          "type": "literal_list",
-          "named": true
-        },
-        {
-          "type": "literal_termlink",
-          "named": true
-        },
-        {
-          "type": "literal_text",
-          "named": true
-        },
-        {
-          "type": "literal_typelink",
-          "named": true
-        },
-        {
-          "type": "match_expression",
-          "named": true
-        },
-        {
-          "type": "match_expression_lambda",
-          "named": true
-        },
-        {
-          "type": "nat",
-          "named": true
-        },
-        {
-          "type": "operator",
-          "named": true
-        },
-        {
-          "type": "or",
-          "named": true
-        },
-        {
-          "type": "parenthetical_exp",
-          "named": true
-        },
-        {
-          "type": "path",
-          "named": true
-        },
-        {
-          "type": "regular_identifier",
-          "named": true
-        },
-        {
-          "type": "sequence_type",
-          "named": true
-        },
-        {
-          "type": "tuple_or_parenthesized",
-          "named": true
-        },
-        {
-          "type": "tuple_or_parenthesized_type",
-          "named": true
-        },
-        {
-          "type": "type_signature_colon",
-          "named": true
-        },
-        {
-          "type": "unit",
           "named": true
         }
       ]
@@ -4657,41 +4436,6 @@
     }
   },
   {
-    "type": "tuple_constructor",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "_data_constructor",
-          "named": true
-        },
-        {
-          "type": "list_constructor",
-          "named": true
-        },
-        {
-          "type": "record",
-          "named": true
-        },
-        {
-          "type": "tuple_constructor",
-          "named": true
-        },
-        {
-          "type": "type_argument",
-          "named": true
-        },
-        {
-          "type": "type_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "tuple_or_parenthesized",
     "named": true,
     "fields": {},
@@ -5109,6 +4853,7 @@
   {
     "type": "unison",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -5408,10 +5153,6 @@
     "named": false
   },
   {
-    "type": "@",
-    "named": false
-  },
-  {
     "type": "[",
     "named": false
   },
@@ -5461,7 +5202,8 @@
   },
   {
     "type": "comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "concat",
