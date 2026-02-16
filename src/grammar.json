@@ -4388,7 +4388,23 @@
         },
         {
           "type": "SYMBOL",
+          "name": "_layout_start"
+        },
+        {
+          "type": "SYMBOL",
           "name": "_watch_expression"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_layout_end"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
