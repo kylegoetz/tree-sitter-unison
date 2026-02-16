@@ -1665,47 +1665,42 @@
       ]
     },
     "_pattern_leaf": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "var_or_nullary_ctor"
-        },
-        {
-          "type": "PREC",
-          "value": 2,
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_literal_pattern"
-              },
-              {
-                "type": "ALIAS",
-                "content": {
-                  "type": "STRING",
-                  "value": "_"
-                },
-                "named": true,
-                "value": "blank_pattern"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "literal_list_pattern"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "parenthesized_or_tuple_pattern"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "effect_pattern"
-              }
-            ]
+      "type": "PREC",
+      "value": 2,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "var_or_nullary_ctor"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_literal_pattern"
+          },
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "STRING",
+              "value": "_"
+            },
+            "named": true,
+            "value": "blank_pattern"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "literal_list_pattern"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "parenthesized_or_tuple_pattern"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "effect_pattern"
           }
-        }
-      ]
+        ]
+      }
     },
     "_boolean_exp": {
       "type": "PREC_LEFT",
@@ -4548,14 +4543,6 @@
     [
       "tuple_or_parenthesized",
       "parenthesized_or_tuple_pattern"
-    ],
-    [
-      "_pattern_leaf",
-      "_hq_qualified_wordy_id"
-    ],
-    [
-      "_hqNamey",
-      "_pattern_leaf"
     ]
   ],
   "precedences": [

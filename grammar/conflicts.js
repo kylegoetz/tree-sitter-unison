@@ -27,6 +27,4 @@ module.exports = $ => [
   [$._statement, $.else_block],
   [$._pattern_root],
   [$.tuple_or_parenthesized, $.parenthesized_or_tuple_pattern],
-  [$._pattern_leaf, $._hq_qualified_wordy_id],
-  [$._hqNamey, $._pattern_leaf],
 ]

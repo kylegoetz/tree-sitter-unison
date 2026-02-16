@@ -111,18 +111,16 @@ module.exports = {
       optional(seq(alias('@', $.at_token), $._pattern_leaf)),
     ),
   _pattern_leaf: $ =>
-    choice(
-      $.var_or_nullary_ctor,
-      prec(
-        2,
-        choice(
-          // $.var_or_as,
-          $._literal_pattern,
-          alias('_', $.blank_pattern),
-          $.literal_list_pattern,
-          $.parenthesized_or_tuple_pattern,
-          $.effect_pattern,
-        ),
+    prec(
+      2,
+      choice(
+        // $.var_or_as,
+        $.var_or_nullary_ctor,
+        $._literal_pattern,
+        alias('_', $.blank_pattern),
+        $.literal_list_pattern,
+        $.parenthesized_or_tuple_pattern,
+        $.effect_pattern,
       ),
     ),
 }
