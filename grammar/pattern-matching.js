@@ -13,6 +13,7 @@ module.exports = {
       seq(
         openBlockWith($, $.match),
         field('scrutinee', $._term),
+        $.wait_for_next_kw,
         optional($._layout_end),
         $.with,
         optional(seq($._layout_start, $._match_cases)),

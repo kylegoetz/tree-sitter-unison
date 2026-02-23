@@ -6,7 +6,7 @@
 #define DEBUG 0
 #endif
 
-#define LOG_LEVEL ERROR
+#define LOG_LEVEL VERBOSE
 typedef enum {
   VERBOSE,
   INFO,
@@ -117,6 +117,7 @@ typedef enum {
     GUARD_LAYOUT_START,
     DESTRUCTURE_START,
     TEXT_LITERAL,
+    WAIT_FOR_NEXT_KEYWORD,
     FAIL, // always last in list
 } Sym;
 
@@ -143,6 +144,7 @@ static char *sym_names[] = {
     "guard layout start",
     "destructure start",
     "text literal",
+    "wait for next keyword",
     "fail",
 };
 // #endif
@@ -535,6 +537,21 @@ static void pop(State *state) {
   // LOG(VERBOSE, "[pop] after: %s\n", debug_indents_str(state->indents));
 }
 
+static void skipwhitespace(State *state) {
+	for (;;) {
+		switch (PEEK) {
+			case ' ':
+			case '\t':
+			case '\n':
+			case '\r':
+				S_SKIP;
+				break;
+			default:
+				return;
+		}
+	}
+}
+
 /**
  * Advance the lexer until the following character is neither space nor tab.
  */
@@ -732,7 +749,20 @@ static Result fold(State *state) {
 static Result dedent(uint32_t indent, State *state) {
   LOG(INFO, "->dedent (indent = %u, col = %u, PEEK = %c)\n", indent, COL, PEEK);
   LOG(VERBOSE, "smaller_indent = %s\n", smaller_indent(indent, state) ? "yes" : "no");
-  if (smaller_indent(indent, state)) return layout_end("dedent", state);
+  if (smaller_indent(indent, state)) {
+  	if(SYM(WAIT_FOR_NEXT_KEYWORD)) {
+ 			MARK("dedent", false, state);
+      skipwhitespace(state);
+      if(token("with", state)) {
+        return finish(WAIT_FOR_NEXT_KEYWORD, "dedent");
+      } else {
+      	return layout_end("dedent", state);
+      }
+   	} else {
+    	return layout_end("dedent", state);
+    }
+  }
+  // if (smaller_indent(indent, state)) return layout_end("dedent", state);
   return res_cont;
 }
 
@@ -769,6 +799,11 @@ static Result newline_semicolon(uint32_t indent, State *state) {
  * Necessary because `is_newline_where` needs to know that no `where` may follow, and `with` can end a layout started by `handle`.
  */
 static Result where_or_with(State *state) {
+	return res_cont;
+	MARK("where_or_with", false, state);
+	if(token("with", state) && SYM(WAIT_FOR_NEXT_KEYWORD)) {
+		// return finish(WAIT_FOR_NEXT_KEYWORD)
+	}
   LOG(INFO, "->where_or_with (col = %u, peek = %c)\n", COL, PEEK);
   if (PEEK == 'w') {
     S_ADVANCE;
@@ -884,7 +919,7 @@ static bool consume_hash(State *state) {
  */
 static Result paren_symop(State *state) {
   LOG(INFO, "->paren_symop (col = %u, peek = %c)\n", COL, PEEK);
-  bool found_hash = false;
+  // bool found_hash = false;
   if (PEEK != '(') {
     return res_cont;
   }
@@ -978,7 +1013,7 @@ static Result operator(State *state) {
     SHORT_SCANNER;
   }
 
-  bool parenthesized = false;
+  // bool parenthesized = false;
 
   if (!symbolic(PEEK)) return res_fail;
   if (PEEK == '=') {
@@ -1118,7 +1153,7 @@ static Result post_pos_neg_sign(State *state, bool can_be_operator, bool is_neg)
  */
 static Result minus(State *state) {
   LOG(INFO, "->minus\n");
-  uint16_t initialColumn = COL;
+  // uint16_t initialColumn = COL;
   if (PEEK != '-') return res_cont;
   S_ADVANCE;
   switch(PEEK) {
@@ -1458,7 +1493,7 @@ static Result text_literal(State *state) {
       return multiline_text_literal(i, state);
     }
   }
-  return res_cont;  
+  return res_cont;
 }
 
 /** Parse special tokens before the first newline that can't be reliably detected by tree-sitter:
@@ -1487,9 +1522,10 @@ static Result inline_tokens(State *state) {
       SHORT_SCANNER;
     }
     case 'w': {
+    	LOG(VERBOSE, "inline_tokens: case 'w'\n");
       Result res = where_or_with(state);
       SHORT_SCANNER;
-      return res_fail;
+      return res_fail; //This is here since where_or_with consumes
     }
     case 'i': {
       Result res = in(state);

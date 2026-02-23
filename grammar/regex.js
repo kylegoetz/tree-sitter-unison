@@ -1,9 +1,10 @@
-const composeRegex = (...res) => new RegExp(res.map(_ => `(${_.source})`).join('|'), 'u')
+const composeRegex = (...res) =>
+  new RegExp(res.map(_ => `(${_.source})`).join('|'), 'u')
 
 //1F400 and 1FAFF
 
 // id = /[_a-z\p{Emoji}][_!'a-z\p{Emoji}]*/
-
+// const varid = /[a-z]/i
 const varid = /[_a-z\u{1f400}-\u{1faff}]([_!'a-z0-9\u{1f400}-\u{1faff}])*/iu
 const VARID = varid
 const LCASE_VARID = /[_a-z\u{1f400}-\u{1faff}][_!'a-z0-9\u{1f400}-\u{1faff}]*/u
@@ -21,11 +22,22 @@ const TWO_SYMBOL_AND_NOT_DOUBLEAND2 = /[!$%^*\-=+<>~\\\/|:]&/
 const TWO_SYMBOL_OR_NOT_DOUBLEOR = /\|[!$%^&*\-=+<>~\\\/:]/
 const TWO_SYMBOL_OR_NOT_DOUBLEOR2 = /[!$%^&*\-=+<>~\\\/:]\|/
 const TWO_SYMBOL_REST = /[!$%^*=+<>~\\\/:]{2}/
-const TWO_SYMBOL = composeRegex(TWO_SYMBOL_MINUS_NOT_ARROW, TWO_SYMBOL_AND_NOT_DOUBLEAND, TWO_SYMBOL_AND_NOT_DOUBLEAND2, TWO_SYMBOL_OR_NOT_DOUBLEOR, TWO_SYMBOL_OR_NOT_DOUBLEOR2, TWO_SYMBOL_REST)
+const TWO_SYMBOL = composeRegex(
+  TWO_SYMBOL_MINUS_NOT_ARROW,
+  TWO_SYMBOL_AND_NOT_DOUBLEAND,
+  TWO_SYMBOL_AND_NOT_DOUBLEAND2,
+  TWO_SYMBOL_OR_NOT_DOUBLEOR,
+  TWO_SYMBOL_OR_NOT_DOUBLEOR2,
+  TWO_SYMBOL_REST,
+)
 // anything 3+ symbols is an operator
 const THREE_SYMBOL_OR_MORE = /[!$%^&*\-=+<>~\\/|:]{3,}/
 // const SYMBOLIC_PATH_SEGMENT = /[!$%^&*\-=+<>~\\/|:]{3,}/ ///[!$%^&*\-+:]+/
-const SYMBOLIC_PATH_SEGMENT = composeRegex(ONE_SYMBOL, TWO_SYMBOL, THREE_SYMBOL_OR_MORE)
+const SYMBOLIC_PATH_SEGMENT = composeRegex(
+  ONE_SYMBOL,
+  TWO_SYMBOL,
+  THREE_SYMBOL_OR_MORE,
+)
 
 // const NON_TERMINAL_PATH_SEGMENT = /[+]/ //ONE_SYMBOL  // composeRegex(/*VARID,*/ SYMBOLIC_PATH_SEGMENT) //SYMBOLIC_PATH_SEGMENT //composeRegex([WORDY_PATH_SEGMENT, SYMBOLIC_PATH_SEGMENT])
 

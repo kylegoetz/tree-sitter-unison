@@ -912,6 +912,10 @@
             }
           },
           {
+            "type": "SYMBOL",
+            "name": "wait_for_next_kw"
+          },
+          {
             "type": "CHOICE",
             "members": [
               {
@@ -3885,9 +3889,13 @@
       }
     },
     "wordy_id": {
-      "type": "PATTERN",
-      "value": "[_a-z\\u{1f400}-\\u{1faff}]([_!'a-z0-9\\u{1f400}-\\u{1faff}])*",
-      "flags": "iu"
+      "type": "PREC",
+      "value": -1,
+      "content": {
+        "type": "PATTERN",
+        "value": "[_a-z\\u{1f400}-\\u{1faff}]([_!'a-z0-9\\u{1f400}-\\u{1faff}])*",
+        "flags": "iu"
+      }
     },
     "symboly_id": {
       "type": "PATTERN",
@@ -4109,9 +4117,8 @@
                   {
                     "type": "ALIAS",
                     "content": {
-                      "type": "PATTERN",
-                      "value": "[_a-z\\u{1f400}-\\u{1faff}]([_!'a-z0-9\\u{1f400}-\\u{1faff}])*",
-                      "flags": "iu"
+                      "type": "SYMBOL",
+                      "name": "wordy_id"
                     },
                     "named": true,
                     "value": "regular_identifier"
@@ -4699,10 +4706,21 @@
     },
     {
       "type": "SYMBOL",
+      "name": "wait_for_next_kw"
+    },
+    {
+      "type": "SYMBOL",
       "name": "DUMMY"
     }
   ],
   "inline": [],
   "supertypes": [],
-  "reserved": {}
+  "reserved": {
+    "global": [
+      {
+        "type": "SYMBOL",
+        "name": "with"
+      }
+    ]
+  }
 }

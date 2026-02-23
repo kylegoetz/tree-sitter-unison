@@ -8,6 +8,7 @@ CHANGELOG.md
 !*/
 
 # Whitelist the grammar and tests
+!grammar.js
 !/grammar/*.js
 !/test/corpus/*.txt
 
