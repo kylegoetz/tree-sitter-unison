@@ -1,0 +1,23 @@
+===
+confusion
+===
+>
+    match a
+      b
+        c with
+      _  -> ()
+---
+(unison
+  (watch_expression
+    (match_expression
+      (match)
+      (literal_function
+        (regular_identifier)
+        (regular_identifier)
+        (regular_identifier))
+      (with)
+      (pattern_case
+        (pattern
+          (blank_pattern)
+        (arrow_symbol)
+        (unit))))
