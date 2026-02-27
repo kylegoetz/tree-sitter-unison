@@ -47,8 +47,9 @@ module.exports = {
         layoutBlock($, $.kw_equals),
       ),
     ),
-
-  block_term: $ => choice($.literal_function, $._infix_app_or_boolean_op),
+  // dynamic precedence so functional application + dedent + pattern -> x doesn't get parsed
+  // as a function literal
+  block_term: $ => choice(prec.dynamic(1, $._infix_app_or_boolean_op), prec.dynamic(1, $.literal_function)),
   literal_function: $ => lam($, $._term),
   literal_function2: $ => lam($, $._term2),
   _term: $ => $._term2,

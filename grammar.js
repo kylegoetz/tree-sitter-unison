@@ -28,6 +28,7 @@ module.exports = grammar({
         seq(repeat($._top_item), $.namespace_pragma, repeat($._top_item)),
         repeat($._top_item),
       ),
+    ...reserved,
     _top_item: ($) =>
       choice(
         $.watch_expression,
@@ -50,7 +51,6 @@ module.exports = grammar({
     ...bindings,
     ...types,
     ...useClause,
-    ...reserved,
     ...identifiers,
     ...watch,
   },
