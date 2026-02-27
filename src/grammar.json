@@ -37,6 +37,135 @@
         }
       ]
     },
+    "do": {
+      "type": "STRING",
+      "value": "do"
+    },
+    "kw_let": {
+      "type": "STRING",
+      "value": "let"
+    },
+    "type_kw": {
+      "type": "STRING",
+      "value": "type"
+    },
+    "pipe": {
+      "type": "STRING",
+      "value": "|"
+    },
+    "match": {
+      "type": "STRING",
+      "value": "match"
+    },
+    "cases": {
+      "type": "STRING",
+      "value": "cases"
+    },
+    "otherwise": {
+      "type": "STRING",
+      "value": "otherwise"
+    },
+    "as": {
+      "type": "STRING",
+      "value": "@"
+    },
+    "structural": {
+      "type": "STRING",
+      "value": "structural"
+    },
+    "unique": {
+      "type": "STRING",
+      "value": "unique"
+    },
+    "ability": {
+      "type": "STRING",
+      "value": "ability"
+    },
+    "where": {
+      "type": "STRING",
+      "value": "where"
+    },
+    "or": {
+      "type": "STRING",
+      "value": "||"
+    },
+    "and": {
+      "type": "STRING",
+      "value": "&&"
+    },
+    "kw_forall": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "forall"
+        },
+        {
+          "type": "STRING",
+          "value": "∀"
+        }
+      ]
+    },
+    "kw_equals": {
+      "type": "STRING",
+      "value": "="
+    },
+    "type_signature_colon": {
+      "type": "STRING",
+      "value": ":"
+    },
+    "kw_termlink": {
+      "type": "STRING",
+      "value": "termLink"
+    },
+    "kw_typelink": {
+      "type": "STRING",
+      "value": "typeLink"
+    },
+    "kw_namespace": {
+      "type": "STRING",
+      "value": "namespace"
+    },
+    "handle": {
+      "type": "STRING",
+      "value": "handle"
+    },
+    "with": {
+      "type": "STRING",
+      "value": "with"
+    },
+    "open_parens": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "STRING",
+        "value": "("
+      }
+    },
+    "close_parens": {
+      "type": "STRING",
+      "value": ")"
+    },
+    "rewrite": {
+      "type": "STRING",
+      "value": "@rewrite"
+    },
+    "term": {
+      "type": "STRING",
+      "value": "term"
+    },
+    "case": {
+      "type": "STRING",
+      "value": "case"
+    },
+    "signature": {
+      "type": "STRING",
+      "value": "signature"
+    },
+    "rewrite_arrow": {
+      "type": "STRING",
+      "value": "==>"
+    },
     "_top_item": {
       "type": "CHOICE",
       "members": [
@@ -390,12 +519,20 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "literal_function"
+          "type": "PREC_DYNAMIC",
+          "value": 1,
+          "content": {
+            "type": "SYMBOL",
+            "name": "_infix_app_or_boolean_op"
+          }
         },
         {
-          "type": "SYMBOL",
-          "name": "_infix_app_or_boolean_op"
+          "type": "PREC_DYNAMIC",
+          "value": 1,
+          "content": {
+            "type": "SYMBOL",
+            "name": "literal_function"
+          }
         }
       ]
     },
@@ -3747,135 +3884,6 @@
         }
       ]
     },
-    "do": {
-      "type": "STRING",
-      "value": "do"
-    },
-    "kw_let": {
-      "type": "STRING",
-      "value": "let"
-    },
-    "type_kw": {
-      "type": "STRING",
-      "value": "type"
-    },
-    "pipe": {
-      "type": "STRING",
-      "value": "|"
-    },
-    "match": {
-      "type": "STRING",
-      "value": "match"
-    },
-    "cases": {
-      "type": "STRING",
-      "value": "cases"
-    },
-    "otherwise": {
-      "type": "STRING",
-      "value": "otherwise"
-    },
-    "as": {
-      "type": "STRING",
-      "value": "@"
-    },
-    "structural": {
-      "type": "STRING",
-      "value": "structural"
-    },
-    "unique": {
-      "type": "STRING",
-      "value": "unique"
-    },
-    "ability": {
-      "type": "STRING",
-      "value": "ability"
-    },
-    "where": {
-      "type": "STRING",
-      "value": "where"
-    },
-    "or": {
-      "type": "STRING",
-      "value": "||"
-    },
-    "and": {
-      "type": "STRING",
-      "value": "&&"
-    },
-    "kw_forall": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "forall"
-        },
-        {
-          "type": "STRING",
-          "value": "∀"
-        }
-      ]
-    },
-    "kw_equals": {
-      "type": "STRING",
-      "value": "="
-    },
-    "type_signature_colon": {
-      "type": "STRING",
-      "value": ":"
-    },
-    "kw_termlink": {
-      "type": "STRING",
-      "value": "termLink"
-    },
-    "kw_typelink": {
-      "type": "STRING",
-      "value": "typeLink"
-    },
-    "kw_namespace": {
-      "type": "STRING",
-      "value": "namespace"
-    },
-    "handle": {
-      "type": "STRING",
-      "value": "handle"
-    },
-    "with": {
-      "type": "STRING",
-      "value": "with"
-    },
-    "open_parens": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "STRING",
-        "value": "("
-      }
-    },
-    "close_parens": {
-      "type": "STRING",
-      "value": ")"
-    },
-    "rewrite": {
-      "type": "STRING",
-      "value": "@rewrite"
-    },
-    "term": {
-      "type": "STRING",
-      "value": "term"
-    },
-    "case": {
-      "type": "STRING",
-      "value": "case"
-    },
-    "signature": {
-      "type": "STRING",
-      "value": "signature"
-    },
-    "rewrite_arrow": {
-      "type": "STRING",
-      "value": "==>"
-    },
     "imm_wordy_id": {
       "type": "IMMEDIATE_TOKEN",
       "content": {
@@ -3959,7 +3967,7 @@
     },
     "path": {
       "type": "PATTERN",
-      "value": "\\.?((([_\\p{L}\\u{1f400}-\\u{1faff}][_!'\\p{L}\\p{N}\\u{1f400}-\\u{1faff}]+)|([$%^&*\\-+<>~\\\\\\/:])|(-[!$%^&*\\-=+<~\\\\\\/|:])|([!$%^*=+<>~\\\\\\/:]{2})|(&[!$%^*\\-=+<>~\\\\\\/|:])|(\\|[!$%^&*\\-=+<>~\\\\\\/:])|([!$%^&*\\-=+<>~\\\\/|:]{3,}))\\.)+",
+      "value": "\\.?((([_\\p{L}\\u{1f400}-\\u{1faff}][_!'\\p{L}\\p{N}\\u{1f400}-\\u{1faff}]*)|([$%^&*\\-+<>~\\\\\\/:])|(-[!$%^&*\\-=+<~\\\\\\/|:])|([!$%^*=+<>~\\\\\\/:]{2})|(&[!$%^*\\-=+<>~\\\\\\/|:])|(\\|[!$%^&*\\-=+<>~\\\\\\/:])|([!$%^&*\\-=+<>~\\\\/|:]{3,}))\\.)+",
       "flags": "u"
     },
     "hash_qualifier": {
