@@ -437,41 +437,6 @@
     "fields": {}
   },
   {
-    "type": "ctor",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "built_in_hash",
-          "named": true
-        },
-        {
-          "type": "hash_qualifier",
-          "named": true
-        },
-        {
-          "type": "operator",
-          "named": true
-        },
-        {
-          "type": "path",
-          "named": true
-        },
-        {
-          "type": "prefix_operator",
-          "named": true
-        },
-        {
-          "type": "regular_identifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "delay_block",
     "named": true,
     "fields": {},
@@ -849,6 +814,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "at_token",
+          "named": true
+        },
         {
           "type": "blank_pattern",
           "named": true
@@ -2191,7 +2160,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "at_token",
@@ -2199,10 +2168,6 @@
         },
         {
           "type": "blank_pattern",
-          "named": true
-        },
-        {
-          "type": "ctor",
           "named": true
         },
         {

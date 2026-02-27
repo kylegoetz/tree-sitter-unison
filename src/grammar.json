@@ -1512,6 +1512,22 @@
         }
       ]
     },
+    "_hqNamey$": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_hqNamey"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_pattern_leaf"
+          }
+        }
+      ]
+    },
     "_pattern_constructor": {
       "type": "PREC_RIGHT",
       "value": 0,
@@ -1547,15 +1563,11 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_pattern_constructor"
+          "name": "_pattern_leaf$"
         },
         {
           "type": "SYMBOL",
-          "name": "_pattern_leaf"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_hqNamey"
+          "name": "_hqNamey$"
         }
       ]
     },
@@ -1803,6 +1815,19 @@
       ]
     },
     "_pattern_leaf": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_hqNamey"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_pattern_leaf$"
+        }
+      ]
+    },
+    "_pattern_leaf$": {
       "type": "PREC",
       "value": 2,
       "content": {
@@ -4536,6 +4561,10 @@
     [
       "tuple_or_parenthesized",
       "parenthesized_or_tuple_pattern"
+    ],
+    [
+      "_hqNamey$",
+      "_pattern_leaf"
     ]
   ],
   "precedences": [
