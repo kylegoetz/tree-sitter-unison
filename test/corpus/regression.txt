@@ -1153,3 +1153,29 @@ metadata.licenses.fböller2020.doc = License.toDoc fböller2020
         (path)
         (regular_identifier)
         (regular_identifier)))))
+===
+GH-174
+===
+math.Natural.internal.normalize : Natural -> Natural
+math.Natural.internal.normalize =
+  use Nat ==
+  lmask = bitMask
+  hmask = Nat.complement lmask
+  cases
+    Natural ns ->
+      rec rem done carry = match rem with
+        []      ->
+          done' = List.dropRightWhile (x -> x == 0) done
+          if carry == 0 then mkNatural done' else mkNatural (done' :+ carry)
+        x +: xs -> go xs x done carry
+      go rem next done carry =
+        use Nat + <= and
+        newNext = next + carry
+        if newNext <= lmask then rec rem (done :+ newNext) 0
+        else
+          newNewNext = and lmask newNext
+          newCarry = Nat.shiftRight (and hmask newNext) bitWidth
+          rec rem (done :+ newNewNext) newCarry
+      go (Nonempty.tail ns) (Nonempty.head ns) [] 0
+---
+(unison)
