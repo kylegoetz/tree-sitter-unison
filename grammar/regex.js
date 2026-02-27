@@ -4,9 +4,10 @@ const composeRegex = (...res) => new RegExp(res.map(_ => `(${_.source})`).join('
 
 // id = /[_a-z\p{Emoji}][_!'a-z\p{Emoji}]*/
 
-const varid = /[_a-z\u{1f400}-\u{1faff}]([_!'a-z0-9\u{1f400}-\u{1faff}])*/iu
+const varid = /[_\p{L}\u{1f400}-\u{1faff}]([_!'\p{L}\p{N}\u{1f400}-\u{1faff}])*/iu
 const VARID = varid
-const LCASE_VARID = /[_a-z\u{1f400}-\u{1faff}][_!'a-z0-9\u{1f400}-\u{1faff}]*/u
+const LCASE_VARID = /[_\p{Ll}\u{1f400}-\u{1faff}]([_!'\p{L}\p{N}\u{1f400}-\u{1faff}])*/u
+const  UCASE_INITIAL_VARID = /[_\p{Lu}\u{1f400}-\u{1faff}]([_!'\p{L}\p{N}\u{1f400}-\u{1faff}])*/u
 // const VARID = new RegExp("[a-zA-Z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*", "u")
 
 // `=` and `|` and `!` are not operators
@@ -33,7 +34,7 @@ const SYMBOLIC_PATH_SEGMENT = composeRegex(ONE_SYMBOL, TWO_SYMBOL, THREE_SYMBOL_
 // const NON_TERMINAL_PATH_SEGMENT = /foo/
 const NON_TERMINAL_PATH_SEGMENT = composeRegex(VARID, SYMBOLIC_PATH_SEGMENT)
 const path =
-  /\.?((([_a-zA-Z\u{1f400}-\u{1faff}][_!'a-zA-Z0-9\u{1f400}-\u{1faff}]+)|([$%^&*\-+<>~\\\/:])|(-[!$%^&*\-=+<~\\\/|:])|([!$%^*=+<>~\\\/:]{2})|(&[!$%^*\-=+<>~\\\/|:])|(\|[!$%^&*\-=+<>~\\\/:])|([!$%^&*\-=+<>~\\/|:]{3,}))\.)+/u
+  /\.?((([_\p{L}\u{1f400}-\u{1faff}][_!'\p{L}\p{N}\u{1f400}-\u{1faff}]+)|([$%^&*\-+<>~\\\/:])|(-[!$%^&*\-=+<~\\\/|:])|([!$%^*=+<>~\\\/:]{2})|(&[!$%^*\-=+<>~\\\/|:])|(\|[!$%^&*\-=+<>~\\\/:])|([!$%^&*\-=+<>~\\/|:]{3,}))\.)+/u
 
 module.exports = {
   path,

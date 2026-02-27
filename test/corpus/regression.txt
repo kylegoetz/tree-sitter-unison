@@ -1129,3 +1129,27 @@ a =
             (regular_identifier))))
       (block_term
         (regular_identifier)))))
+
+===
+GH-173
+===
+metadata.licenses.fböller2020.doc : Doc
+metadata.licenses.fböller2020.doc = License.toDoc fböller2020
+---
+
+(unison
+  (term_declaration
+    (type_signature
+      (path)
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (regular_identifier)))
+    (term_definition
+      (path)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (path)
+        (regular_identifier)
+        (regular_identifier)))))
