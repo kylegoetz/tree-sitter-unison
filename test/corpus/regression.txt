@@ -613,7 +613,7 @@ a =
             (parenthesized_or_tuple_pattern
               (open_parens)
               (pattern
-                (ctor
+                (var_or_nullary_ctor
                   (regular_identifier))
                 (var_or_nullary_ctor
                   (regular_identifier)))
@@ -905,7 +905,7 @@ a = cases
                 (regular_identifier)))
             (comma)
             (pattern
-              (ctor
+              (var_or_nullary_ctor
                 (regular_identifier))
               (var_or_nullary_ctor
                 (regular_identifier)))
@@ -982,7 +982,7 @@ a = cases
               (parenthesized_or_tuple_pattern
                 (open_parens)
                 (pattern
-                  (ctor
+                  (var_or_nullary_ctor
                     (regular_identifier))
                   (var_or_nullary_ctor
                     (regular_identifier)))
@@ -1218,7 +1218,7 @@ math.Natural.internal.normalize =
           (cases)
           (pattern_case
             (pattern
-              (ctor
+              (var_or_nullary_ctor
                 (regular_identifier))
               (var_or_nullary_ctor
                 (regular_identifier)))
@@ -1375,3 +1375,286 @@ math.Natural.internal.normalize =
                 (open_bracket)
                 (close_bracket))
               (nat))))))))
+
+===
+GH-175
+===
+IO.concurrent.STM.TMap.delete : Bytes -> TMap a ->{STM} ()
+IO.concurrent.STM.TMap.delete b tm =
+  use F Empty
+  use Nat +
+  use TVar read write
+  go i b m =
+    match (Bytes.at i b, m) with
+      (None, TMap tv _) -> write tv None
+      (Some h, TMap _ children) ->
+        child = List.unsafeAt h children
+        match read child with
+          One b2 a0
+            | b === b2   -> write child Empty
+            | otherwise  ->
+              c = TMap.empty()
+              write child (Many c)
+              insert.impl (i + 1) b2 c
+              go (i + 1) b c
+          Many m@(TMap tv children) ->
+            go (i + 1) b m
+            isEmpty c = match read c with
+              Empty -> true
+              _     -> false
+            if List.all isEmpty children && isNone (read tv) then
+              write child Empty
+            else ()
+          Empty -> ()
+  go 0 b tm
+---
+
+(unison
+  (term_declaration
+    (type_signature
+      (path)
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (regular_identifier)
+        (arrow_symbol)
+        (regular_identifier)
+        (regular_identifier)
+        (arrow_symbol)
+        (effect
+          (regular_identifier))
+        (unit)))
+    (term_definition
+      (path)
+      (regular_identifier)
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (use_clause
+        (use)
+        (namespace
+          (regular_identifier))
+        (regular_identifier))
+      (use_clause
+        (use)
+        (namespace
+          (regular_identifier))
+        (operator))
+      (use_clause
+        (use)
+        (namespace
+          (regular_identifier))
+        (regular_identifier)
+        (regular_identifier))
+      (term_declaration
+        (term_definition
+          (regular_identifier)
+          (regular_identifier)
+          (regular_identifier)
+          (regular_identifier)
+          (kw_equals)
+          (block_term
+            (match_expression
+              (match)
+              (tuple_or_parenthesized
+                (path)
+                (regular_identifier)
+                (regular_identifier)
+                (regular_identifier)
+                (regular_identifier))
+              (with)
+              (pattern_case
+                (pattern
+                  (parenthesized_or_tuple_pattern
+                    (open_parens)
+                    (pattern
+                      (var_or_nullary_ctor
+                        (regular_identifier)))
+                    (comma)
+                    (pattern
+                      (var_or_nullary_ctor
+                        (regular_identifier))
+                      (var_or_nullary_ctor
+                        (regular_identifier))
+                      (blank_pattern))
+                    (close_parens)))
+                (arrow_symbol)
+                (block_term
+                  (regular_identifier)
+                  (regular_identifier)
+                  (regular_identifier)))
+              (pattern_case
+                (pattern
+                  (parenthesized_or_tuple_pattern
+                    (open_parens)
+                    (pattern
+                      (var_or_nullary_ctor
+                        (regular_identifier))
+                      (var_or_nullary_ctor
+                        (regular_identifier)))
+                    (comma)
+                    (pattern
+                      (var_or_nullary_ctor
+                        (regular_identifier))
+                      (blank_pattern)
+                      (var_or_nullary_ctor
+                        (regular_identifier)))
+                    (close_parens)))
+                (arrow_symbol)
+                (term_declaration
+                  (term_definition
+                    (regular_identifier)
+                    (kw_equals)
+                    (block_term
+                      (path)
+                      (regular_identifier)
+                      (regular_identifier)
+                      (regular_identifier))))
+                (block_term
+                  (match_expression
+                    (match)
+                    (regular_identifier)
+                    (regular_identifier)
+                    (with)
+                    (pattern_case
+                      (pattern
+                        (var_or_nullary_ctor
+                          (regular_identifier))
+                        (var_or_nullary_ctor
+                          (regular_identifier))
+                        (var_or_nullary_ctor
+                          (regular_identifier)))
+                      (guarded_block
+                        (pipe)
+                        (guard
+                          (regular_identifier)
+                          (operator)
+                          (regular_identifier))
+                        (arrow_symbol)
+                        (block_term
+                          (regular_identifier)
+                          (regular_identifier)
+                          (regular_identifier)))
+                      (guarded_block
+                        (pipe)
+                        (guard
+                          (otherwise))
+                        (arrow_symbol)
+                        (term_declaration
+                          (term_definition
+                            (regular_identifier)
+                            (kw_equals)
+                            (block_term
+                              (force
+                                (path)
+                                (regular_identifier)
+                                (unit)))))
+                        (block_term
+                          (regular_identifier)
+                          (regular_identifier)
+                          (tuple_or_parenthesized
+                            (regular_identifier)
+                            (regular_identifier)))
+                        (block_term
+                          (path)
+                          (regular_identifier)
+                          (tuple_or_parenthesized
+                            (regular_identifier)
+                            (operator)
+                            (nat))
+                          (regular_identifier)
+                          (regular_identifier))
+                        (block_term
+                          (regular_identifier)
+                          (tuple_or_parenthesized
+                            (regular_identifier)
+                            (operator)
+                            (nat))
+                          (regular_identifier)
+                          (regular_identifier))))
+                    (pattern_case
+                      (pattern
+                        (var_or_nullary_ctor
+                          (regular_identifier))
+                        (var_or_nullary_ctor
+                          (regular_identifier))
+                        (at_token)
+                        (parenthesized_or_tuple_pattern
+                          (open_parens)
+                          (pattern
+                            (var_or_nullary_ctor
+                              (regular_identifier))
+                            (var_or_nullary_ctor
+                              (regular_identifier))
+                            (var_or_nullary_ctor
+                              (regular_identifier)))
+                          (close_parens)))
+                      (arrow_symbol)
+                      (block_term
+                        (regular_identifier)
+                        (tuple_or_parenthesized
+                          (regular_identifier)
+                          (operator)
+                          (nat))
+                        (regular_identifier)
+                        (regular_identifier))
+                      (term_declaration
+                        (term_definition
+                          (regular_identifier)
+                          (regular_identifier)
+                          (kw_equals)
+                          (block_term
+                            (match_expression
+                              (match)
+                              (regular_identifier)
+                              (regular_identifier)
+                              (with)
+                              (pattern_case
+                                (pattern
+                                  (var_or_nullary_ctor
+                                    (regular_identifier)))
+                                (arrow_symbol)
+                                (block_term
+                                  (literal_boolean)))
+                              (pattern_case
+                                (pattern
+                                  (blank_pattern))
+                                (arrow_symbol)
+                                (block_term
+                                  (literal_boolean)))))))
+                      (block_term
+                        (exp_if
+                          (if_block
+                            (kw_if)
+                            (block_term
+                              (path)
+                              (regular_identifier)
+                              (regular_identifier)
+                              (regular_identifier)
+                              (and)
+                              (regular_identifier)
+                              (tuple_or_parenthesized
+                                (regular_identifier)
+                                (regular_identifier))))
+                          (then_block
+                            (kw_then)
+                            (block_term
+                              (regular_identifier)
+                              (regular_identifier)
+                              (regular_identifier)))
+                          (else_block
+                            (kw_else)
+                            (block_term
+                              (unit))))))
+                    (pattern_case
+                      (pattern
+                        (var_or_nullary_ctor
+                          (regular_identifier)))
+                      (arrow_symbol)
+                      (block_term
+                        (unit))))))))))
+      (block_term
+        (regular_identifier)
+        (nat)
+        (regular_identifier)
+        (regular_identifier)))))

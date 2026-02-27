@@ -274,7 +274,7 @@
         (cases)
         (pattern_case
           (pattern
-            (ctor
+            (var_or_nullary_ctor
               (path)
               (regular_identifier))
             (var_or_nullary_ctor
@@ -298,13 +298,13 @@
         (cases)
         (pattern_case
           (pattern
-            (ctor
+            (var_or_nullary_ctor
               (path)
               (regular_identifier))
             (parenthesized_or_tuple_pattern
               (open_parens)
               (pattern
-                (ctor
+                (var_or_nullary_ctor
                   (path)
                   (regular_identifier))
                 (var_or_nullary_ctor
