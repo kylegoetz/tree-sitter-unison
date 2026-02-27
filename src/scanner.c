@@ -1458,7 +1458,7 @@ static Result text_literal(State *state) {
       return multiline_text_literal(i, state);
     }
   }
-  return res_cont;  
+  return res_cont;
 }
 
 /** Parse special tokens before the first newline that can't be reliably detected by tree-sitter:
@@ -1466,6 +1466,7 @@ static Result text_literal(State *state) {
  *   - `where` here is just for the actual valid token
  *   - `in` closes a layout when inline
  *   - `then` closes a layout when inline
+ *   - `,` if END is a possibility, closes layout
  *   - THIS IS NOT TRUE! '+' closes a layout when inline if END valid `x = 5 + 2`, the + does not close a layout!
  *   - `)` can end the layout of an `of`
  *   - symbolic operators are complicated to implement with regex
@@ -1528,7 +1529,8 @@ static Result inline_tokens(State *state) {
       return res_fail;
     }
     case ',': {
-      // There should not be any parsing if you encounter a comma
+      Result res = layout_end("}", state);
+      SHORT_SCANNER;
       return res_fail;
     }
     // TODO(414owen) does this clash with inline comments '--'?

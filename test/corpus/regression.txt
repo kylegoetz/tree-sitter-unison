@@ -1658,3 +1658,17 @@ IO.concurrent.STM.TMap.delete b tm =
         (nat)
         (regular_identifier)
         (regular_identifier)))))
+===
+GH-177 comma can end layout
+===
+test.gen.functions.someOrNone :
+  (a ->{g} b) -> b -> '{Gen} (Optional a ->{g} Optional b)
+test.gen.functions.someOrNone f v =
+  gen.oneOf
+    [Optional.map f, cases
+        None   -> Some v
+        Some _ -> None, cases
+        None   -> Some v
+        Some x -> Some (f x), const None, const (Some v)]
+---
+(unison)
