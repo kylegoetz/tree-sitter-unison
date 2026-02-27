@@ -34,7 +34,7 @@ const SYMBOLIC_PATH_SEGMENT = composeRegex(ONE_SYMBOL, TWO_SYMBOL, THREE_SYMBOL_
 // const NON_TERMINAL_PATH_SEGMENT = /foo/
 const NON_TERMINAL_PATH_SEGMENT = composeRegex(VARID, SYMBOLIC_PATH_SEGMENT)
 const path =
-  /\.?((([_\p{L}\u{1f400}-\u{1faff}][_!'\p{L}\p{N}\u{1f400}-\u{1faff}]+)|([$%^&*\-+<>~\\\/:])|(-[!$%^&*\-=+<~\\\/|:])|([!$%^*=+<>~\\\/:]{2})|(&[!$%^*\-=+<>~\\\/|:])|(\|[!$%^&*\-=+<>~\\\/:])|([!$%^&*\-=+<>~\\/|:]{3,}))\.)+/u
+  /\.?((([_\p{L}\u{1f400}-\u{1faff}][_!'\p{L}\p{N}\u{1f400}-\u{1faff}]*)|([$%^&*\-+<>~\\\/:])|(-[!$%^&*\-=+<~\\\/|:])|([!$%^*=+<>~\\\/:]{2})|(&[!$%^*\-=+<>~\\\/|:])|(\|[!$%^&*\-=+<>~\\\/:])|([!$%^&*\-=+<>~\\/|:]{3,}))\.)+/u
 
 module.exports = {
   path,
