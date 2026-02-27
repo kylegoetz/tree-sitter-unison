@@ -120,7 +120,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_block_term"
+          "name": "block_term"
         },
         {
           "type": "ALIAS",
@@ -190,7 +190,7 @@
               },
               {
                 "type": "SYMBOL",
-                "name": "_block_term"
+                "name": "block_term"
               },
               {
                 "type": "SYMBOL",
@@ -235,7 +235,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_block_term"
+          "name": "block_term"
         },
         {
           "type": "SYMBOL",
@@ -375,7 +375,7 @@
               },
               {
                 "type": "SYMBOL",
-                "name": "_block_term"
+                "name": "block_term"
               },
               {
                 "type": "SYMBOL",
@@ -386,7 +386,7 @@
         ]
       }
     },
-    "_block_term": {
+    "block_term": {
       "type": "CHOICE",
       "members": [
         {
@@ -1129,7 +1129,7 @@
               },
               {
                 "type": "SYMBOL",
-                "name": "_block_term"
+                "name": "block_term"
               },
               {
                 "type": "SYMBOL",
@@ -1235,7 +1235,7 @@
               },
               {
                 "type": "SYMBOL",
-                "name": "_block_term"
+                "name": "block_term"
               },
               {
                 "type": "SYMBOL",
@@ -1824,7 +1824,7 @@
             },
             {
               "type": "SYMBOL",
-              "name": "_block_term"
+              "name": "block_term"
             },
             {
               "type": "CHOICE",
@@ -1932,7 +1932,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_block_term"
+          "name": "block_term"
         },
         {
           "type": "SYMBOL",
@@ -2402,7 +2402,7 @@
           },
           {
             "type": "SYMBOL",
-            "name": "_block_term"
+            "name": "block_term"
           },
           {
             "type": "SYMBOL",
@@ -2541,7 +2541,7 @@
             },
             {
               "type": "SYMBOL",
-              "name": "_block_term"
+              "name": "block_term"
             },
             {
               "type": "SYMBOL",
@@ -4371,7 +4371,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_block_term"
+          "name": "block_term"
         }
       ]
     },
