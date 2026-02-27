@@ -3,108 +3,158 @@ identifier: relative
 ===
 x = foo.bar.baz
 ---
+
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (path)
-            (regular_identifier))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (path)
+        (regular_identifier)))))
+
 ===
 identifier: simple
 ===
 x = baz
 ---
+
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (regular_identifier))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (regular_identifier)))))
+
 ===
 identifier: symop
 ===
 x = 1 + 1
 ---
+
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (nat)
-            (operator)
-            (nat))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (nat)
+        (operator)
+        (nat)))))
+
 ===
 [Identifier] hash-qualified symboly id
 ===
 x = (>>=#foo)
 ---
+
 (unison
-        (term_declaration
-            (term_definition
-                (regular_identifier)
-                (kw_equals)
-                (operator)
-                (hash_qualifier (hash_prefix)))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (operator)
+        (hash_qualifier
+          (hash_prefix))))))
+
 ===
 [Identifier] HQ built in
 ===
 x = ##Text.take
 ---
-(unison (term_declaration (term_definition (regular_identifier) (kw_equals) (built_in_hash))))
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (built_in_hash)))))
+
 ===
 [Identifier] HQ prefix
 ===
 x = #2tBjVAuc7
 ---
+
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (hash_qualifier (hash_prefix)))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (hash_qualifier
+          (hash_prefix))))))
+
 ===
 [Identifier] HQ prefix and cycle
 ===
 x = #9ckiC1.a9
 ---
+
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (hash_qualifier (hash_prefix) (cyclic_index)))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (hash_qualifier
+          (hash_prefix)
+          (cyclic_index))))))
+
 ===
 [Identifier] HQ prefix and cid
 ===
 x = #ckiC189#1
 ---
+
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (hash_qualifier (hash_prefix) (hash_cid)))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (hash_qualifier
+          (hash_prefix)
+          (hash_cid))))))
+
 ===
 [Identifier] HQ prefix, cycle, and cid
 ===
 x = #DCrnCAPS.AD#0
 ---
+
 (unison
-        (term_declaration
-            (term_definition
-                (regular_identifier)
-                (kw_equals)
-                (hash_qualifier (hash_prefix) (cyclic_index) (hash_cid)))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (hash_qualifier
+          (hash_prefix)
+          (cyclic_index)
+          (hash_cid))))))
+
 ===
 [Identifiers] builtin hash
 ===
 > ##Int.+
 ---
-(unison (watch_expression (built_in_hash)))
+
+(unison
+  (watch_expression
+    (block_term
+      (built_in_hash))))
+
 ===
 [Identifiers] builtin hash 2
 ===
 > ##ImmutableArray.copyTo!
 ---
-(unison (watch_expression (built_in_hash)))
+
+(unison
+  (watch_expression
+    (block_term
+      (built_in_hash))))

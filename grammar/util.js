@@ -43,7 +43,7 @@ layoutBlock = ($, opener) =>
   seq(
     openBlockWith($, opener),
     repeat(seq(choice($._statement, $.use_clause), $._layout_semicolon)),
-    $._block_term,
+    $.block_term,
     $._layout_end,
   )
 

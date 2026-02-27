@@ -33,20 +33,23 @@
 
 (unison
   (watch_expression
-    (match_expression_lambda
-      (cases)
-      (comment)
-      (comment)
-      (pattern_case
-        (pattern
-          (nat))
-        (arrow_symbol)
-        (literal_text))
-      (pattern_case
-        (pattern
-          (nat))
-        (arrow_symbol)
-        (literal_text)))))
+    (block_term
+      (match_expression_lambda
+        (cases)
+        (comment)
+        (comment)
+        (pattern_case
+          (pattern
+            (nat))
+          (arrow_symbol)
+          (block_term
+            (literal_text)))
+        (pattern_case
+          (pattern
+            (nat))
+          (arrow_symbol)
+          (block_term
+            (literal_text)))))))
 
 ===
 [Blocks] term rewrite
@@ -60,17 +63,19 @@ x =
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (rewrite_block
-        (rewrite)
-        (rewrite_term
-          (term)
-          (regular_identifier)
-          (operator)
-          (nat)
-          (rewrite_arrow)
-          (path)
-          (regular_identifier)
-          (regular_identifier))))))
+      (block_term
+        (rewrite_block
+          (rewrite)
+          (rewrite_term
+            (term)
+            (regular_identifier)
+            (operator)
+            (nat)
+            (rewrite_arrow)
+            (block_term
+              (path)
+              (regular_identifier)
+              (regular_identifier))))))))
 
 ===
 [Blocks] case rewrite
@@ -85,14 +90,16 @@ x =
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (rewrite_block
-        (rewrite)
-        (rewrite_case
-          (case)
-          (regular_identifier)
-          (regular_identifier)
-          (rewrite_arrow)
-          (regular_identifier))))))
+      (block_term
+        (rewrite_block
+          (rewrite)
+          (rewrite_case
+            (case)
+            (regular_identifier)
+            (regular_identifier)
+            (rewrite_arrow)
+            (block_term
+              (regular_identifier))))))))
 
 ===
 [Blocks] type rewrite
@@ -107,16 +114,17 @@ x =
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (rewrite_block
-        (rewrite)
-        (rewrite_type
-          (signature)
-          (regular_identifier)
-          (regular_identifier)
-          (dot)
-          (regular_identifier)
-          (regular_identifier)
-          (regular_identifier)
-          (rewrite_arrow)
-          (regular_identifier)
-          (regular_identifier))))))
+      (block_term
+        (rewrite_block
+          (rewrite)
+          (rewrite_type
+            (signature)
+            (regular_identifier)
+            (regular_identifier)
+            (dot)
+            (regular_identifier)
+            (regular_identifier)
+            (regular_identifier)
+            (rewrite_arrow)
+            (regular_identifier)
+            (regular_identifier)))))))

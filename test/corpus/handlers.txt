@@ -9,11 +9,14 @@ a = handle x with foo
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (handler
-        (handle)
-        (regular_identifier)
-        (with)
-        (regular_identifier)))))
+      (block_term
+        (handler
+          (handle)
+          (block_term
+            (regular_identifier))
+          (with)
+          (block_term
+            (regular_identifier)))))))
 
 ===
 [Handlers] multiline 1
@@ -29,23 +32,27 @@ a = handle
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (handler
-        (handle)
-        (term_declaration
-          (term_definition
+      (block_term
+        (handler
+          (handle)
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (nat)
+                (operator)
+                (nat))))
+          (block_term
             (regular_identifier)
-            (kw_equals)
-            (nat)
             (operator)
-            (nat)))
-        (regular_identifier)
-        (operator)
-        (regular_identifier)
-        (nat)
-        (float)
-        (int)
-        (with)
-        (regular_identifier)))))
+            (regular_identifier)
+            (nat)
+            (float)
+            (int))
+          (with)
+          (block_term
+            (regular_identifier)))))))
 
 ===
 [Handlers] multiline 2
@@ -61,16 +68,20 @@ a = handle
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (handler
-        (handle)
-        (term_declaration
-          (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (nat)))
-        (regular_identifier)
-        (with)
-        (regular_identifier)))))
+      (block_term
+        (handler
+          (handle)
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (nat))))
+          (block_term
+            (regular_identifier))
+          (with)
+          (block_term
+            (regular_identifier)))))))
 
 ===
 [Handlers] with cases
@@ -84,18 +95,22 @@ a = handle foo with cases
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (handler
-        (handle)
-        (regular_identifier)
-        (with)
-        (match_expression_lambda
-          (cases)
-          (pattern_case
-            (pattern
-              (effect_pattern
-                (effect_pure
-                  (pattern
-                    (var_or_nullary_ctor
-                      (regular_identifier))))))
-            (arrow_symbol)
-            (regular_identifier)))))))
+      (block_term
+        (handler
+          (handle)
+          (block_term
+            (regular_identifier))
+          (with)
+          (block_term
+            (match_expression_lambda
+              (cases)
+              (pattern_case
+                (pattern
+                  (effect_pattern
+                    (effect_pure
+                      (pattern
+                        (var_or_nullary_ctor
+                          (regular_identifier))))))
+                (arrow_symbol)
+                (block_term
+                  (regular_identifier))))))))))

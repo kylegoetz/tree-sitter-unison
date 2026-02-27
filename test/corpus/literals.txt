@@ -6,7 +6,8 @@
 
 (unison
   (watch_expression
-    (literal_text)))
+    (block_term
+      (literal_text))))
 
 ===
 [Literal] multi-line text
@@ -18,7 +19,8 @@
 
 (unison
   (watch_expression
-    (literal_text)))
+    (block_term
+      (literal_text))))
 
 ===
 [Literal] Nat
@@ -31,7 +33,8 @@ x = 123
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (nat))))
+      (block_term
+        (nat)))))
 
 ===
 [Literal] Nat (hex)
@@ -44,7 +47,8 @@ x = 0x003
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (literal_hex))))
+      (block_term
+        (literal_hex)))))
 
 ===
 [Literal] Int
@@ -57,7 +61,8 @@ x = -9223372036854775808
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (int))))
+      (block_term
+        (int)))))
 
 ===
 [Literal] Float
@@ -70,7 +75,8 @@ x = 1.6777216
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float))))
+      (block_term
+        (float)))))
 
 ===
 [Literal] Char
@@ -84,12 +90,14 @@ x = ?\n
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (literal_char)))
+      (block_term
+        (literal_char))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (literal_char))))
+      (block_term
+        (literal_char)))))
 
 ===
 [Literal] Boolean
@@ -102,7 +110,8 @@ x = true
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (literal_boolean))))
+      (block_term
+        (literal_boolean)))))
 
 ===
 [Literal] Byte
@@ -115,7 +124,8 @@ x = 0xsdeadbeef
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (literal_byte))))
+      (block_term
+        (literal_byte)))))
 
 ===
 [Literal] list literal
@@ -128,12 +138,13 @@ x = [1, 2, 3]
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (literal_list
-        (open_bracket)
-        (nat)
-        (nat)
-        (nat)
-        (close_bracket)))))
+      (block_term
+        (literal_list
+          (open_bracket)
+          (nat)
+          (nat)
+          (nat)
+          (close_bracket))))))
 
 ===
 [Literal] function
@@ -146,30 +157,34 @@ y = x -> x + 2
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (literal_function
-        (regular_identifier)
-        (arrow_symbol)
-        (regular_identifier)
-        (operator)
-        (nat)))))
+      (block_term
+        (literal_function
+          (regular_identifier)
+          (arrow_symbol)
+          (regular_identifier)
+          (operator)
+          (nat))))))
 
 ===
 [Literal] multi-parameter function
 ===
 y = acc x -> acc + x
 ---
+
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (literal_function
-                (regular_identifier)
-                (regular_identifier)
-                (arrow_symbol)
-                (regular_identifier)
-                (operator)
-                (regular_identifier)))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (literal_function
+          (regular_identifier)
+          (regular_identifier)
+          (arrow_symbol)
+          (regular_identifier)
+          (operator)
+          (regular_identifier))))))
+
 ===
 [Literal] tuple
 ===
@@ -181,10 +196,11 @@ x = (true, true, false)
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (tuple_or_parenthesized
-        (literal_boolean)
-        (literal_boolean)
-        (literal_boolean)))))
+      (block_term
+        (tuple_or_parenthesized
+          (literal_boolean)
+          (literal_boolean)
+          (literal_boolean))))))
 
 ===
 [Literal] unit
@@ -197,7 +213,8 @@ x = ()
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (unit))))
+      (block_term
+        (unit)))))
 
 ===
 [Literal] termLink
@@ -210,9 +227,10 @@ x = termLink aUnisonTerm
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (literal_termlink
-        (kw_termlink)
-        (regular_identifier)))))
+      (block_term
+        (literal_termlink
+          (kw_termlink)
+          (regular_identifier))))))
 
 ===
 [Literal] typeLink
@@ -223,13 +241,15 @@ x = termLink aUnisonTerm
 
 (unison
   (watch_expression
-    (literal_typelink
-      (kw_typelink)
-      (regular_identifier)))
+    (block_term
+      (literal_typelink
+        (kw_typelink)
+        (regular_identifier))))
   (watch_expression
-    (literal_typelink
-      (kw_typelink)
-      (built_in_hash))))
+    (block_term
+      (literal_typelink
+        (kw_typelink)
+        (built_in_hash)))))
 
 ===
 [Literal] Nat
@@ -242,7 +262,8 @@ x = 1
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (nat))))
+      (block_term
+        (nat)))))
 
 ===
 [Literal] numbers
@@ -277,117 +298,140 @@ x = -1.2e-3
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (int)))
+      (block_term
+        (int))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (int)))
+      (block_term
+        (int))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float)))
+      (block_term
+        (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (float))))
+      (block_term
+        (float)))))
 
 ===
 [Literal] escape sequences
@@ -397,7 +441,8 @@ x = -1.2e-3
 
 (unison
   (watch_expression
-    (literal_text)))
+    (block_term
+      (literal_text))))
 
 ===
 [Literal] illegal float
@@ -407,7 +452,8 @@ x = -1.2e-3
 
 (unison
   (watch_expression
-    (float)))
+    (block_term
+      (float))))
 
 ===
 [Literal] fn with two lambda params
@@ -420,10 +466,11 @@ add = x y -> x + y
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (literal_function
-        (regular_identifier)
-        (regular_identifier)
-        (arrow_symbol)
-        (regular_identifier)
-        (operator)
-        (regular_identifier)))))
+      (block_term
+        (literal_function
+          (regular_identifier)
+          (regular_identifier)
+          (arrow_symbol)
+          (regular_identifier)
+          (operator)
+          (regular_identifier))))))

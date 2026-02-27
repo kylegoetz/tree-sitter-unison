@@ -4,19 +4,21 @@
 program : '{IO, Exception} ()
 program = a
 ---
+
 (unison
-    (term_declaration
-        (type_signature
-            (regular_identifier)
-            (type_signature_colon)
-            (term_type
-                (delayed
-                    (effect
-                        (regular_identifier))
-                        (effect
-                        (regular_identifier))
-                    (unit))))
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (regular_identifier))))
+  (term_declaration
+    (type_signature
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (delayed
+          (effect
+            (regular_identifier))
+          (effect
+            (regular_identifier))
+          (unit))))
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (regular_identifier)))))

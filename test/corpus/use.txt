@@ -3,38 +3,71 @@
 ===
 use base.List
 ---
+
 (unison
-    (use_clause
-        (use)
-        (namespace (path) (regular_identifier))))
+  (use_clause
+    (use)
+    (namespace
+      (path)
+      (regular_identifier))))
 
 ===
 [use] operators
 ===
 use Universal == < > >=
 ---
-(unison (use_clause (use) (namespace (regular_identifier)) (operator) (operator) (operator) (operator)))
+
+(unison
+  (use_clause
+    (use)
+    (namespace
+      (regular_identifier))
+    (operator)
+    (operator)
+    (operator)
+    (operator)))
 
 ===
 [use] name with tick mark
 ===
 use Search lubIndexOf'
 ---
-(unison (use_clause (use) (namespace (regular_identifier)) (regular_identifier)))
+
+(unison
+  (use_clause
+    (use)
+    (namespace
+      (regular_identifier))
+    (regular_identifier)))
 
 ===
 [use] namespace with a path component and an operator name
 ===
 use base.List ++
 ---
-(unison (use_clause (use) (namespace (path) (regular_identifier)) (operator)))
+
+(unison
+  (use_clause
+    (use)
+    (namespace
+      (path)
+      (regular_identifier))
+    (operator)))
 
 ===
 [use] namespace with multiple operators
 ===
 use Nat + - *
 ---
-(unison (use_clause (use) (namespace (regular_identifier)) (operator) (operator) (operator)))
+
+(unison
+  (use_clause
+    (use)
+    (namespace
+      (regular_identifier))
+    (operator)
+    (operator)
+    (operator)))
 
 ===
 [use] use clause mixed with bindings in let block
@@ -47,40 +80,47 @@ complexCalculation input =
     result = step2 + step1
     result
 ---
+
 (unison
   (term_declaration
     (term_definition
       (regular_identifier)
       (regular_identifier)
       (kw_equals)
-      (exp_let
-        (kw_let)
-        (term_declaration
-          (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (regular_identifier)
+      (block_term
+        (exp_let
+          (kw_let)
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (regular_identifier)
+                (operator)
+                (nat))))
+          (use_clause
+            (use)
+            (namespace
+              (regular_identifier))
             (operator)
-            (nat)))
-        (use_clause
-          (use)
-          (namespace (regular_identifier))
-          (operator)
-          (operator)
-          (operator))
-        (term_declaration
-          (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (nat)))
-        (term_declaration
-          (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (regular_identifier)
             (operator)
-            (regular_identifier)))
-        (regular_identifier)))))
+            (operator))
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (nat))))
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (regular_identifier)
+                (operator)
+                (regular_identifier))))
+          (block_term
+            (regular_identifier)))))))
 
 ===
 [use] multiple use clauses in let block
@@ -93,38 +133,46 @@ example =
     sum = 1 + 2
     sum
 ---
+
 (unison
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (exp_let
-        (kw_let)
-        (use_clause
-          (use)
-          (namespace (path) (regular_identifier)))
-        (term_declaration
-          (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (literal_list
-              (open_bracket)
-              (nat)
-              (nat)
-              (nat)
-              (close_bracket))))
-        (use_clause
-          (use)
-          (namespace (regular_identifier))
-          (operator))
-        (term_declaration
-          (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (nat)
-            (operator)
-            (nat)))
-        (regular_identifier)))))
+      (block_term
+        (exp_let
+          (kw_let)
+          (use_clause
+            (use)
+            (namespace
+              (path)
+              (regular_identifier)))
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (literal_list
+                  (open_bracket)
+                  (nat)
+                  (nat)
+                  (nat)
+                  (close_bracket)))))
+          (use_clause
+            (use)
+            (namespace
+              (regular_identifier))
+            (operator))
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (nat)
+                (operator)
+                (nat))))
+          (block_term
+            (regular_identifier)))))))
 
 ===
 [use] use clause at start of let block
@@ -134,25 +182,30 @@ atStart = let
   x = 1 + 2
   x
 ---
+
 (unison
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (exp_let
-        (kw_let)
-        (use_clause
-          (use)
-          (namespace (regular_identifier))
-          (operator))
-        (term_declaration
-          (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (nat)
-            (operator)
-            (nat)))
-        (regular_identifier)))))
+      (block_term
+        (exp_let
+          (kw_let)
+          (use_clause
+            (use)
+            (namespace
+              (regular_identifier))
+            (operator))
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (nat)
+                (operator)
+                (nat))))
+          (block_term
+            (regular_identifier)))))))
 
 ===
 [use] use clause in middle of let block
@@ -163,30 +216,36 @@ inMiddle = let
   y = x * 2
   y
 ---
+
 (unison
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (exp_let
-        (kw_let)
-        (term_declaration
-          (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (nat)))
-        (use_clause
-          (use)
-          (namespace (regular_identifier))
-          (operator))
-        (term_declaration
-          (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (regular_identifier)
-            (operator)
-            (nat)))
-        (regular_identifier)))))
+      (block_term
+        (exp_let
+          (kw_let)
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (nat))))
+          (use_clause
+            (use)
+            (namespace
+              (regular_identifier))
+            (operator))
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (regular_identifier)
+                (operator)
+                (nat))))
+          (block_term
+            (regular_identifier)))))))
 
 ===
 [use] use clause at end of let block
@@ -196,20 +255,25 @@ atEnd = let
   use Nat +
   x
 ---
+
 (unison
   (term_declaration
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (exp_let
-        (kw_let)
-        (term_declaration
-          (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (nat)))
-        (use_clause
-          (use)
-          (namespace (regular_identifier))
-          (operator))
-        (regular_identifier)))))
+      (block_term
+        (exp_let
+          (kw_let)
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (nat))))
+          (use_clause
+            (use)
+            (namespace
+              (regular_identifier))
+            (operator))
+          (block_term
+            (regular_identifier)))))))

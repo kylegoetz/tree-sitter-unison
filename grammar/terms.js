@@ -10,7 +10,7 @@ const {
 module.exports = {
   _statement: $ =>
     choice(
-      $._block_term,
+      $.block_term,
       alias($._binding, $.term_declaration),
       $.destructuring_bind,
     ),
@@ -21,7 +21,7 @@ module.exports = {
     seq(
       $._layout_start,
       repeat(seq(choice($._statement, $.use_clause), $._layout_semicolon)),
-      $._block_term,
+      $.block_term,
       $._layout_end,
     ),
 
@@ -48,7 +48,7 @@ module.exports = {
       ),
     ),
 
-  _block_term: $ => choice($.literal_function, $._infix_app_or_boolean_op),
+  block_term: $ => choice($.literal_function, $._infix_app_or_boolean_op),
   literal_function: $ => lam($, $._term),
   literal_function2: $ => lam($, $._term2),
   _term: $ => $._term2,

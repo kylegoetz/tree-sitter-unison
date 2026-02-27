@@ -23,8 +23,10 @@ x =
               (regular_identifier)))
           (close_parens))
         (kw_equals)
-        (regular_identifier))
-      (regular_identifier))))
+        (block_term
+          (regular_identifier)))
+      (block_term
+        (regular_identifier)))))
 
 ===
 [Binding] destructuring in a lambda
@@ -34,31 +36,33 @@ x =
 
 (unison
   (watch_expression
-    (path)
-    (regular_identifier)
-    (tuple_or_parenthesized
-      (match_expression_lambda
-        (cases)
-        (pattern_case
-          (pattern
-            (parenthesized_or_tuple_pattern
-              (open_parens)
-              (pattern
-                (var_or_nullary_ctor
-                  (regular_identifier)))
-              (comma)
-              (pattern
-                (var_or_nullary_ctor
-                  (regular_identifier)))
-              (close_parens)))
-          (arrow_symbol)
-          (regular_identifier))))
-    (literal_list
-      (open_bracket)
+    (block_term
+      (path)
+      (regular_identifier)
       (tuple_or_parenthesized
-        (nat)
-        (nat))
-      (tuple_or_parenthesized
-        (nat)
-        (nat))
-      (close_bracket))))
+        (match_expression_lambda
+          (cases)
+          (pattern_case
+            (pattern
+              (parenthesized_or_tuple_pattern
+                (open_parens)
+                (pattern
+                  (var_or_nullary_ctor
+                    (regular_identifier)))
+                (comma)
+                (pattern
+                  (var_or_nullary_ctor
+                    (regular_identifier)))
+                (close_parens)))
+            (arrow_symbol)
+            (block_term
+              (regular_identifier)))))
+      (literal_list
+        (open_bracket)
+        (tuple_or_parenthesized
+          (nat)
+          (nat))
+        (tuple_or_parenthesized
+          (nat)
+          (nat))
+        (close_bracket)))))

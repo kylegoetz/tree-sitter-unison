@@ -9,9 +9,10 @@ x = 1 + 2
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (nat)
-      (operator)
-      (nat))))
+      (block_term
+        (nat)
+        (operator)
+        (nat)))))
 
 ===
 [Regression] Issue 21: built-in hash without path not parsed correctly
@@ -24,7 +25,8 @@ x = ##Foo
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (built_in_hash))))
+      (block_term
+        (built_in_hash)))))
 
 ===
 [Regression] issue 24: multiline text literal with an unescaped double quotation mark
@@ -34,7 +36,8 @@ x = ##Foo
 
 (unison
   (watch_expression
-    (literal_text)))
+    (block_term
+      (literal_text))))
 
 ===
 [Regression] Issue 30, infix ops with path in function application
@@ -44,10 +47,11 @@ x = ##Foo
 
 (unison
   (watch_expression
-    (nat)
-    (path)
-    (operator)
-    (nat)))
+    (block_term
+      (nat)
+      (path)
+      (operator)
+      (nat))))
 
 ===
 [Regression] #34 - watch expressions can be binds (term definitions, but types are not allowed as per TermParser.hs, so not term declarations). They cannot be destructuring binds, which cannot happen at the top level. Verified via Unison LSP.
@@ -61,7 +65,8 @@ x = ##Foo
       (term_definition
         (regular_identifier)
         (kw_equals)
-        (nat)))))
+        (block_term
+          (nat))))))
 
 ===
 [Regression] Issue 37, docblock can be anywhere an expression is
@@ -74,7 +79,8 @@ z = {{ test }}
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (doc_block))))
+      (block_term
+        (doc_block)))))
 
 ===
 [Regression] Issue 37, anonymous docblock immediately precedes term declaration
@@ -89,7 +95,8 @@ x = 5
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (nat))))
+      (block_term
+        (nat)))))
 
 ===
 [Regression] Issue 39, Parenthesized operators in term declaration (def'n + type sig) fail
@@ -118,8 +125,9 @@ x = 5
       (operator)
       (close_parens)
       (kw_equals)
-      (regular_identifier)
-      (literal_text))))
+      (block_term
+        (regular_identifier)
+        (literal_text)))))
 
 ===
 [Regression] Issue 46, comment that appears where a fold could be fails
@@ -171,7 +179,8 @@ lib.base.Float.fromNat.doc =
         (namespace
           (regular_identifier))
         (regular_identifier))
-      (doc_block))))
+      (block_term
+        (doc_block)))))
 
 ===
 [Regression] 84 path with symboly id fails
@@ -185,7 +194,8 @@ lib.base.Nat.!=.doc = 5
       (path)
       (regular_identifier)
       (kw_equals)
-      (nat))))
+      (block_term
+        (nat)))))
 
 ===
 [Regression] pattern matching guards should be part of a layouted block
@@ -199,26 +209,29 @@ lib.base.Nat.!=.doc = 5
 
 (unison
   (watch_expression
-    (match_expression
-      (match)
-      (literal_boolean)
-      (with)
-      (pattern_case
-        (pattern
-          (var_or_nullary_ctor
-            (regular_identifier)))
-        (guarded_block
-          (pipe)
-          (guard
-            (literal_boolean))
-          (arrow_symbol)
-          (nat))
-        (guarded_block
-          (pipe)
-          (guard
-            (otherwise))
-          (arrow_symbol)
-          (nat))))))
+    (block_term
+      (match_expression
+        (match)
+        (literal_boolean)
+        (with)
+        (pattern_case
+          (pattern
+            (var_or_nullary_ctor
+              (regular_identifier)))
+          (guarded_block
+            (pipe)
+            (guard
+              (literal_boolean))
+            (arrow_symbol)
+            (block_term
+              (nat)))
+          (guarded_block
+            (pipe)
+            (guard
+              (otherwise))
+            (arrow_symbol)
+            (block_term
+              (nat))))))))
 
 ===
 [Regression] #91 - infix op can have namespace prefix
@@ -241,12 +254,13 @@ a lib.base.Nat.!= b =
         (namespace
           (regular_identifier))
         (operator))
-      (path)
-      (regular_identifier)
-      (tuple_or_parenthesized
+      (block_term
+        (path)
         (regular_identifier)
-        (operator)
-        (regular_identifier)))))
+        (tuple_or_parenthesized
+          (regular_identifier)
+          (operator)
+          (regular_identifier))))))
 
 ===
 [Regression] watch doc block fails to parse
@@ -256,7 +270,8 @@ a lib.base.Nat.!= b =
 
 (unison
   (watch_expression
-    (doc_block)))
+    (block_term
+      (doc_block))))
 
 ===
 [Regression] #103, match scrutinee should be term
@@ -267,16 +282,18 @@ a lib.base.Nat.!= b =
 
 (unison
   (watch_expression
-    (match_expression
-      (match)
-      (regular_identifier)
-      (regular_identifier)
-      (with)
-      (pattern_case
-        (pattern
-          (blank_pattern))
-        (arrow_symbol)
-        (regular_identifier)))))
+    (block_term
+      (match_expression
+        (match)
+        (regular_identifier)
+        (regular_identifier)
+        (with)
+        (pattern_case
+          (pattern
+            (blank_pattern))
+          (arrow_symbol)
+          (block_term
+            (regular_identifier)))))))
 
 ===
 [Regression] fold that is more than just ---
@@ -296,9 +313,10 @@ this should still be fold
 
 (unison
   (watch_expression
-    (regular_identifier)
-    (operator)
-    (regular_identifier)))
+    (block_term
+      (regular_identifier)
+      (operator)
+      (regular_identifier))))
 
 ===
 [Regression] 2-symbol op ending with &
@@ -308,9 +326,10 @@ this should still be fold
 
 (unison
   (watch_expression
-    (regular_identifier)
-    (operator)
-    (regular_identifier)))
+    (block_term
+      (regular_identifier)
+      (operator)
+      (regular_identifier))))
 
 ===
 [Regression] Issue 121: pattern following effect pattern fails to be recognized as a pattern
@@ -325,23 +344,26 @@ a = cases
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (match_expression_lambda
-        (cases)
-        (pattern_case
-          (pattern
-            (effect_pattern
-              (effect_pure
-                (pattern
-                  (var_or_nullary_ctor
-                    (regular_identifier))))))
-          (arrow_symbol)
-          (nat))
-        (pattern_case
-          (pattern
-            (var_or_nullary_ctor
-              (regular_identifier)))
-          (arrow_symbol)
-          (nat))))))
+      (block_term
+        (match_expression_lambda
+          (cases)
+          (pattern_case
+            (pattern
+              (effect_pattern
+                (effect_pure
+                  (pattern
+                    (var_or_nullary_ctor
+                      (regular_identifier))))))
+            (arrow_symbol)
+            (block_term
+              (nat)))
+          (pattern_case
+            (pattern
+              (var_or_nullary_ctor
+                (regular_identifier)))
+            (arrow_symbol)
+            (block_term
+              (nat))))))))
 
 ===
 [Regression] #134 multi-line quotation mark text literal that opens with more than three " needs balanced ending
@@ -357,7 +379,8 @@ baz""""
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (literal_text))))
+      (block_term
+        (literal_text)))))
 
 ===
 [Regression] GH-139: underscores in path names
@@ -371,7 +394,8 @@ lib.unison_base_3_0_0.Nat.gcd = 5
       (path)
       (regular_identifier)
       (kw_equals)
-      (nat))))
+      (block_term
+        (nat)))))
 
 ===
 [Regression] 141 - use clause in block
@@ -389,21 +413,24 @@ complexCalculation input =
       (regular_identifier)
       (regular_identifier)
       (kw_equals)
-      (exp_let
-        (kw_let)
-        (term_declaration
-          (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (nat)))
-        (use_clause
-          (use)
-          (namespace
-            (regular_identifier))
-          (operator)
-          (operator)
-          (operator))
-        (regular_identifier)))))
+      (block_term
+        (exp_let
+          (kw_let)
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (nat))))
+          (use_clause
+            (use)
+            (namespace
+              (regular_identifier))
+            (operator)
+            (operator)
+            (operator))
+          (block_term
+            (regular_identifier)))))))
 
 ===
 [Regression] 141 - use clause in former layout block
@@ -437,17 +464,20 @@ x =
           (term_definition
             (regular_identifier)
             (kw_equals)
-            (nat)))
+            (block_term
+              (nat))))
         (use_clause
           (use)
           (namespace
             (regular_identifier))
           (regular_identifier)
           (regular_identifier))
-        (tuple_or_parenthesized
-          (nat)
-          (nat)))
-      (regular_identifier))))
+        (block_term
+          (tuple_or_parenthesized
+            (nat)
+            (nat))))
+      (block_term
+        (regular_identifier)))))
 
 ===
 [Regression] GH-143 - tuple expr in case branch return
@@ -461,24 +491,26 @@ swap = cases
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (match_expression_lambda
-        (cases)
-        (pattern_case
-          (pattern
-            (parenthesized_or_tuple_pattern
-              (open_parens)
-              (pattern
-                (var_or_nullary_ctor
-                  (regular_identifier)))
-              (comma)
-              (pattern
-                (var_or_nullary_ctor
-                  (regular_identifier)))
-              (close_parens)))
-          (arrow_symbol)
-          (tuple_or_parenthesized
-            (regular_identifier)
-            (regular_identifier)))))))
+      (block_term
+        (match_expression_lambda
+          (cases)
+          (pattern_case
+            (pattern
+              (parenthesized_or_tuple_pattern
+                (open_parens)
+                (pattern
+                  (var_or_nullary_ctor
+                    (regular_identifier)))
+                (comma)
+                (pattern
+                  (var_or_nullary_ctor
+                    (regular_identifier)))
+                (close_parens)))
+            (arrow_symbol)
+            (block_term
+              (tuple_or_parenthesized
+                (regular_identifier)
+                (regular_identifier)))))))))
 
 ===
 [Regression] GH-142 - destructuring bind issue
@@ -504,10 +536,12 @@ y =
             (blank_pattern))
           (close_parens))
         (kw_equals)
-        (force
-          (regular_identifier)
-          (unit)))
-      (regular_identifier))))
+        (block_term
+          (force
+            (regular_identifier)
+            (unit))))
+      (block_term
+        (regular_identifier)))))
 
 ===
 [Regression] GH-144 Guarded block
@@ -524,34 +558,38 @@ x = cases
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (match_expression_lambda
-        (cases)
-        (pattern_case
-          (pattern
-            (var_or_nullary_ctor
-              (regular_identifier)))
-          (guarded_block
-            (pipe)
-            (guard
-              (otherwise))
-            (arrow_symbol)
-            (term_declaration
-              (term_definition
-                (regular_identifier)
-                (kw_equals)
-                (regular_identifier)
-                (tuple_or_parenthesized
+      (block_term
+        (match_expression_lambda
+          (cases)
+          (pattern_case
+            (pattern
+              (var_or_nullary_ctor
+                (regular_identifier)))
+            (guarded_block
+              (pipe)
+              (guard
+                (otherwise))
+              (arrow_symbol)
+              (term_declaration
+                (term_definition
                   (regular_identifier)
-                  (operator)
-                  (nat))
-                (delay_block
-                  (do)
-                  (regular_identifier)
-                  (tuple_or_parenthesized
+                  (kw_equals)
+                  (block_term
                     (regular_identifier)
-                    (operator)
-                    (nat)))))
-            (regular_identifier)))))))
+                    (tuple_or_parenthesized
+                      (regular_identifier)
+                      (operator)
+                      (nat))
+                    (delay_block
+                      (do)
+                      (block_term
+                        (regular_identifier)
+                        (tuple_or_parenthesized
+                          (regular_identifier)
+                          (operator)
+                          (nat)))))))
+              (block_term
+                (regular_identifier)))))))))
 
 ===
 [Regression] destructuring, unexplained cause
@@ -567,21 +605,24 @@ a =
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (regular_identifier)
-      (delay_block
-        (do)
-        (destructuring_bind
-          (parenthesized_or_tuple_pattern
-            (open_parens)
-            (pattern
-              (ctor
-                (regular_identifier))
-              (var_or_nullary_ctor
-                (regular_identifier)))
-            (close_parens))
-          (kw_equals)
-          (regular_identifier))
-        (nat)))))
+      (block_term
+        (regular_identifier)
+        (delay_block
+          (do)
+          (destructuring_bind
+            (parenthesized_or_tuple_pattern
+              (open_parens)
+              (pattern
+                (ctor
+                  (regular_identifier))
+                (var_or_nullary_ctor
+                  (regular_identifier)))
+              (close_parens))
+            (kw_equals)
+            (block_term
+              (regular_identifier)))
+          (block_term
+            (nat)))))))
 
 ===
 [Regression] GH-145 - 0-ary effect binding pattern
@@ -596,20 +637,22 @@ a =
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (match_expression_lambda
-        (cases)
-        (pattern_case
-          (pattern
-            (effect_pattern
-              (effect_bind
-                (var_or_nullary_ctor
-                  (regular_identifier))
-                (effect_arrow)
-                (pattern
+      (block_term
+        (match_expression_lambda
+          (cases)
+          (pattern_case
+            (pattern
+              (effect_pattern
+                (effect_bind
                   (var_or_nullary_ctor
-                    (regular_identifier))))))
-          (arrow_symbol)
-          (unit))))))
+                    (regular_identifier))
+                  (effect_arrow)
+                  (pattern
+                    (var_or_nullary_ctor
+                      (regular_identifier))))))
+            (arrow_symbol)
+            (block_term
+              (unit))))))))
 
 ===
 [Regression] GH-146 - issue closing layout of do block
@@ -622,10 +665,12 @@ x = do (a)
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (delay_block
-        (do)
-        (tuple_or_parenthesized
-          (regular_identifier))))))
+      (block_term
+        (delay_block
+          (do)
+          (block_term
+            (tuple_or_parenthesized
+              (regular_identifier))))))))
 
 ===
 [Regression] GH-147 - in-line comments
@@ -641,7 +686,8 @@ a =
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (regular_identifier)
+      (block_term
+        (regular_identifier))
       (comment)
       (comment)
       (comment))))
@@ -659,12 +705,13 @@ Void.absurdly v = match v() with
       (regular_identifier)
       (regular_identifier)
       (kw_equals)
-      (match_expression
-        (match)
-        (force
-          (regular_identifier)
-          (unit))
-        (with)))))
+      (block_term
+        (match_expression
+          (match)
+          (force
+            (regular_identifier)
+            (unit))
+          (with))))))
 
 ===
 [Regression] GH-151 - destructuring bind that is an as-pattern fails
@@ -681,55 +728,61 @@ a =
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (path)
-      (regular_identifier)
-      (operator)
-      (path)
-      (regular_identifier)
-      (tuple_or_parenthesized
-        (literal_function
-          (regular_identifier)
-          (arrow_symbol)
-          (exp_let
-            (kw_let)
-            (destructuring_bind
-              (regular_identifier
-                (regular_identifier))
-              (at_token)
-              (parenthesized_or_tuple_pattern
-                (open_parens)
-                (pattern
-                  (var_or_nullary_ctor
-                    (regular_identifier)))
-                (comma)
-                (pattern
-                  (var_or_nullary_ctor
-                    (regular_identifier)))
-                (close_parens))
-              (kw_equals)
-              (regular_identifier)
-              (regular_identifier))
-            (exp_if
-              (if_block
-                (kw_if)
-                (path)
-                (regular_identifier)
-                (regular_identifier)
-                (nat))
-              (then_block
-                (kw_then)
-                (literal_list
-                  (open_bracket)
-                  (close_bracket)))
-              (else_block
-                (kw_else)
-                (literal_list
-                  (open_bracket)
+      (block_term
+        (path)
+        (regular_identifier)
+        (operator)
+        (path)
+        (regular_identifier)
+        (tuple_or_parenthesized
+          (literal_function
+            (regular_identifier)
+            (arrow_symbol)
+            (exp_let
+              (kw_let)
+              (destructuring_bind
+                (regular_identifier
+                  (regular_identifier))
+                (at_token)
+                (parenthesized_or_tuple_pattern
+                  (open_parens)
+                  (pattern
+                    (var_or_nullary_ctor
+                      (regular_identifier)))
+                  (comma)
+                  (pattern
+                    (var_or_nullary_ctor
+                      (regular_identifier)))
+                  (close_parens))
+                (kw_equals)
+                (block_term
                   (regular_identifier)
-                  (close_bracket)))))))
-      (operator)
-      (path)
-      (regular_identifier))))
+                  (regular_identifier)))
+              (block_term
+                (exp_if
+                  (if_block
+                    (kw_if)
+                    (block_term
+                      (path)
+                      (regular_identifier)
+                      (regular_identifier)
+                      (nat)))
+                  (then_block
+                    (kw_then)
+                    (block_term
+                      (literal_list
+                        (open_bracket)
+                        (close_bracket))))
+                  (else_block
+                    (kw_else)
+                    (block_term
+                      (literal_list
+                        (open_bracket)
+                        (regular_identifier)
+                        (close_bracket)))))))))
+        (operator)
+        (path)
+        (regular_identifier)))))
 
 ===
 [Regression] GH-152 - pattern matching with nested use clause in RHS
@@ -745,18 +798,20 @@ a = cases
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (match_expression_lambda
-        (cases)
-        (pattern_case
-          (pattern
-            (blank_pattern))
-          (arrow_symbol)
-          (use_clause
-            (use)
-            (namespace
-              (regular_identifier))
-            (operator))
-          (literal_boolean))))))
+      (block_term
+        (match_expression_lambda
+          (cases)
+          (pattern_case
+            (pattern
+              (blank_pattern))
+            (arrow_symbol)
+            (use_clause
+              (use)
+              (namespace
+                (regular_identifier))
+              (operator))
+            (block_term
+              (literal_boolean))))))))
 
 ===
 GH-156
@@ -774,22 +829,26 @@ a =
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (exp_if
-        (if_block
-          (kw_if)
-          (literal_boolean))
-        (then_block
-          (kw_then)
-          (literal_boolean))
-        (else_block
-          (kw_else)
-          (use_clause
-            (use)
-            (namespace
-              (regular_identifier))
-            (operator)
-            (operator))
-          (literal_boolean))))))
+      (block_term
+        (exp_if
+          (if_block
+            (kw_if)
+            (block_term
+              (literal_boolean)))
+          (then_block
+            (kw_then)
+            (block_term
+              (literal_boolean)))
+          (else_block
+            (kw_else)
+            (use_clause
+              (use)
+              (namespace
+                (regular_identifier))
+              (operator)
+              (operator))
+            (block_term
+              (literal_boolean))))))))
 
 ===
 GH-157 - layout issues with if/then/else
@@ -808,17 +867,22 @@ a =
         (term_definition
           (regular_identifier)
           (kw_equals)
-          (exp_if
-            (if_block
-              (kw_if)
-              (literal_boolean))
-            (then_block
-              (kw_then)
-              (literal_boolean))
-            (else_block
-              (kw_else)
-              (literal_boolean)))))
-      (literal_boolean))))
+          (block_term
+            (exp_if
+              (if_block
+                (kw_if)
+                (block_term
+                  (literal_boolean)))
+              (then_block
+                (kw_then)
+                (block_term
+                  (literal_boolean)))
+              (else_block
+                (kw_else)
+                (block_term
+                  (literal_boolean)))))))
+      (block_term
+        (literal_boolean)))))
 
 ===
 GH-154 - pattern LHS representing a multi-param lambda
@@ -832,27 +896,29 @@ a = cases
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (match_expression_lambda
-        (cases)
-        (pattern_case
-          (pattern
-            (var_or_nullary_ctor
-              (regular_identifier)))
-          (comma)
-          (pattern
-            (ctor
-              (regular_identifier))
-            (var_or_nullary_ctor
-              (regular_identifier)))
-          (arrow_symbol)
-          (regular_identifier)
-          (tuple_or_parenthesized
-            (regular_identifier)
-            (path)
-            (operator)
-            (path)
-            (regular_identifier)
-            (regular_identifier)))))))
+      (block_term
+        (match_expression_lambda
+          (cases)
+          (pattern_case
+            (pattern
+              (var_or_nullary_ctor
+                (regular_identifier)))
+            (comma)
+            (pattern
+              (ctor
+                (regular_identifier))
+              (var_or_nullary_ctor
+                (regular_identifier)))
+            (arrow_symbol)
+            (block_term
+              (regular_identifier)
+              (tuple_or_parenthesized
+                (regular_identifier)
+                (path)
+                (operator)
+                (path)
+                (regular_identifier)
+                (regular_identifier)))))))))
 
 ===
 GH-159 - pattern case RHS should be a layout block
@@ -869,19 +935,21 @@ a =
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (match_expression_lambda
-        (cases)
-        (pattern_case
-          (pattern
-            (blank_pattern))
-          (arrow_symbol)
-          (use_clause
-            (use)
-            (namespace
-              (regular_identifier))
-            (operator)
-            (operator))
-          (unit))))))
+      (block_term
+        (match_expression_lambda
+          (cases)
+          (pattern_case
+            (pattern
+              (blank_pattern))
+            (arrow_symbol)
+            (use_clause
+              (use)
+              (namespace
+                (regular_identifier))
+              (operator)
+              (operator))
+            (block_term
+              (unit))))))))
 
 ===
 GH-160 - as pattern in pattern case
@@ -903,23 +971,25 @@ a = cases
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (match_expression_lambda
-        (cases)
-        (pattern_case
-          (pattern
-            (var_or_nullary_ctor
-              (regular_identifier))
-            (at_token)
-            (parenthesized_or_tuple_pattern
-              (open_parens)
-              (pattern
-                (ctor
-                  (regular_identifier))
-                (var_or_nullary_ctor
-                  (regular_identifier)))
-              (close_parens)))
-          (arrow_symbol)
-          (regular_identifier))))))
+      (block_term
+        (match_expression_lambda
+          (cases)
+          (pattern_case
+            (pattern
+              (var_or_nullary_ctor
+                (regular_identifier))
+              (at_token)
+              (parenthesized_or_tuple_pattern
+                (open_parens)
+                (pattern
+                  (ctor
+                    (regular_identifier))
+                  (var_or_nullary_ctor
+                    (regular_identifier)))
+                (close_parens)))
+            (arrow_symbol)
+            (block_term
+              (regular_identifier))))))))
 
 ===
 GH-161 - typedef consumes start of following termdef
@@ -946,24 +1016,27 @@ time.UTCOffset.fromIso8601 t =
       (regular_identifier)
       (regular_identifier)
       (kw_equals)
-      (regular_identifier)
-      (delay_block
-        (do)
-        (match_expression
-          (match)
-          (path)
-          (regular_identifier)
-          (tuple_or_parenthesized
-            (path)
-            (regular_identifier)
-            (regular_identifier)
-            (regular_identifier))
-          (with)
-          (pattern_case
-            (pattern
-              (blank_pattern))
-            (arrow_symbol)
-            (regular_identifier)))))))
+      (block_term
+        (regular_identifier)
+        (delay_block
+          (do)
+          (block_term
+            (match_expression
+              (match)
+              (path)
+              (regular_identifier)
+              (tuple_or_parenthesized
+                (path)
+                (regular_identifier)
+                (regular_identifier)
+                (regular_identifier))
+              (with)
+              (pattern_case
+                (pattern
+                  (blank_pattern))
+                (arrow_symbol)
+                (block_term
+                  (regular_identifier))))))))))
 
 ===
 GH-162
@@ -980,21 +1053,23 @@ a d =
       (regular_identifier)
       (regular_identifier)
       (kw_equals)
-      (match_expression
-        (match)
-        (unit)
-        (with)
-        (pattern_case
-          (pattern
-            (parenthesized_or_tuple_pattern
-              (open_parens)
-              (close_parens)))
-          (guarded_block
-            (pipe)
-            (guard
-              (otherwise))
-            (arrow_symbol)
-            (unit)))))))
+      (block_term
+        (match_expression
+          (match)
+          (unit)
+          (with)
+          (pattern_case
+            (pattern
+              (parenthesized_or_tuple_pattern
+                (open_parens)
+                (close_parens)))
+            (guarded_block
+              (pipe)
+              (guard
+                (otherwise))
+              (arrow_symbol)
+              (block_term
+                (unit)))))))))
 
 ===
 GH-163
@@ -1009,21 +1084,48 @@ a = b do
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (regular_identifier)
-      (delay_block
-        (do)
-        (term_declaration
-          (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (regular_identifier)
-            (tuple_or_parenthesized
-              (path)
+      (block_term
+        (regular_identifier)
+        (delay_block
+          (do)
+          (term_declaration
+            (term_definition
               (regular_identifier)
-              (literal_list
-                (open_bracket)
-                (literal_char)
-                (literal_char)
-                (close_bracket)))
-            (unit)))
-        (literal_boolean)))))
+              (kw_equals)
+              (block_term
+                (regular_identifier)
+                (tuple_or_parenthesized
+                  (path)
+                  (regular_identifier)
+                  (literal_list
+                    (open_bracket)
+                    (literal_char)
+                    (literal_char)
+                    (close_bracket)))
+                (unit))))
+          (block_term
+            (literal_boolean)))))))
+
+===
+GH-172
+===
+a =
+  totalSize = Bytes.size bytes
+  a
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (term_declaration
+        (term_definition
+          (regular_identifier)
+          (kw_equals)
+          (block_term
+            (path)
+            (regular_identifier)
+            (regular_identifier))))
+      (block_term
+        (regular_identifier)))))
