@@ -6,7 +6,7 @@
 #define DEBUG 0
 #endif
 
-#define LOG_LEVEL ERROR
+#define LOG_LEVEL VERBOSE
 typedef enum {
   VERBOSE,
   INFO,
@@ -99,6 +99,7 @@ typedef enum {
     SEMICOLON,
     START,
     END,
+    COMMA_END,
     DOT,
     WHERE,
     VARSYM,
@@ -125,6 +126,7 @@ static char *sym_names[] = {
     "semicolon",
     "start",
     "end",
+    "comma end",
     "dot",
     "where",
     "varsym",
@@ -883,7 +885,8 @@ static bool consume_hash(State *state) {
  * - (#HASH)
  */
 static Result paren_symop(State *state) {
-  LOG(INFO, "->paren_symop (col = %u, peek = %c)\n", COL, PEEK);
+  LOG(WARN, "DEPRECATED!!! paren_symop (col = %u, peek = %c)\n", COL, PEEK);
+  return res_cont;
   bool found_hash = false;
   if (PEEK != '(') {
     return res_cont;
@@ -902,6 +905,18 @@ static Result paren_symop(State *state) {
     return res_fail;
   }
   S_ADVANCE;
+  /**
+   * Beginning here, the logic is:
+   * 1. consume all valid symop symbols until hash or RPAREN.
+   * 2. (optional) if hash, consume all until RPAREN
+   * 3. if hit EOF while still scanning, fail.
+   */
+  while (!is_eof(state) && PEEK != ')' && PEEK != '#') {
+  	if(symbolic(PEEK)) { S_ADVANCE; }
+  }
+  if(PEEK == ')') {
+
+  }
   while (!is_eof(state) && PEEK != ')' && !isws(PEEK)) {
     if (symbolic(PEEK)) {
       S_ADVANCE;
@@ -1328,6 +1343,7 @@ static Result comment(State *state) {
 }
 
 static Result close_layout_in_list(State *state) {
+	LOG(INFO, "close_layout_in_list (peek = %c)\n", PEEK);
   switch (PEEK) {
     case ']': {
       if (state->symbols[END]) {
@@ -1340,9 +1356,9 @@ static Result close_layout_in_list(State *state) {
       S_ADVANCE;
       if (state->symbols[COMMA]) {
         MARK("comma", false, state);
-        return finish(COMMA, "comma");
+        return finish(COMMA, "close_layout_in_list");
       }
-      Result res = layout_end("comma", state);
+      Result res = layout_end("close_layout_in_list: ,", state);
       SHORT_SCANNER;
       return res_fail;
     }
@@ -1451,8 +1467,8 @@ static Result text_literal(State *state) {
       return single_line_text_literal(state);
     }
     else if (i == 2) { // empty text literal
-      MARK("inline_tokens", false, state);
-      return finish(TEXT_LITERAL, "text literal");
+      MARK("text_literal", false, state);
+      return finish(TEXT_LITERAL, "text_literal");
     }
     else {
       return multiline_text_literal(i, state);
@@ -1508,7 +1524,7 @@ static Result inline_tokens(State *state) {
       return res_fail;
     }
     case ')': {
-      Result res = layout_end(")", state);
+      Result res = layout_end("inline_tokens: )", state);
       SHORT_SCANNER;
       return res_fail;
     }
@@ -1529,8 +1545,13 @@ static Result inline_tokens(State *state) {
       return res_fail;
     }
     case ',': {
-      Result res = layout_end("}", state);
-      SHORT_SCANNER;
+    	if(SYM(COMMA_END)) {
+   			return finish(COMMA_END, "inline_tokens: COMMA");
+     	}
+      if(!SYM(SEMICOLON)) {
+      	Result res = layout_end("inline_tokens: COMMA", state);
+       	SHORT_SCANNER;
+      }
       return res_fail;
     }
     // TODO(414owen) does this clash with inline comments '--'?
@@ -1618,7 +1639,7 @@ static Result layout_start(uint32_t column, State *state) {
             LOG(VERBOSE, "[layout_start] found GUARD_LAYOUT_START; about to push col = %u\n", columna);
             MARK("guard_layout_start", false, state);
             push(COL, state);
-            return finish(GUARD_LAYOUT_START, "guard_layout_start");
+            return finish(GUARD_LAYOUT_START, "layout_start");
         }
     }
     if (SYM(START)) {
