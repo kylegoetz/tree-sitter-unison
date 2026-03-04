@@ -3,128 +3,156 @@
 ===
 structural type Optional a = Some a | None
 ---
+
 (unison
-    (type_declaration
-        (structural)
-        (type_kw)
-        (type_constructor (type_name (regular_identifier)) (type_argument))
-        (kw_equals)
-        (regular_identifier)
-        (regular_identifier)
-        (pipe)
-        (regular_identifier)))
+  (type_declaration
+    (structural)
+    (type_kw)
+    (type_constructor
+      (type_name
+        (regular_identifier))
+      (type_argument))
+    (kw_equals)
+    (regular_identifier)
+    (regular_identifier)
+    (pipe)
+    (regular_identifier)))
+
 ===
 [Types] unique type
 ===
 unique type UserId = Phone Nat | Email Text
 ---
+
 (unison
-    (type_declaration
-        (unique)
-        (type_kw)
-        (type_constructor (type_name (regular_identifier)))
-        (kw_equals)
-        (regular_identifier)
-        (regular_identifier)
-        (pipe)
-        (regular_identifier)
+  (type_declaration
+    (unique)
+    (type_kw)
+    (type_constructor
+      (type_name
         (regular_identifier)))
+    (kw_equals)
+    (regular_identifier)
+    (regular_identifier)
+    (pipe)
+    (regular_identifier)
+    (regular_identifier)))
+
 ===
 [Types] type tag (no type constructor)
 ===
 unique type Foo =
 ---
+
 (unison
-    (type_declaration
-        (unique)
-        (type_kw)
-        (type_constructor (type_name (regular_identifier)))
-        (kw_equals)))
+  (type_declaration
+    (unique)
+    (type_kw)
+    (type_constructor
+      (type_name
+        (regular_identifier)))
+    (kw_equals)))
+
 ===
 [Types] type name with namespace/qualifier
 ===
 unique type controlFlow.Color = RGB Nat Nat Nat
 ---
+
 (unison
-    (type_declaration
-        (unique)
-        (type_kw)
-        (type_constructor
-            (type_name (path) (regular_identifier)))
-        (kw_equals)
-        (regular_identifier)
-        (regular_identifier)
-        (regular_identifier)
+  (type_declaration
+    (unique)
+    (type_kw)
+    (type_constructor
+      (type_name
+        (path)
         (regular_identifier)))
+    (kw_equals)
+    (regular_identifier)
+    (regular_identifier)
+    (regular_identifier)
+    (regular_identifier)))
+
 ===
 [Types] Record type, single line
 ===
 unique type Point2 = { x : Nat, y : Nat }
 ---
+
 (unison
-    (type_declaration
-        (unique)
-        (type_kw)
-        (type_constructor
-            (type_name
-                (regular_identifier)))
-        (kw_equals)
-        (record
-            (record_field
-                (field_name)
-                (regular_identifier))
-            (record_field
-                (field_name)
-                (regular_identifier)))))
+  (type_declaration
+    (unique)
+    (type_kw)
+    (type_constructor
+      (type_name
+        (regular_identifier)))
+    (kw_equals)
+    (record
+      (record_field
+        (field_name)
+        (regular_identifier))
+      (record_field
+        (field_name)
+        (regular_identifier)))))
+
 ===
-[Types] Record type, multiline
+[Types] Record type multiline
 ===
 unique type Point2 = {
     x : Nat,
     y : Nat,
 }
 ---
+
 (unison
-    (type_declaration
-        (unique)
-        (type_kw)
-        (type_constructor
-            (type_name
-                (regular_identifier)))
-        (kw_equals)
-        (record
-            (record_field
-                (field_name)
-                (regular_identifier))
-            (record_field
-                (field_name)
-                (regular_identifier)))))
+  (type_declaration
+    (unique)
+    (type_kw)
+    (type_constructor
+      (type_name
+        (regular_identifier)))
+    (kw_equals)
+    (record
+      (record_field
+        (field_name)
+        (regular_identifier))
+      (record_field
+        (field_name)
+        (regular_identifier)))))
+
 ===
 [Types] optional `unique` keyword
 ===
 type UserId = Phone Nat | Email Text
 ---
+
 (unison
-    (type_declaration
-        (type_kw)
-        (type_constructor (type_name (regular_identifier)))
-        (kw_equals)
-        (regular_identifier)
-        (regular_identifier)
-        (pipe)
-        (regular_identifier)
+  (type_declaration
+    (type_kw)
+    (type_constructor
+      (type_name
         (regular_identifier)))
+    (kw_equals)
+    (regular_identifier)
+    (regular_identifier)
+    (pipe)
+    (regular_identifier)
+    (regular_identifier)))
+
 ===
 [Types] bare record type declaration
 ===
 type Task = { id : Nat }
 ---
+
 (unison
-    (type_declaration
-        (type_kw)
-        (type_constructor (type_name (regular_identifier)))
-        (kw_equals)
-        (record
-            (record_field
-                (field_name)
-                (regular_identifier)))))
+  (type_declaration
+    (type_kw)
+    (type_constructor
+      (type_name
+        (regular_identifier)))
+    (kw_equals)
+    (record
+      (record_field
+        (field_name)
+        (regular_identifier)))))
