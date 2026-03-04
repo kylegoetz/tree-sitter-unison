@@ -3,6 +3,7 @@
 
 # Top-level whitelist
 CHANGELOG.md
+.gitignore
 
 # Allow git to see inside subdirectories
 !*/

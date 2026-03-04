@@ -1,5 +1,5 @@
-const regex = require("./regex");
-const { parens, paren$ } = require("./util");
+const regex = require('./regex')
+const { parens, parenthesized } = require('./util')
 
 module.exports = {
   imm_wordy_id: ($) => token.immediate(regex.varid),
@@ -71,11 +71,14 @@ module.exports = {
         seq($.path, alias($.symboly_id, $.operator))),
       optional(alias($.imm_hash_qualifier, $.hash_qualifier))),
 
-  _hq_qualified_prefix_term: ($) =>
-    choice(
-      $._hq_qualified_wordy_id,
-      paren$($, $._hq_qualified_symboly_id),
-      alias($._parenthesized_operator, $.prefix_operator)),
+  _hq_qualified_prefix_term: $ =>
+    prec(
+      9,
+      choice(
+        $._hq_qualified_wordy_id,
+        parenthesized($, alias($._hq_qualified_symboly_id, $.operator)),
+      ),
+    ),
 
   _hq_qualified_infix_term: ($) => $._hq_qualified_symboly_id,
 

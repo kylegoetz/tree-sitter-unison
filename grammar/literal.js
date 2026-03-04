@@ -1,4 +1,4 @@
-const { sep, sep1 } = require('./util')
+const { parenthesized, sep, sep1 } = require('./util')
 const regex = require('./regex')
 
 module.exports = {
@@ -28,9 +28,7 @@ module.exports = {
   literal_boolean: $ => choice('true', 'false'),
   literal_byte: $ => /0xs[0-9a-fA-F]+/,
   literal_hex: $ => /0x[0-9a-fA-F]+/,
-
-  tuple_or_parenthesized: $ =>
-    seq(openBlockWith($, '('), sep(',', $._term), $._layout_end, ')'),
+  tuple_or_parenthesized: $ => prec.dynamic(3, parenthesized($, $._term)),
   literal_termlink: $ => seq($.kw_termlink, $._hash_qualified),
   literal_typelink: $ => seq($.kw_typelink, $._hash_qualified),
 }

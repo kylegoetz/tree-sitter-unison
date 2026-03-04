@@ -64,6 +64,15 @@ const block = ($, opener) =>
     // optional($._layout_end),
   )
 
+parenthesized = ($, el) =>
+  seq(
+    alias('(', $.open_parens),
+    $._layout_start,
+    sep(seq($._comma_layout_end, $.comma), el),
+    $._layout_end,
+    alias(')', $.close_parens),
+  )
+// parenthesized = ($, el) => seq('(', $.layout ')')
 // open_block_with = ($, opener, start_type) => seq(
 //   // start_type ?? $._layout_start,//$._layout_start,
 //   terminated($, opener),
@@ -108,6 +117,7 @@ module.exports = {
   openBlockWith,
   parens,
   paren$,
+  parenthesized,
   sep,
   sep1,
   sep2,

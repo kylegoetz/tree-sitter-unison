@@ -1,4 +1,10 @@
-const { sep, sep1, layoutBlock, openBlockWith } = require('./util')
+const {
+  sep,
+  sep1,
+  layoutBlock,
+  openBlockWith,
+  parenthesized,
+} = require('./util')
 const { lowercase_varid } = require('./regex')
 
 module.exports = {
@@ -100,12 +106,7 @@ module.exports = {
       ),
     ),
   parenthesized_or_tuple_pattern: $ =>
-    seq(
-      openBlockWith($, alias('(', $.open_parens)),
-      sep(alias(',', $.comma), choice($._pattern_root)),
-      $._layout_end,
-      alias(')', $.close_parens),
-    ),
+    prec.dynamic(-1, parenthesized($, $._pattern_root)),
 
   effect_pure: $ => $._pattern_root,
   effect_bind: $ =>
