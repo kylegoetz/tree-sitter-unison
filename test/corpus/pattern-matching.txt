@@ -96,14 +96,18 @@
             (pipe)
             (guard
               (tuple_or_parenthesized
+                (open_parens)
                 (regular_identifier)
                 (operator)
-                (nat))
+                (nat)
+                (close_parens))
               (or)
               (tuple_or_parenthesized
+                (open_parens)
                 (regular_identifier)
                 (operator)
-                (nat)))
+                (nat)
+                (close_parens)))
             (arrow_symbol)
             (block_term
               (literal_text))))))))
@@ -491,5 +495,8 @@
           (arrow_symbol)
           (block_term
             (tuple_or_parenthesized
+              (open_parens)
               (regular_identifier)
-              (regular_identifier))))))))
+              (comma)
+              (regular_identifier)
+              (close_parens))))))))
