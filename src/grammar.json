@@ -4610,59 +4610,8 @@
       "_pattern_root"
     ],
     [
-      "tuple_or_parenthesized",
-      "parenthesized_or_tuple_pattern"
-    ],
-    [
       "_hqNamey$",
       "_pattern_leaf"
-    ],
-    [
-      "literal_function",
-      "literal_function2",
-      "_prefix_lhs"
-    ],
-    [
-      "literal_function",
-      "literal_function2",
-      "_infix_lhs"
-    ],
-    [
-      "_infix_app_or_boolean_op",
-      "delay_quote"
-    ],
-    [
-      "_infix_app_or_boolean_op",
-      "bang"
-    ],
-    [
-      "tuple_or_parenthesized"
-    ],
-    [
-      "comma",
-      "literal_list"
-    ],
-    [
-      "literal_function2",
-      "_term"
-    ],
-    [
-      "block_term",
-      "_term3"
-    ],
-    [
-      "tuple_or_parenthesized",
-      "literal_list"
-    ],
-    [
-      "literal_function",
-      "tuple_or_parenthesized"
-    ],
-    [
-      "parenthesized_or_tuple_pattern"
-    ],
-    [
-      "_hq_qualified_prefix_term"
     ]
   ],
   "precedences": [
