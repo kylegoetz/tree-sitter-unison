@@ -76,7 +76,7 @@ module.exports = {
       9,
       choice(
         $._hq_qualified_wordy_id,
-        parenthesized($, alias($._hq_qualified_symboly_id, $.operator)),
+        parenthesized($, $._hq_qualified_symboly_id),
       ),
     ),
 
