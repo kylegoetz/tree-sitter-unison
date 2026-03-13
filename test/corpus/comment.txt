@@ -5,7 +5,10 @@
 -- a comment
 
 ---
-(unison (comment))
+
+(unison
+  (comment))
+
 ===
 [Comment] multiline comment
 ===
@@ -13,8 +16,9 @@
     this is a multiline comment
 -}
 ---
+
 (unison
-    (comment))
+  (comment))
 
 ===
 [Comment] fold
@@ -24,8 +28,10 @@
 x = 5
 
 ---
+
 (unison
-    (fold))
+  (fold))
+
 ===
 [Comment] nested multiline comment
 ===
@@ -34,13 +40,15 @@ x = 5 {- this is a
 comment with -} nesting
 -}
 ---
+
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (nat)
-            (comment))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (nat))
+      (comment))))
 
 ===
 [Comment] before type signature
@@ -49,14 +57,17 @@ comment with -} nesting
 someBytes : Bytes
 someBytes = 0xsdeadbeef
 ---
+
 (unison
-    (comment)
-    (term_declaration
-        (type_signature
-            (regular_identifier)
-            (type_signature_colon)
-            (term_type (regular_identifier)))
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (literal_byte))))
+  (comment)
+  (term_declaration
+    (type_signature
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (regular_identifier)))
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (literal_byte)))))

@@ -10,7 +10,7 @@ const {
 module.exports = {
   _statement: $ =>
     choice(
-      $._block_term,
+      $.block_term,
       alias($._binding, $.term_declaration),
       $.destructuring_bind,
     ),
@@ -21,7 +21,7 @@ module.exports = {
     seq(
       $._layout_start,
       repeat(seq(choice($._statement, $.use_clause), $._layout_semicolon)),
-      $._block_term,
+      $.block_term,
       $._layout_end,
     ),
 
@@ -47,8 +47,9 @@ module.exports = {
         layoutBlock($, $.kw_equals),
       ),
     ),
-
-  _block_term: $ => choice($.literal_function, $._infix_app_or_boolean_op),
+  // dynamic precedence so functional application + dedent + pattern -> x doesn't get parsed
+  // as a function literal
+  block_term: $ => choice(prec.dynamic(1, $._infix_app_or_boolean_op), prec.dynamic(1, $.literal_function)),
   literal_function: $ => lam($, $._term),
   literal_function2: $ => lam($, $._term2),
   _term: $ => $._term2,

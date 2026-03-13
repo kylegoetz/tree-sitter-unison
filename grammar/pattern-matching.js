@@ -63,18 +63,31 @@ module.exports = {
   _pattern_root: $ =>
     sep1(
       $._pattern_infix_app,
-      sep1(alias(',', $.comma), alias($._pattern_candidates, $.pattern)),
-    ),
-
-  _pattern_constructor: $ =>
-    prec.right(
-      seq(
-        alias($._hq_qualified_prefix_term, $.ctor),
-        repeat1(choice($._pattern_leaf)),
+      sep1(
+        alias(',', $.comma),
+        alias(choice($._pattern_leaf$, $._hqNamey$), $.pattern),
       ),
     ),
-  _pattern_candidates: $ =>
-    choice($._pattern_constructor, $._pattern_leaf, $._hqNamey),
+  _hqNamey$: $ => seq($._hqNamey, repeat($._pattern_leaf)),
+  _hqNamey: $ =>
+    seq(
+      $.var_or_nullary_ctor,
+      optional(seq(alias('@', $.at_token), $._pattern_leaf)),
+    ),
+  _pattern_leaf: $ => choice($._hqNamey, $._pattern_leaf$),
+  _pattern_leaf$: $ =>
+    prec(
+      2,
+      choice(
+        // $.var_or_as,
+        $.var_or_nullary_ctor,
+        $._literal_pattern,
+        alias('_', $.blank_pattern),
+        $.literal_list_pattern,
+        $.parenthesized_or_tuple_pattern,
+        $.effect_pattern,
+      ),
+    ),
 
   // Note: Unfortunately the SEMI is disabled here because leaving it in creates a parsing error where
   literal_list_pattern: $ =>
@@ -104,23 +117,5 @@ module.exports = {
       choice($.effect_pure, $.effect_bind),
       $._layout_end,
       '}',
-    ),
-  _hqNamey: $ =>
-    seq(
-      $.var_or_nullary_ctor,
-      optional(seq(alias('@', $.at_token), $._pattern_leaf)),
-    ),
-  _pattern_leaf: $ =>
-    prec(
-      2,
-      choice(
-        // $.var_or_as,
-        $.var_or_nullary_ctor,
-        $._literal_pattern,
-        alias('_', $.blank_pattern),
-        $.literal_list_pattern,
-        $.parenthesized_or_tuple_pattern,
-        $.effect_pattern,
-      ),
     ),
 }

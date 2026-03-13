@@ -18,7 +18,7 @@ module.exports = {
       seq(
         $._layout_start,
         repeat(seq(choice($._statement, $.use_clause), $._layout_semicolon)),
-        $._block_term,
+        $.block_term,
         optional($._layout_end),
       ),
     ),

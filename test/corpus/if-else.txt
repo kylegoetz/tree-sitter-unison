@@ -9,16 +9,20 @@ y = if x then 5 else 6
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (exp_if
-        (if_block
-          (kw_if)
-          (regular_identifier))
-        (then_block
-          (kw_then)
-          (nat))
-        (else_block
-          (kw_else)
-          (nat))))))
+      (block_term
+        (exp_if
+          (if_block
+            (kw_if)
+            (block_term
+              (regular_identifier)))
+          (then_block
+            (kw_then)
+            (block_term
+              (nat)))
+          (else_block
+            (kw_else)
+            (block_term
+              (nat))))))))
 
 ===
 [Conditional] one line if/else
@@ -31,18 +35,22 @@ mySimpleTerm = if elem 5 myList then "high five" else "no five found"
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (exp_if
-        (if_block
-          (kw_if)
-          (regular_identifier)
-          (nat)
-          (regular_identifier))
-        (then_block
-          (kw_then)
-          (literal_text))
-        (else_block
-          (kw_else)
-          (literal_text))))))
+      (block_term
+        (exp_if
+          (if_block
+            (kw_if)
+            (block_term
+              (regular_identifier)
+              (nat)
+              (regular_identifier)))
+          (then_block
+            (kw_then)
+            (block_term
+              (literal_text)))
+          (else_block
+            (kw_else)
+            (block_term
+              (literal_text))))))))
 
 ===
 [Conditional] if/then/else
@@ -57,15 +65,19 @@ mySimpleTerm = if elem 5 myList
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (exp_if
-        (if_block
-          (kw_if)
-          (regular_identifier)
-          (nat)
-          (regular_identifier))
-        (then_block
-          (kw_then)
-          (literal_text))
-        (else_block
-          (kw_else)
-          (literal_text))))))
+      (block_term
+        (exp_if
+          (if_block
+            (kw_if)
+            (block_term
+              (regular_identifier)
+              (nat)
+              (regular_identifier)))
+          (then_block
+            (kw_then)
+            (block_term
+              (literal_text)))
+          (else_block
+            (kw_else)
+            (block_term
+              (literal_text))))))))

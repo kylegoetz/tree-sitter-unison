@@ -3,60 +3,95 @@ simple term declaration
 ===
 x = 5
 ---
+
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (nat))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (nat)))))
+
 ===
 [Term] Declaration
 ===
 sumUpTo : Nat -> Nat
 sumUpTo x = x
 ---
+
 (unison
-    (term_declaration
-        (type_signature (regular_identifier) (type_signature_colon) (term_type (regular_identifier) (arrow_symbol) (regular_identifier)))
-        (term_definition (regular_identifier) (regular_identifier) (kw_equals) (regular_identifier))))
+  (term_declaration
+    (type_signature
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (regular_identifier)
+        (arrow_symbol)
+        (regular_identifier)))
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (regular_identifier)))))
+
 ===
 [Term] type signature with complex abilities clause
 ===
 store.stopIfTrue : (a -> Boolean) -> a ->{Abort, Store a} a
 store.stopIfTrue = f a b c
 ---
+
 (unison
-    (term_declaration
-        (type_signature (path) (regular_identifier) (type_signature_colon) (term_type
-            (tuple_or_parenthesized_type (regular_identifier) (arrow_symbol) (regular_identifier))
-            (arrow_symbol)
-            (regular_identifier)
-            (arrow_symbol)
-            (effect (regular_identifier)) (effect (regular_identifier) (regular_identifier)) (regular_identifier)))
-        (term_definition
-            (path) (regular_identifier)
-            (kw_equals)
-            (regular_identifier)
-            (regular_identifier)
-            (regular_identifier)
-            (regular_identifier))))
+  (term_declaration
+    (type_signature
+      (path)
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (tuple_or_parenthesized_type
+          (regular_identifier)
+          (arrow_symbol)
+          (regular_identifier))
+        (arrow_symbol)
+        (regular_identifier)
+        (arrow_symbol)
+        (effect
+          (regular_identifier))
+        (effect
+          (regular_identifier)
+          (regular_identifier))
+        (regular_identifier)))
+    (term_definition
+      (path)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (regular_identifier)
+        (regular_identifier)
+        (regular_identifier)
+        (regular_identifier)))))
+
 ===
 [Term] type signature with tuple
 ===
 tup : (Nat, Nat)
 tup = (3, 3)
 ---
+
 (unison
   (term_declaration
     (type_signature
       (regular_identifier)
       (type_signature_colon)
-      (term_type (tuple_or_parenthesized_type
-        (regular_identifier)
-        (regular_identifier))))
+      (term_type
+        (tuple_or_parenthesized_type
+          (regular_identifier)
+          (regular_identifier))))
     (term_definition
       (regular_identifier)
       (kw_equals)
-      (tuple_or_parenthesized
-        (nat)
-        (nat)))))
+      (block_term
+        (tuple_or_parenthesized
+          (nat)
+          (nat))))))

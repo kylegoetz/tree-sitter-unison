@@ -1,5 +1,5 @@
 module.exports = {
-  _watch_expression: $ => choice($.doc_block, alias($._binding, $.term_declaration), $._block_term),
+  _watch_expression: $ => choice($.doc_block, alias($._binding, $.term_declaration), $.block_term),
   watch_expression: ($) =>
     seq(
       $._watch_start,

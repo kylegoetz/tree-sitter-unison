@@ -4,13 +4,19 @@
 namespace mynamespace
 x = 5
 ---
+
 (unison
-    (namespace_pragma (kw_namespace) (namespace (regular_identifier)))
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (nat))))
+  (namespace_pragma
+    (kw_namespace)
+    (namespace
+      (regular_identifier)))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (nat)))))
+
 ===
 [misc] namespace pragma mid-file
 ===
@@ -19,54 +25,78 @@ namespace My.Namespace
 sum x y = x + y
 > sum x 2
 ---
+
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (nat)))
-    (namespace_pragma (kw_namespace) (namespace (path) (regular_identifier)))
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (regular_identifier)
-            (regular_identifier)
-            (kw_equals)
-            (regular_identifier)
-            (operator)
-            (regular_identifier)))
-    (watch_expression
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (nat))))
+  (namespace_pragma
+    (kw_namespace)
+    (namespace
+      (path)
+      (regular_identifier)))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
         (regular_identifier)
-        (regular_identifier)
-        (nat)))
+        (operator)
+        (regular_identifier))))
+  (watch_expression
+    (block_term
+      (regular_identifier)
+      (regular_identifier)
+      (nat))))
+
 ===
 [misc] Watch expression
 ===
 > square 4
 ---
+
 (unison
-    (watch_expression
-        (regular_identifier)
-        (nat)))
+  (watch_expression
+    (block_term
+      (regular_identifier)
+      (nat))))
+
 ===
 [misc] Test watch expression
 ===
 test> 5
 ---
-(unison (test_watch_expression (nat)))
+
+(unison
+  (test_watch_expression
+    (block_term
+      (nat))))
+
 ===
 [misc] test.io watch expression
 ===
 test.io> 5
 ---
-(unison (test_watch_expression (nat)))
+
+(unison
+  (test_watch_expression
+    (block_term
+      (nat))))
+
 ===
 [Misc] force
 ===
 > x()
 ---
+
 (unison
-    (watch_expression
-        (force
-            (regular_identifier)
-            (unit))))
+  (watch_expression
+    (block_term
+      (force
+        (regular_identifier)
+        (unit)))))

@@ -4,50 +4,56 @@
 program : '{IO, Exception} ()
 program = a
 ---
+
 (unison
-    (term_declaration
-        (type_signature
-            (regular_identifier)
-            (type_signature_colon)
-            (term_type
-                (delayed
-                    (effect
-                        (regular_identifier))
-                        (effect
-                        (regular_identifier))
-                    (unit))))
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (regular_identifier))))
+  (term_declaration
+    (type_signature
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (delayed
+          (effect
+            (regular_identifier))
+          (effect
+            (regular_identifier))
+          (unit))))
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (regular_identifier)))))
 ===
 [Delayed] do block with parenthesized variable
 ===
 x = do (a)
 ---
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (delay_block
-                (do)
-                (tuple_or_parenthesized
-                    (regular_identifier))))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (delay_block
+          (do)
+          (block_term
+            (tuple_or_parenthesized
+              (regular_identifier))))))))
 ===
 [Delayed] do block with parenthesized literal
 ===
 x = do (true)
 ---
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
-            (kw_equals)
-            (delay_block
-                (do)
-                (tuple_or_parenthesized
-                    (literal_boolean))))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (delay_block
+          (do)
+          (block_term
+            (tuple_or_parenthesized
+              (literal_boolean))))))))
 ===
 [Delayed] do block with destructuring bind
 ===
@@ -56,23 +62,26 @@ x = do
   a
 ---
 (unison
-    (term_declaration
-        (term_definition
-            (regular_identifier)
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (delay_block
+          (do)
+          (destructuring_bind
+            (parenthesized_or_tuple_pattern
+              (open_parens)
+              (pattern
+                (var_or_nullary_ctor
+                  (regular_identifier)))
+              (comma)
+              (pattern
+                (var_or_nullary_ctor
+                  (regular_identifier)))
+              (close_parens))
             (kw_equals)
-            (delay_block
-                (do)
-                (destructuring_bind
-                    (parenthesized_or_tuple_pattern
-                        (open_parens)
-                        (pattern
-                            (var_or_nullary_ctor
-                                (regular_identifier)))
-                        (comma)
-                        (pattern
-                            (var_or_nullary_ctor
-                                (regular_identifier)))
-                        (close_parens))
-                    (kw_equals)
-                    (regular_identifier))
-                (regular_identifier)))))
+            (block_term
+              (regular_identifier)))
+          (block_term
+            (regular_identifier)))))))

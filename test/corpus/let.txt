@@ -5,23 +5,28 @@ x = let y = 5
         z = 1
         y + z
 ---
+
 (unison
-    (term_declaration
-        (term_definition
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (exp_let
+          (kw_let)
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (nat))))
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (nat))))
+          (block_term
             (regular_identifier)
-            (kw_equals)
-            (exp_let
-                (kw_let)
-                (term_declaration
-                    (term_definition
-                        (regular_identifier)
-                        (kw_equals)
-                        (nat)))
-                (term_declaration
-                    (term_definition
-                        (regular_identifier)
-                        (kw_equals)
-                        (nat)))
-                (regular_identifier)
-                (operator)
-                (regular_identifier)))))
+            (operator)
+            (regular_identifier)))))))

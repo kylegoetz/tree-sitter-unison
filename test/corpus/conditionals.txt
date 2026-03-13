@@ -6,16 +6,20 @@
 
 (unison
   (watch_expression
-    (exp_if
-      (if_block
-        (kw_if)
-        (regular_identifier))
-      (then_block
-        (kw_then)
-        (regular_identifier))
-      (else_block
-        (kw_else)
-        (regular_identifier)))))
+    (block_term
+      (exp_if
+        (if_block
+          (kw_if)
+          (block_term
+            (regular_identifier)))
+        (then_block
+          (kw_then)
+          (block_term
+            (regular_identifier)))
+        (else_block
+          (kw_else)
+          (block_term
+            (regular_identifier)))))))
 
 ===
 [Conditionals] multiline `if`
@@ -33,37 +37,44 @@
 
 (unison
   (watch_expression
-    (exp_if
-      (if_block
-        (kw_if)
-        (term_declaration
-          (term_definition
+    (block_term
+      (exp_if
+        (if_block
+          (kw_if)
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (nat))))
+          (block_term
             (regular_identifier)
-            (kw_equals)
+            (operator)
             (nat)))
-        (regular_identifier)
-        (operator)
-        (nat))
-      (then_block
-        (kw_then)
-        (term_declaration
-          (term_definition
+        (then_block
+          (kw_then)
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (nat))))
+          (block_term
             (regular_identifier)
-            (kw_equals)
+            (operator)
             (nat)))
-        (regular_identifier)
-        (operator)
-        (nat))
-      (else_block
-        (kw_else)
-        (term_declaration
-          (term_definition
+        (else_block
+          (kw_else)
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (nat))))
+          (block_term
             (regular_identifier)
-            (kw_equals)
-            (nat)))
-        (regular_identifier)
-        (operator)
-        (nat)))))
+            (operator)
+            (nat)))))))
 
 ===
 [Conditionals] Boolean operations
@@ -74,10 +85,12 @@
 
 (unison
   (watch_expression
-    (regular_identifier)
-    (and)
-    (regular_identifier))
+    (block_term
+      (regular_identifier)
+      (and)
+      (regular_identifier)))
   (watch_expression
-    (regular_identifier)
-    (or)
-    (regular_identifier)))
+    (block_term
+      (regular_identifier)
+      (or)
+      (regular_identifier))))
