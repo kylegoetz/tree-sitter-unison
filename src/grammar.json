@@ -1424,8 +1424,17 @@
             {
               "type": "ALIAS",
               "content": {
-                "type": "SYMBOL",
-                "name": "_pattern_candidates"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_pattern_leaf$"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_hqNamey$"
+                  }
+                ]
               },
               "named": true,
               "value": "pattern"
@@ -1447,8 +1456,17 @@
                   {
                     "type": "ALIAS",
                     "content": {
-                      "type": "SYMBOL",
-                      "name": "_pattern_candidates"
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "_pattern_leaf$"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "_hqNamey$"
+                        }
+                      ]
                     },
                     "named": true,
                     "value": "pattern"
@@ -1473,8 +1491,17 @@
                   {
                     "type": "ALIAS",
                     "content": {
-                      "type": "SYMBOL",
-                      "name": "_pattern_candidates"
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "_pattern_leaf$"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "_hqNamey$"
+                        }
+                      ]
                     },
                     "named": true,
                     "value": "pattern"
@@ -1496,8 +1523,17 @@
                         {
                           "type": "ALIAS",
                           "content": {
-                            "type": "SYMBOL",
-                            "name": "_pattern_candidates"
+                            "type": "CHOICE",
+                            "members": [
+                              {
+                                "type": "SYMBOL",
+                                "name": "_pattern_leaf$"
+                              },
+                              {
+                                "type": "SYMBOL",
+                                "name": "_hqNamey$"
+                              }
+                            ]
                           },
                           "named": true,
                           "value": "pattern"
@@ -1528,48 +1564,91 @@
         }
       ]
     },
-    "_pattern_constructor": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_hq_qualified_prefix_term"
-            },
-            "named": true,
-            "value": "ctor"
-          },
-          {
-            "type": "REPEAT1",
-            "content": {
-              "type": "CHOICE",
+    "_hqNamey": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "var_or_nullary_ctor"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
               "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "STRING",
+                    "value": "@"
+                  },
+                  "named": true,
+                  "value": "at_token"
+                },
                 {
                   "type": "SYMBOL",
                   "name": "_pattern_leaf"
                 }
               ]
+            },
+            {
+              "type": "BLANK"
             }
-          }
-        ]
-      }
+          ]
+        }
+      ]
     },
-    "_pattern_candidates": {
+    "_pattern_leaf": {
       "type": "CHOICE",
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_pattern_leaf$"
+          "name": "_hqNamey"
         },
         {
           "type": "SYMBOL",
-          "name": "_hqNamey$"
+          "name": "_pattern_leaf$"
         }
       ]
+    },
+    "_pattern_leaf$": {
+      "type": "PREC",
+      "value": 2,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "var_or_nullary_ctor"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_literal_pattern"
+          },
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "STRING",
+              "value": "_"
+            },
+            "named": true,
+            "value": "blank_pattern"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "literal_list_pattern"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "parenthesized_or_tuple_pattern"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "effect_pattern"
+          }
+        ]
+      }
     },
     "literal_list_pattern": {
       "type": "CHOICE",
@@ -1778,92 +1857,6 @@
           "value": "}"
         }
       ]
-    },
-    "_hqNamey": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "var_or_nullary_ctor"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "STRING",
-                    "value": "@"
-                  },
-                  "named": true,
-                  "value": "at_token"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "_pattern_leaf"
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        }
-      ]
-    },
-    "_pattern_leaf": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_hqNamey"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_pattern_leaf$"
-        }
-      ]
-    },
-    "_pattern_leaf$": {
-      "type": "PREC",
-      "value": 2,
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "var_or_nullary_ctor"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "_literal_pattern"
-          },
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "STRING",
-              "value": "_"
-            },
-            "named": true,
-            "value": "blank_pattern"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "literal_list_pattern"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "parenthesized_or_tuple_pattern"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "effect_pattern"
-          }
-        ]
-      }
     },
     "_boolean_exp": {
       "type": "PREC_LEFT",
@@ -4417,7 +4410,23 @@
         },
         {
           "type": "SYMBOL",
+          "name": "_layout_start"
+        },
+        {
+          "type": "SYMBOL",
           "name": "_watch_expression"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_layout_end"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
@@ -4525,19 +4534,11 @@
       "_infix_lhs"
     ],
     [
-      "var_or_nullary_ctor",
-      "_pattern_constructor"
-    ],
-    [
       "_term_leaf",
       "_watch_expression"
     ],
     [
       "_literal_pattern",
-      "_term_leaf"
-    ],
-    [
-      "_pattern_constructor",
       "_term_leaf"
     ],
     [
