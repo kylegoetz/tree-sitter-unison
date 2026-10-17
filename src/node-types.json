@@ -72,7 +72,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "bang",
@@ -80,10 +80,6 @@
         },
         {
           "type": "built_in_hash",
-          "named": true
-        },
-        {
-          "type": "close_parens",
           "named": true
         },
         {
@@ -175,10 +171,6 @@
           "named": true
         },
         {
-          "type": "open_parens",
-          "named": true
-        },
-        {
           "type": "operator",
           "named": true
         },
@@ -223,10 +215,6 @@
         },
         {
           "type": "built_in_hash",
-          "named": true
-        },
-        {
-          "type": "close_parens",
           "named": true
         },
         {
@@ -319,10 +307,6 @@
         },
         {
           "type": "nat",
-          "named": true
-        },
-        {
-          "type": "open_parens",
           "named": true
         },
         {
@@ -494,7 +478,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "bang",
@@ -502,10 +486,6 @@
         },
         {
           "type": "built_in_hash",
-          "named": true
-        },
-        {
-          "type": "close_parens",
           "named": true
         },
         {
@@ -594,10 +574,6 @@
         },
         {
           "type": "nat",
-          "named": true
-        },
-        {
-          "type": "open_parens",
           "named": true
         },
         {
@@ -1086,19 +1062,11 @@
           "named": true
         },
         {
-          "type": "close_parens",
-          "named": true
-        },
-        {
           "type": "comma",
           "named": true
         },
         {
           "type": "hash_qualifier",
-          "named": true
-        },
-        {
-          "type": "open_parens",
           "named": true
         },
         {
@@ -1138,10 +1106,6 @@
         },
         {
           "type": "built_in_hash",
-          "named": true
-        },
-        {
-          "type": "close_parens",
           "named": true
         },
         {
@@ -1230,10 +1194,6 @@
         },
         {
           "type": "nat",
-          "named": true
-        },
-        {
-          "type": "open_parens",
           "named": true
         },
         {
@@ -1610,182 +1570,10 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
-          "type": "and",
-          "named": true
-        },
-        {
-          "type": "arrow_symbol",
-          "named": true
-        },
-        {
-          "type": "bang",
-          "named": true
-        },
-        {
-          "type": "built_in_hash",
-          "named": true
-        },
-        {
-          "type": "close_bracket",
-          "named": true
-        },
-        {
-          "type": "close_parens",
-          "named": true
-        },
-        {
           "type": "comma",
-          "named": true
-        },
-        {
-          "type": "delay_block",
-          "named": true
-        },
-        {
-          "type": "delay_quote",
-          "named": true
-        },
-        {
-          "type": "delayed",
-          "named": true
-        },
-        {
-          "type": "doc_block",
-          "named": true
-        },
-        {
-          "type": "effect",
-          "named": true
-        },
-        {
-          "type": "exp_if",
-          "named": true
-        },
-        {
-          "type": "exp_let",
-          "named": true
-        },
-        {
-          "type": "float",
-          "named": true
-        },
-        {
-          "type": "forall",
-          "named": true
-        },
-        {
-          "type": "force",
-          "named": true
-        },
-        {
-          "type": "handler",
-          "named": true
-        },
-        {
-          "type": "hash_qualifier",
-          "named": true
-        },
-        {
-          "type": "int",
-          "named": true
-        },
-        {
-          "type": "literal_boolean",
-          "named": true
-        },
-        {
-          "type": "literal_byte",
-          "named": true
-        },
-        {
-          "type": "literal_char",
-          "named": true
-        },
-        {
-          "type": "literal_function",
-          "named": true
-        },
-        {
-          "type": "literal_hex",
-          "named": true
-        },
-        {
-          "type": "literal_list",
-          "named": true
-        },
-        {
-          "type": "literal_termlink",
-          "named": true
-        },
-        {
-          "type": "literal_text",
-          "named": true
-        },
-        {
-          "type": "literal_typelink",
-          "named": true
-        },
-        {
-          "type": "match_expression",
-          "named": true
-        },
-        {
-          "type": "match_expression_lambda",
-          "named": true
-        },
-        {
-          "type": "nat",
-          "named": true
-        },
-        {
-          "type": "open_bracket",
-          "named": true
-        },
-        {
-          "type": "open_parens",
-          "named": true
-        },
-        {
-          "type": "operator",
-          "named": true
-        },
-        {
-          "type": "or",
-          "named": true
-        },
-        {
-          "type": "path",
-          "named": true
-        },
-        {
-          "type": "regular_identifier",
-          "named": true
-        },
-        {
-          "type": "rewrite_block",
-          "named": true
-        },
-        {
-          "type": "sequence_type",
-          "named": true
-        },
-        {
-          "type": "tuple_or_parenthesized",
-          "named": true
-        },
-        {
-          "type": "tuple_or_parenthesized_type",
-          "named": true
-        },
-        {
-          "type": "type_signature_colon",
-          "named": true
-        },
-        {
-          "type": "unit",
           "named": true
         }
       ]
@@ -1801,22 +1589,6 @@
       "types": [
         {
           "type": "comma",
-          "named": true
-        },
-        {
-          "type": "concat",
-          "named": true
-        },
-        {
-          "type": "cons",
-          "named": true
-        },
-        {
-          "type": "pattern",
-          "named": true
-        },
-        {
-          "type": "snoc",
           "named": true
         }
       ]
@@ -1901,6 +1673,14 @@
         "required": true,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
             "type": ",",
             "named": false
           },
@@ -1918,10 +1698,6 @@
           },
           {
             "type": "built_in_hash",
-            "named": true
-          },
-          {
-            "type": "close_parens",
             "named": true
           },
           {
@@ -2026,10 +1802,6 @@
           },
           {
             "type": "nat",
-            "named": true
-          },
-          {
-            "type": "open_parens",
             "named": true
           },
           {
@@ -2174,12 +1946,8 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
-        {
-          "type": "close_parens",
-          "named": true
-        },
         {
           "type": "comma",
           "named": true
@@ -2190,10 +1958,6 @@
         },
         {
           "type": "cons",
-          "named": true
-        },
-        {
-          "type": "open_parens",
           "named": true
         },
         {
@@ -2427,19 +2191,11 @@
           "named": true
         },
         {
-          "type": "close_parens",
-          "named": true
-        },
-        {
           "type": "comma",
           "named": true
         },
         {
           "type": "hash_qualifier",
-          "named": true
-        },
-        {
-          "type": "open_parens",
           "named": true
         },
         {
@@ -2514,10 +2270,6 @@
         },
         {
           "type": "case",
-          "named": true
-        },
-        {
-          "type": "close_parens",
           "named": true
         },
         {
@@ -2626,10 +2378,6 @@
         },
         {
           "type": "nat",
-          "named": true
-        },
-        {
-          "type": "open_parens",
           "named": true
         },
         {
@@ -2716,10 +2464,6 @@
           "named": true
         },
         {
-          "type": "close_parens",
-          "named": true
-        },
-        {
           "type": "comma",
           "named": true
         },
@@ -2825,10 +2569,6 @@
         },
         {
           "type": "nat",
-          "named": true
-        },
-        {
-          "type": "open_parens",
           "named": true
         },
         {
@@ -3254,7 +2994,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "and",
@@ -3270,10 +3010,6 @@
         },
         {
           "type": "built_in_hash",
-          "named": true
-        },
-        {
-          "type": "close_parens",
           "named": true
         },
         {
@@ -3378,10 +3114,6 @@
         },
         {
           "type": "nat",
-          "named": true
-        },
-        {
-          "type": "open_parens",
           "named": true
         },
         {
@@ -3761,14 +3493,10 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "built_in_hash",
-          "named": true
-        },
-        {
-          "type": "close_parens",
           "named": true
         },
         {
@@ -3777,10 +3505,6 @@
         },
         {
           "type": "hash_qualifier",
-          "named": true
-        },
-        {
-          "type": "open_parens",
           "named": true
         },
         {
@@ -3891,10 +3615,6 @@
   },
   {
     "type": "cases",
-    "named": true
-  },
-  {
-    "type": "close_bracket",
     "named": true
   },
   {
@@ -4012,10 +3732,6 @@
   },
   {
     "type": "nat",
-    "named": true
-  },
-  {
-    "type": "open_bracket",
     "named": true
   },
   {
