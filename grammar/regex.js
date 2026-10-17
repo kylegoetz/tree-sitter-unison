@@ -11,7 +11,7 @@ const  UCASE_INITIAL_VARID = /[_\p{Lu}\u{1f400}-\u{1faff}]([_!'\p{L}\p{N}\u{1f40
 // const VARID = new RegExp("[a-zA-Z_\u{1F400}-\u{1FAFF}][a-zA-Z0-9_!'\u{1F400}-\u{1FAFF}]*", "u")
 
 // `=` and `|` and `!` are not operators
-const ONE_SYMBOL = /[$%^&*\-+<>~\\\/:]/
+const ONE_SYMBOL = /[$%^&*\-+<>~\\\/]/
 
 const SYM_CLASS_NO_PIPE = '[!$%^&*\-=+<>~\\\/:]'
 
@@ -34,7 +34,7 @@ const SYMBOLIC_PATH_SEGMENT = composeRegex(ONE_SYMBOL, TWO_SYMBOL, THREE_SYMBOL_
 // const NON_TERMINAL_PATH_SEGMENT = /foo/
 const NON_TERMINAL_PATH_SEGMENT = composeRegex(VARID, SYMBOLIC_PATH_SEGMENT)
 const path =
-  /\.?((([_\p{L}\u{1f400}-\u{1faff}][_!'\p{L}\p{N}\u{1f400}-\u{1faff}]*)|([$%^&*\-+<>~\\\/:])|(-[!$%^&*\-=+<~\\\/|:])|([!$%^*=+<>~\\\/:]{2})|(&[!$%^*\-=+<>~\\\/|:])|(\|[!$%^&*\-=+<>~\\\/:])|([!$%^&*\-=+<>~\\/|:]{3,}))\.)+/u
+  new RegExp(`\\.?((${NON_TERMINAL_PATH_SEGMENT.source})\\.)+`, 'u')
 
 module.exports = {
   path,

@@ -6,6 +6,7 @@ const conditionals = require("./conditionals");
 const delayed = require("./delayed-computation");
 const expression = require("./expression");
 const blocks = require("./blocks");
+const records = require("./records");
 
 /**
  * There are five types of top-level patterns:
@@ -25,6 +26,7 @@ module.exports = {
   ...delayed,
   ...expression,
   ...blocks,
+  ...records,
 
   type_signature: $ =>
     seq(

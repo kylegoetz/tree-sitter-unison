@@ -11,7 +11,7 @@ module.exports = {
   _match_with: $ =>
     prec.right(
       seq(
-        openBlockWith($, $.match),
+        $.match, $._record_start,
         field('scrutinee', $._term),
         optional($._layout_end),
         $.with,
@@ -25,7 +25,7 @@ module.exports = {
       seq($.cases, $._layout_start, $._match_cases, optional($._layout_end)),
     ),
 
-  _match_cases: $ => prec.right(sep1($._layout_semicolon, $.pattern_case)),
+  _match_cases: $ => prec.dynamic(1, prec.right(sep1($._layout_semicolon, $.pattern_case))),
 
   /**
    * Case examples:
@@ -86,6 +86,7 @@ module.exports = {
         $.literal_list_pattern,
         $.parenthesized_or_tuple_pattern,
         $.effect_pattern,
+        $.record_pattern,
       ),
     ),
 
@@ -101,7 +102,7 @@ module.exports = {
     ),
   parenthesized_or_tuple_pattern: $ =>
     seq(
-      openBlockWith($, alias('(', $.open_parens)),
+      alias('(', $.open_parens), $._record_start,
       sep(alias(',', $.comma), choice($._pattern_root)),
       $._layout_end,
       alias(')', $.close_parens),
@@ -113,7 +114,7 @@ module.exports = {
 
   effect_pattern: $ =>
     seq(
-      openBlockWith($, '{'),
+      '{', $._record_start,
       choice($.effect_pure, $.effect_bind),
       $._layout_end,
       '}',

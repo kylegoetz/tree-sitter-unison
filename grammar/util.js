@@ -8,7 +8,7 @@ braces = (...rule) => seq('{', ...rule, '}')
 
 parens = (...rule) => seq('(', ...rule, ')')
 
-paren$ = ($, ...rule) => seq('(', $._layout_start, ...rule, $._layout_end, ')')
+paren$ = ($, ...rule) => seq('(', $._record_start, ...rule, $._layout_end, ')')
 
 /**
  * Wrap a repeated rule with semicolon rules.

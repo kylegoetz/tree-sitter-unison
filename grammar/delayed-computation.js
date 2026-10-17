@@ -34,6 +34,11 @@ module.exports = {
       $.bang,
       $.doc_block,
       $.unit,
+      $.record_literal,
+      $.record_access,
+      $.record_accessor,
+      $.record_field_read,
+      $.record_update,
     ),
   literal_list: $ =>
     seq(

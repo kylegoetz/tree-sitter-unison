@@ -5,7 +5,7 @@ module.exports = {
   imm_wordy_id: ($) => token.immediate(regex.varid),
   wordy_id: $ => regex.varid,
 
-  symboly_id: ($) => regex.symboly_id,
+  symboly_id: ($) => choice(regex.symboly_id, '++', '+:', ':+'),
   imm_symboly_id: ($) => token.immediate(regex.symboly_id),
 
   /**

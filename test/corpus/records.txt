@@ -1,0 +1,666 @@
+==================
+[Records] literals and constructor payloads
+==================
+type Point = Point { x: Nat, y: Nat }
+mkPoint x y = Point { x: x, y: y }
+empty : {}
+empty = {}
+nested = { a: { b: 7 }, values: [1, 2], f: x -> x }
+multiline =
+  { x: 1
+  , y: 2
+  }
+
+---
+
+(unison
+  (type_declaration
+    (type_kw)
+    (type_constructor
+      (type_name
+        (regular_identifier)))
+    (kw_equals)
+    (regular_identifier)
+    (record
+      (record_field
+        (field_name)
+        (regular_identifier))
+      (record_field
+        (field_name)
+        (regular_identifier))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (regular_identifier)
+        (record_literal
+          (record_literal_field
+            (field_name)
+            (regular_identifier))
+          (record_literal_field
+            (field_name)
+            (regular_identifier))))))
+  (term_declaration
+    (type_signature
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (record)))
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (record_literal))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (record_literal
+          (record_literal_field
+            (field_name)
+            (record_literal
+              (record_literal_field
+                (field_name)
+                (nat))))
+          (record_literal_field
+            (field_name)
+            (literal_list
+              (open_bracket)
+              (nat)
+              (nat)
+              (close_bracket)))
+          (record_literal_field
+            (field_name)
+            (literal_function
+              (regular_identifier)
+              (arrow_symbol)
+              (regular_identifier)))))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (record_literal
+          (record_literal_field
+            (field_name)
+            (nat))
+          (record_literal_field
+            (field_name)
+            (nat)))))))
+
+==================
+[Records] types and named rows
+==================
+rowId : { x: Nat | r } -> { x: Nat | r }
+rowId r = r
+flat : { a: Nat | { b: Text | rest } } -> { a: Nat, b: Text | rest }
+flat r = r
+containers : Box { x: Nat } -> [{ x: Nat | r }]
+containers r = [r]
+effectful : { x: Nat } ->{IO} { y: Text }
+effectful r = { y: "hi" }
+
+---
+
+(unison
+  (term_declaration
+    (type_signature
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (record
+          (record_field
+            (field_name)
+            (regular_identifier))
+          (pipe)
+          (regular_identifier))
+        (arrow_symbol)
+        (record
+          (record_field
+            (field_name)
+            (regular_identifier))
+          (pipe)
+          (regular_identifier))))
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (regular_identifier))))
+  (term_declaration
+    (type_signature
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (record
+          (record_field
+            (field_name)
+            (regular_identifier))
+          (pipe)
+          (record
+            (record_field
+              (field_name)
+              (regular_identifier))
+            (pipe)
+            (regular_identifier)))
+        (arrow_symbol)
+        (record
+          (record_field
+            (field_name)
+            (regular_identifier))
+          (record_field
+            (field_name)
+            (regular_identifier))
+          (pipe)
+          (regular_identifier))))
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (regular_identifier))))
+  (term_declaration
+    (type_signature
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (regular_identifier)
+        (record
+          (record_field
+            (field_name)
+            (regular_identifier)))
+        (arrow_symbol)
+        (sequence_type
+          (record
+            (record_field
+              (field_name)
+              (regular_identifier))
+            (pipe)
+            (regular_identifier)))))
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (literal_list
+          (open_bracket)
+          (regular_identifier)
+          (close_bracket)))))
+  (term_declaration
+    (type_signature
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (record
+          (record_field
+            (field_name)
+            (regular_identifier)))
+        (arrow_symbol)
+        (effect
+          (regular_identifier))
+        (record
+          (record_field
+            (field_name)
+            (regular_identifier)))))
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (record_literal
+          (record_literal_field
+            (field_name)
+            (literal_text)))))))
+
+==================
+[Records] patterns and destructuring
+==================
+unpack = cases
+  Point { x: x, y: y } -> (x, y)
+nested = cases
+  { a: { b: Some n }, c: 0 } -> n
+  { a: { b: None } } -> 0
+  _ -> 1
+lists = cases
+  { items: x +: xs, other: _ } -> x
+sum r =
+  { x: x, y: y } = r
+  x + y
+asPat = cases
+  x@(Some n) -> n
+  None -> 0
+
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (match_expression_lambda
+          (cases)
+          (pattern_case
+            (pattern
+              (var_or_nullary_ctor
+                (regular_identifier))
+              (record_pattern
+                (record_pattern_field
+                  (field_name)
+                  (pattern
+                    (var_or_nullary_ctor
+                      (regular_identifier))))
+                (record_pattern_field
+                  (field_name)
+                  (pattern
+                    (var_or_nullary_ctor
+                      (regular_identifier))))))
+            (arrow_symbol)
+            (block_term
+              (tuple_or_parenthesized
+                (regular_identifier)
+                (regular_identifier))))))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (match_expression_lambda
+          (cases)
+          (pattern_case
+            (pattern
+              (record_pattern
+                (record_pattern_field
+                  (field_name)
+                  (pattern
+                    (record_pattern
+                      (record_pattern_field
+                        (field_name)
+                        (pattern
+                          (var_or_nullary_ctor
+                            (regular_identifier))
+                          (var_or_nullary_ctor
+                            (regular_identifier)))))))
+                (record_pattern_field
+                  (field_name)
+                  (pattern
+                    (nat)))))
+            (arrow_symbol)
+            (block_term
+              (regular_identifier)))
+          (pattern_case
+            (pattern
+              (record_pattern
+                (record_pattern_field
+                  (field_name)
+                  (pattern
+                    (record_pattern
+                      (record_pattern_field
+                        (field_name)
+                        (pattern
+                          (var_or_nullary_ctor
+                            (regular_identifier)))))))))
+            (arrow_symbol)
+            (block_term
+              (nat)))
+          (pattern_case
+            (pattern
+              (blank_pattern))
+            (arrow_symbol)
+            (block_term
+              (nat)))))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (match_expression_lambda
+          (cases)
+          (pattern_case
+            (pattern
+              (record_pattern
+                (record_pattern_field
+                  (field_name)
+                  (pattern
+                    (var_or_nullary_ctor
+                      (regular_identifier)))
+                  (cons)
+                  (pattern
+                    (var_or_nullary_ctor
+                      (regular_identifier))))
+                (record_pattern_field
+                  (field_name)
+                  (pattern
+                    (blank_pattern)))))
+            (arrow_symbol)
+            (block_term
+              (regular_identifier)))))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (destructuring_bind
+        (record_pattern
+          (record_pattern_field
+            (field_name)
+            (pattern
+              (var_or_nullary_ctor
+                (regular_identifier))))
+          (record_pattern_field
+            (field_name)
+            (pattern
+              (var_or_nullary_ctor
+                (regular_identifier)))))
+        (kw_equals)
+        (block_term
+          (regular_identifier)))
+      (block_term
+        (regular_identifier)
+        (operator)
+        (regular_identifier))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (match_expression_lambda
+          (cases)
+          (pattern_case
+            (pattern
+              (var_or_nullary_ctor
+                (regular_identifier))
+              (at_token)
+              (parenthesized_or_tuple_pattern
+                (open_parens)
+                (pattern
+                  (var_or_nullary_ctor
+                    (regular_identifier))
+                  (var_or_nullary_ctor
+                    (regular_identifier)))
+                (close_parens)))
+            (arrow_symbol)
+            (block_term
+              (regular_identifier)))
+          (pattern_case
+            (pattern
+              (var_or_nullary_ctor
+                (regular_identifier)))
+            (arrow_symbol)
+            (block_term
+              (nat))))))))
+
+==================
+[Records] getters setters and precedence
+==================
+get r = (r@x, r@ x, r @ x)
+chain r = f r@a@b
+expressions = ((mkRec 5)@v, ({ v: 9 })@v, { v: 9 }@v)
+set r v = (r@x.set v, r@ x.set v, r @ x.set v)
+prefix = ((@x), (@x.set))
+mapped = List.map (@name) [{ name: "Alice" }]
+
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (tuple_or_parenthesized
+          (record_access
+            (regular_identifier)
+            (at_token)
+            (field_name))
+          (record_access
+            (regular_identifier)
+            (at_token)
+            (field_name))
+          (record_access
+            (regular_identifier)
+            (at_token)
+            (field_name))))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (regular_identifier)
+        (record_access
+          (record_access
+            (regular_identifier)
+            (at_token)
+            (field_name))
+          (at_token)
+          (field_name)))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (tuple_or_parenthesized
+          (record_access
+            (tuple_or_parenthesized
+              (regular_identifier)
+              (nat))
+            (at_token)
+            (field_name))
+          (record_access
+            (tuple_or_parenthesized
+              (record_literal
+                (record_literal_field
+                  (field_name)
+                  (nat))))
+            (at_token)
+            (field_name))
+          (record_access
+            (record_literal
+              (record_literal_field
+                (field_name)
+                (nat)))
+            (at_token)
+            (field_name))))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (tuple_or_parenthesized
+          (record_access
+            (regular_identifier)
+            (at_token)
+            (field_name))
+          (regular_identifier)
+          (record_access
+            (regular_identifier)
+            (at_token)
+            (field_name))
+          (regular_identifier)
+          (record_access
+            (regular_identifier)
+            (at_token)
+            (field_name))
+          (regular_identifier)))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (tuple_or_parenthesized
+          (record_accessor
+            (at_token)
+            (field_name))
+          (record_accessor
+            (at_token)
+            (field_name))))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (path)
+        (regular_identifier)
+        (record_accessor
+          (at_token)
+          (field_name))
+        (literal_list
+          (open_bracket)
+          (record_literal
+            (record_literal_field
+              (field_name)
+              (literal_text)))
+          (close_bracket))))))
+
+==================
+[Records] record-set blocks and field reads
+==================
+setBoth r = r@{x: @x + 1, y: @x + @y}
+deep r = r@a@b@{x: @x + 1}
+applyTo r = r@{x: Nat.increment @y}
+spaced r = r @ {x: @x}
+multiline r = r@{
+  x: @x + 1,
+  y: @y
+}
+nested r = r@{x: f @inner@y, y: (n -> @x + n) 1}
+
+---
+
+(unison
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (record_update
+          (regular_identifier)
+          (at_token)
+          (record_literal_field
+            (field_name)
+            (record_field_read
+              (at_token)
+              (field_name))
+            (operator)
+            (nat))
+          (record_literal_field
+            (field_name)
+            (record_field_read
+              (at_token)
+              (field_name))
+            (operator)
+            (record_field_read
+              (at_token)
+              (field_name)))))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (record_update
+          (record_access
+            (record_access
+              (regular_identifier)
+              (at_token)
+              (field_name))
+            (at_token)
+            (field_name))
+          (at_token)
+          (record_literal_field
+            (field_name)
+            (record_field_read
+              (at_token)
+              (field_name))
+            (operator)
+            (nat))))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (record_update
+          (regular_identifier)
+          (at_token)
+          (record_literal_field
+            (field_name)
+            (path)
+            (regular_identifier)
+            (record_field_read
+              (at_token)
+              (field_name)))))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (record_update
+          (regular_identifier)
+          (at_token)
+          (record_literal_field
+            (field_name)
+            (record_field_read
+              (at_token)
+              (field_name)))))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (record_update
+          (regular_identifier)
+          (at_token)
+          (record_literal_field
+            (field_name)
+            (record_field_read
+              (at_token)
+              (field_name))
+            (operator)
+            (nat))
+          (record_literal_field
+            (field_name)
+            (record_field_read
+              (at_token)
+              (field_name)))))))
+  (term_declaration
+    (term_definition
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (record_update
+          (regular_identifier)
+          (at_token)
+          (record_literal_field
+            (field_name)
+            (regular_identifier)
+            (record_access
+              (record_field_read
+                (at_token)
+                (field_name))
+              (at_token)
+              (field_name)))
+          (record_literal_field
+            (field_name)
+            (tuple_or_parenthesized
+              (literal_function
+                (regular_identifier)
+                (arrow_symbol)
+                (record_field_read
+                  (at_token)
+                  (field_name))
+                (operator)
+                (regular_identifier)))
+            (nat)))))))

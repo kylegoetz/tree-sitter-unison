@@ -1,4 +1,4 @@
-const { sep } = require('./util')
+const { sep, sep1 } = require('./util')
 const regex = require('./regex')
 
 module.exports = {
@@ -63,15 +63,10 @@ module.exports = {
     $.type_constructor
   ),
 
-  _type_rhs: $ => sep1($.pipe, choice($._value_type, $.record)),
+  _type_rhs: $ => sep1($.pipe, $._value_type),
 
   // Record type
-  record: $ => seq('{', $._record_fields_block, '}',),
+  record: $ => seq('{', optional($._record_fields_inline), optional(seq($.pipe, field('row', $._value_type))), '}'),
   record_field: $ => seq(alias($.wordy_id, $.field_name), ':', field('type', $._value_type)),
   _record_fields_inline: $ => seq(sep1(',', $.record_field), optional(',')),
-  _record_fields_block: $ => choice($._record_fields_inline, seq(
-    $._layout_start,
-    sep($._layout_semicolon, $._record_fields_inline),
-    $._layout_end,
-  )),
 }

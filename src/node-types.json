@@ -179,6 +179,26 @@
           "named": true
         },
         {
+          "type": "record_access",
+          "named": true
+        },
+        {
+          "type": "record_accessor",
+          "named": true
+        },
+        {
+          "type": "record_field_read",
+          "named": true
+        },
+        {
+          "type": "record_literal",
+          "named": true
+        },
+        {
+          "type": "record_update",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
@@ -322,6 +342,26 @@
           "named": true
         },
         {
+          "type": "record_access",
+          "named": true
+        },
+        {
+          "type": "record_accessor",
+          "named": true
+        },
+        {
+          "type": "record_field_read",
+          "named": true
+        },
+        {
+          "type": "record_literal",
+          "named": true
+        },
+        {
+          "type": "record_update",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
@@ -387,6 +427,10 @@
           },
           {
             "type": "path",
+            "named": true
+          },
+          {
+            "type": "record",
             "named": true
           },
           {
@@ -580,6 +624,26 @@
           "named": true
         },
         {
+          "type": "record_access",
+          "named": true
+        },
+        {
+          "type": "record_accessor",
+          "named": true
+        },
+        {
+          "type": "record_field_read",
+          "named": true
+        },
+        {
+          "type": "record_literal",
+          "named": true
+        },
+        {
+          "type": "record_update",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
@@ -628,6 +692,10 @@
         },
         {
           "type": "path",
+          "named": true
+        },
+        {
+          "type": "record",
           "named": true
         },
         {
@@ -710,6 +778,10 @@
           "named": true
         },
         {
+          "type": "record_pattern",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
@@ -785,6 +857,10 @@
         },
         {
           "type": "path",
+          "named": true
+        },
+        {
+          "type": "record",
           "named": true
         },
         {
@@ -872,6 +948,10 @@
         },
         {
           "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "record_pattern",
           "named": true
         },
         {
@@ -1208,6 +1288,26 @@
           "named": true
         },
         {
+          "type": "record_access",
+          "named": true
+        },
+        {
+          "type": "record_accessor",
+          "named": true
+        },
+        {
+          "type": "record_field_read",
+          "named": true
+        },
+        {
+          "type": "record_literal",
+          "named": true
+        },
+        {
+          "type": "record_update",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
@@ -1529,6 +1629,30 @@
           "named": true
         },
         {
+          "type": "record",
+          "named": true
+        },
+        {
+          "type": "record_access",
+          "named": true
+        },
+        {
+          "type": "record_accessor",
+          "named": true
+        },
+        {
+          "type": "record_field_read",
+          "named": true
+        },
+        {
+          "type": "record_literal",
+          "named": true
+        },
+        {
+          "type": "record_update",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
@@ -1705,6 +1829,30 @@
         },
         {
           "type": "prefix_operator",
+          "named": true
+        },
+        {
+          "type": "record",
+          "named": true
+        },
+        {
+          "type": "record_access",
+          "named": true
+        },
+        {
+          "type": "record_accessor",
+          "named": true
+        },
+        {
+          "type": "record_field_read",
+          "named": true
+        },
+        {
+          "type": "record_literal",
+          "named": true
+        },
+        {
+          "type": "record_update",
           "named": true
         },
         {
@@ -1992,6 +2140,30 @@
             "named": true
           },
           {
+            "type": "record",
+            "named": true
+          },
+          {
+            "type": "record_access",
+            "named": true
+          },
+          {
+            "type": "record_accessor",
+            "named": true
+          },
+          {
+            "type": "record_field_read",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
+            "type": "record_update",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           },
@@ -2116,6 +2288,11 @@
     "fields": {}
   },
   {
+    "type": "operator",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "parenthesized_or_tuple_pattern",
     "named": true,
     "fields": {},
@@ -2160,7 +2337,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "at_token",
@@ -2200,6 +2377,10 @@
         },
         {
           "type": "parenthesized_or_tuple_pattern",
+          "named": true
+        },
+        {
+          "type": "record_pattern",
           "named": true
         },
         {
@@ -2267,13 +2448,281 @@
   {
     "type": "record",
     "named": true,
-    "fields": {},
+    "fields": {
+      "row": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "arrow_symbol",
+            "named": true
+          },
+          {
+            "type": "built_in_hash",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
+            "type": "effect",
+            "named": true
+          },
+          {
+            "type": "forall",
+            "named": true
+          },
+          {
+            "type": "hash_qualifier",
+            "named": true
+          },
+          {
+            "type": "operator",
+            "named": true
+          },
+          {
+            "type": "path",
+            "named": true
+          },
+          {
+            "type": "record",
+            "named": true
+          },
+          {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "unit",
+            "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": false,
       "types": [
         {
+          "type": "pipe",
+          "named": true
+        },
+        {
           "type": "record_field",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "record_access",
+    "named": true,
+    "fields": {
+      "record": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "bang",
+            "named": true
+          },
+          {
+            "type": "built_in_hash",
+            "named": true
+          },
+          {
+            "type": "delay_block",
+            "named": true
+          },
+          {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "exp_if",
+            "named": true
+          },
+          {
+            "type": "exp_let",
+            "named": true
+          },
+          {
+            "type": "float",
+            "named": true
+          },
+          {
+            "type": "force",
+            "named": true
+          },
+          {
+            "type": "handler",
+            "named": true
+          },
+          {
+            "type": "hash_qualifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": true
+          },
+          {
+            "type": "literal_boolean",
+            "named": true
+          },
+          {
+            "type": "literal_byte",
+            "named": true
+          },
+          {
+            "type": "literal_char",
+            "named": true
+          },
+          {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
+            "type": "literal_list",
+            "named": true
+          },
+          {
+            "type": "literal_termlink",
+            "named": true
+          },
+          {
+            "type": "literal_text",
+            "named": true
+          },
+          {
+            "type": "literal_typelink",
+            "named": true
+          },
+          {
+            "type": "match_expression",
+            "named": true
+          },
+          {
+            "type": "match_expression_lambda",
+            "named": true
+          },
+          {
+            "type": "nat",
+            "named": true
+          },
+          {
+            "type": "operator",
+            "named": true
+          },
+          {
+            "type": "path",
+            "named": true
+          },
+          {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
+            "type": "record_access",
+            "named": true
+          },
+          {
+            "type": "record_accessor",
+            "named": true
+          },
+          {
+            "type": "record_field_read",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
+            "type": "record_update",
+            "named": true
+          },
+          {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "unit",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "at_token",
+          "named": true
+        },
+        {
+          "type": "field_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "record_accessor",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "at_token",
+          "named": true
+        },
+        {
+          "type": "field_name",
           "named": true
         }
       ]
@@ -2324,6 +2773,10 @@
             "named": true
           },
           {
+            "type": "record",
+            "named": true
+          },
+          {
             "type": "regular_identifier",
             "named": true
           },
@@ -2356,6 +2809,486 @@
       "types": [
         {
           "type": "field_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "record_field_read",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "at_token",
+          "named": true
+        },
+        {
+          "type": "field_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "record_literal",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "record_literal_field",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "record_literal_field",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "and",
+            "named": true
+          },
+          {
+            "type": "arrow_symbol",
+            "named": true
+          },
+          {
+            "type": "bang",
+            "named": true
+          },
+          {
+            "type": "built_in_hash",
+            "named": true
+          },
+          {
+            "type": "delay_block",
+            "named": true
+          },
+          {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "delayed",
+            "named": true
+          },
+          {
+            "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "effect",
+            "named": true
+          },
+          {
+            "type": "exp_if",
+            "named": true
+          },
+          {
+            "type": "exp_let",
+            "named": true
+          },
+          {
+            "type": "float",
+            "named": true
+          },
+          {
+            "type": "forall",
+            "named": true
+          },
+          {
+            "type": "force",
+            "named": true
+          },
+          {
+            "type": "handler",
+            "named": true
+          },
+          {
+            "type": "hash_qualifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": true
+          },
+          {
+            "type": "literal_boolean",
+            "named": true
+          },
+          {
+            "type": "literal_byte",
+            "named": true
+          },
+          {
+            "type": "literal_char",
+            "named": true
+          },
+          {
+            "type": "literal_function",
+            "named": true
+          },
+          {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
+            "type": "literal_list",
+            "named": true
+          },
+          {
+            "type": "literal_termlink",
+            "named": true
+          },
+          {
+            "type": "literal_text",
+            "named": true
+          },
+          {
+            "type": "literal_typelink",
+            "named": true
+          },
+          {
+            "type": "match_expression",
+            "named": true
+          },
+          {
+            "type": "match_expression_lambda",
+            "named": true
+          },
+          {
+            "type": "nat",
+            "named": true
+          },
+          {
+            "type": "operator",
+            "named": true
+          },
+          {
+            "type": "or",
+            "named": true
+          },
+          {
+            "type": "path",
+            "named": true
+          },
+          {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
+            "type": "record",
+            "named": true
+          },
+          {
+            "type": "record_access",
+            "named": true
+          },
+          {
+            "type": "record_accessor",
+            "named": true
+          },
+          {
+            "type": "record_field_read",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
+            "type": "record_update",
+            "named": true
+          },
+          {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
+            "type": "sequence_type",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized_type",
+            "named": true
+          },
+          {
+            "type": "type_signature_colon",
+            "named": true
+          },
+          {
+            "type": "unit",
+            "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "field_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "record_pattern",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "record_pattern_field",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "record_pattern_field",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "concat",
+          "named": true
+        },
+        {
+          "type": "cons",
+          "named": true
+        },
+        {
+          "type": "field_name",
+          "named": true
+        },
+        {
+          "type": "pattern",
+          "named": true
+        },
+        {
+          "type": "snoc",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "record_update",
+    "named": true,
+    "fields": {
+      "record": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "bang",
+            "named": true
+          },
+          {
+            "type": "built_in_hash",
+            "named": true
+          },
+          {
+            "type": "delay_block",
+            "named": true
+          },
+          {
+            "type": "delay_quote",
+            "named": true
+          },
+          {
+            "type": "doc_block",
+            "named": true
+          },
+          {
+            "type": "exp_if",
+            "named": true
+          },
+          {
+            "type": "exp_let",
+            "named": true
+          },
+          {
+            "type": "float",
+            "named": true
+          },
+          {
+            "type": "force",
+            "named": true
+          },
+          {
+            "type": "handler",
+            "named": true
+          },
+          {
+            "type": "hash_qualifier",
+            "named": true
+          },
+          {
+            "type": "int",
+            "named": true
+          },
+          {
+            "type": "literal_boolean",
+            "named": true
+          },
+          {
+            "type": "literal_byte",
+            "named": true
+          },
+          {
+            "type": "literal_char",
+            "named": true
+          },
+          {
+            "type": "literal_hex",
+            "named": true
+          },
+          {
+            "type": "literal_list",
+            "named": true
+          },
+          {
+            "type": "literal_termlink",
+            "named": true
+          },
+          {
+            "type": "literal_text",
+            "named": true
+          },
+          {
+            "type": "literal_typelink",
+            "named": true
+          },
+          {
+            "type": "match_expression",
+            "named": true
+          },
+          {
+            "type": "match_expression_lambda",
+            "named": true
+          },
+          {
+            "type": "nat",
+            "named": true
+          },
+          {
+            "type": "operator",
+            "named": true
+          },
+          {
+            "type": "path",
+            "named": true
+          },
+          {
+            "type": "prefix_operator",
+            "named": true
+          },
+          {
+            "type": "record_access",
+            "named": true
+          },
+          {
+            "type": "record_accessor",
+            "named": true
+          },
+          {
+            "type": "record_field_read",
+            "named": true
+          },
+          {
+            "type": "record_literal",
+            "named": true
+          },
+          {
+            "type": "record_update",
+            "named": true
+          },
+          {
+            "type": "regular_identifier",
+            "named": true
+          },
+          {
+            "type": "rewrite_block",
+            "named": true
+          },
+          {
+            "type": "tuple_or_parenthesized",
+            "named": true
+          },
+          {
+            "type": "unit",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "at_token",
+          "named": true
+        },
+        {
+          "type": "record_literal_field",
           "named": true
         }
       ]
@@ -2576,6 +3509,30 @@
           "named": true
         },
         {
+          "type": "record",
+          "named": true
+        },
+        {
+          "type": "record_access",
+          "named": true
+        },
+        {
+          "type": "record_accessor",
+          "named": true
+        },
+        {
+          "type": "record_field_read",
+          "named": true
+        },
+        {
+          "type": "record_literal",
+          "named": true
+        },
+        {
+          "type": "record_update",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
@@ -2767,6 +3724,30 @@
           "named": true
         },
         {
+          "type": "record",
+          "named": true
+        },
+        {
+          "type": "record_access",
+          "named": true
+        },
+        {
+          "type": "record_accessor",
+          "named": true
+        },
+        {
+          "type": "record_field_read",
+          "named": true
+        },
+        {
+          "type": "record_literal",
+          "named": true
+        },
+        {
+          "type": "record_update",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
@@ -2866,6 +3847,10 @@
           "named": true
         },
         {
+          "type": "record",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
@@ -2930,6 +3915,10 @@
         },
         {
           "type": "path",
+          "named": true
+        },
+        {
+          "type": "record",
           "named": true
         },
         {
@@ -3096,6 +4085,10 @@
         },
         {
           "type": "path",
+          "named": true
+        },
+        {
+          "type": "record",
           "named": true
         },
         {
@@ -3312,6 +4305,30 @@
           "named": true
         },
         {
+          "type": "record",
+          "named": true
+        },
+        {
+          "type": "record_access",
+          "named": true
+        },
+        {
+          "type": "record_accessor",
+          "named": true
+        },
+        {
+          "type": "record_field_read",
+          "named": true
+        },
+        {
+          "type": "record_literal",
+          "named": true
+        },
+        {
+          "type": "record_update",
+          "named": true
+        },
+        {
           "type": "regular_identifier",
           "named": true
         },
@@ -3380,6 +4397,10 @@
         },
         {
           "type": "path",
+          "named": true
+        },
+        {
+          "type": "record",
           "named": true
         },
         {
@@ -3745,6 +4766,14 @@
     "named": false
   },
   {
+    "type": "++",
+    "named": false
+  },
+  {
+    "type": "+:",
+    "named": false
+  },
+  {
     "type": ",",
     "named": false
   },
@@ -3757,7 +4786,15 @@
     "named": false
   },
   {
+    "type": ".set",
+    "named": false
+  },
+  {
     "type": ":",
+    "named": false
+  },
+  {
+    "type": ":+",
     "named": false
   },
   {
@@ -3927,10 +4964,6 @@
   },
   {
     "type": "open_bracket",
-    "named": true
-  },
-  {
-    "type": "operator",
     "named": true
   },
   {

@@ -16,10 +16,11 @@
       (term_definition
         (regular_identifier)
         (kw_equals)
-        (tuple_or_parenthesized
-          (nat)
-          (type_signature_colon)
-          (regular_identifier))))))
+        (block_term
+          (tuple_or_parenthesized
+            (nat)
+            (type_signature_colon)
+            (regular_identifier)))))))
 
 ===
 [Blocks] inline and multiline comments should not affect indentation calculation

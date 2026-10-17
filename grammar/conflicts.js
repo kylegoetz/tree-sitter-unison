@@ -1,4 +1,6 @@
 module.exports = $ => [
+  [$.record, $._effect_list],
+  [$.record_literal, $.record_pattern],
   [$._value_type],
   [$._type2],
   [$._type1, $.constructor],
