@@ -77,7 +77,7 @@ module.exports = {
   constructor: $ =>
     seq(
       alias($.wordy_id, $.constructor_name),
-      alias(':', $.colon),
+      ':',
       field('type', choice($._arrow, $._computation_type)),
     ),
 

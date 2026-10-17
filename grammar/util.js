@@ -60,18 +60,14 @@ const block = ($, opener) =>
     // optional($._layout_end),
   )
 
-const bracketPair = {
-  '(': ')',
-  '[': ']',
-  '{': '}',
-}
-
-seq$ = ($, a, b) =>
-  seq(a, $._start_list, sep($.comma, b), $._end_list, bracketPair[a])
-
-parenthesized = ($, el) => seq$($, '(', el)
-bracketed = ($, el) => seq$($, '[', el)
-braced = ($, el) => seq$($, '{', el)
+parenthesized = ($, el) =>
+  seq(
+    '(',
+    $._layout_start,
+    sep(seq($._comma_layout_end, ','), el),
+    $._layout_end,
+    ')'
+  )
 
 // parenthesized = ($, el) => seq('(', $.layout ')')
 // open_block_with = ($, opener, start_type) => seq(
@@ -108,7 +104,6 @@ module.exports = {
   openBlockWith,
   parens,
   parenthesized,
-  bracketed,
   sep,
   sep1,
 }

@@ -26,7 +26,9 @@ y = (+) 5 2
       (regular_identifier)
       (kw_equals)
       (block_term
+        
         (operator)
+        
         (nat)
         (nat)))))
 

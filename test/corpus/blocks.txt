@@ -23,9 +23,11 @@ x =
           (kw_equals)
           (block_term
             (tuple_or_parenthesized
+              
               (nat)
               (type_signature_colon)
-              (regular_identifier)))))
+              (regular_identifier)
+              ))))
       (block_term
         (unit)))))
 

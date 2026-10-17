@@ -528,11 +528,6 @@ static Result close_layout_in_list(State *state) {
       break;
     }
     case ',': {
-      S_ADVANCE;
-      if (state->symbols[COMMA]) {
-        MARK("comma", state);
-        return finish(COMMA, "close_layout_in_list");
-      }
       Result res = layout_end("close_layout_in_list: ,", state);
       SHORT_SCANNER;
       return res_fail;
@@ -671,28 +666,15 @@ static Result inline_tokens(State *state) {
       SHORT_SCANNER;
       return res_fail;
     }
-    case '(':
-    case '[': {
-    	if(SYM(START_LIST)) {
-     		START_LIST(state->indents);
-       	return finish(START_LIST, "inline_tokens: (");
-     	}
-     	break;
+    case ')': {
+      Result res = layout_end(")", state);
+      SHORT_SCANNER;
+      return res_fail;
     }
-    case ')':
     case ']': {
-    	if(SYM(END_LIST)) {
-     		if(state->indents->lm_len > 0) {
-       		// if it's poitig at the latest, ENDN_LSIT (and pop list marker)
-          if(state->indents->list_marker_stack[state->indents->lm_len - 1] == state->indents->len) {
-          	VEC_POP_LM(state->indents);
-            return finish(END_LIST, "inline_tokens: ) or ]");
-          } else {
-         		// otherwise, END and pop end
-            return finish(END, "inline_tokens: ) or ]");
-          }
-       	}
-     	}
+      Result res = layout_end("]", state);
+      SHORT_SCANNER;
+      return res_fail;
     }
     SYMBOLIC_CASES: {
       Result res = operator(state);
@@ -700,10 +682,11 @@ static Result inline_tokens(State *state) {
       return res_fail;
     }
     case ',': {
-      //if we have nested ends, then succeed END if END available (else fail)
-      if(state->indents->lm_len > 0 && SYM(END)) {
-      	return finish(END, "inline_tokens: COMMA");
+      if (SYM(COMMA_END)) {
+        return finish(COMMA_END, "inline_tokens: COMMA_END");
       }
+      Result res = layout_end("inline_tokens: ,", state);
+      SHORT_SCANNER;
       return res_fail;
     }
     case '{': {
@@ -796,6 +779,9 @@ static Result layout_start(uint32_t column, State *state) {
  */
 static Result post_end_semicolon(uint32_t column, State *state) {
   LOG(INFO, "->post_end_semicolon(%u, %c)\n", column, PEEK);
+  if (PEEK == ',' || PEEK == ')' || PEEK == ']' || PEEK == '}') {
+    return res_cont;
+  }
   return SYM(SEMICOLON) && indent_lesseq(column, state)
     ? finish(SEMICOLON, "post_end_semicolon")
     : res_cont;

@@ -4,22 +4,24 @@
 structural ability Throw e where throw : e ->{Throw e} a
 
 ---
+
 (unison
-    (ability_declaration
-        (structural)
-        (ability)
-        (ability_name (regular_identifier))
-        (type_argument)
-        (where)
-        (constructor
-            (constructor_name)
-            (colon)
-            (regular_identifier)
-            (arrow_symbol)
-            (effect
-                (regular_identifier)
-                (regular_identifier))
-            (regular_identifier))))
+  (ability_declaration
+    (structural)
+    (ability)
+    (ability_name
+      (regular_identifier))
+    (type_argument)
+    (where)
+    (constructor
+      (constructor_name)
+      (regular_identifier)
+      (arrow_symbol)
+      (effect
+        (regular_identifier)
+        (regular_identifier))
+      (regular_identifier))))
+
 ===
 [Abilities] unique ability
 ===
@@ -27,29 +29,30 @@ unique ability Store a where
   put : a ->{Store a} ()
   get : {Store a} a
 ---
+
 (unison
-    (ability_declaration
-        (unique)
-        (ability)
-        (ability_name (regular_identifier))
-        (type_argument)
-        (where)
-        (constructor
-            (constructor_name)
-            (colon)
-            (regular_identifier)
-            (arrow_symbol)
-            (effect
-                (regular_identifier)
-                (regular_identifier))
-            (unit))
-        (constructor
-            (constructor_name)
-            (colon)
-            (effect
-                (regular_identifier)
-                (regular_identifier))
-            (regular_identifier))))
+  (ability_declaration
+    (unique)
+    (ability)
+    (ability_name
+      (regular_identifier))
+    (type_argument)
+    (where)
+    (constructor
+      (constructor_name)
+      (regular_identifier)
+      (arrow_symbol)
+      (effect
+        (regular_identifier)
+        (regular_identifier))
+      (unit))
+    (constructor
+      (constructor_name)
+      (effect
+        (regular_identifier)
+        (regular_identifier))
+      (regular_identifier))))
+
 ===
 [Abilities] optional `unique`
 ===
@@ -57,25 +60,25 @@ ability Store a where
   put : a ->{Store a} ()
   get : {Store a} a
 ---
+
 (unison
-    (ability_declaration
-        (ability)
-        (ability_name (regular_identifier))
-        (type_argument)
-        (where)
-        (constructor
-            (constructor_name)
-            (colon)
-            (regular_identifier)
-            (arrow_symbol)
-            (effect
-                (regular_identifier)
-                (regular_identifier))
-            (unit))
-        (constructor
-            (constructor_name)
-            (colon)
-            (effect
-                (regular_identifier)
-                (regular_identifier))
-            (regular_identifier))))
+  (ability_declaration
+    (ability)
+    (ability_name
+      (regular_identifier))
+    (type_argument)
+    (where)
+    (constructor
+      (constructor_name)
+      (regular_identifier)
+      (arrow_symbol)
+      (effect
+        (regular_identifier)
+        (regular_identifier))
+      (unit))
+    (constructor
+      (constructor_name)
+      (effect
+        (regular_identifier)
+        (regular_identifier))
+      (regular_identifier))))

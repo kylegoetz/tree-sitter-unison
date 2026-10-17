@@ -39,7 +39,7 @@ module.exports = {
         choice(
           seq(
             alias($._hq_qualified_prefix_term, $.regular_identifier),
-            alias('@', $.at_token),
+            '@',
             $._pattern_leaf,
           ),
           $.parenthesized_or_tuple_pattern,

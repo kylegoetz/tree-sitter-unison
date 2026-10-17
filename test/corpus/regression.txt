@@ -108,10 +108,8 @@ x = 5
 (unison
   (term_declaration
     (type_signature
-      (open_parens)
       (path)
       (operator)
-      (close_parens)
       (type_signature_colon)
       (term_type
         (regular_identifier)
@@ -120,10 +118,8 @@ x = 5
         (arrow_symbol)
         (regular_identifier)))
     (term_definition
-      (open_parens)
       (path)
       (operator)
-      (close_parens)
       (kw_equals)
       (block_term
         (regular_identifier)
@@ -453,7 +449,6 @@ x =
           (pattern
             (var_or_nullary_ctor
               (regular_identifier)))
-          (comma)
           (pattern
             (var_or_nullary_ctor
               (regular_identifier))))
@@ -473,7 +468,6 @@ x =
         (block_term
           (tuple_or_parenthesized
             (nat)
-            (comma)
             (nat))))
       (block_term
         (regular_identifier)))))
@@ -499,7 +493,6 @@ swap = cases
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier)))
-                (comma)
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier)))))
@@ -507,7 +500,6 @@ swap = cases
             (block_term
               (tuple_or_parenthesized
                 (regular_identifier)
-                (comma)
                 (regular_identifier)))))))))
 
 ===
@@ -528,7 +520,6 @@ y =
           (pattern
             (var_or_nullary_ctor
               (regular_identifier)))
-          (comma)
           (pattern
             (blank_pattern)))
         (kw_equals)
@@ -729,7 +720,6 @@ a =
         (path)
         (regular_identifier)
         (tuple_or_parenthesized
-          (open_parens)
           (literal_function
             (regular_identifier)
             (arrow_symbol)
@@ -738,17 +728,13 @@ a =
               (destructuring_bind
                 (regular_identifier
                   (regular_identifier))
-                (at_token)
                 (parenthesized_or_tuple_pattern
-                  (open_parens)
                   (pattern
                     (var_or_nullary_ctor
                       (regular_identifier)))
-                  (comma)
                   (pattern
                     (var_or_nullary_ctor
-                      (regular_identifier)))
-                  (close_parens))
+                      (regular_identifier))))
                 (kw_equals)
                 (block_term
                   (regular_identifier)
@@ -765,17 +751,12 @@ a =
                   (then_block
                     (kw_then)
                     (block_term
-                      (literal_list
-                        (open_bracket)
-                        (close_bracket))))
+                      (literal_list)))
                   (else_block
                     (kw_else)
                     (block_term
                       (literal_list
-                        (open_bracket)
-                        (regular_identifier)
-                        (close_bracket))))))))
-          (close_parens))
+                        (regular_identifier)))))))))
         (operator)
         (path)
         (regular_identifier)))))
@@ -899,7 +880,6 @@ a = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier)))
-            (comma)
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
@@ -1087,15 +1067,11 @@ a = b do
               (block_term
                 (regular_identifier)
                 (tuple_or_parenthesized
-                  (open_parens)
                   (path)
                   (regular_identifier)
                   (literal_list
-                    (open_bracket)
                     (literal_char)
-                    (literal_char)
-                    (close_bracket))
-                  (close_parens))
+                    (literal_char)))
                 (unit))))
           (block_term
             (literal_boolean)))))))
@@ -1453,7 +1429,6 @@ IO.concurrent.STM.TMap.delete b tm =
                 (regular_identifier)
                 (regular_identifier)
                 (regular_identifier)
-                (comma)
                 (regular_identifier))
               (with)
               (pattern_case
@@ -1462,7 +1437,6 @@ IO.concurrent.STM.TMap.delete b tm =
                     (pattern
                       (var_or_nullary_ctor
                         (regular_identifier)))
-                    (comma)
                     (pattern
                       (var_or_nullary_ctor
                         (regular_identifier))
@@ -1482,7 +1456,6 @@ IO.concurrent.STM.TMap.delete b tm =
                         (regular_identifier))
                       (var_or_nullary_ctor
                         (regular_identifier)))
-                    (comma)
                     (pattern
                       (var_or_nullary_ctor
                         (regular_identifier))
@@ -1660,4 +1633,89 @@ test.gen.functions.someOrNone f v =
         Some x -> Some (f x), const None, const (Some v)]
 ---
 
-(unison)
+(unison
+  (term_declaration
+    (type_signature
+      (path)
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (tuple_or_parenthesized_type
+          (regular_identifier)
+          (arrow_symbol)
+          (effect
+            (regular_identifier))
+          (regular_identifier))
+        (arrow_symbol)
+        (regular_identifier)
+        (arrow_symbol)
+        (delayed
+          (effect
+            (regular_identifier))
+          (tuple_or_parenthesized_type
+            (regular_identifier)
+            (regular_identifier)
+            (arrow_symbol)
+            (effect
+              (regular_identifier))
+            (regular_identifier)
+            (regular_identifier)))))
+    (term_definition
+      (path)
+      (regular_identifier)
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (path)
+        (regular_identifier)
+        (literal_list
+          (path)
+          (regular_identifier)
+          (regular_identifier)
+          (match_expression_lambda
+            (cases)
+            (pattern_case
+              (pattern
+                (var_or_nullary_ctor
+                  (regular_identifier)))
+              (arrow_symbol)
+              (block_term
+                (regular_identifier)
+                (regular_identifier)))
+            (pattern_case
+              (pattern
+                (var_or_nullary_ctor
+                  (regular_identifier))
+                (blank_pattern))
+              (arrow_symbol)
+              (block_term
+                (regular_identifier))))
+          (match_expression_lambda
+            (cases)
+            (pattern_case
+              (pattern
+                (var_or_nullary_ctor
+                  (regular_identifier)))
+              (arrow_symbol)
+              (block_term
+                (regular_identifier)
+                (regular_identifier)))
+            (pattern_case
+              (pattern
+                (var_or_nullary_ctor
+                  (regular_identifier))
+                (var_or_nullary_ctor
+                  (regular_identifier)))
+              (arrow_symbol)
+              (block_term
+                (regular_identifier)
+                (tuple_or_parenthesized
+                  (regular_identifier)
+                  (regular_identifier)))))
+          (regular_identifier)
+          (regular_identifier)
+          (regular_identifier)
+          (tuple_or_parenthesized
+            (regular_identifier)
+            (regular_identifier)))))))

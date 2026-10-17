@@ -17,4 +17,5 @@ module.exports = $ => [
   [$._statement, $.else_block],
   [$._hqNamey$, $._pattern_leaf],
   [$._pattern_root],
+  [$._identifier, $._symboly_definition_name],
 ]

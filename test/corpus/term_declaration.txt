@@ -93,6 +93,8 @@ tup = (3, 3)
       (kw_equals)
       (block_term
         (tuple_or_parenthesized
+          
           (nat)
-          (comma)
-          (nat))))))
+          
+          (nat)
+          )))))

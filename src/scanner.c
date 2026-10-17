@@ -98,18 +98,15 @@ bool tree_sitter_unison_external_scanner_scan(void *indents_v, TSLexer *lexer, c
  * This is normally more complex, but since this parser's state constists solely of a vector of integers, it can just be
  * copied.
  */
-unsigned tree_sitter_unison_external_scanner_serialize(indent_vec *s, char *buffer) {
-	if (s == NULL) return 0;
-	unsigned i = 0;
-	buffer[i++] = (char)s->len;
-	buffer[i++] = (char)s->lm_len;
-	for(size_t j = 0; j < s->len && i < TREE_SITTER_SERIALIZATION_BUFFER_SIZE; ++j) {
-		buffer[i++] = (char)s->data[j];
-	}
-	for(size_t j = 0; j < s->lm_len && i < TREE_SITTER_SERIALIZATION_BUFFER_SIZE; ++j) {
-		buffer[i++] = (char)s->list_marker_stack[j];
-	}
-	return i;
+unsigned tree_sitter_unison_external_scanner_serialize(void *indents_v, char *buffer) {
+  indent_vec *indents = (indent_vec*) indents_v;
+  if (indents == NULL) return 0;
+  unsigned to_copy = sizeof(indents->data[0]) * indents->len;
+  if (to_copy > TREE_SITTER_SERIALIZATION_BUFFER_SIZE) {
+    return 0;
+  }
+  memcpy(buffer, indents->data, to_copy);
+  return to_copy;
 }
 
 /**
@@ -117,30 +114,16 @@ unsigned tree_sitter_unison_external_scanner_serialize(indent_vec *s, char *buff
  * `payload` is the state of the previous parser execution, while `buffer` is the saved state of a different position
  * (e.g. when doing incremental parsing).
  */
-void tree_sitter_unison_external_scanner_deserialize(indent_vec *s, char *buffer, unsigned length) {
-	if (s == NULL) return;
-	s->len = 0;
-	s->lm_len = 0;
-	if(length < 2) return;
-
-	unsigned i = 0;
-	size_t i_len = (unsigned char)buffer[i++];
-	size_t m_len = (unsigned char)buffer[i++];
-	if (i_len + m_len + 2 > length) return;
-
-	if(i_len > 0) {
-		VEC_GROW(s, i_len);
-	}
-	if(m_len > 0) {
-		VEC_GROW_LM(s, m_len);
-	}
-
-	for(size_t j = 0; j < i_len; ++j) {
-		VEC_PUSH(s, (unsigned char)buffer[i++]);
-	}
-	for(size_t j = 0; j < m_len; ++j) {
-		VEC_PUSH_LM(s, (unsigned char)buffer[i++]);
-	}
+void tree_sitter_unison_external_scanner_deserialize(void *indents_v, char *buffer, unsigned length) {
+  indent_vec *indents = (indent_vec*) indents_v;
+  if (indents == NULL) return;
+  indents->len = 0;
+  unsigned els = length / sizeof(indents->data[0]);
+  if (els > 0) {
+    VEC_GROW(indents, els);
+    indents->len = els;
+    memcpy(indents->data, buffer, length);
+  }
 }
 
 /**
@@ -148,10 +131,7 @@ void tree_sitter_unison_external_scanner_deserialize(indent_vec *s, char *buffer
  */
 void tree_sitter_unison_external_scanner_destroy(void *indents_v) {
   indent_vec *indents = (indent_vec*) indents_v;
-  if(indents == NULL) return;
-
-  if(indents->data != NULL) free(indents->data);
-  if(indents->list_marker_stack != NULL) free(indents->list_marker_stack);
-
+  if (indents == NULL) return;
+  VEC_FREE(indents);
   free(indents);
 }

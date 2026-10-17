@@ -32,31 +32,18 @@ static void debug_indents(indent_vec *indents) {
   }
 }
 
-static void debug_list_markers(indent_vec *indents) {
-	if (indents->lm_len == 0) LOG(VERBOSE, "empty");
-	bool empty = true;
-	for (size_t i = 0; i < indents->lm_len; ++i) {
-		if (!empty) LOG(VERBOSE, "-");
-		LOG(VERBOSE, "%zu", indents->list_marker_stack[i]);
-		empty = false;
-	}
-}
-
 static void debug_state(State *state) {
   LOG(VERBOSE, "State { syms = ");
   debug_valid(state);
   LOG(VERBOSE, "col = %d", state->lexer->get_column(state->lexer));
   LOG(VERBOSE, ", indents = ");
   debug_indents(state->indents);
-  LOG(VERBOSE, ", list markers = ");
-  debug_list_markers(state->indents);
   LOG(VERBOSE, " }\n");
 }
 
 #else
 
 static inline void debug_indents(indent_vec *indents) { (void)indents; }
-static inline void debug_list_markers(indent_vec *indents) { (void)indents; }
 static inline void debug_state(State *state) { (void)state; }
 
 #endif

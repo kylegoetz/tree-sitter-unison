@@ -28,8 +28,6 @@ typedef enum {
     GUARD_LAYOUT_START,
     DESTRUCTURE_START,
     TEXT_LITERAL,
-    START_LIST,
-    END_LIST,
     FAIL, // always last in list
 } Sym;
 
@@ -56,34 +54,17 @@ static char *sym_names[] = {
     "guard layout start",
     "destructure start",
     "text literal",
-    "start list",
-    "end list",
     "fail",
 };
 
 
 /**
  * State
- *
- * We track two things:
- *
- * 1. an indentation stack
- * 2. if we are in a nested list/tuple (where a single element might or might not have its own indentation stack),
- * keep track of where the element's indentation stack began in #1.
- *
- * Then, as we scan, if we enter a list or tuple where we must track this, push col to #1 and the current idx to #2
- * When we encounter a comma:
- * 	- if #2 is non-empty, succeed END
- *  - if #2 is empty, fail
- * When we find END with no comma, succeed END
  */
 typedef struct {
     uint32_t *data;
     size_t len;
     size_t cap;
-    size_t *list_marker_stack;
-    size_t lm_len;
-    size_t lm_cap;
 } indent_vec;
 
 /**

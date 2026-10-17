@@ -1,5 +1,4 @@
 const {
-  bracketed,
   openBlockWith,
   block,
   open_block_with,
@@ -36,7 +35,12 @@ module.exports = {
       $.doc_block,
       $.unit,
     ),
-  literal_list: $ => bracketed($, '[', $._term),
+  literal_list: $ =>
+    seq(
+      '[',
+      sep(',', $._term),
+      ']',
+    ),
   _keyword_block: $ =>
     choice(
       $.exp_let,

@@ -88,7 +88,7 @@ module.exports = {
   built_in_hash: ($) => /##\S+/,
 
   _prefix_definition_name: ($) =>
-    choice($._wordy_definition_name, seq($.open_parens, $._symboly_definition_name, $.close_parens)),
+    choice($._wordy_definition_name, seq('(', $._symboly_definition_name, ')')),
 
   _wordy_definition_name: ($) =>
     choice(

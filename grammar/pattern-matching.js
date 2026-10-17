@@ -70,7 +70,7 @@ module.exports = {
     sep1(
       $._pattern_infix_app,
       sep1(
-        alias(',', $.comma),
+        ',',
         alias(choice($._pattern_leaf$, $._hqNamey$), $.pattern),
       ),
     ),
@@ -96,7 +96,14 @@ module.exports = {
     ),
 
   // Note: Unfortunately the SEMI is disabled here because leaving it in creates a parsing error where
-  literal_list_pattern: $ => bracketed($, '[', $._pattern_root),
+  literal_list_pattern: $ =>
+    choice(
+      seq(
+        '[',
+        sep(',', $._pattern_root),
+        ']',
+      ),
+    ),
 
   parenthesized_or_tuple_pattern: $ =>
     prec.dynamic(-1, parenthesized($, $._pattern_root)),

@@ -1,5 +1,4 @@
 module.exports = {
-  comma: $ => ',',
   do: _ => 'do',
   kw_let: _ => 'let',
   type_kw: $ => 'type',
@@ -21,8 +20,6 @@ module.exports = {
   kw_namespace: ($) => "namespace",
   handle: ($) => "handle",
   with: ($) => "with",
-  open_parens: $ => prec.right('('),
-  close_parens: $ => ')',
   rewrite: $ => '@rewrite',
   term: $ => 'term',
   case: $ => 'case',

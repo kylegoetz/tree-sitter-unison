@@ -153,11 +153,9 @@ example =
               (kw_equals)
               (block_term
                 (literal_list
-                  (open_bracket)
                   (nat)
                   (nat)
-                  (nat)
-                  (close_bracket)))))
+                  (nat)))))
           (use_clause
             (use)
             (namespace

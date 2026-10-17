@@ -140,11 +140,9 @@ x = [1, 2, 3]
       (kw_equals)
       (block_term
         (literal_list
-          (open_bracket)
           (nat)
           (nat)
-          (nat)
-          (close_bracket))))))
+          (nat))))))
 
 ===
 [Literal] function
@@ -199,9 +197,7 @@ x = (true, true, false)
       (block_term
         (tuple_or_parenthesized
           (literal_boolean)
-          (comma)
           (literal_boolean)
-          (comma)
           (literal_boolean))))))
 
 ===

@@ -16,7 +16,6 @@ x =
           (pattern
             (var_or_nullary_ctor
               (regular_identifier)))
-          (comma)
           (pattern
             (var_or_nullary_ctor
               (regular_identifier))))
@@ -38,37 +37,24 @@ x =
       (path)
       (regular_identifier)
       (tuple_or_parenthesized
-        (open_parens)
         (match_expression_lambda
           (cases)
           (pattern_case
             (pattern
               (parenthesized_or_tuple_pattern
-                (open_parens)
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier)))
-                (comma)
                 (pattern
                   (var_or_nullary_ctor
-                    (regular_identifier)))
-                (close_parens)))
+                    (regular_identifier)))))
             (arrow_symbol)
             (block_term
-              (regular_identifier))))
-        (close_parens))
+              (regular_identifier)))))
       (literal_list
-        (open_bracket)
         (tuple_or_parenthesized
-          (open_parens)
           (nat)
-          (comma)
-          (nat)
-          (close_parens))
+          (nat))
         (tuple_or_parenthesized
-          (open_parens)
           (nat)
-          (comma)
-          (nat)
-          (close_parens))
-        (close_bracket)))))
+          (nat))))))

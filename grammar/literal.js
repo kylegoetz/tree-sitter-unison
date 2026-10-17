@@ -1,5 +1,4 @@
-const { bracketed, parenthesized, sep, sep1 } = require('./util')
-const regex = require('./regex')
+const { parenthesized } = require('./util')
 
 module.exports = {
   unit: $ => '()',
