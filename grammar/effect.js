@@ -47,7 +47,7 @@ module.exports = {
   arrow_symbol: $ => '->',
 
   // { E1, E2, ..., En } T
-  _effect: $ => seq($._effect_list, $._type2),
+  _effect: $ => seq($._effect_list, $._type2a),
 
   // [{ E1, E2, ..., En }] T
   _computation_type: $ => prec.left(choice($._effect, $._value_type)),

@@ -1348,6 +1348,7 @@ static Result close_layout_in_list(State *state) {
       break;
     }
     case ',': {
+      if (indent_exists(state) && VEC_BACK(state->indents) >= RECORD_UPDATE_INDENT) return res_fail;
       S_ADVANCE;
       if (state->symbols[COMMA]) {
         MARK("comma", false, state);
@@ -1489,6 +1490,7 @@ static Result record_at(State *state) {
   if (PEEK != '@') return res_cont;
   S_ADVANCE;
   MARK("record @", false, state);
+  if (PEEK == '(') return res_fail; // An as-pattern, not a record projection.
   // r@x and r @ x project; f @x applies f to a block's field read.
   Sym at = (!state->spaced || isws(PEEK) || PEEK == '{') && SYM(RECORD_ACCESS_AT)
     ? RECORD_ACCESS_AT : RECORD_READ_AT;
@@ -1559,8 +1561,7 @@ static Result inline_tokens(State *state) {
       return res_fail;
     }
     case ',': {
-      // There should not be any parsing if you encounter a comma
-      return res_fail;
+      return close_layout_in_list(state);
     }
     // TODO(414owen) does this clash with inline comments '--'?
     // I'm not sure why there's a `symbolic::comment` and a `COMMENT`...
@@ -1748,6 +1749,17 @@ static Result repeat_end(uint32_t column, State *state) {
  */
 static Result newline_indent(uint32_t indent, State *state) {
   LOG(INFO, "->newline_indent (col = %u, indent = %u, PEEK = %c)\n", COL, indent, PEEK);
+  // Logical operators continue the preceding expression across newlines.
+  if (PEEK == '&') return res_fail;
+  if (PEEK == '|') {
+    S_ADVANCE;
+    if (PEEK == '|') return res_fail;
+    Result res = dedent(indent, state);
+    SHORT_SCANNER;
+    return newline_semicolon(indent, state);
+  }
+  if (PEEK == ')' || PEEK == '}') return layout_end("delimiter", state);
+  if (PEEK == ',') return close_layout_in_list(state);
   Result res = dedent(indent, state);
   SHORT_SCANNER;
   res = close_layout_in_list(state);
@@ -1845,6 +1857,10 @@ static Result newline(uint32_t indent, State *state) {
  */
 static Result immediate(uint32_t column, State *state) {
   LOG(INFO, "->immediate (col = %u, PEEK = %c)\n", COL, PEEK);
+  if (!SYM(START) && (PEEK == 't' || PEEK == 'e' || PEEK == 'w')) {
+    Result res = inline_tokens(state);
+    SHORT_SCANNER;
+  }
   Result res = layout_start(column, state);
   SHORT_SCANNER;
   res = post_end_semicolon(column, state);

@@ -2288,6 +2288,11 @@
     "fields": {}
   },
   {
+    "type": "operator",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "parenthesized_or_tuple_pattern",
     "named": true,
     "fields": {},
@@ -4761,6 +4766,14 @@
     "named": false
   },
   {
+    "type": "++",
+    "named": false
+  },
+  {
+    "type": "+:",
+    "named": false
+  },
+  {
     "type": ",",
     "named": false
   },
@@ -4778,6 +4791,10 @@
   },
   {
     "type": ":",
+    "named": false
+  },
+  {
+    "type": ":+",
     "named": false
   },
   {
@@ -4947,10 +4964,6 @@
   },
   {
     "type": "open_bracket",
-    "named": true
-  },
-  {
-    "type": "operator",
     "named": true
   },
   {

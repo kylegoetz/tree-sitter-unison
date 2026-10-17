@@ -20,7 +20,7 @@ module.exports = {
     optional(token.immediate('.set')),
   )),
   record_accessor: $ => prec(1, seq(
-    '(', $._layout_start,
+    '(', $._record_start,
     alias('@', $.at_token),
     alias($.imm_wordy_id, $.field_name),
     optional(token.immediate('.set')),

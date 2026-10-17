@@ -30,7 +30,7 @@ module.exports = {
   literal_hex: $ => /0x[0-9a-fA-F]+/,
 
   tuple_or_parenthesized: $ =>
-    seq(openBlockWith($, '('), sep(',', $._term), $._layout_end, ')'),
+    seq('(', $._record_start, sep(',', $._term), $._layout_end, ')'),
   literal_termlink: $ => seq($.kw_termlink, $._hash_qualified),
   literal_typelink: $ => seq($.kw_typelink, $._hash_qualified),
 }

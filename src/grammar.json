@@ -850,17 +850,12 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "("
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_layout_start"
-            }
-          ]
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_record_start"
         },
         {
           "type": "CHOICE",
@@ -1032,17 +1027,12 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "match"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_layout_start"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "match"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_record_start"
           },
           {
             "type": "FIELD",
@@ -1138,32 +1128,36 @@
       }
     },
     "_match_cases": {
-      "type": "PREC_RIGHT",
-      "value": 0,
+      "type": "PREC_DYNAMIC",
+      "value": 1,
       "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "pattern_case"
-          },
-          {
-            "type": "REPEAT",
-            "content": {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "_layout_semicolon"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "pattern_case"
-                }
-              ]
+        "type": "PREC_RIGHT",
+        "value": 0,
+        "content": {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "pattern_case"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_layout_semicolon"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "pattern_case"
+                  }
+                ]
+              }
             }
-          }
-        ]
+          ]
+        }
       }
     },
     "pattern_case": {
@@ -1718,22 +1712,17 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "STRING",
-                "value": "("
-              },
-              "named": true,
-              "value": "open_parens"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_layout_start"
-            }
-          ]
+          "type": "ALIAS",
+          "content": {
+            "type": "STRING",
+            "value": "("
+          },
+          "named": true,
+          "value": "open_parens"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_record_start"
         },
         {
           "type": "CHOICE",
@@ -3093,7 +3082,7 @@
           },
           {
             "type": "SYMBOL",
-            "name": "_layout_start"
+            "name": "_record_start"
           },
           {
             "type": "ALIAS",
@@ -4049,7 +4038,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_type2"
+          "name": "_type2a"
         }
       ]
     },
@@ -4327,15 +4316,32 @@
       "flags": "iu"
     },
     "symboly_id": {
-      "type": "PATTERN",
-      "value": "([$%^&*\\-+<>~\\\\\\/:])|((-[!$%^&*\\-=+<~\\\\\\/|:])|(&[!$%^*\\-=+<>~\\\\\\/|:])|([!$%^*\\-=+<>~\\\\\\/|:]&)|(\\|[!$%^&*\\-=+<>~\\\\\\/:])|([!$%^&*\\-=+<>~\\\\\\/:]\\|)|([!$%^*=+<>~\\\\\\/:]{2}))|([!$%^&*\\-=+<>~\\\\/|:]{3,})",
-      "flags": "u"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "([$%^&*\\-+<>~\\\\\\/])|((-[!$%^&*\\-=+<~\\\\\\/|:])|(&[!$%^*\\-=+<>~\\\\\\/|:])|([!$%^*\\-=+<>~\\\\\\/|:]&)|(\\|[!$%^&*\\-=+<>~\\\\\\/:])|([!$%^&*\\-=+<>~\\\\\\/:]\\|)|([!$%^*=+<>~\\\\\\/:]{2}))|([!$%^&*\\-=+<>~\\\\/|:]{3,})",
+          "flags": "u"
+        },
+        {
+          "type": "STRING",
+          "value": "++"
+        },
+        {
+          "type": "STRING",
+          "value": "+:"
+        },
+        {
+          "type": "STRING",
+          "value": ":+"
+        }
+      ]
     },
     "imm_symboly_id": {
       "type": "IMMEDIATE_TOKEN",
       "content": {
         "type": "PATTERN",
-        "value": "([$%^&*\\-+<>~\\\\\\/:])|((-[!$%^&*\\-=+<~\\\\\\/|:])|(&[!$%^*\\-=+<>~\\\\\\/|:])|([!$%^*\\-=+<>~\\\\\\/|:]&)|(\\|[!$%^&*\\-=+<>~\\\\\\/:])|([!$%^&*\\-=+<>~\\\\\\/:]\\|)|([!$%^*=+<>~\\\\\\/:]{2}))|([!$%^&*\\-=+<>~\\\\/|:]{3,})",
+        "value": "([$%^&*\\-+<>~\\\\\\/])|((-[!$%^&*\\-=+<~\\\\\\/|:])|(&[!$%^*\\-=+<>~\\\\\\/|:])|([!$%^*\\-=+<>~\\\\\\/|:]&)|(\\|[!$%^&*\\-=+<>~\\\\\\/:])|([!$%^&*\\-=+<>~\\\\\\/:]\\|)|([!$%^*=+<>~\\\\\\/:]{2}))|([!$%^&*\\-=+<>~\\\\/|:]{3,})",
         "flags": "u"
       }
     },
@@ -4396,7 +4402,7 @@
     },
     "path": {
       "type": "PATTERN",
-      "value": "\\.?((([_\\p{L}\\u{1f400}-\\u{1faff}][_!'\\p{L}\\p{N}\\u{1f400}-\\u{1faff}]*)|([$%^&*\\-+<>~\\\\\\/:])|(-[!$%^&*\\-=+<~\\\\\\/|:])|([!$%^*=+<>~\\\\\\/:]{2})|(&[!$%^*\\-=+<>~\\\\\\/|:])|(\\|[!$%^&*\\-=+<>~\\\\\\/:])|([!$%^&*\\-=+<>~\\\\/|:]{3,}))\\.)+",
+      "value": "\\.?((([_\\p{L}\\u{1f400}-\\u{1faff}]([_!'\\p{L}\\p{N}\\u{1f400}-\\u{1faff}])*)|(([$%^&*\\-+<>~\\\\\\/])|((-[!$%^&*\\-=+<~\\\\\\/|:])|(&[!$%^*\\-=+<>~\\\\\\/|:])|([!$%^*\\-=+<>~\\\\\\/|:]&)|(\\|[!$%^&*\\-=+<>~\\\\\\/:])|([!$%^&*\\-=+<>~\\\\\\/:]\\|)|([!$%^*=+<>~\\\\\\/:]{2}))|([!$%^&*\\-=+<>~\\\\/|:]{3,})))\\.)+",
       "flags": "u"
     },
     "hash_qualifier": {
@@ -4665,7 +4671,7 @@
             },
             {
               "type": "SYMBOL",
-              "name": "_layout_start"
+              "name": "_record_start"
             },
             {
               "type": "SYMBOL",
@@ -4821,7 +4827,15 @@
         },
         {
           "type": "SYMBOL",
+          "name": "_layout_start"
+        },
+        {
+          "type": "SYMBOL",
           "name": "_watch_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_layout_end"
         }
       ]
     },
