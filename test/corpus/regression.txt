@@ -450,15 +450,13 @@ x =
       (kw_equals)
       (destructuring_bind
         (parenthesized_or_tuple_pattern
-          (open_parens)
           (pattern
             (var_or_nullary_ctor
               (regular_identifier)))
           (comma)
           (pattern
             (var_or_nullary_ctor
-              (regular_identifier)))
-          (close_parens))
+              (regular_identifier))))
         (kw_equals)
         (term_declaration
           (term_definition
@@ -475,6 +473,7 @@ x =
         (block_term
           (tuple_or_parenthesized
             (nat)
+            (comma)
             (nat))))
       (block_term
         (regular_identifier)))))
@@ -497,19 +496,18 @@ swap = cases
           (pattern_case
             (pattern
               (parenthesized_or_tuple_pattern
-                (open_parens)
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier)))
                 (comma)
                 (pattern
                   (var_or_nullary_ctor
-                    (regular_identifier)))
-                (close_parens)))
+                    (regular_identifier)))))
             (arrow_symbol)
             (block_term
               (tuple_or_parenthesized
                 (regular_identifier)
+                (comma)
                 (regular_identifier)))))))))
 
 ===
@@ -527,14 +525,12 @@ y =
       (kw_equals)
       (destructuring_bind
         (parenthesized_or_tuple_pattern
-          (open_parens)
           (pattern
             (var_or_nullary_ctor
               (regular_identifier)))
           (comma)
           (pattern
-            (blank_pattern))
-          (close_parens))
+            (blank_pattern)))
         (kw_equals)
         (block_term
           (force
@@ -611,13 +607,11 @@ a =
           (do)
           (destructuring_bind
             (parenthesized_or_tuple_pattern
-              (open_parens)
               (pattern
                 (var_or_nullary_ctor
                   (regular_identifier))
                 (var_or_nullary_ctor
-                  (regular_identifier)))
-              (close_parens))
+                  (regular_identifier))))
             (kw_equals)
             (block_term
               (regular_identifier)))
@@ -735,6 +729,7 @@ a =
         (path)
         (regular_identifier)
         (tuple_or_parenthesized
+          (open_parens)
           (literal_function
             (regular_identifier)
             (arrow_symbol)
@@ -779,7 +774,8 @@ a =
                       (literal_list
                         (open_bracket)
                         (regular_identifier)
-                        (close_bracket)))))))))
+                        (close_bracket))))))))
+          (close_parens))
         (operator)
         (path)
         (regular_identifier)))))
@@ -980,13 +976,11 @@ a = cases
                 (regular_identifier))
               (at_token)
               (parenthesized_or_tuple_pattern
-                (open_parens)
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier))
                   (var_or_nullary_ctor
-                    (regular_identifier)))
-                (close_parens)))
+                    (regular_identifier)))))
             (arrow_symbol)
             (block_term
               (regular_identifier))))))))
@@ -1060,9 +1054,7 @@ a d =
           (with)
           (pattern_case
             (pattern
-              (parenthesized_or_tuple_pattern
-                (open_parens)
-                (close_parens)))
+              (var_or_nullary_ctor))
             (guarded_block
               (pipe)
               (guard
@@ -1095,13 +1087,15 @@ a = b do
               (block_term
                 (regular_identifier)
                 (tuple_or_parenthesized
+                  (open_parens)
                   (path)
                   (regular_identifier)
                   (literal_list
                     (open_bracket)
                     (literal_char)
                     (literal_char)
-                    (close_bracket)))
+                    (close_bracket))
+                  (close_parens))
                 (unit))))
           (block_term
             (literal_boolean)))))))
@@ -1371,9 +1365,7 @@ math.Natural.internal.normalize =
                 (path)
                 (regular_identifier)
                 (regular_identifier))
-              (literal_list
-                (open_bracket)
-                (close_bracket))
+              (literal_list)
               (nat))))))))
 
 ===
@@ -1461,12 +1453,12 @@ IO.concurrent.STM.TMap.delete b tm =
                 (regular_identifier)
                 (regular_identifier)
                 (regular_identifier)
+                (comma)
                 (regular_identifier))
               (with)
               (pattern_case
                 (pattern
                   (parenthesized_or_tuple_pattern
-                    (open_parens)
                     (pattern
                       (var_or_nullary_ctor
                         (regular_identifier)))
@@ -1476,8 +1468,7 @@ IO.concurrent.STM.TMap.delete b tm =
                         (regular_identifier))
                       (var_or_nullary_ctor
                         (regular_identifier))
-                      (blank_pattern))
-                    (close_parens)))
+                      (blank_pattern))))
                 (arrow_symbol)
                 (block_term
                   (regular_identifier)
@@ -1486,7 +1477,6 @@ IO.concurrent.STM.TMap.delete b tm =
               (pattern_case
                 (pattern
                   (parenthesized_or_tuple_pattern
-                    (open_parens)
                     (pattern
                       (var_or_nullary_ctor
                         (regular_identifier))
@@ -1498,8 +1488,7 @@ IO.concurrent.STM.TMap.delete b tm =
                         (regular_identifier))
                       (blank_pattern)
                       (var_or_nullary_ctor
-                        (regular_identifier)))
-                    (close_parens)))
+                        (regular_identifier)))))
                 (arrow_symbol)
                 (term_declaration
                   (term_definition
@@ -1580,15 +1569,13 @@ IO.concurrent.STM.TMap.delete b tm =
                           (regular_identifier))
                         (at_token)
                         (parenthesized_or_tuple_pattern
-                          (open_parens)
                           (pattern
                             (var_or_nullary_ctor
                               (regular_identifier))
                             (var_or_nullary_ctor
                               (regular_identifier))
                             (var_or_nullary_ctor
-                              (regular_identifier)))
-                          (close_parens)))
+                              (regular_identifier)))))
                       (arrow_symbol)
                       (block_term
                         (regular_identifier)
@@ -1658,6 +1645,7 @@ IO.concurrent.STM.TMap.delete b tm =
         (nat)
         (regular_identifier)
         (regular_identifier)))))
+
 ===
 GH-177 comma can end layout
 ===
@@ -1671,4 +1659,5 @@ test.gen.functions.someOrNone f v =
         None   -> Some v
         Some x -> Some (f x), const None, const (Some v)]
 ---
+
 (unison)

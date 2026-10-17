@@ -96,18 +96,14 @@
             (pipe)
             (guard
               (tuple_or_parenthesized
-                (open_parens)
                 (regular_identifier)
                 (operator)
-                (nat)
-                (close_parens))
+                (nat))
               (or)
               (tuple_or_parenthesized
-                (open_parens)
                 (regular_identifier)
                 (operator)
-                (nat)
-                (close_parens)))
+                (nat)))
             (arrow_symbol)
             (block_term
               (literal_text))))))))
@@ -306,7 +302,6 @@
               (path)
               (regular_identifier))
             (parenthesized_or_tuple_pattern
-              (open_parens)
               (pattern
                 (var_or_nullary_ctor
                   (path)
@@ -314,8 +309,7 @@
                 (var_or_nullary_ctor
                   (regular_identifier))
                 (var_or_nullary_ctor
-                  (regular_identifier)))
-              (close_parens))
+                  (regular_identifier))))
             (blank_pattern))
           (arrow_symbol)
           (block_term
@@ -483,20 +477,16 @@
         (pattern_case
           (pattern
             (parenthesized_or_tuple_pattern
-              (open_parens)
               (pattern
                 (var_or_nullary_ctor
                   (regular_identifier)))
               (comma)
               (pattern
                 (var_or_nullary_ctor
-                  (regular_identifier)))
-              (close_parens)))
+                  (regular_identifier)))))
           (arrow_symbol)
           (block_term
             (tuple_or_parenthesized
-              (open_parens)
               (regular_identifier)
               (comma)
-              (regular_identifier)
-              (close_parens))))))))
+              (regular_identifier))))))))

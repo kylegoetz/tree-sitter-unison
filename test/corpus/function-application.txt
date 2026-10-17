@@ -26,9 +26,7 @@ y = (+) 5 2
       (regular_identifier)
       (kw_equals)
       (block_term
-        (open_parens)
         (operator)
-        (close_parens)
         (nat)
         (nat)))))
 

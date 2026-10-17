@@ -55,11 +55,9 @@ x = (>>=#foo)
       (regular_identifier)
       (kw_equals)
       (block_term
-        (open_parens)
         (operator)
         (hash_qualifier
-          (hash_prefix))
-        (close_parens)))))
+          (hash_prefix))))))
 
 ===
 [Identifier] HQ built in

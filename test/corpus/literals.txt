@@ -198,13 +198,11 @@ x = (true, true, false)
       (kw_equals)
       (block_term
         (tuple_or_parenthesized
-          (open_parens)
           (literal_boolean)
           (comma)
           (literal_boolean)
           (comma)
-          (literal_boolean)
-          (close_parens))))))
+          (literal_boolean))))))
 
 ===
 [Literal] unit
