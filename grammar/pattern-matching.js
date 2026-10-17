@@ -96,15 +96,8 @@ module.exports = {
     ),
 
   // Note: Unfortunately the SEMI is disabled here because leaving it in creates a parsing error where
-  literal_list_pattern: $ =>
-    choice(
-      seq(
-        '[',
-        sep(alias(',', $.comma), $._pattern_root),
-        // $._layout_end,
-        ']',
-      ),
-    ),
+  literal_list_pattern: $ => bracketed($, '[', $._pattern_root),
+
   parenthesized_or_tuple_pattern: $ =>
     prec.dynamic(-1, parenthesized($, $._pattern_root)),
 
