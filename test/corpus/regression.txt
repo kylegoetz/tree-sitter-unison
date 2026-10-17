@@ -1720,3 +1720,26 @@ test.gen.functions.someOrNone f v =
           (tuple_or_parenthesized
             (regular_identifier)
             (regular_identifier)))))))
+===
+GH-178
+===
+unique type Point2 = {
+    x : Nat,
+    y : Nat,
+}
+---
+(unison
+  (type_declaration
+    (unique)
+    (type_kw)
+    (type_constructor
+      (type_name
+        (regular_identifier)))
+    (kw_equals)
+    (record
+      (record_field
+        (field_name)
+        (regular_identifier))
+      (record_field
+        (field_name)
+        (regular_identifier)))))
