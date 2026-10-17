@@ -1,24 +1,7 @@
-const { parenthesized, sep, sep1 } = require('./util')
+const { bracketed, parenthesized, sep, sep1 } = require('./util')
 const regex = require('./regex')
 
 module.exports = {
-  _literal: $ =>
-    choice(
-      $.literal_text,
-      $.nat,
-      $.int,
-      $.float,
-      $.literal_char,
-      $.literal_boolean,
-      $.literal_byte,
-      $.literal_hex,
-      $.literal_list,
-      $.literal_function,
-      $.tuple_or_parenthesized,
-      $.literal_termlink,
-      $.literal_typelink,
-      $.unit,
-    ),
   unit: $ => '()',
 
   nat: $ => /[0-9]+/,

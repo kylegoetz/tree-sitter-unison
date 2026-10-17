@@ -1,12 +1,6 @@
 const { KEYWORD } = require('./precedences')
 
 module.exports = {
-  _boolean_exp: $ =>
-    prec.left(
-      '_boolean_exp',
-      seq($._expression, choice($.or, $.and), $._expression),
-    ),
-
   kw_if: $ => prec(KEYWORD, 'if'),
   kw_then: $ => prec(KEYWORD, 'then'),
   kw_else: $ => prec(KEYWORD, 'else'),

@@ -15,48 +15,6 @@ module.exports = {
     $.type_name,
     repeat($.type_argument),
   )),
-
-  _parenthetical_data_constructor: $ => seq(
-    '(',
-    choice($.list_constructor, $.tuple_constructor, $._standard_constructor),
-    ')',
-  ),
-
-  list_constructor: $ => seq(
-    '[',
-    $._data_constructor,
-    ']'
-  ),
-  tuple_constructor: $ => seq(
-    '(',
-    sep(',', $._data_constructor),
-    ')'
-  ),
-  _standard_constructor: $ => prec.right(seq(
-    $.type_name,
-    repeat(choice($.type_argument, $.list_constructor, $.tuple_constructor, alias($._parenthetical_data_constructor, $._data_constructor))),
-  )),
-
-  /**
-   * Need to account for:
-   * Foo
-   * Foo a
-   * Foo Nat
-   * Foo (Option Nat)
-   * Foo (Option a)
-   * Foo Bar (Option a)
-   * [Int] <- list
-   * (Int, Nat, Float) <- tuple
-   * { x : Nat, y : Nat } <- record
-   */
-  _data_constructor: $ => prec.right(choice(
-    $.list_constructor,
-    $.tuple_constructor,
-    $._standard_constructor,
-    $.record,
-  )),
-
-
   _type_lhs: $ => seq(
     optional(choice($.structural, $.unique)),
     $.type_kw,

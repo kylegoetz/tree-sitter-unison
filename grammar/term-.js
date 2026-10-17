@@ -4,7 +4,6 @@ const term = require("./term");
 const patterns = require("./pattern-matching");
 const conditionals = require("./conditionals");
 const delayed = require("./delayed-computation");
-const expression = require("./expression");
 const blocks = require("./blocks");
 
 /**
@@ -23,7 +22,6 @@ module.exports = {
   ...patterns,
   ...conditionals,
   ...delayed,
-  ...expression,
   ...blocks,
 
   type_signature: $ =>

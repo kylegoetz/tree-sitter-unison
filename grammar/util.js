@@ -2,13 +2,9 @@ const sep = (sep, rule) => optional(seq(rule, repeat(seq(sep, rule))))
 
 sep1 = (sep, rule) => seq(rule, repeat(seq(sep, rule)))
 
-sep2 = (sep, rule) => seq(rule, repeat1(seq(sep, rule)))
-
 braces = (...rule) => seq('{', ...rule, '}')
 
 parens = (...rule) => seq('(', ...rule, ')')
-
-paren$ = ($, ...rule) => seq('(', $._layout_start, ...rule, $._layout_end, ')')
 
 /**
  * Wrap a repeated rule with semicolon rules.
@@ -64,14 +60,19 @@ const block = ($, opener) =>
     // optional($._layout_end),
   )
 
-parenthesized = ($, el) =>
-  seq(
-    alias('(', $.open_parens),
-    $._layout_start,
-    sep(seq($._comma_layout_end, $.comma), el),
-    $._layout_end,
-    alias(')', $.close_parens),
-  )
+const bracketPair = {
+  '(': ')',
+  '[': ']',
+  '{': '}',
+}
+
+seq$ = ($, a, b) =>
+  seq(a, $._start_list, sep($.comma, b), $._end_list, bracketPair[a])
+
+parenthesized = ($, el) => seq$($, '(', el)
+bracketed = ($, el) => seq$($, '[', el)
+braced = ($, el) => seq$($, '{', el)
+
 // parenthesized = ($, el) => seq('(', $.layout ')')
 // open_block_with = ($, opener, start_type) => seq(
 //   // start_type ?? $._layout_start,//$._layout_start,
@@ -98,28 +99,16 @@ layouted = ($, rule) =>
     rule,
   )
 
-// guardLayouted = seq()
-
-layouted_without_end = ($, rule) =>
-  choice(
-    layouted_braces(rule),
-    seq($._layout_start, optional(terminated($, rule))),
-  )
-
-// layout_block = ($, keyword) => seq(open_block_with($, keyword));
 
 module.exports = {
   block,
   layoutBlock,
   layouted,
-  layouted_without_end,
   open_block_with,
   openBlockWith,
   parens,
-  paren$,
   parenthesized,
+  bracketed,
   sep,
   sep1,
-  sep2,
-  terminated,
 }

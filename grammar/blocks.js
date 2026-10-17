@@ -1,10 +1,7 @@
 const { KEYWORD } = require('./precedences')
-const { sep, layouted, layoutBlock } = require('./util')
+const { layouted, layoutBlock } = require('./util')
 
 module.exports = {
-  operator_expression: $ =>
-    seq($._expression, alias($.symboly_id, $.operator), $._expression),
-
   _block: $ => layouted($, $._statement),
 
   // let [sm_1] [sm_2] ... [sm_n] [exp]

@@ -1,7 +1,5 @@
 module.exports = {
   comma: $ => ',',
-  lbrace: $ => '{',
-  rbrace: $ => '}',
   do: _ => 'do',
   kw_let: _ => 'let',
   type_kw: $ => 'type',
@@ -9,7 +7,6 @@ module.exports = {
   match: $ => 'match',
   cases: $ => 'cases',
   otherwise: ($) => "otherwise",
-  as: ($) => "@",
   structural: ($) => "structural",
   unique: ($) => "unique",
   ability: ($) => "ability",

@@ -1,13 +1,6 @@
-const { sep, sep1 } = require('./util')
+const { sep1 } = require('./util')
 
 module.exports = {
-  // { E1, E2, ..., En }
-  _effect_block: $ =>
-    seq(
-      $._layout_start,
-      sep(',', alias($._value_type, $.effect)),
-      $._layout_end,
-    ),
   _effect_inline: $ => sep1(',', alias($._value_type, $.effect)),
 
   _effect_list: $ => seq('{', optional($._effect_inline), '}'),
@@ -23,12 +16,9 @@ module.exports = {
   forall: $ =>
     seq($.kw_forall, repeat(alias($.wordy_id, $.regular_identifier)), '.'),
   _value_type: $ => choice(seq($.forall, $._type1), $._type1), // seq(optional($.forall), alias($._type1, $.type1)),
-  parenthesized: $ => seq('(', $._value_type, ')'),
   tuple_or_parenthesized_type: $ => seq('(', sep1(',', $._value_type), ')'),
   _value_type_leaf: $ =>
     choice($.tuple_or_parenthesized_type, $._type_atom, $.sequence_type),
-
-  immediate_hash: $ => token.immediate(/#[a-zA-Z0-9]+/),
 
   // TODO refer back to hashes again. Can it also be ##builtin hash?
   _type_atom: $ => choice($._hash_qualified, $.unit),
