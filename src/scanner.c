@@ -29,6 +29,8 @@ typedef enum {
 // #endif
 
 #define ASCII_OFFSET 48
+#define RECORD_INDENT UINT16_MAX
+#define RECORD_UPDATE_INDENT (UINT16_MAX - 1)
 #define NUMERIC_CASES \
   case '0': \
   case '1': \
@@ -117,6 +119,10 @@ typedef enum {
     GUARD_LAYOUT_START,
     DESTRUCTURE_START,
     TEXT_LITERAL,
+    RECORD_ACCESS_AT,
+    RECORD_READ_AT,
+    RECORD_START,
+    RECORD_UPDATE_START,
     FAIL, // always last in list
 } Sym;
 
@@ -143,6 +149,10 @@ static char *sym_names[] = {
     "guard layout start",
     "destructure start",
     "text literal",
+    "record access @",
+    "record read @",
+    "record start",
+    "record update start",
     "fail",
 };
 // #endif
@@ -203,6 +213,7 @@ typedef struct {
     TSLexer *lexer;
     const bool *symbols;
     indent_vec *indents;
+    bool spaced;
 #ifdef DEBUG
     int marked;
     char *marked_by;
@@ -378,10 +389,10 @@ static bool smaller_indent(uint32_t indent, State *state) {
   if (indent_exists(state)) {
     LOG(VERBOSE, "indent exists and indent = %u, back = %u\n", indent, VEC_BACK(state->indents));
   }
-  return indent_exists(state) && (indent < VEC_BACK(state->indents));
+  return indent_exists(state) && VEC_BACK(state->indents) < RECORD_UPDATE_INDENT && (indent < VEC_BACK(state->indents));
 }
 
-static bool indent_lesseq(uint32_t indent, State *state) { return indent_exists(state) && indent <= VEC_BACK(state->indents); }
+static bool indent_lesseq(uint32_t indent, State *state) { return indent_exists(state) && VEC_BACK(state->indents) < RECORD_UPDATE_INDENT && indent <= VEC_BACK(state->indents); }
 
 
 #define NEWLINE_CASES \
@@ -1474,6 +1485,25 @@ static Result text_literal(State *state) {
  *   - '|' in a quasiquote, since it can be followed by symbolic operator characters, which would be consumed
  * TODO: should this handle -> instead of layout_start handling it?
  */
+static Result record_at(State *state) {
+  if (PEEK != '@') return res_cont;
+  S_ADVANCE;
+  MARK("record @", false, state);
+  // r@x and r @ x project; f @x applies f to a block's field read.
+  Sym at = (!state->spaced || isws(PEEK) || PEEK == '{') && SYM(RECORD_ACCESS_AT)
+    ? RECORD_ACCESS_AT : RECORD_READ_AT;
+  if (at == RECORD_READ_AT) {
+    bool in_update = false;
+    for (uint32_t i = 0; i < state->indents->len; i++) {
+      if (state->indents->data[i] == RECORD_UPDATE_INDENT) in_update = true;
+    }
+    if (!in_update) return res_fail;
+  }
+  // Leave the reserved @rewrite keyword to the internal lexer.
+  if (at == RECORD_READ_AT && PEEK == 'r' && token("rewrite", state)) return res_fail;
+  return SYM(at) ? finish(at, "record @") : res_fail;
+}
+
 static Result inline_tokens(State *state) {
   LOG(INFO, "->inline_tokens (%u, %c)\n", COL, PEEK);
   // if (PEEK == '+') {
@@ -1482,6 +1512,7 @@ static Result inline_tokens(State *state) {
   //   return res_fail;
   // }
   switch (PEEK) {
+    case '@': return record_at(state);
     case '"': { // consume a text literal, failing if malformed or disallowed
       Result res = text_literal(state);
       SHORT_SCANNER;
@@ -1739,6 +1770,8 @@ static Result newline_token(uint32_t indent, State *state) {
     return minus(state);
   }
   switch (PEEK) {
+    case '}': return layout_end("record close", state);
+    case '@': return record_at(state);
     NUMERIC_CASES: {
       Result res = numeric(state);
       SHORT_SCANNER;
@@ -1838,6 +1871,13 @@ static Result init(State *state) {
   Result res = eof(state);
   SHORT_SCANNER;
 
+
+  if (SYM(RECORD_START) || SYM(RECORD_UPDATE_START)) {
+    // Braces, rather than indentation, delimit record fields.
+    bool update = SYM(RECORD_UPDATE_START);
+    push(update ? RECORD_UPDATE_INDENT : RECORD_INDENT, state);
+    return finish(update ? RECORD_UPDATE_START : RECORD_START, "record start");
+  }
 
   // res = after_error(state) ? res_fail : res_cont;
   // SHORT_SCANNER;
@@ -1976,7 +2016,8 @@ bool tree_sitter_unison_external_scanner_scan(void *indents_v, TSLexer *lexer, c
   State state = {
     .lexer = lexer,
     .symbols = syms,
-    .indents = indents
+    .indents = indents,
+    .spaced = isws(lexer->lookahead),
   };
   LOG(WARN, "===================\nBeginning scanner\n");
   debug_state(&state);

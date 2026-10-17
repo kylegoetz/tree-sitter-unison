@@ -43,6 +43,7 @@ module.exports = {
             $._pattern_leaf,
           ),
           $.parenthesized_or_tuple_pattern,
+          $.record_pattern,
         ),
         layoutBlock($, $.kw_equals),
       ),

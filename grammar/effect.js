@@ -26,7 +26,7 @@ module.exports = {
   parenthesized: $ => seq('(', $._value_type, ')'),
   tuple_or_parenthesized_type: $ => seq('(', sep1(',', $._value_type), ')'),
   _value_type_leaf: $ =>
-    choice($.tuple_or_parenthesized_type, $._type_atom, $.sequence_type),
+    choice($.tuple_or_parenthesized_type, $._type_atom, $.sequence_type, $.record),
 
   immediate_hash: $ => token.immediate(/#[a-zA-Z0-9]+/),
 

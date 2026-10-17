@@ -86,6 +86,7 @@ module.exports = {
         $.literal_list_pattern,
         $.parenthesized_or_tuple_pattern,
         $.effect_pattern,
+        $.record_pattern,
       ),
     ),
 
@@ -113,7 +114,7 @@ module.exports = {
 
   effect_pattern: $ =>
     seq(
-      openBlockWith($, '{'),
+      '{', $._record_start,
       choice($.effect_pure, $.effect_bind),
       $._layout_end,
       '}',
