@@ -726,15 +726,16 @@ a =
             (exp_let
               (kw_let)
               (destructuring_bind
-                (regular_identifier
-                  (regular_identifier))
-                (parenthesized_or_tuple_pattern
-                  (pattern
-                    (var_or_nullary_ctor
-                      (regular_identifier)))
-                  (pattern
-                    (var_or_nullary_ctor
-                      (regular_identifier))))
+                (as_pattern
+                  (regular_identifier
+                    (regular_identifier))
+                  (parenthesized_or_tuple_pattern
+                    (pattern
+                      (var_or_nullary_ctor
+                        (regular_identifier)))
+                    (pattern
+                      (var_or_nullary_ctor
+                        (regular_identifier)))))
                 (kw_equals)
                 (block_term
                   (regular_identifier)

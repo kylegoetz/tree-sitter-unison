@@ -32,16 +32,17 @@ module.exports = {
       optional($.type_signature),
       alias($.term_definition2, $.term_definition),
     ),
+  as_pattern: $ => seq(
+    alias($._hq_qualified_prefix_term, $.regular_identifier),
+    '@',
+    $._pattern_leaf,
+  ),
   destructuring_bind: $ =>
     prec.dynamic(
       1,
       seq(
         choice(
-          seq(
-            alias($._hq_qualified_prefix_term, $.regular_identifier),
-            '@',
-            $._pattern_leaf,
-          ),
+          $.as_pattern,
           $.parenthesized_or_tuple_pattern,
         ),
         layoutBlock($, $.kw_equals),

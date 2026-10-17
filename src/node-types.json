@@ -67,6 +67,65 @@
     "fields": {}
   },
   {
+    "type": "as_pattern",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "at_token",
+          "named": true
+        },
+        {
+          "type": "blank_pattern",
+          "named": true
+        },
+        {
+          "type": "effect_pattern",
+          "named": true
+        },
+        {
+          "type": "int",
+          "named": true
+        },
+        {
+          "type": "literal_boolean",
+          "named": true
+        },
+        {
+          "type": "literal_char",
+          "named": true
+        },
+        {
+          "type": "literal_list_pattern",
+          "named": true
+        },
+        {
+          "type": "literal_text",
+          "named": true
+        },
+        {
+          "type": "nat",
+          "named": true
+        },
+        {
+          "type": "parenthesized_or_tuple_pattern",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
+          "type": "var_or_nullary_ctor",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "bang",
     "named": true,
     "fields": {},
@@ -637,11 +696,7 @@
       "required": true,
       "types": [
         {
-          "type": "at_token",
-          "named": true
-        },
-        {
-          "type": "blank_pattern",
+          "type": "as_pattern",
           "named": true
         },
         {
@@ -653,43 +708,11 @@
           "named": true
         },
         {
-          "type": "effect_pattern",
-          "named": true
-        },
-        {
-          "type": "int",
-          "named": true
-        },
-        {
           "type": "kw_equals",
           "named": true
         },
         {
-          "type": "literal_boolean",
-          "named": true
-        },
-        {
-          "type": "literal_char",
-          "named": true
-        },
-        {
-          "type": "literal_list_pattern",
-          "named": true
-        },
-        {
-          "type": "literal_text",
-          "named": true
-        },
-        {
-          "type": "nat",
-          "named": true
-        },
-        {
           "type": "parenthesized_or_tuple_pattern",
-          "named": true
-        },
-        {
-          "type": "regular_identifier",
           "named": true
         },
         {
@@ -698,10 +721,6 @@
         },
         {
           "type": "use_clause",
-          "named": true
-        },
-        {
-          "type": "var_or_nullary_ctor",
           "named": true
         }
       ]
