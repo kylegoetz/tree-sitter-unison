@@ -26,7 +26,7 @@ module.exports = {
         ),
       ),
       alias($.wordy_id, $.regular_identifier),
-      alias($.symboly_id, $.operator),
+      alias(choice($.symboly_id, $.concat, $.cons, $.snoc), $.operator),
     ),
 
   path: ($) => regex.path,
@@ -67,7 +67,7 @@ module.exports = {
   _hq_qualified_symboly_id: ($) =>
     seq(
       choice(
-        alias($.symboly_id, $.operator),
+        alias(choice($.symboly_id, $.concat, $.cons, $.snoc), $.operator),
         seq($.path, alias($.imm_symboly_id, $.operator))),
       optional(alias($.imm_hash_qualifier, $.hash_qualifier))),
 
@@ -96,5 +96,8 @@ module.exports = {
       seq($.path, alias($.imm_wordy_id, $.regular_identifier)),
     ),
   _symboly_definition_name: ($) =>
-    choice(alias($.symboly_id, $.operator), seq($.path, alias($.imm_symboly_id, $.operator))),
+    choice(
+      alias(choice($.symboly_id, $.concat, $.cons, $.snoc), $.operator),
+      seq($.path, alias($.imm_symboly_id, $.operator)),
+    ),
 };

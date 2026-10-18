@@ -89,6 +89,18 @@
       "type": "STRING",
       "value": "&&"
     },
+    "concat": {
+      "type": "STRING",
+      "value": "++"
+    },
+    "cons": {
+      "type": "STRING",
+      "value": "+:"
+    },
+    "snoc": {
+      "type": "STRING",
+      "value": ":+"
+    },
     "kw_forall": {
       "type": "CHOICE",
       "members": [
@@ -1296,31 +1308,16 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "STRING",
-            "value": "++"
-          },
-          "named": true,
-          "value": "concat"
+          "type": "SYMBOL",
+          "name": "concat"
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "STRING",
-            "value": "+:"
-          },
-          "named": true,
-          "value": "cons"
+          "type": "SYMBOL",
+          "name": "cons"
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "STRING",
-            "value": ":+"
-          },
-          "named": true,
-          "value": "snoc"
+          "type": "SYMBOL",
+          "name": "snoc"
         }
       ]
     },
@@ -3394,8 +3391,25 @@
         {
           "type": "ALIAS",
           "content": {
-            "type": "SYMBOL",
-            "name": "symboly_id"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "symboly_id"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "concat"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "cons"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "snoc"
+              }
+            ]
           },
           "named": true,
           "value": "operator"
@@ -3612,8 +3626,25 @@
             {
               "type": "ALIAS",
               "content": {
-                "type": "SYMBOL",
-                "name": "symboly_id"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "symboly_id"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "concat"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "cons"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "snoc"
+                  }
+                ]
               },
               "named": true,
               "value": "operator"
@@ -3805,8 +3836,25 @@
         {
           "type": "ALIAS",
           "content": {
-            "type": "SYMBOL",
-            "name": "symboly_id"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "symboly_id"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "concat"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "cons"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "snoc"
+              }
+            ]
           },
           "named": true,
           "value": "operator"

@@ -64,7 +64,7 @@ module.exports = {
     prec.right(seq($.pipe, $.guard, layoutBlock($, $.arrow_symbol))),
 
   _pattern_infix_app: $ =>
-    choice(alias('++', $.concat), alias('+:', $.cons), alias(':+', $.snoc)),
+    choice($.concat, $.cons, $.snoc),
   _pattern_root: $ =>
     sep1(
       $._pattern_infix_app,
