@@ -18248,7 +18248,42 @@ abilities.Random.weighted weightedGen =
   fromStream (Stream.fromList weightedGen)
 ---
 
-(unison)
+(unison
+  (term_declaration
+    (type_signature
+      (path)
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (sequence_type
+          (tuple_or_parenthesized_type
+            (regular_identifier)
+            (delayed
+              (effect
+                (regular_identifier))
+              (effect
+                (regular_identifier))
+              (regular_identifier))))
+        (arrow_symbol)
+        (effect
+          (regular_identifier))
+        (delayed
+          (effect
+            (regular_identifier))
+          (effect
+            (regular_identifier))
+          (regular_identifier))))
+    (term_definition
+      (path)
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (regular_identifier)
+        (tuple_or_parenthesized
+          (path)
+          (regular_identifier)
+          (regular_identifier))))))
 
 ===
 abilities.Random.weighted.doc
@@ -18334,7 +18369,170 @@ abilities.Random.weighted.fromStream weights =
       |> force
 ---
 
-(unison)
+(unison
+  (term_declaration
+    (type_signature
+      (path)
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (delayed
+          (effect
+            (regular_identifier))
+          (effect
+            (regular_identifier)
+            (tuple_or_parenthesized_type
+              (regular_identifier)
+              (delayed
+                (effect
+                  (regular_identifier))
+                (effect
+                  (regular_identifier))
+                (regular_identifier))))
+          (regular_identifier))
+        (arrow_symbol)
+        (effect
+          (regular_identifier))
+        (delayed
+          (effect
+            (regular_identifier))
+          (effect
+            (regular_identifier))
+          (regular_identifier))))
+    (term_definition
+      (path)
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (use_clause
+        (use)
+        (namespace
+          (regular_identifier))
+        (operator))
+      (term_declaration
+        (type_signature
+          (regular_identifier)
+          (type_signature_colon)
+          (term_type
+            (tuple_or_parenthesized_type
+              (regular_identifier)
+              (regular_identifier)
+              (tuple_or_parenthesized_type
+                (delayed
+                  (effect
+                    (regular_identifier))
+                  (effect
+                    (regular_identifier))
+                  (regular_identifier))))
+            (arrow_symbol)
+            (tuple_or_parenthesized_type
+              (regular_identifier)
+              (delayed
+                (effect
+                  (regular_identifier))
+                (effect
+                  (regular_identifier))
+                (regular_identifier)))
+            (arrow_symbol)
+            (tuple_or_parenthesized_type
+              (regular_identifier)
+              (regular_identifier)
+              (tuple_or_parenthesized_type
+                (delayed
+                  (effect
+                    (regular_identifier))
+                  (effect
+                    (regular_identifier))
+                  (regular_identifier))))))
+        (term_definition
+          (regular_identifier)
+          (kw_equals)
+          (block_term
+            (match_expression_lambda
+              (cases)
+              (pattern_case
+                (pattern
+                  (parenthesized_or_tuple_pattern
+                    (pattern
+                      (var_or_nullary_ctor
+                        (regular_identifier)))
+                    (pattern
+                      (var_or_nullary_ctor
+                        (regular_identifier)))))
+                (pattern
+                  (parenthesized_or_tuple_pattern
+                    (pattern
+                      (var_or_nullary_ctor
+                        (regular_identifier)))
+                    (pattern
+                      (var_or_nullary_ctor
+                        (regular_identifier)))))
+                (arrow_symbol)
+                (term_declaration
+                  (term_definition
+                    (regular_identifier)
+                    (kw_equals)
+                    (block_term
+                      (regular_identifier)
+                      (operator)
+                      (regular_identifier))))
+                (block_term
+                  (tuple_or_parenthesized
+                    (regular_identifier)
+                    (path)
+                    (regular_identifier)
+                    (regular_identifier)
+                    (regular_identifier)
+                    (regular_identifier))))))))
+      (destructuring_bind
+        (parenthesized_or_tuple_pattern
+          (pattern
+            (var_or_nullary_ctor
+              (regular_identifier)))
+          (pattern
+            (var_or_nullary_ctor
+              (regular_identifier))))
+        (kw_equals)
+        (block_term
+          (regular_identifier)
+          (regular_identifier)
+          (tuple_or_parenthesized
+            (nat)
+            (path)
+            (regular_identifier))
+          (regular_identifier)))
+      (term_declaration
+        (term_definition
+          (regular_identifier)
+          (kw_equals)
+          (block_term
+            (path)
+            (regular_identifier)
+            (regular_identifier))))
+      (block_term
+        (delay_block
+          (do)
+          (term_declaration
+            (term_definition
+              (regular_identifier)
+              (kw_equals)
+              (block_term
+                (path)
+                (regular_identifier)
+                (nat)
+                (regular_identifier))))
+          (block_term
+            (path)
+            (regular_identifier)
+            (regular_identifier)
+            (regular_identifier)
+            (operator)
+            (regular_identifier)
+            (literal_text)
+            (operator)
+            (regular_identifier)
+            (operator)
+            (regular_identifier)))))))
 
 ===
 abilities.Random.weighted.fromStream.doc
@@ -70636,7 +70834,20 @@ data.List.Nonempty.+|.doc =
   }}
 ---
 
-(unison)
+(unison
+  (term_declaration
+    (type_signature
+      (path)
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (regular_identifier)))
+    (term_definition
+      (path)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (doc_block)))))
 
 ===
 data.List.Nonempty.append.tests.associative
@@ -188250,7 +188461,37 @@ data.Weighted.weight : Nat ->{e} '{e} Weighted a ->{e} Weighted a
 data.Weighted.weight w ws = Weight w ws
 ---
 
-(unison)
+(unison
+  (term_declaration
+    (type_signature
+      (path)
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (regular_identifier)
+        (arrow_symbol)
+        (effect
+          (regular_identifier))
+        (delayed
+          (effect
+            (regular_identifier))
+          (regular_identifier)
+          (regular_identifier))
+        (arrow_symbol)
+        (effect
+          (regular_identifier))
+        (regular_identifier)
+        (regular_identifier)))
+    (term_definition
+      (path)
+      (regular_identifier)
+      (regular_identifier)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (regular_identifier)
+        (regular_identifier)
+        (regular_identifier)))))
 
 ===
 data.Weighted.weight.doc
@@ -200698,7 +200939,25 @@ Function.<|.doc =
   }}
 ---
 
-(unison)
+(unison
+  (term_declaration
+    (type_signature
+      (path)
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (regular_identifier)))
+    (term_definition
+      (path)
+      (regular_identifier)
+      (kw_equals)
+      (use_clause
+        (use)
+        (namespace
+          (regular_identifier))
+        (regular_identifier))
+      (block_term
+        (doc_block)))))
 
 ===
 (Function.<||)
