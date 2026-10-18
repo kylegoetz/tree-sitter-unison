@@ -11,6 +11,6 @@ module.exports = {
   literal_byte: $ => /0xs[0-9a-fA-F]+/,
   literal_hex: $ => /0x[0-9a-fA-F]+/,
   tuple_or_parenthesized: $ => prec.dynamic(3, parenthesized($, $._term)),
-  literal_termlink: $ => seq($.kw_termlink, $._hash_qualified),
-  literal_typelink: $ => seq($.kw_typelink, $._hash_qualified),
+  literal_termlink: $ => seq('termLink', $._hash_qualified),
+  literal_typelink: $ => seq('typeLink', $._hash_qualified),
 }

@@ -8,13 +8,10 @@ a = handle x with foo
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (handler
-          (handle)
           (block_term
             (regular_identifier))
-          (with)
           (block_term
             (regular_identifier)))))))
 
@@ -31,14 +28,11 @@ a = handle
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (handler
-          (handle)
           (term_declaration
             (term_definition
               (regular_identifier)
-              (kw_equals)
               (block_term
                 (nat)
                 (operator)
@@ -50,7 +44,6 @@ a = handle
             (nat)
             (float)
             (int))
-          (with)
           (block_term
             (regular_identifier)))))))
 
@@ -67,19 +60,15 @@ a = handle
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (handler
-          (handle)
           (term_declaration
             (term_definition
               (regular_identifier)
-              (kw_equals)
               (block_term
                 (nat))))
           (block_term
             (regular_identifier))
-          (with)
           (block_term
             (regular_identifier)))))))
 
@@ -94,16 +83,12 @@ a = handle foo with cases
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (handler
-          (handle)
           (block_term
             (regular_identifier))
-          (with)
           (block_term
             (match_expression_lambda
-              (cases)
               (pattern_case
                 (pattern
                   (effect_pattern
@@ -111,6 +96,5 @@ a = handle foo with cases
                       (pattern
                         (var_or_nullary_ctor
                           (regular_identifier))))))
-                (arrow_symbol)
                 (block_term
                   (regular_identifier))))))))))

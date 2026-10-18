@@ -13,37 +13,30 @@
   (watch_expression
     (block_term
       (match_expression
-        (match)
         (regular_identifier)
-        (with)
         (pattern_case
           (pattern
             (literal_text))
-          (arrow_symbol)
           (block_term
             (literal_text)))
         (pattern_case
           (pattern
             (literal_text))
-          (arrow_symbol)
           (block_term
             (literal_text)))
         (pattern_case
           (pattern
             (literal_text))
-          (arrow_symbol)
           (block_term
             (literal_text)))
         (pattern_case
           (pattern
             (literal_text))
-          (arrow_symbol)
           (block_term
             (literal_text)))
         (pattern_case
           (pattern
             (blank_pattern))
-          (arrow_symbol)
           (block_term
             (literal_text)))))))
 
@@ -59,20 +52,16 @@
   (watch_expression
     (block_term
       (match_expression
-        (match)
         (regular_identifier)
-        (with)
         (pattern_case
           (pattern
             (nat))
-          (arrow_symbol)
           (block_term
             (literal_text)))
         (pattern_case
           (pattern
             (var_or_nullary_ctor
               (regular_identifier)))
-          (arrow_symbol)
           (block_term
             (literal_text)))))))
 
@@ -87,28 +76,21 @@
   (watch_expression
     (block_term
       (match_expression_lambda
-        (cases)
         (pattern_case
           (pattern
             (var_or_nullary_ctor
               (regular_identifier)))
           (guarded_block
-            (pipe)
             (guard
               (tuple_or_parenthesized
-                
                 (regular_identifier)
                 (operator)
-                (nat)
-                )
+                (nat))
               (or)
               (tuple_or_parenthesized
-                
                 (regular_identifier)
                 (operator)
-                (nat)
-                ))
-            (arrow_symbol)
+                (nat)))
             (block_term
               (literal_text))))))))
 
@@ -123,19 +105,15 @@
   (watch_expression
     (block_term
       (match_expression
-        (match)
         (regular_identifier)
-        (with)
         (pattern_case
           (pattern
             (nat))
           (guarded_block
-            (pipe)
             (guard
               (nat)
               (operator)
               (nat))
-            (arrow_symbol)
             (block_term
               (nat))))))))
 
@@ -149,14 +127,11 @@
   (watch_expression
     (block_term
       (match_expression
-        (match)
         (regular_identifier)
-        (with)
         (pattern_case
           (pattern
             (var_or_nullary_ctor
               (regular_identifier)))
-          (arrow_symbol)
           (block_term
             (regular_identifier)))))))
 
@@ -170,13 +145,10 @@
   (watch_expression
     (block_term
       (match_expression
-        (match)
         (regular_identifier)
-        (with)
         (pattern_case
           (pattern
             (nat))
-          (arrow_symbol)
           (block_term
             (nat)))))))
 
@@ -191,11 +163,9 @@
   (watch_expression
     (block_term
       (match_expression_lambda
-        (cases)
         (pattern_case
           (pattern
             (nat))
-          (arrow_symbol)
           (block_term
             (nat)))))))
 
@@ -210,13 +180,10 @@
   (watch_expression
     (block_term
       (match_expression
-        (match)
         (int)
-        (with)
         (pattern_case
           (pattern
             (int))
-          (arrow_symbol)
           (block_term
             (int)))))))
 
@@ -230,11 +197,9 @@
   (watch_expression
     (block_term
       (match_expression_lambda
-        (cases)
         (pattern_case
           (pattern
             (blank_pattern))
-          (arrow_symbol)
           (block_term
             (nat)))))))
 
@@ -250,18 +215,15 @@
   (watch_expression
     (block_term
       (match_expression_lambda
-        (cases)
         (pattern_case
           (pattern
             (var_or_nullary_ctor
               (regular_identifier)))
-          (arrow_symbol)
           (block_term
             (nat)))
         (pattern_case
           (pattern
             (nat))
-          (arrow_symbol)
           (block_term
             (nat)))))))
 
@@ -275,7 +237,6 @@
   (watch_expression
     (block_term
       (match_expression_lambda
-        (cases)
         (pattern_case
           (pattern
             (var_or_nullary_ctor
@@ -285,7 +246,6 @@
               (regular_identifier))
             (var_or_nullary_ctor
               (regular_identifier)))
-          (arrow_symbol)
           (block_term
             (unit)))))))
 
@@ -299,14 +259,12 @@
   (watch_expression
     (block_term
       (match_expression_lambda
-        (cases)
         (pattern_case
           (pattern
             (var_or_nullary_ctor
               (path)
               (regular_identifier))
             (parenthesized_or_tuple_pattern
-              
               (pattern
                 (var_or_nullary_ctor
                   (path)
@@ -314,10 +272,8 @@
                 (var_or_nullary_ctor
                   (regular_identifier))
                 (var_or_nullary_ctor
-                  (regular_identifier)))
-              )
+                  (regular_identifier))))
             (blank_pattern))
-          (arrow_symbol)
           (block_term
             (unit)))))))
 
@@ -334,15 +290,12 @@
   (watch_expression
     (block_term
       (match_expression_lambda
-        (cases)
         (pattern_case
           (pattern
             (nat))
-          (arrow_symbol)
           (term_declaration
             (term_definition
               (regular_identifier)
-              (kw_equals)
               (block_term
                 (nat))))
           (block_term
@@ -358,11 +311,9 @@
   (watch_expression
     (block_term
       (match_expression_lambda
-        (cases)
         (pattern_case
           (pattern
             (literal_list_pattern))
-          (arrow_symbol)
           (block_term
             (nat)))))))
 
@@ -376,14 +327,12 @@
   (watch_expression
     (block_term
       (match_expression_lambda
-        (cases)
         (pattern_case
           (pattern
             (nat))
           (cons)
           (pattern
             (nat))
-          (arrow_symbol)
           (block_term
             (nat)))))))
 
@@ -397,13 +346,11 @@
   (watch_expression
     (block_term
       (match_expression_lambda
-        (cases)
         (pattern_case
           (pattern
             (literal_list_pattern
               (pattern
                 (nat))))
-          (arrow_symbol)
           (block_term
             (nat)))))))
 
@@ -417,14 +364,12 @@
   (watch_expression
     (block_term
       (match_expression_lambda
-        (cases)
         (pattern_case
           (pattern
             (blank_pattern))
           (snoc)
           (pattern
             (nat))
-          (arrow_symbol)
           (block_term
             (nat)))))))
 
@@ -438,7 +383,6 @@
   (watch_expression
     (block_term
       (match_expression_lambda
-        (cases)
         (pattern_case
           (pattern
             (literal_list_pattern
@@ -447,7 +391,6 @@
           (concat)
           (pattern
             (blank_pattern))
-          (arrow_symbol)
           (block_term
             (nat)))))))
 
@@ -461,11 +404,9 @@
   (watch_expression
     (block_term
       (match_expression_lambda
-        (cases)
         (pattern_case
           (pattern
             (literal_list_pattern))
-          (arrow_symbol)
           (block_term
             (nat)))))))
 
@@ -479,24 +420,16 @@
   (watch_expression
     (block_term
       (match_expression_lambda
-        (cases)
         (pattern_case
           (pattern
             (parenthesized_or_tuple_pattern
-              
               (pattern
                 (var_or_nullary_ctor
                   (regular_identifier)))
-              
               (pattern
                 (var_or_nullary_ctor
-                  (regular_identifier)))
-              ))
-          (arrow_symbol)
+                  (regular_identifier)))))
           (block_term
             (tuple_or_parenthesized
-              
               (regular_identifier)
-              
-              (regular_identifier)
-              )))))))
+              (regular_identifier))))))))

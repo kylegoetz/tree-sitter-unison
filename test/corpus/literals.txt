@@ -32,7 +32,6 @@ x = 123
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (nat)))))
 
@@ -46,7 +45,6 @@ x = 0x003
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (literal_hex)))))
 
@@ -60,7 +58,6 @@ x = -9223372036854775808
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (int)))))
 
@@ -74,7 +71,6 @@ x = 1.6777216
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float)))))
 
@@ -89,13 +85,11 @@ x = ?\n
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (literal_char))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (literal_char)))))
 
@@ -109,7 +103,6 @@ x = true
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (literal_boolean)))))
 
@@ -123,7 +116,6 @@ x = 0xsdeadbeef
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (literal_byte)))))
 
@@ -137,7 +129,6 @@ x = [1, 2, 3]
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (literal_list
           (nat)
@@ -154,11 +145,9 @@ y = x -> x + 2
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (literal_function
           (regular_identifier)
-          (arrow_symbol)
           (regular_identifier)
           (operator)
           (nat))))))
@@ -173,12 +162,10 @@ y = acc x -> acc + x
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (literal_function
           (regular_identifier)
           (regular_identifier)
-          (arrow_symbol)
           (regular_identifier)
           (operator)
           (regular_identifier))))))
@@ -193,7 +180,6 @@ x = (true, true, false)
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (tuple_or_parenthesized
           (literal_boolean)
@@ -210,7 +196,6 @@ x = ()
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (unit)))))
 
@@ -224,10 +209,8 @@ x = termLink aUnisonTerm
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (literal_termlink
-          (kw_termlink)
           (regular_identifier))))))
 
 ===
@@ -241,12 +224,10 @@ x = termLink aUnisonTerm
   (watch_expression
     (block_term
       (literal_typelink
-        (kw_typelink)
         (regular_identifier))))
   (watch_expression
     (block_term
       (literal_typelink
-        (kw_typelink)
         (built_in_hash)))))
 
 ===
@@ -259,7 +240,6 @@ x = 1
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (nat)))))
 
@@ -295,139 +275,116 @@ x = -1.2e-3
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (int))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (int))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float))))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (float)))))
 
@@ -463,12 +420,10 @@ add = x y -> x + y
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (literal_function
           (regular_identifier)
           (regular_identifier)
-          (arrow_symbol)
           (regular_identifier)
           (operator)
           (regular_identifier))))))

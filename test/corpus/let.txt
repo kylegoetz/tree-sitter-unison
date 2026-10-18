@@ -10,20 +10,16 @@ x = let y = 5
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (exp_let
-          (kw_let)
           (term_declaration
             (term_definition
               (regular_identifier)
-              (kw_equals)
               (block_term
                 (nat))))
           (term_declaration
             (term_definition
               (regular_identifier)
-              (kw_equals)
               (block_term
                 (nat))))
           (block_term

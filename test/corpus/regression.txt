@@ -8,7 +8,6 @@ x = 1 + 2
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (nat)
         (operator)
@@ -24,7 +23,6 @@ x = ##Foo
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (built_in_hash)))))
 
@@ -64,7 +62,6 @@ x = ##Foo
     (term_declaration
       (term_definition
         (regular_identifier)
-        (kw_equals)
         (block_term
           (nat))))))
 
@@ -78,7 +75,6 @@ z = {{ test }}
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (doc_block)))))
 
@@ -94,7 +90,6 @@ x = 5
     (doc_block)
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (nat)))))
 
@@ -110,17 +105,13 @@ x = 5
     (type_signature
       (path)
       (operator)
-      (type_signature_colon)
       (term_type
         (regular_identifier)
-        (arrow_symbol)
         (regular_identifier)
-        (arrow_symbol)
         (regular_identifier)))
     (term_definition
       (path)
       (operator)
-      (kw_equals)
       (block_term
         (regular_identifier)
         (literal_text)))))
@@ -163,15 +154,12 @@ lib.base.Float.fromNat.doc =
     (type_signature
       (path)
       (regular_identifier)
-      (type_signature_colon)
       (term_type
         (regular_identifier)))
     (term_definition
       (path)
       (regular_identifier)
-      (kw_equals)
       (use_clause
-        (use)
         (namespace
           (regular_identifier))
         (regular_identifier))
@@ -189,7 +177,6 @@ lib.base.Nat.!=.doc = 5
     (term_definition
       (path)
       (regular_identifier)
-      (kw_equals)
       (block_term
         (nat)))))
 
@@ -207,25 +194,18 @@ lib.base.Nat.!=.doc = 5
   (watch_expression
     (block_term
       (match_expression
-        (match)
         (literal_boolean)
-        (with)
         (pattern_case
           (pattern
             (var_or_nullary_ctor
               (regular_identifier)))
           (guarded_block
-            (pipe)
             (guard
               (literal_boolean))
-            (arrow_symbol)
             (block_term
               (nat)))
           (guarded_block
-            (pipe)
-            (guard
-              (otherwise))
-            (arrow_symbol)
+            (guard)
             (block_term
               (nat))))))))
 
@@ -244,9 +224,7 @@ a lib.base.Nat.!= b =
       (path)
       (operator)
       (regular_identifier)
-      (kw_equals)
       (use_clause
-        (use)
         (namespace
           (regular_identifier))
         (operator))
@@ -280,14 +258,11 @@ a lib.base.Nat.!= b =
   (watch_expression
     (block_term
       (match_expression
-        (match)
         (regular_identifier)
         (regular_identifier)
-        (with)
         (pattern_case
           (pattern
             (blank_pattern))
-          (arrow_symbol)
           (block_term
             (regular_identifier)))))))
 
@@ -339,10 +314,8 @@ a = cases
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (match_expression_lambda
-          (cases)
           (pattern_case
             (pattern
               (effect_pattern
@@ -350,14 +323,12 @@ a = cases
                   (pattern
                     (var_or_nullary_ctor
                       (regular_identifier))))))
-            (arrow_symbol)
             (block_term
               (nat)))
           (pattern_case
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier)))
-            (arrow_symbol)
             (block_term
               (nat))))))))
 
@@ -374,7 +345,6 @@ baz""""
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (literal_text)))))
 
@@ -389,7 +359,6 @@ lib.unison_base_3_0_0.Nat.gcd = 5
     (term_definition
       (path)
       (regular_identifier)
-      (kw_equals)
       (block_term
         (nat)))))
 
@@ -408,18 +377,14 @@ complexCalculation input =
     (term_definition
       (regular_identifier)
       (regular_identifier)
-      (kw_equals)
       (block_term
         (exp_let
-          (kw_let)
           (term_declaration
             (term_definition
               (regular_identifier)
-              (kw_equals)
               (block_term
                 (nat))))
           (use_clause
-            (use)
             (namespace
               (regular_identifier))
             (operator)
@@ -443,7 +408,6 @@ x =
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (destructuring_bind
         (parenthesized_or_tuple_pattern
           (pattern
@@ -452,15 +416,12 @@ x =
           (pattern
             (var_or_nullary_ctor
               (regular_identifier))))
-        (kw_equals)
         (term_declaration
           (term_definition
             (regular_identifier)
-            (kw_equals)
             (block_term
               (nat))))
         (use_clause
-          (use)
           (namespace
             (regular_identifier))
           (regular_identifier)
@@ -483,10 +444,8 @@ swap = cases
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (match_expression_lambda
-          (cases)
           (pattern_case
             (pattern
               (parenthesized_or_tuple_pattern
@@ -496,7 +455,6 @@ swap = cases
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier)))))
-            (arrow_symbol)
             (block_term
               (tuple_or_parenthesized
                 (regular_identifier)
@@ -514,7 +472,6 @@ y =
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (destructuring_bind
         (parenthesized_or_tuple_pattern
           (pattern
@@ -522,7 +479,6 @@ y =
               (regular_identifier)))
           (pattern
             (blank_pattern)))
-        (kw_equals)
         (block_term
           (force
             (regular_identifier)
@@ -544,23 +500,17 @@ x = cases
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (match_expression_lambda
-          (cases)
           (pattern_case
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier)))
             (guarded_block
-              (pipe)
-              (guard
-                (otherwise))
-              (arrow_symbol)
+              (guard)
               (term_declaration
                 (term_definition
                   (regular_identifier)
-                  (kw_equals)
                   (block_term
                     (regular_identifier)
                     (tuple_or_parenthesized
@@ -568,7 +518,6 @@ x = cases
                       (operator)
                       (nat))
                     (delay_block
-                      (do)
                       (block_term
                         (regular_identifier)
                         (tuple_or_parenthesized
@@ -591,11 +540,9 @@ a =
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (regular_identifier)
         (delay_block
-          (do)
           (destructuring_bind
             (parenthesized_or_tuple_pattern
               (pattern
@@ -603,7 +550,6 @@ a =
                   (regular_identifier))
                 (var_or_nullary_ctor
                   (regular_identifier))))
-            (kw_equals)
             (block_term
               (regular_identifier)))
           (block_term
@@ -621,10 +567,8 @@ a =
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (match_expression_lambda
-          (cases)
           (pattern_case
             (pattern
               (effect_pattern
@@ -635,7 +579,6 @@ a =
                   (pattern
                     (var_or_nullary_ctor
                       (regular_identifier))))))
-            (arrow_symbol)
             (block_term
               (unit))))))))
 
@@ -649,10 +592,8 @@ x = do (a)
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (delay_block
-          (do)
           (block_term
             (tuple_or_parenthesized
               (regular_identifier))))))))
@@ -670,7 +611,6 @@ a =
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (regular_identifier))
       (comment)
@@ -689,14 +629,11 @@ Void.absurdly v = match v() with
       (path)
       (regular_identifier)
       (regular_identifier)
-      (kw_equals)
       (block_term
         (match_expression
-          (match)
           (force
             (regular_identifier)
-            (unit))
-          (with))))))
+            (unit)))))))
 
 ===
 [Regression] GH-151 - destructuring bind that is an as-pattern fails
@@ -712,7 +649,6 @@ a =
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (path)
         (regular_identifier)
@@ -722,9 +658,7 @@ a =
         (tuple_or_parenthesized
           (literal_function
             (regular_identifier)
-            (arrow_symbol)
             (exp_let
-              (kw_let)
               (destructuring_bind
                 (as_pattern
                   (regular_identifier
@@ -736,25 +670,21 @@ a =
                     (pattern
                       (var_or_nullary_ctor
                         (regular_identifier)))))
-                (kw_equals)
                 (block_term
                   (regular_identifier)
                   (regular_identifier)))
               (block_term
                 (exp_if
                   (if_block
-                    (kw_if)
                     (block_term
                       (path)
                       (regular_identifier)
                       (regular_identifier)
                       (nat)))
                   (then_block
-                    (kw_then)
                     (block_term
                       (literal_list)))
                   (else_block
-                    (kw_else)
                     (block_term
                       (literal_list
                         (regular_identifier)))))))))
@@ -775,16 +705,12 @@ a = cases
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (match_expression_lambda
-          (cases)
           (pattern_case
             (pattern
               (blank_pattern))
-            (arrow_symbol)
             (use_clause
-              (use)
               (namespace
                 (regular_identifier))
               (operator))
@@ -806,21 +732,16 @@ a =
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (exp_if
           (if_block
-            (kw_if)
             (block_term
               (literal_boolean)))
           (then_block
-            (kw_then)
             (block_term
               (literal_boolean)))
           (else_block
-            (kw_else)
             (use_clause
-              (use)
               (namespace
                 (regular_identifier))
               (operator)
@@ -840,23 +761,18 @@ a =
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (term_declaration
         (term_definition
           (regular_identifier)
-          (kw_equals)
           (block_term
             (exp_if
               (if_block
-                (kw_if)
                 (block_term
                   (literal_boolean)))
               (then_block
-                (kw_then)
                 (block_term
                   (literal_boolean)))
               (else_block
-                (kw_else)
                 (block_term
                   (literal_boolean)))))))
       (block_term
@@ -873,10 +789,8 @@ a = cases
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (match_expression_lambda
-          (cases)
           (pattern_case
             (pattern
               (var_or_nullary_ctor
@@ -886,7 +800,6 @@ a = cases
                 (regular_identifier))
               (var_or_nullary_ctor
                 (regular_identifier)))
-            (arrow_symbol)
             (block_term
               (regular_identifier)
               (tuple_or_parenthesized
@@ -911,16 +824,12 @@ a =
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (match_expression_lambda
-          (cases)
           (pattern_case
             (pattern
               (blank_pattern))
-            (arrow_symbol)
             (use_clause
-              (use)
               (namespace
                 (regular_identifier))
               (operator)
@@ -940,17 +849,13 @@ a = cases
   (term_declaration
     (type_signature
       (regular_identifier)
-      (type_signature_colon)
       (term_type
         (regular_identifier)
-        (arrow_symbol)
         (regular_identifier)))
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (match_expression_lambda
-          (cases)
           (pattern_case
             (pattern
               (var_or_nullary_ctor
@@ -962,7 +867,6 @@ a = cases
                     (regular_identifier))
                   (var_or_nullary_ctor
                     (regular_identifier)))))
-            (arrow_symbol)
             (block_term
               (regular_identifier))))))))
 
@@ -980,24 +884,19 @@ time.UTCOffset.fromIso8601 t =
     (type_signature
       (path)
       (regular_identifier)
-      (type_signature_colon)
       (term_type
         (regular_identifier)
-        (arrow_symbol)
         (regular_identifier)
         (regular_identifier)))
     (term_definition
       (path)
       (regular_identifier)
       (regular_identifier)
-      (kw_equals)
       (block_term
         (regular_identifier)
         (delay_block
-          (do)
           (block_term
             (match_expression
-              (match)
               (path)
               (regular_identifier)
               (tuple_or_parenthesized
@@ -1005,11 +904,9 @@ time.UTCOffset.fromIso8601 t =
                 (regular_identifier)
                 (regular_identifier)
                 (regular_identifier))
-              (with)
               (pattern_case
                 (pattern
                   (blank_pattern))
-                (arrow_symbol)
                 (block_term
                   (regular_identifier))))))))))
 
@@ -1027,20 +924,14 @@ a d =
     (term_definition
       (regular_identifier)
       (regular_identifier)
-      (kw_equals)
       (block_term
         (match_expression
-          (match)
           (unit)
-          (with)
           (pattern_case
             (pattern
               (var_or_nullary_ctor))
             (guarded_block
-              (pipe)
-              (guard
-                (otherwise))
-              (arrow_symbol)
+              (guard)
               (block_term
                 (unit)))))))))
 
@@ -1056,15 +947,12 @@ a = b do
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (regular_identifier)
         (delay_block
-          (do)
           (term_declaration
             (term_definition
               (regular_identifier)
-              (kw_equals)
               (block_term
                 (regular_identifier)
                 (tuple_or_parenthesized
@@ -1089,11 +977,9 @@ a =
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (term_declaration
         (term_definition
           (regular_identifier)
-          (kw_equals)
           (block_term
             (path)
             (regular_identifier)
@@ -1113,13 +999,11 @@ metadata.licenses.fböller2020.doc = License.toDoc fböller2020
     (type_signature
       (path)
       (regular_identifier)
-      (type_signature_colon)
       (term_type
         (regular_identifier)))
     (term_definition
       (path)
       (regular_identifier)
-      (kw_equals)
       (block_term
         (path)
         (regular_identifier)
@@ -1156,71 +1040,57 @@ math.Natural.internal.normalize =
     (type_signature
       (path)
       (regular_identifier)
-      (type_signature_colon)
       (term_type
         (regular_identifier)
-        (arrow_symbol)
         (regular_identifier)))
     (term_definition
       (path)
       (regular_identifier)
-      (kw_equals)
       (use_clause
-        (use)
         (namespace
           (regular_identifier))
         (operator))
       (term_declaration
         (term_definition
           (regular_identifier)
-          (kw_equals)
           (block_term
             (regular_identifier))))
       (term_declaration
         (term_definition
           (regular_identifier)
-          (kw_equals)
           (block_term
             (path)
             (regular_identifier)
             (regular_identifier))))
       (block_term
         (match_expression_lambda
-          (cases)
           (pattern_case
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
               (var_or_nullary_ctor
                 (regular_identifier)))
-            (arrow_symbol)
             (term_declaration
               (term_definition
                 (regular_identifier)
                 (regular_identifier)
                 (regular_identifier)
                 (regular_identifier)
-                (kw_equals)
                 (block_term
                   (match_expression
-                    (match)
                     (regular_identifier)
-                    (with)
                     (pattern_case
                       (pattern
                         (literal_list_pattern))
-                      (arrow_symbol)
                       (term_declaration
                         (term_definition
                           (regular_identifier)
-                          (kw_equals)
                           (block_term
                             (path)
                             (regular_identifier)
                             (tuple_or_parenthesized
                               (literal_function
                                 (regular_identifier)
-                                (arrow_symbol)
                                 (regular_identifier)
                                 (operator)
                                 (nat)))
@@ -1228,18 +1098,15 @@ math.Natural.internal.normalize =
                       (block_term
                         (exp_if
                           (if_block
-                            (kw_if)
                             (block_term
                               (regular_identifier)
                               (operator)
                               (nat)))
                           (then_block
-                            (kw_then)
                             (block_term
                               (regular_identifier)
                               (regular_identifier)))
                           (else_block
-                            (kw_else)
                             (block_term
                               (regular_identifier)
                               (tuple_or_parenthesized
@@ -1254,7 +1121,6 @@ math.Natural.internal.normalize =
                       (pattern
                         (var_or_nullary_ctor
                           (regular_identifier)))
-                      (arrow_symbol)
                       (block_term
                         (regular_identifier)
                         (regular_identifier)
@@ -1268,9 +1134,7 @@ math.Natural.internal.normalize =
                 (regular_identifier)
                 (regular_identifier)
                 (regular_identifier)
-                (kw_equals)
                 (use_clause
-                  (use)
                   (namespace
                     (regular_identifier))
                   (operator)
@@ -1279,7 +1143,6 @@ math.Natural.internal.normalize =
                 (term_declaration
                   (term_definition
                     (regular_identifier)
-                    (kw_equals)
                     (block_term
                       (regular_identifier)
                       (operator)
@@ -1287,13 +1150,11 @@ math.Natural.internal.normalize =
                 (block_term
                   (exp_if
                     (if_block
-                      (kw_if)
                       (block_term
                         (regular_identifier)
                         (operator)
                         (regular_identifier)))
                     (then_block
-                      (kw_then)
                       (block_term
                         (regular_identifier)
                         (regular_identifier)
@@ -1303,11 +1164,9 @@ math.Natural.internal.normalize =
                           (regular_identifier))
                         (nat)))
                     (else_block
-                      (kw_else)
                       (term_declaration
                         (term_definition
                           (regular_identifier)
-                          (kw_equals)
                           (block_term
                             (regular_identifier)
                             (regular_identifier)
@@ -1315,7 +1174,6 @@ math.Natural.internal.normalize =
                       (term_declaration
                         (term_definition
                           (regular_identifier)
-                          (kw_equals)
                           (block_term
                             (path)
                             (regular_identifier)
@@ -1383,13 +1241,10 @@ IO.concurrent.STM.TMap.delete b tm =
     (type_signature
       (path)
       (regular_identifier)
-      (type_signature_colon)
       (term_type
         (regular_identifier)
-        (arrow_symbol)
         (regular_identifier)
         (regular_identifier)
-        (arrow_symbol)
         (effect
           (regular_identifier))
         (unit)))
@@ -1398,19 +1253,15 @@ IO.concurrent.STM.TMap.delete b tm =
       (regular_identifier)
       (regular_identifier)
       (regular_identifier)
-      (kw_equals)
       (use_clause
-        (use)
         (namespace
           (regular_identifier))
         (regular_identifier))
       (use_clause
-        (use)
         (namespace
           (regular_identifier))
         (operator))
       (use_clause
-        (use)
         (namespace
           (regular_identifier))
         (regular_identifier)
@@ -1421,17 +1272,14 @@ IO.concurrent.STM.TMap.delete b tm =
           (regular_identifier)
           (regular_identifier)
           (regular_identifier)
-          (kw_equals)
           (block_term
             (match_expression
-              (match)
               (tuple_or_parenthesized
                 (path)
                 (regular_identifier)
                 (regular_identifier)
                 (regular_identifier)
                 (regular_identifier))
-              (with)
               (pattern_case
                 (pattern
                   (parenthesized_or_tuple_pattern
@@ -1444,7 +1292,6 @@ IO.concurrent.STM.TMap.delete b tm =
                       (var_or_nullary_ctor
                         (regular_identifier))
                       (blank_pattern))))
-                (arrow_symbol)
                 (block_term
                   (regular_identifier)
                   (regular_identifier)
@@ -1463,11 +1310,9 @@ IO.concurrent.STM.TMap.delete b tm =
                       (blank_pattern)
                       (var_or_nullary_ctor
                         (regular_identifier)))))
-                (arrow_symbol)
                 (term_declaration
                   (term_definition
                     (regular_identifier)
-                    (kw_equals)
                     (block_term
                       (path)
                       (regular_identifier)
@@ -1475,10 +1320,8 @@ IO.concurrent.STM.TMap.delete b tm =
                       (regular_identifier))))
                 (block_term
                   (match_expression
-                    (match)
                     (regular_identifier)
                     (regular_identifier)
-                    (with)
                     (pattern_case
                       (pattern
                         (var_or_nullary_ctor
@@ -1488,25 +1331,19 @@ IO.concurrent.STM.TMap.delete b tm =
                         (var_or_nullary_ctor
                           (regular_identifier)))
                       (guarded_block
-                        (pipe)
                         (guard
                           (regular_identifier)
                           (operator)
                           (regular_identifier))
-                        (arrow_symbol)
                         (block_term
                           (regular_identifier)
                           (regular_identifier)
                           (regular_identifier)))
                       (guarded_block
-                        (pipe)
-                        (guard
-                          (otherwise))
-                        (arrow_symbol)
+                        (guard)
                         (term_declaration
                           (term_definition
                             (regular_identifier)
-                            (kw_equals)
                             (block_term
                               (force
                                 (path)
@@ -1550,7 +1387,6 @@ IO.concurrent.STM.TMap.delete b tm =
                               (regular_identifier))
                             (var_or_nullary_ctor
                               (regular_identifier)))))
-                      (arrow_symbol)
                       (block_term
                         (regular_identifier)
                         (tuple_or_parenthesized
@@ -1563,30 +1399,24 @@ IO.concurrent.STM.TMap.delete b tm =
                         (term_definition
                           (regular_identifier)
                           (regular_identifier)
-                          (kw_equals)
                           (block_term
                             (match_expression
-                              (match)
                               (regular_identifier)
                               (regular_identifier)
-                              (with)
                               (pattern_case
                                 (pattern
                                   (var_or_nullary_ctor
                                     (regular_identifier)))
-                                (arrow_symbol)
                                 (block_term
                                   (literal_boolean)))
                               (pattern_case
                                 (pattern
                                   (blank_pattern))
-                                (arrow_symbol)
                                 (block_term
                                   (literal_boolean)))))))
                       (block_term
                         (exp_if
                           (if_block
-                            (kw_if)
                             (block_term
                               (path)
                               (regular_identifier)
@@ -1598,20 +1428,17 @@ IO.concurrent.STM.TMap.delete b tm =
                                 (regular_identifier)
                                 (regular_identifier))))
                           (then_block
-                            (kw_then)
                             (block_term
                               (regular_identifier)
                               (regular_identifier)
                               (regular_identifier)))
                           (else_block
-                            (kw_else)
                             (block_term
                               (unit))))))
                     (pattern_case
                       (pattern
                         (var_or_nullary_ctor
                           (regular_identifier)))
-                      (arrow_symbol)
                       (block_term
                         (unit))))))))))
       (block_term
@@ -1619,6 +1446,7 @@ IO.concurrent.STM.TMap.delete b tm =
         (nat)
         (regular_identifier)
         (regular_identifier)))))
+
 ===
 GH-177 comma can end layout
 ===
@@ -1638,24 +1466,19 @@ test.gen.functions.someOrNone f v =
     (type_signature
       (path)
       (regular_identifier)
-      (type_signature_colon)
       (term_type
         (tuple_or_parenthesized_type
           (regular_identifier)
-          (arrow_symbol)
           (effect
             (regular_identifier))
           (regular_identifier))
-        (arrow_symbol)
         (regular_identifier)
-        (arrow_symbol)
         (delayed
           (effect
             (regular_identifier))
           (tuple_or_parenthesized_type
             (regular_identifier)
             (regular_identifier)
-            (arrow_symbol)
             (effect
               (regular_identifier))
             (regular_identifier)
@@ -1665,7 +1488,6 @@ test.gen.functions.someOrNone f v =
       (regular_identifier)
       (regular_identifier)
       (regular_identifier)
-      (kw_equals)
       (block_term
         (path)
         (regular_identifier)
@@ -1674,12 +1496,10 @@ test.gen.functions.someOrNone f v =
           (regular_identifier)
           (regular_identifier)
           (match_expression_lambda
-            (cases)
             (pattern_case
               (pattern
                 (var_or_nullary_ctor
                   (regular_identifier)))
-              (arrow_symbol)
               (block_term
                 (regular_identifier)
                 (regular_identifier)))
@@ -1688,16 +1508,13 @@ test.gen.functions.someOrNone f v =
                 (var_or_nullary_ctor
                   (regular_identifier))
                 (blank_pattern))
-              (arrow_symbol)
               (block_term
                 (regular_identifier))))
           (match_expression_lambda
-            (cases)
             (pattern_case
               (pattern
                 (var_or_nullary_ctor
                   (regular_identifier)))
-              (arrow_symbol)
               (block_term
                 (regular_identifier)
                 (regular_identifier)))
@@ -1707,7 +1524,6 @@ test.gen.functions.someOrNone f v =
                   (regular_identifier))
                 (var_or_nullary_ctor
                   (regular_identifier)))
-              (arrow_symbol)
               (block_term
                 (regular_identifier)
                 (tuple_or_parenthesized
@@ -1719,6 +1535,7 @@ test.gen.functions.someOrNone f v =
           (tuple_or_parenthesized
             (regular_identifier)
             (regular_identifier)))))))
+
 ===
 GH-178
 ===
@@ -1727,14 +1544,12 @@ unique type Point2 = {
     y : Nat,
 }
 ---
+
 (unison
   (type_declaration
-    (unique)
-    (type_kw)
     (type_constructor
       (type_name
         (regular_identifier)))
-    (kw_equals)
     (record
       (record_field
         (field_name)

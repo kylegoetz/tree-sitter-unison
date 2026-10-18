@@ -9,7 +9,6 @@ program = a
   (term_declaration
     (type_signature
       (regular_identifier)
-      (type_signature_colon)
       (term_type
         (delayed
           (effect
@@ -19,6 +18,5 @@ program = a
           (unit))))
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (regular_identifier)))))

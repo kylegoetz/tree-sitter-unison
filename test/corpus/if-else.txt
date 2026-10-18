@@ -8,19 +8,15 @@ y = if x then 5 else 6
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (exp_if
           (if_block
-            (kw_if)
             (block_term
               (regular_identifier)))
           (then_block
-            (kw_then)
             (block_term
               (nat)))
           (else_block
-            (kw_else)
             (block_term
               (nat))))))))
 
@@ -34,21 +30,17 @@ mySimpleTerm = if elem 5 myList then "high five" else "no five found"
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (exp_if
           (if_block
-            (kw_if)
             (block_term
               (regular_identifier)
               (nat)
               (regular_identifier)))
           (then_block
-            (kw_then)
             (block_term
               (literal_text)))
           (else_block
-            (kw_else)
             (block_term
               (literal_text))))))))
 
@@ -64,20 +56,16 @@ mySimpleTerm = if elem 5 myList
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (exp_if
           (if_block
-            (kw_if)
             (block_term
               (regular_identifier)
               (nat)
               (regular_identifier)))
           (then_block
-            (kw_then)
             (block_term
               (literal_text)))
           (else_block
-            (kw_else)
             (block_term
               (literal_text))))))))

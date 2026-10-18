@@ -7,13 +7,11 @@ x = 5
 
 (unison
   (namespace_pragma
-    (kw_namespace)
     (namespace
       (regular_identifier)))
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (nat)))))
 
@@ -30,11 +28,9 @@ sum x y = x + y
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (nat))))
   (namespace_pragma
-    (kw_namespace)
     (namespace
       (path)
       (regular_identifier)))
@@ -43,7 +39,6 @@ sum x y = x + y
       (regular_identifier)
       (regular_identifier)
       (regular_identifier)
-      (kw_equals)
       (block_term
         (regular_identifier)
         (operator)

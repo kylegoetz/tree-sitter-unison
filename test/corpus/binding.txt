@@ -10,7 +10,6 @@ x =
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (destructuring_bind
         (parenthesized_or_tuple_pattern
           (pattern
@@ -19,7 +18,6 @@ x =
           (pattern
             (var_or_nullary_ctor
               (regular_identifier))))
-        (kw_equals)
         (block_term
           (regular_identifier)))
       (block_term
@@ -38,7 +36,6 @@ x =
       (regular_identifier)
       (tuple_or_parenthesized
         (match_expression_lambda
-          (cases)
           (pattern_case
             (pattern
               (parenthesized_or_tuple_pattern
@@ -48,7 +45,6 @@ x =
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier)))))
-            (arrow_symbol)
             (block_term
               (regular_identifier)))))
       (literal_list

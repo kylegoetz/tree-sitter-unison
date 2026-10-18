@@ -6,16 +6,12 @@ structural type Optional a = Some a | None
 
 (unison
   (type_declaration
-    (structural)
-    (type_kw)
     (type_constructor
       (type_name
         (regular_identifier))
       (type_argument))
-    (kw_equals)
     (regular_identifier)
     (regular_identifier)
-    (pipe)
     (regular_identifier)))
 
 ===
@@ -26,15 +22,11 @@ unique type UserId = Phone Nat | Email Text
 
 (unison
   (type_declaration
-    (unique)
-    (type_kw)
     (type_constructor
       (type_name
         (regular_identifier)))
-    (kw_equals)
     (regular_identifier)
     (regular_identifier)
-    (pipe)
     (regular_identifier)
     (regular_identifier)))
 
@@ -46,12 +38,9 @@ unique type Foo =
 
 (unison
   (type_declaration
-    (unique)
-    (type_kw)
     (type_constructor
       (type_name
-        (regular_identifier)))
-    (kw_equals)))
+        (regular_identifier)))))
 
 ===
 [Types] type name with namespace/qualifier
@@ -61,13 +50,10 @@ unique type controlFlow.Color = RGB Nat Nat Nat
 
 (unison
   (type_declaration
-    (unique)
-    (type_kw)
     (type_constructor
       (type_name
         (path)
         (regular_identifier)))
-    (kw_equals)
     (regular_identifier)
     (regular_identifier)
     (regular_identifier)
@@ -81,12 +67,9 @@ unique type Point2 = { x : Nat, y : Nat }
 
 (unison
   (type_declaration
-    (unique)
-    (type_kw)
     (type_constructor
       (type_name
         (regular_identifier)))
-    (kw_equals)
     (record
       (record_field
         (field_name)
@@ -106,12 +89,9 @@ unique type Point2 = {
 
 (unison
   (type_declaration
-    (unique)
-    (type_kw)
     (type_constructor
       (type_name
         (regular_identifier)))
-    (kw_equals)
     (record
       (record_field
         (field_name)
@@ -128,14 +108,11 @@ type UserId = Phone Nat | Email Text
 
 (unison
   (type_declaration
-    (type_kw)
     (type_constructor
       (type_name
         (regular_identifier)))
-    (kw_equals)
     (regular_identifier)
     (regular_identifier)
-    (pipe)
     (regular_identifier)
     (regular_identifier)))
 
@@ -147,11 +124,9 @@ type Task = { id : Nat }
 
 (unison
   (type_declaration
-    (type_kw)
     (type_constructor
       (type_name
         (regular_identifier)))
-    (kw_equals)
     (record
       (record_field
         (field_name)

@@ -14,7 +14,7 @@ module.exports = {
       alias($._binding, $.term_declaration),
       $.destructuring_bind,
     ),
-  term_definition2: $ => prec.right(seq($._lhs, layoutBlock($, $.kw_equals))),
+  term_definition2: $ => prec.right(seq($._lhs, layoutBlock($, '='))),
 
   // This exists because of the if/then/else definition. See that definition for more info.
   __block: $ =>
@@ -45,7 +45,7 @@ module.exports = {
           $.as_pattern,
           $.parenthesized_or_tuple_pattern,
         ),
-        layoutBlock($, $.kw_equals),
+        layoutBlock($, '='),
       ),
     ),
   // dynamic precedence so functional application + dedent + pattern -> x doesn't get parsed
@@ -59,7 +59,7 @@ module.exports = {
     prec.right(
       seq(
         $._infix_app_or_boolean_op,
-        optional(seq($.type_signature_colon, $._computation_type)),
+        optional(seq(':', $._computation_type)),
       ),
     ),
   _term4: $ => repeat1($._term_leaf),
@@ -73,4 +73,4 @@ module.exports = {
 }
 
 lam = ($, term) =>
-  seq(repeat1($._prefix_definition_name), alias('->', $.arrow_symbol), term)
+  seq(repeat1($._prefix_definition_name), '->', term)

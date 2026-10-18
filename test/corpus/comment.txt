@@ -45,7 +45,6 @@ comment with -} nesting
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (nat))
       (comment))))
@@ -63,11 +62,9 @@ someBytes = 0xsdeadbeef
   (term_declaration
     (type_signature
       (regular_identifier)
-      (type_signature_colon)
       (term_type
         (regular_identifier)))
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (literal_byte)))))

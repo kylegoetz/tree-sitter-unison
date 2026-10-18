@@ -6,7 +6,6 @@ use base.List
 
 (unison
   (use_clause
-    (use)
     (namespace
       (path)
       (regular_identifier))))
@@ -19,7 +18,6 @@ use Universal == < > >=
 
 (unison
   (use_clause
-    (use)
     (namespace
       (regular_identifier))
     (operator)
@@ -35,7 +33,6 @@ use Search lubIndexOf'
 
 (unison
   (use_clause
-    (use)
     (namespace
       (regular_identifier))
     (regular_identifier)))
@@ -48,7 +45,6 @@ use base.List ++
 
 (unison
   (use_clause
-    (use)
     (namespace
       (path)
       (regular_identifier))
@@ -62,7 +58,6 @@ use Nat + - *
 
 (unison
   (use_clause
-    (use)
     (namespace
       (regular_identifier))
     (operator)
@@ -86,20 +81,16 @@ complexCalculation input =
     (term_definition
       (regular_identifier)
       (regular_identifier)
-      (kw_equals)
       (block_term
         (exp_let
-          (kw_let)
           (term_declaration
             (term_definition
               (regular_identifier)
-              (kw_equals)
               (block_term
                 (regular_identifier)
                 (operator)
                 (nat))))
           (use_clause
-            (use)
             (namespace
               (regular_identifier))
             (operator)
@@ -108,13 +99,11 @@ complexCalculation input =
           (term_declaration
             (term_definition
               (regular_identifier)
-              (kw_equals)
               (block_term
                 (nat))))
           (term_declaration
             (term_definition
               (regular_identifier)
-              (kw_equals)
               (block_term
                 (regular_identifier)
                 (operator)
@@ -138,33 +127,27 @@ example =
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (exp_let
-          (kw_let)
           (use_clause
-            (use)
             (namespace
               (path)
               (regular_identifier)))
           (term_declaration
             (term_definition
               (regular_identifier)
-              (kw_equals)
               (block_term
                 (literal_list
                   (nat)
                   (nat)
                   (nat)))))
           (use_clause
-            (use)
             (namespace
               (regular_identifier))
             (operator))
           (term_declaration
             (term_definition
               (regular_identifier)
-              (kw_equals)
               (block_term
                 (nat)
                 (operator)
@@ -185,19 +168,15 @@ atStart = let
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (exp_let
-          (kw_let)
           (use_clause
-            (use)
             (namespace
               (regular_identifier))
             (operator))
           (term_declaration
             (term_definition
               (regular_identifier)
-              (kw_equals)
               (block_term
                 (nat)
                 (operator)
@@ -219,25 +198,20 @@ inMiddle = let
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (exp_let
-          (kw_let)
           (term_declaration
             (term_definition
               (regular_identifier)
-              (kw_equals)
               (block_term
                 (nat))))
           (use_clause
-            (use)
             (namespace
               (regular_identifier))
             (operator))
           (term_declaration
             (term_definition
               (regular_identifier)
-              (kw_equals)
               (block_term
                 (regular_identifier)
                 (operator)
@@ -258,18 +232,14 @@ atEnd = let
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (exp_let
-          (kw_let)
           (term_declaration
             (term_definition
               (regular_identifier)
-              (kw_equals)
               (block_term
                 (nat))))
           (use_clause
-            (use)
             (namespace
               (regular_identifier))
             (operator))

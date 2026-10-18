@@ -11,7 +11,7 @@ module.exports = {
   delay_quote: $ => seq("'", $._term_leaf),
 
   bang: $ => seq('!', $._term_leaf),
-  delay_block: $ => layoutBlock($, $.do),
+  delay_block: $ => layoutBlock($, 'do'),
 
   _number: $ => choice($.float, $.nat, $.int),
   _link: $ => choice($.literal_termlink, $.literal_typelink),

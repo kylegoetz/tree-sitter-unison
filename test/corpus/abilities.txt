@@ -7,16 +7,12 @@ structural ability Throw e where throw : e ->{Throw e} a
 
 (unison
   (ability_declaration
-    (structural)
-    (ability)
     (ability_name
       (regular_identifier))
     (type_argument)
-    (where)
     (constructor
       (constructor_name)
       (regular_identifier)
-      (arrow_symbol)
       (effect
         (regular_identifier)
         (regular_identifier))
@@ -32,16 +28,12 @@ unique ability Store a where
 
 (unison
   (ability_declaration
-    (unique)
-    (ability)
     (ability_name
       (regular_identifier))
     (type_argument)
-    (where)
     (constructor
       (constructor_name)
       (regular_identifier)
-      (arrow_symbol)
       (effect
         (regular_identifier)
         (regular_identifier))
@@ -63,15 +55,12 @@ ability Store a where
 
 (unison
   (ability_declaration
-    (ability)
     (ability_name
       (regular_identifier))
     (type_argument)
-    (where)
     (constructor
       (constructor_name)
       (regular_identifier)
-      (arrow_symbol)
       (effect
         (regular_identifier)
         (regular_identifier))

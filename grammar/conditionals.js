@@ -1,14 +1,9 @@
-const { KEYWORD } = require('./precedences')
-
 module.exports = {
-  kw_if: $ => prec(KEYWORD, 'if'),
-  kw_then: $ => prec(KEYWORD, 'then'),
-  kw_else: $ => prec(KEYWORD, 'else'),
-  if_block: $ => seq($.kw_if, $.__block),
-  then_block: $ => seq($.kw_then, $.__block),
+  if_block: $ => seq('if', $.__block),
+  then_block: $ => seq('then', $.__block),
   else_block: $ =>
     seq(
-      $.kw_else,
+      'else',
       seq(
         $._layout_start,
         repeat(seq(choice($._statement, $.use_clause), $._layout_semicolon)),

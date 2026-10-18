@@ -4,7 +4,7 @@ const regex = require('./regex')
 module.exports = {
   type_declaration: $ => prec.right(seq(
     $._type_lhs,
-    $.kw_equals,
+    '=',
     optional($._type_rhs),
   )),
 
@@ -16,12 +16,12 @@ module.exports = {
     repeat($.type_argument),
   )),
   _type_lhs: $ => seq(
-    optional(choice($.structural, $.unique)),
-    $.type_kw,
+    optional(choice('structural', 'unique')),
+    'type',
     $.type_constructor
   ),
 
-  _type_rhs: $ => sep1($.pipe, choice($._value_type, $.record)),
+  _type_rhs: $ => sep1('|', choice($._value_type, $.record)),
 
   // Record type
   record: $ => seq(

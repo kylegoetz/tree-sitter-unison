@@ -8,10 +8,6 @@
       "required": true,
       "types": [
         {
-          "type": "ability",
-          "named": true
-        },
-        {
           "type": "ability_name",
           "named": true
         },
@@ -20,19 +16,7 @@
           "named": true
         },
         {
-          "type": "structural",
-          "named": true
-        },
-        {
           "type": "type_argument",
-          "named": true
-        },
-        {
-          "type": "unique",
-          "named": true
-        },
-        {
-          "type": "where",
           "named": true
         }
       ]
@@ -60,11 +44,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "arrow_symbol",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "as_pattern",
@@ -404,8 +383,8 @@
             "named": false
           },
           {
-            "type": "arrow_symbol",
-            "named": true
+            "type": "->",
+            "named": false
           },
           {
             "type": "built_in_hash",
@@ -492,10 +471,6 @@
         },
         {
           "type": "destructuring_bind",
-          "named": true
-        },
-        {
-          "type": "do",
           "named": true
         },
         {
@@ -708,10 +683,6 @@
           "named": true
         },
         {
-          "type": "kw_equals",
-          "named": true
-        },
-        {
           "type": "parenthesized_or_tuple_pattern",
           "named": true
         },
@@ -753,10 +724,6 @@
       "multiple": true,
       "required": false,
       "types": [
-        {
-          "type": "arrow_symbol",
-          "named": true
-        },
         {
           "type": "built_in_hash",
           "named": true
@@ -942,10 +909,6 @@
           "named": true
         },
         {
-          "type": "kw_else",
-          "named": true
-        },
-        {
           "type": "term_declaration",
           "named": true
         },
@@ -996,10 +959,6 @@
           "named": true
         },
         {
-          "type": "kw_let",
-          "named": true
-        },
-        {
           "type": "term_declaration",
           "named": true
         },
@@ -1021,12 +980,8 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
-        {
-          "type": "kw_forall",
-          "named": true
-        },
         {
           "type": "regular_identifier",
           "named": true
@@ -1182,10 +1137,6 @@
           "named": true
         },
         {
-          "type": "otherwise",
-          "named": true
-        },
-        {
           "type": "path",
           "named": true
         },
@@ -1217,10 +1168,6 @@
       "required": true,
       "types": [
         {
-          "type": "arrow_symbol",
-          "named": true
-        },
-        {
           "type": "block_term",
           "named": true
         },
@@ -1230,10 +1177,6 @@
         },
         {
           "type": "guard",
-          "named": true
-        },
-        {
-          "type": "pipe",
           "named": true
         },
         {
@@ -1264,15 +1207,7 @@
           "named": true
         },
         {
-          "type": "handle",
-          "named": true
-        },
-        {
           "type": "term_declaration",
-          "named": true
-        },
-        {
-          "type": "with",
           "named": true
         }
       ]
@@ -1318,10 +1253,6 @@
           "named": true
         },
         {
-          "type": "kw_if",
-          "named": true
-        },
-        {
           "type": "term_declaration",
           "named": true
         },
@@ -1331,26 +1262,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "kw_else",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "kw_forall",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "kw_if",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "kw_then",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "literal_boolean",
@@ -1368,14 +1279,10 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "and",
-          "named": true
-        },
-        {
-          "type": "arrow_symbol",
           "named": true
         },
         {
@@ -1516,10 +1423,6 @@
         },
         {
           "type": "tuple_or_parenthesized_type",
-          "named": true
-        },
-        {
-          "type": "type_signature_colon",
           "named": true
         },
         {
@@ -1542,10 +1445,6 @@
           "named": true
         },
         {
-          "type": "arrow_symbol",
-          "named": true
-        },
-        {
           "type": "bang",
           "named": true
         },
@@ -1683,10 +1582,6 @@
         },
         {
           "type": "tuple_or_parenthesized_type",
-          "named": true
-        },
-        {
-          "type": "type_signature_colon",
           "named": true
         },
         {
@@ -1740,10 +1635,6 @@
           "named": true
         },
         {
-          "type": "kw_termlink",
-          "named": true
-        },
-        {
           "type": "operator",
           "named": true
         },
@@ -1772,10 +1663,6 @@
         },
         {
           "type": "hash_qualifier",
-          "named": true
-        },
-        {
-          "type": "kw_typelink",
           "named": true
         },
         {
@@ -1814,11 +1701,15 @@
             "named": false
           },
           {
-            "type": "and",
-            "named": true
+            "type": "->",
+            "named": false
           },
           {
-            "type": "arrow_symbol",
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "and",
             "named": true
           },
           {
@@ -1962,10 +1853,6 @@
             "named": true
           },
           {
-            "type": "type_signature_colon",
-            "named": true
-          },
-          {
             "type": "unit",
             "named": true
           },
@@ -1982,18 +1869,10 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
-          "type": "match",
-          "named": true
-        },
-        {
           "type": "pattern_case",
-          "named": true
-        },
-        {
-          "type": "with",
           "named": true
         }
       ]
@@ -2007,10 +1886,6 @@
       "multiple": true,
       "required": true,
       "types": [
-        {
-          "type": "cases",
-          "named": true
-        },
         {
           "type": "pattern_case",
           "named": true
@@ -2046,13 +1921,9 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
-        {
-          "type": "kw_namespace",
-          "named": true
-        },
         {
           "type": "namespace",
           "named": true
@@ -2151,10 +2022,6 @@
       "required": true,
       "types": [
         {
-          "type": "arrow_symbol",
-          "named": true
-        },
-        {
           "type": "block_term",
           "named": true
         },
@@ -2221,8 +2088,8 @@
             "named": false
           },
           {
-            "type": "arrow_symbol",
-            "named": true
+            "type": "->",
+            "named": false
           },
           {
             "type": "built_in_hash",
@@ -2330,10 +2197,6 @@
       "required": true,
       "types": [
         {
-          "type": "rewrite",
-          "named": true
-        },
-        {
           "type": "rewrite_case",
           "named": true
         },
@@ -2361,10 +2224,6 @@
           "named": true
         },
         {
-          "type": "arrow_symbol",
-          "named": true
-        },
-        {
           "type": "bang",
           "named": true
         },
@@ -2374,10 +2233,6 @@
         },
         {
           "type": "built_in_hash",
-          "named": true
-        },
-        {
-          "type": "case",
           "named": true
         },
         {
@@ -2501,10 +2356,6 @@
           "named": true
         },
         {
-          "type": "rewrite_arrow",
-          "named": true
-        },
-        {
           "type": "rewrite_block",
           "named": true
         },
@@ -2522,10 +2373,6 @@
         },
         {
           "type": "tuple_or_parenthesized_type",
-          "named": true
-        },
-        {
-          "type": "type_signature_colon",
           "named": true
         },
         {
@@ -2552,10 +2399,6 @@
           "named": true
         },
         {
-          "type": "arrow_symbol",
-          "named": true
-        },
-        {
           "type": "bang",
           "named": true
         },
@@ -2688,19 +2531,11 @@
           "named": true
         },
         {
-          "type": "rewrite_arrow",
-          "named": true
-        },
-        {
           "type": "rewrite_block",
           "named": true
         },
         {
           "type": "sequence_type",
-          "named": true
-        },
-        {
-          "type": "term",
           "named": true
         },
         {
@@ -2713,10 +2548,6 @@
         },
         {
           "type": "tuple_or_parenthesized_type",
-          "named": true
-        },
-        {
-          "type": "type_signature_colon",
           "named": true
         },
         {
@@ -2736,12 +2567,8 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
-        {
-          "type": "arrow_symbol",
-          "named": true
-        },
         {
           "type": "built_in_hash",
           "named": true
@@ -2779,15 +2606,7 @@
           "named": true
         },
         {
-          "type": "rewrite_arrow",
-          "named": true
-        },
-        {
           "type": "sequence_type",
-          "named": true
-        },
-        {
-          "type": "signature",
           "named": true
         },
         {
@@ -2809,10 +2628,6 @@
       "multiple": true,
       "required": false,
       "types": [
-        {
-          "type": "arrow_symbol",
-          "named": true
-        },
         {
           "type": "built_in_hash",
           "named": true
@@ -2953,10 +2768,6 @@
           "named": true
         },
         {
-          "type": "kw_equals",
-          "named": true
-        },
-        {
           "type": "term_declaration",
           "named": true
         },
@@ -2975,10 +2786,6 @@
       "multiple": true,
       "required": false,
       "types": [
-        {
-          "type": "arrow_symbol",
-          "named": true
-        },
         {
           "type": "built_in_hash",
           "named": true
@@ -3066,10 +2873,6 @@
           "named": true
         },
         {
-          "type": "kw_then",
-          "named": true
-        },
-        {
           "type": "term_declaration",
           "named": true
         },
@@ -3090,10 +2893,6 @@
       "types": [
         {
           "type": "and",
-          "named": true
-        },
-        {
-          "type": "arrow_symbol",
           "named": true
         },
         {
@@ -3237,10 +3036,6 @@
           "named": true
         },
         {
-          "type": "type_signature_colon",
-          "named": true
-        },
-        {
           "type": "unit",
           "named": true
         }
@@ -3255,10 +3050,6 @@
       "multiple": true,
       "required": false,
       "types": [
-        {
-          "type": "arrow_symbol",
-          "named": true
-        },
         {
           "type": "built_in_hash",
           "named": true
@@ -3339,10 +3130,6 @@
       "required": true,
       "types": [
         {
-          "type": "arrow_symbol",
-          "named": true
-        },
-        {
           "type": "built_in_hash",
           "named": true
         },
@@ -3363,19 +3150,11 @@
           "named": true
         },
         {
-          "type": "kw_equals",
-          "named": true
-        },
-        {
           "type": "operator",
           "named": true
         },
         {
           "type": "path",
-          "named": true
-        },
-        {
-          "type": "pipe",
           "named": true
         },
         {
@@ -3391,23 +3170,11 @@
           "named": true
         },
         {
-          "type": "structural",
-          "named": true
-        },
-        {
           "type": "tuple_or_parenthesized_type",
           "named": true
         },
         {
           "type": "type_constructor",
-          "named": true
-        },
-        {
-          "type": "type_kw",
-          "named": true
-        },
-        {
-          "type": "unique",
           "named": true
         },
         {
@@ -3472,24 +3239,15 @@
       }
     },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "term_type",
           "named": true
-        },
-        {
-          "type": "type_signature_colon",
-          "named": true
         }
       ]
     }
-  },
-  {
-    "type": "type_signature_colon",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "unison",
@@ -3540,11 +3298,6 @@
     }
   },
   {
-    "type": "use",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "use_clause",
     "named": true,
     "fields": {},
@@ -3566,10 +3319,6 @@
         },
         {
           "type": "regular_identifier",
-          "named": true
-        },
-        {
-          "type": "use",
           "named": true
         }
       ]
@@ -3666,7 +3415,19 @@
     "named": false
   },
   {
+    "type": "=",
+    "named": false
+  },
+  {
+    "type": "==>",
+    "named": false
+  },
+  {
     "type": "@",
+    "named": false
+  },
+  {
+    "type": "@rewrite",
     "named": false
   },
   {
@@ -3679,7 +3440,7 @@
   },
   {
     "type": "ability",
-    "named": true
+    "named": false
   },
   {
     "type": "and",
@@ -3699,11 +3460,11 @@
   },
   {
     "type": "case",
-    "named": true
+    "named": false
   },
   {
     "type": "cases",
-    "named": true
+    "named": false
   },
   {
     "type": "comment",
@@ -3724,7 +3485,7 @@
   },
   {
     "type": "do",
-    "named": true
+    "named": false
   },
   {
     "type": "doc_block",
@@ -3760,7 +3521,7 @@
   },
   {
     "type": "handle",
-    "named": true
+    "named": false
   },
   {
     "type": "hash_cid",
@@ -3779,24 +3540,8 @@
     "named": true
   },
   {
-    "type": "kw_equals",
-    "named": true
-  },
-  {
-    "type": "kw_let",
-    "named": true
-  },
-  {
-    "type": "kw_namespace",
-    "named": true
-  },
-  {
-    "type": "kw_termlink",
-    "named": true
-  },
-  {
-    "type": "kw_typelink",
-    "named": true
+    "type": "let",
+    "named": false
   },
   {
     "type": "literal_byte",
@@ -3812,7 +3557,11 @@
   },
   {
     "type": "match",
-    "named": true
+    "named": false
+  },
+  {
+    "type": "namespace",
+    "named": false
   },
   {
     "type": "nat",
@@ -3828,27 +3577,15 @@
   },
   {
     "type": "otherwise",
-    "named": true
+    "named": false
   },
   {
     "type": "path",
     "named": true
   },
   {
-    "type": "pipe",
-    "named": true
-  },
-  {
-    "type": "rewrite",
-    "named": true
-  },
-  {
-    "type": "rewrite_arrow",
-    "named": true
-  },
-  {
     "type": "signature",
-    "named": true
+    "named": false
   },
   {
     "type": "snoc",
@@ -3856,11 +3593,15 @@
   },
   {
     "type": "structural",
-    "named": true
+    "named": false
   },
   {
     "type": "term",
-    "named": true
+    "named": false
+  },
+  {
+    "type": "termLink",
+    "named": false
   },
   {
     "type": "test.io>",
@@ -3879,12 +3620,16 @@
     "named": false
   },
   {
-    "type": "type_kw",
-    "named": true
+    "type": "type",
+    "named": false
+  },
+  {
+    "type": "typeLink",
+    "named": false
   },
   {
     "type": "unique",
-    "named": true
+    "named": false
   },
   {
     "type": "unit",
@@ -3896,14 +3641,18 @@
   },
   {
     "type": "where",
-    "named": true
+    "named": false
   },
   {
     "type": "with",
-    "named": true
+    "named": false
   },
   {
     "type": "{",
+    "named": false
+  },
+  {
+    "type": "|",
     "named": false
   },
   {

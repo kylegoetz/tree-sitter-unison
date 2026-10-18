@@ -8,7 +8,6 @@ y = 5 + 2
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (nat)
         (operator)
@@ -24,11 +23,8 @@ y = (+) 5 2
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
-        
         (operator)
-        
         (nat)
         (nat)))))
 
@@ -42,7 +38,6 @@ x = myFunc 1 2
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (regular_identifier)
         (nat)
@@ -58,7 +53,6 @@ x = 1 <<- 2
   (term_declaration
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (nat)
         (operator)

@@ -13,8 +13,9 @@ module.exports = {
    * value_type -> {...} value_type
    * value_type -> { ... } ()
    */
+  _forall: $ => choice('forall', '∀'),
   forall: $ =>
-    seq($.kw_forall, repeat(alias($.wordy_id, $.regular_identifier)), '.'),
+    seq($._forall, repeat(alias($.wordy_id, $.regular_identifier)), '.'),
   _value_type: $ => choice(seq($.forall, $._type1), $._type1), // seq(optional($.forall), alias($._type1, $.type1)),
   tuple_or_parenthesized_type: $ => seq('(', sep1(',', $._value_type), ')'),
   _value_type_leaf: $ =>
@@ -34,7 +35,6 @@ module.exports = {
   _type2: $ =>
     seq($._value_type_leaf, repeat(choice($._effect_list, $._value_type_leaf))),
   delayed: $ => seq("'", choice($._effect, $._type2a)),
-  arrow_symbol: $ => '->',
 
   // { E1, E2, ..., En } T
   _effect: $ => seq($._effect_list, $._type2a),
@@ -43,7 +43,7 @@ module.exports = {
   _computation_type: $ => prec.left(choice($._effect, $._value_type)),
 
   // T -> [{ E1, E2 }] U
-  _arrow: $ => seq($._value_type, $.arrow_symbol, $._computation_type),
+  _arrow: $ => seq($._value_type, '->', $._computation_type),
 
   /**
      * body of an effect/ability declaration:
@@ -58,7 +58,7 @@ module.exports = {
     seq(
       alias($._identifier, $.ability_name),
       repeat(alias($.wordy_id, $.type_argument)),
-      $.where,
+      'where',
       choice(
         seq(
           $._layout_start,
@@ -87,5 +87,5 @@ module.exports = {
    *   throw: e ->{ Throw e } a
    */
   effect_declaration: $ =>
-    seq(choice($.structural, optional($.unique)), $.ability, $._ebody),
+    seq(choice('structural', optional('unique')), 'ability', $._ebody),
 }

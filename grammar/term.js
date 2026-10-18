@@ -38,8 +38,8 @@ module.exports = {
   // term_definition: ($) =>
   //   seq(
   //     $._lhs,
-  //     open_block_with($, $.kw_equals),
-  //     // $.kw_equals,
+  //     open_block_with($, '='),
+  //     // '=',
   //     // $._block,
   //     // choice($._expression, $._block),//$._block, // works with $._expression for simple things
   //   ),

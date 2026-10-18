@@ -10,7 +10,6 @@ poet = "Maya Angelou"
     (doc_block)
     (term_definition
       (regular_identifier)
-      (kw_equals)
       (block_term
         (literal_text)))))
 
@@ -48,7 +47,6 @@ use base List
   (documented_use_clause
     (doc_block)
     (use_clause
-      (use)
       (namespace
         (regular_identifier))
       (regular_identifier))))

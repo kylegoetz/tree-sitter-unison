@@ -17,9 +17,9 @@ module.exports = {
   _match_with: $ =>
     prec.right(
       seq(
-        $.match,
+        'match',
         field('scrutinee', $._term),
-        $.with,
+        'with',
         optional(seq($._layout_start, $._match_cases)),
         optional($._layout_end),
       ),
@@ -27,7 +27,7 @@ module.exports = {
 
   _lam_case: $ =>
     prec.right(
-      seq($.cases, $._layout_start, $._match_cases, optional($._layout_end)),
+      seq('cases', $._layout_start, $._match_cases, optional($._layout_end)),
     ),
 
   _match_cases: $ => prec.right(sep1($._layout_semicolon, $.pattern_case)),
@@ -51,17 +51,17 @@ module.exports = {
           sep1($._layout_semicolon, $.guarded_block),
           $._layout_end,
         ),
-        layoutBlock($, $.arrow_symbol),
+        layoutBlock($, '->'),
       ),
     ),
 
   _literal_pattern: $ =>
     choice($.literal_boolean, $.nat, $.int, $.literal_char, $.literal_text),
 
-  guard: $ => choice($._infix_app_or_boolean_op, $.otherwise),
+  guard: $ => choice($._infix_app_or_boolean_op, 'otherwise'),
 
   guarded_block: $ =>
-    prec.right(seq($.pipe, $.guard, layoutBlock($, $.arrow_symbol))),
+    prec.right(seq('|', $.guard, layoutBlock($, '->'))),
 
   _pattern_infix_app: $ =>
     choice($.concat, $.cons, $.snoc),

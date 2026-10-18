@@ -40,7 +40,7 @@ module.exports = grammar({
     namespace_pragma: ($) =>
       prec.right(
         seq(
-          $.kw_namespace,
+          'namespace',
           alias($._identifier, $.namespace),
         ),
       ),
