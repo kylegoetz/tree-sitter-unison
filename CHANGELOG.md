@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [3.0.0] - 2026-02-
+## [3.0.0] - 2026-10-??
 
 ### Fixed
 
@@ -34,8 +34,6 @@ All notable changes to this project will be documented in this file.
 - The above means that `destructuring_bind`s will often have `pattern` now wrapping `var_or_nullary_ctor`. The same goes for descendants of `effect_pattern`.
 - `()` is often parsed as `unit` rather than an empty `tuple_or_parenthesized` (due to #163 fix)
 - `_block_term` is now a named node: `block_term` to improve testing to ensure a statement doesn't consume a subsequent expression as part of the initial statement (see GH-170)
-- `comma` named node
-- `open_parens`, `close_parens` named nodes
 
 
 ## [2.1.3] - 2026-02-04
