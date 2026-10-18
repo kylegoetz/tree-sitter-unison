@@ -17,9 +17,8 @@ module.exports = {
   _match_with: $ =>
     prec.right(
       seq(
-        openBlockWith($, $.match),
+        $.match,
         field('scrutinee', $._term),
-        optional($._layout_end),
         $.with,
         optional(seq($._layout_start, $._match_cases)),
         optional($._layout_end),

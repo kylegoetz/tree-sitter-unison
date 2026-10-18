@@ -1619,7 +1619,6 @@ IO.concurrent.STM.TMap.delete b tm =
         (nat)
         (regular_identifier)
         (regular_identifier)))))
-
 ===
 GH-177 comma can end layout
 ===

@@ -958,17 +958,8 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "match"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_layout_start"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "match"
           },
           {
             "type": "FIELD",
@@ -977,18 +968,6 @@
               "type": "SYMBOL",
               "name": "_term"
             }
-          },
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_layout_end"
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
           },
           {
             "type": "SYMBOL",
