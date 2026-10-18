@@ -18,4 +18,5 @@ module.exports = $ => [
   [$._hqNamey$, $._pattern_leaf],
   [$._pattern_root],
   [$._identifier, $._symboly_definition_name],
+  [$._hq_qualified_symboly_id, $._symboly_definition_name],
 ]

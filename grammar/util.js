@@ -63,9 +63,7 @@ const block = ($, opener) =>
 parenthesized = ($, el) =>
   seq(
     '(',
-    $._layout_start,
-    sep(seq($._comma_layout_end, ','), el),
-    $._layout_end,
+    sep(seq(optional($._comma_layout_end), ','), el),
     ')'
   )
 

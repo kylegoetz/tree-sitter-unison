@@ -68,7 +68,7 @@ module.exports = {
     seq(
       choice(
         alias($.symboly_id, $.operator),
-        seq($.path, alias($.symboly_id, $.operator))),
+        seq($.path, alias($.imm_symboly_id, $.operator))),
       optional(alias($.imm_hash_qualifier, $.hash_qualifier))),
 
   _hq_qualified_prefix_term: $ =>
