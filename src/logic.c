@@ -804,6 +804,20 @@ static Result repeat_end(uint32_t column, State *state) {
  */
 static Result newline_indent(uint32_t indent, State *state) {
   LOG(INFO, "->newline_indent (col = %u, indent = %u, PEEK = %c)\n", COL, indent, PEEK);
+  // In Unison, || and && cannot begin a statement or block; they are infix operator
+  // continuations of expressions. Do not emit dedent or newline_semicolon on lines
+  // starting with || or &&.
+  if (PEEK == '|') {
+    S_ADVANCE;
+    if (PEEK == '|') {
+      return res_cont;
+    }
+  } else if (PEEK == '&') {
+    S_ADVANCE;
+    if (PEEK == '&') {
+      return res_cont;
+    }
+  }
   Result res = dedent(indent, state);
   SHORT_SCANNER;
   res = close_layout_in_list(state);
