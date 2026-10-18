@@ -12147,10 +12147,31 @@ abilities.Random.bytes.doc =
 abilities.Random.char.ascii.control
 ===
 abilities.Random.char.ascii.control : '{Random} Char
-abilities.Random.char.ascii.control = do interval ?\0 ?
+abilities.Random.char.ascii.control = do interval ?\0 ?
 ---
 
-(unison)
+(unison
+  (term_declaration
+    (type_signature
+      (path)
+      (regular_identifier)
+      (type_signature_colon)
+      (term_type
+        (delayed
+          (effect
+            (regular_identifier))
+          (regular_identifier))))
+    (term_definition
+      (path)
+      (regular_identifier)
+      (kw_equals)
+      (block_term
+        (delay_block
+          (do)
+          (block_term
+            (regular_identifier)
+            (literal_char)
+            (literal_char)))))))
 
 ===
 abilities.Random.char.ascii.control.doc

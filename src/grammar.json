@@ -751,7 +751,11 @@
         },
         {
           "type": "PATTERN",
-          "value": "\\?\\\\[0abfnrtvs\\'\"]"
+          "value": "\\?\\\\[0abfnrtvs\\'\"\\\\]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "\\?\\r?\\n"
         }
       ]
     },
