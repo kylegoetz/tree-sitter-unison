@@ -39,14 +39,9 @@ module.exports = {
 
   gadt: $ => seq(
     'where',
-    choice(
-      seq(
-        $._layout_start,
-        sep($._layout_semicolon, $.gadt_constructor),
-        $._layout_end,
-      ),
-      // sep1(',', $.gadt_constructor),
-    ),
+    $._layout_start,
+    sep($._layout_semicolon, $.gadt_constructor),
+    $._layout_end,
   ),
 
   _gadt_type: $ => choice($._effect, $._type2a),
