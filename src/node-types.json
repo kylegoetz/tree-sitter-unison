@@ -54,10 +54,6 @@
       "required": true,
       "types": [
         {
-          "type": "at_token",
-          "named": true
-        },
-        {
           "type": "blank_pattern",
           "named": true
         },
@@ -904,10 +900,6 @@
       "multiple": true,
       "required": true,
       "types": [
-        {
-          "type": "at_token",
-          "named": true
-        },
         {
           "type": "blank_pattern",
           "named": true
@@ -2134,10 +2126,6 @@
       "required": true,
       "types": [
         {
-          "type": "at_token",
-          "named": true
-        },
-        {
           "type": "blank_pattern",
           "named": true
         },
@@ -2742,10 +2730,6 @@
         },
         {
           "type": "delayed",
-          "named": true
-        },
-        {
-          "type": "dot",
           "named": true
         },
         {
@@ -3618,10 +3602,6 @@
     "named": true
   },
   {
-    "type": "at_token",
-    "named": true
-  },
-  {
     "type": "blank_pattern",
     "named": true
   },
@@ -3660,10 +3640,6 @@
   },
   {
     "type": "doc_block",
-    "named": true
-  },
-  {
-    "type": "dot",
     "named": true
   },
   {

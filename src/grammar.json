@@ -1363,13 +1363,8 @@
               "type": "SEQ",
               "members": [
                 {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "STRING",
-                    "value": "@"
-                  },
-                  "named": true,
-                  "value": "at_token"
+                  "type": "STRING",
+                  "value": "@"
                 },
                 {
                   "type": "SYMBOL",
@@ -2335,13 +2330,8 @@
                   }
                 },
                 {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "STRING",
-                    "value": "."
-                  },
-                  "named": true,
-                  "value": "dot"
+                  "type": "STRING",
+                  "value": "."
                 }
               ]
             },
@@ -2646,6 +2636,10 @@
           "value": "where"
         },
         {
+          "type": "SYMBOL",
+          "name": "_layout_start"
+        },
+        {
           "type": "CHOICE",
           "members": [
             {
@@ -2653,48 +2647,34 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "_layout_start"
+                  "name": "gadt_constructor"
                 },
                 {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SEQ",
-                      "members": [
-                        {
-                          "type": "SYMBOL",
-                          "name": "gadt_constructor"
-                        },
-                        {
-                          "type": "REPEAT",
-                          "content": {
-                            "type": "SEQ",
-                            "members": [
-                              {
-                                "type": "SYMBOL",
-                                "name": "_layout_semicolon"
-                              },
-                              {
-                                "type": "SYMBOL",
-                                "name": "gadt_constructor"
-                              }
-                            ]
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "_layout_end"
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "_layout_semicolon"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "gadt_constructor"
+                      }
+                    ]
+                  }
                 }
               ]
+            },
+            {
+              "type": "BLANK"
             }
           ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_layout_end"
         }
       ]
     },
