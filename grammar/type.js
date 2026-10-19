@@ -1,11 +1,16 @@
-const { sep } = require('./util')
+const {
+  sep,
+  sep1,
+} = require('./util')
 const regex = require('./regex')
 
 module.exports = {
   type_declaration: $ => prec.right(seq(
     $._type_lhs,
-    '=',
-    optional($._type_rhs),
+    choice(
+      seq('=', optional($._type_rhs)),
+      $.gadt,
+    ),
   )),
 
   type_name: $ => $._identifier,
@@ -31,4 +36,26 @@ module.exports = {
     '}',
   ),
   record_field: $ => seq(alias($.wordy_id, $.field_name), ':', field('type', $._value_type)),
+
+  gadt: $ => seq(
+    'where',
+    choice(
+      seq(
+        $._layout_start,
+        sep($._layout_semicolon, $.gadt_constructor),
+        $._layout_end,
+      ),
+      // sep1(',', $.gadt_constructor),
+    ),
+  ),
+
+  _gadt_type: $ => choice($._effect, $._type2a),
+
+  gadt_constructor: $ => seq(
+    alias($._prefix_definition_name, $.data_constructor),
+    ':',
+    optional($.forall),
+    repeat(seq(alias($._gadt_type, $.constructor_argument), '->')),
+    alias($._gadt_type, $.constructor_return_type),
+  ),
 }

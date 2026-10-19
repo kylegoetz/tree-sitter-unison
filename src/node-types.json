@@ -453,9 +453,134 @@
     }
   },
   {
+    "type": "constructor_argument",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "built_in_hash",
+          "named": true
+        },
+        {
+          "type": "delayed",
+          "named": true
+        },
+        {
+          "type": "effect",
+          "named": true
+        },
+        {
+          "type": "hash_qualifier",
+          "named": true
+        },
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
+          "type": "sequence_type",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized_type",
+          "named": true
+        },
+        {
+          "type": "unit",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "constructor_name",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "constructor_return_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "built_in_hash",
+          "named": true
+        },
+        {
+          "type": "delayed",
+          "named": true
+        },
+        {
+          "type": "effect",
+          "named": true
+        },
+        {
+          "type": "hash_qualifier",
+          "named": true
+        },
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
+          "named": true
+        },
+        {
+          "type": "sequence_type",
+          "named": true
+        },
+        {
+          "type": "tuple_or_parenthesized_type",
+          "named": true
+        },
+        {
+          "type": "unit",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "data_constructor",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "operator",
+          "named": true
+        },
+        {
+          "type": "path",
+          "named": true
+        },
+        {
+          "type": "regular_identifier",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "delay_block",
@@ -1019,6 +1144,48 @@
         },
         {
           "type": "unit",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "gadt",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "gadt_constructor",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "gadt_constructor",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "constructor_argument",
+          "named": true
+        },
+        {
+          "type": "constructor_return_type",
+          "named": true
+        },
+        {
+          "type": "data_constructor",
+          "named": true
+        },
+        {
+          "type": "forall",
           "named": true
         }
       ]
@@ -3143,6 +3310,10 @@
         },
         {
           "type": "forall",
+          "named": true
+        },
+        {
+          "type": "gadt",
           "named": true
         },
         {

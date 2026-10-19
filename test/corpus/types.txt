@@ -131,3 +131,102 @@ type Task = { id : Nat }
       (record_field
         (field_name)
         (regular_identifier)))))
+
+===
+GADT example
+===
+type Expr a where
+  NatLit : Nat -> Expr Nat
+  BoolLit : Boolean -> Expr Boolean
+  Add : Expr Nat -> Expr Nat -> Expr Nat
+  If : Expr Boolean -> Expr a -> Expr a -> Expr a
+---
+
+(unison
+  (type_declaration
+    (type_constructor
+      (type_name
+        (regular_identifier))
+      (type_argument))
+    (gadt
+      (gadt_constructor
+        (data_constructor
+          (regular_identifier))
+        (constructor_argument
+          (regular_identifier))
+        (constructor_return_type
+          (regular_identifier)
+          (regular_identifier)))
+      (gadt_constructor
+        (data_constructor
+          (regular_identifier))
+        (constructor_argument
+          (regular_identifier))
+        (constructor_return_type
+          (regular_identifier)
+          (regular_identifier)))
+      (gadt_constructor
+        (data_constructor
+          (regular_identifier))
+        (constructor_argument
+          (regular_identifier)
+          (regular_identifier))
+        (constructor_argument
+          (regular_identifier)
+          (regular_identifier))
+        (constructor_return_type
+          (regular_identifier)
+          (regular_identifier)))
+      (gadt_constructor
+        (data_constructor
+          (regular_identifier))
+        (constructor_argument
+          (regular_identifier)
+          (regular_identifier))
+        (constructor_argument
+          (regular_identifier)
+          (regular_identifier))
+        (constructor_argument
+          (regular_identifier)
+          (regular_identifier))
+        (constructor_return_type
+          (regular_identifier)
+          (regular_identifier))))))
+
+===
+GADT - example 2
+===
+type Two a where
+  One : Nat -> Two Nat
+  Pair : Two x -> Two y -> Two (x, y)
+---
+
+(unison
+  (type_declaration
+    (type_constructor
+      (type_name
+        (regular_identifier))
+      (type_argument))
+    (gadt
+      (gadt_constructor
+        (data_constructor
+          (regular_identifier))
+        (constructor_argument
+          (regular_identifier))
+        (constructor_return_type
+          (regular_identifier)
+          (regular_identifier)))
+      (gadt_constructor
+        (data_constructor
+          (regular_identifier))
+        (constructor_argument
+          (regular_identifier)
+          (regular_identifier))
+        (constructor_argument
+          (regular_identifier)
+          (regular_identifier))
+        (constructor_return_type
+          (regular_identifier)
+          (tuple_or_parenthesized_type
+            (regular_identifier)
+            (regular_identifier)))))))
