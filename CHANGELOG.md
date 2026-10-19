@@ -34,8 +34,8 @@ All notable changes to this project will be documented in this file.
 - The above means that `destructuring_bind`s will often have `pattern` now wrapping `var_or_nullary_ctor`. The same goes for descendants of `effect_pattern`.
 - `()` is often parsed as `unit` rather than an empty `tuple_or_parenthesized` (due to #163 fix)
 - `_block_term` is now a named node: `block_term` to improve testing to ensure a statement doesn't consume a subsequent expression as part of the initial statement (see GH-170)
-- removed the following named nodes in favor of string literals: if, then, else, let, do, use, match, cases, handle, with, where, pipe, otherwise, type, ability, structural, unique, namespace, rewrite, links, forall, =, :, ->
-- GADT supported added. Introduced named nodes `gadt`, `gadt_constructor`, `data_constructor`, `constructor_argument`, and `constructor_return_type`
+- removed the following named nodes in favor of string literals: if, then, else, let, do, use, match, cases, handle, with, where, pipe, otherwise, type, ability, structural, unique, namespace, rewrite, links, forall, =, :, ->, at_token, dot
+- GADT support added. Introduced named nodes `gadt`, `gadt_constructor`, `data_constructor`, `constructor_argument`, and `constructor_return_type`
 
 ## [2.1.3] - 2026-02-04
 

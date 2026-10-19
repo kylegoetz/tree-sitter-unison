@@ -26,7 +26,7 @@ module.exports = {
   rewrite_type: $ =>
     seq(
       'signature',
-      optional(seq(repeat1($._prefix_definition_name), alias('.', $.dot))),
+      optional(seq(repeat1($._prefix_definition_name), '.')),
       $._computation_type,
       '==>',
       $._layout_start,

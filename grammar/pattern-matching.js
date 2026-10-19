@@ -77,7 +77,7 @@ module.exports = {
   _hqNamey: $ =>
     seq(
       $.var_or_nullary_ctor,
-      optional(seq(alias('@', $.at_token), $._pattern_leaf)),
+      optional(seq('@', $._pattern_leaf)),
     ),
   _pattern_leaf: $ => choice($._hqNamey, $._pattern_leaf$),
   _pattern_leaf$: $ =>

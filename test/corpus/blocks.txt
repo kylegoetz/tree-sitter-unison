@@ -111,7 +111,6 @@ x =
           (rewrite_type
             (regular_identifier)
             (regular_identifier)
-            (dot)
             (regular_identifier)
             (regular_identifier)
             (regular_identifier)

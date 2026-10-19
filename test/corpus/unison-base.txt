@@ -9313,7 +9313,6 @@ abilities.Exception.catchMany ls ex = match catch ex with
                 (regular_identifier))
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -9438,7 +9437,6 @@ abilities.Exception.catchOnly tpe ex = match catch ex with
                 (regular_identifier))
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -42866,7 +42864,6 @@ data.ByteArray.drop n = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -44667,7 +44664,6 @@ data.ByteArray.read16be = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -44767,7 +44763,6 @@ data.ByteArray.read32be = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -44867,7 +44862,6 @@ data.ByteArray.read64be = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -45292,7 +45286,6 @@ data.ByteArray.take n = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -60344,7 +60337,6 @@ data.List.insertSortedDistinct a = cases
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier))
-                  (at_token)
                   (parenthesized_or_tuple_pattern
                     (pattern
                       (var_or_nullary_ctor
@@ -71023,7 +71015,6 @@ data.List.slidingPairs as =
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier))
-                  (at_token)
                   (parenthesized_or_tuple_pattern
                     (pattern
                       (var_or_nullary_ctor
@@ -72136,7 +72127,6 @@ data.List.sortWith f list =
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier))
-                  (at_token)
                   (parenthesized_or_tuple_pattern
                     (pattern
                       (var_or_nullary_ctor
@@ -72148,7 +72138,6 @@ data.List.sortWith f list =
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier))
-                  (at_token)
                   (parenthesized_or_tuple_pattern
                     (pattern
                       (var_or_nullary_ctor
@@ -79079,7 +79068,6 @@ data.Map.foldLeft f z = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -79570,7 +79558,6 @@ data.Map.foldRight f z = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -80208,7 +80195,6 @@ data.Map.fromList = cases
                       (pattern
                         (var_or_nullary_ctor
                           (regular_identifier))
-                        (at_token)
                         (parenthesized_or_tuple_pattern
                           (pattern
                             (var_or_nullary_ctor
@@ -80271,7 +80257,6 @@ data.Map.fromList = cases
                                   (pattern
                                     (var_or_nullary_ctor
                                       (regular_identifier))
-                                    (at_token)
                                     (parenthesized_or_tuple_pattern
                                       (pattern
                                         (blank_pattern))
@@ -80317,7 +80302,6 @@ data.Map.fromList = cases
                                       (pattern
                                         (var_or_nullary_ctor
                                           (regular_identifier))
-                                        (at_token)
                                         (parenthesized_or_tuple_pattern
                                           (pattern
                                             (parenthesized_or_tuple_pattern
@@ -80420,7 +80404,6 @@ data.Map.fromList = cases
                       (pattern
                         (var_or_nullary_ctor
                           (regular_identifier))
-                        (at_token)
                         (parenthesized_or_tuple_pattern
                           (pattern
                             (parenthesized_or_tuple_pattern
@@ -82417,7 +82400,6 @@ data.Map.internal.balance k x l r =
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier))
-                  (at_token)
                   (parenthesized_or_tuple_pattern
                     (pattern
                       (var_or_nullary_ctor
@@ -82482,7 +82464,6 @@ data.Map.internal.balance k x l r =
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier))
-                  (at_token)
                   (parenthesized_or_tuple_pattern
                     (pattern
                       (var_or_nullary_ctor
@@ -83000,7 +82981,6 @@ data.Map.internal.balanceL k x l = cases
                       (regular_identifier))
                     (var_or_nullary_ctor
                       (regular_identifier))
-                    (at_token)
                     (parenthesized_or_tuple_pattern
                       (pattern
                         (var_or_nullary_ctor
@@ -83039,7 +83019,6 @@ data.Map.internal.balanceL k x l = cases
                       (regular_identifier))
                     (var_or_nullary_ctor
                       (regular_identifier))
-                    (at_token)
                     (parenthesized_or_tuple_pattern
                       (pattern
                         (var_or_nullary_ctor
@@ -83053,7 +83032,6 @@ data.Map.internal.balanceL k x l = cases
                         (blank_pattern)))
                     (var_or_nullary_ctor
                       (regular_identifier))
-                    (at_token)
                     (parenthesized_or_tuple_pattern
                       (pattern
                         (var_or_nullary_ctor
@@ -83153,7 +83131,6 @@ data.Map.internal.balanceL k x l = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -83518,7 +83495,6 @@ data.Map.internal.balanceR k x l r =
                       (regular_identifier))
                     (var_or_nullary_ctor
                       (regular_identifier))
-                    (at_token)
                     (parenthesized_or_tuple_pattern
                       (pattern
                         (var_or_nullary_ctor
@@ -83610,7 +83586,6 @@ data.Map.internal.balanceR k x l r =
                       (regular_identifier))
                     (var_or_nullary_ctor
                       (regular_identifier))
-                    (at_token)
                     (parenthesized_or_tuple_pattern
                       (pattern
                         (var_or_nullary_ctor
@@ -83628,7 +83603,6 @@ data.Map.internal.balanceR k x l r =
                           (regular_identifier))))
                     (var_or_nullary_ctor
                       (regular_identifier))
-                    (at_token)
                     (parenthesized_or_tuple_pattern
                       (pattern
                         (var_or_nullary_ctor
@@ -84050,7 +84024,6 @@ data.Map.internal.glue = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -84079,7 +84052,6 @@ data.Map.internal.glue = cases
                   (pattern
                     (var_or_nullary_ctor
                       (regular_identifier))
-                    (at_token)
                     (parenthesized_or_tuple_pattern
                       (pattern
                         (var_or_nullary_ctor
@@ -84224,7 +84196,6 @@ data.Map.internal.link kx x = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -84243,7 +84214,6 @@ data.Map.internal.link kx x = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -88981,7 +88951,6 @@ data.Map.Nonempty.foldRight f z = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -90496,7 +90465,6 @@ data.Map.Nonempty.internal.balanceL k x l = cases
                       (regular_identifier))
                     (var_or_nullary_ctor
                       (regular_identifier))
-                    (at_token)
                     (parenthesized_or_tuple_pattern
                       (pattern
                         (var_or_nullary_ctor
@@ -90535,7 +90503,6 @@ data.Map.Nonempty.internal.balanceL k x l = cases
                       (regular_identifier))
                     (var_or_nullary_ctor
                       (regular_identifier))
-                    (at_token)
                     (parenthesized_or_tuple_pattern
                       (pattern
                         (var_or_nullary_ctor
@@ -90549,7 +90516,6 @@ data.Map.Nonempty.internal.balanceL k x l = cases
                         (blank_pattern)))
                     (var_or_nullary_ctor
                       (regular_identifier))
-                    (at_token)
                     (parenthesized_or_tuple_pattern
                       (pattern
                         (var_or_nullary_ctor
@@ -90649,7 +90615,6 @@ data.Map.Nonempty.internal.balanceL k x l = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -91016,7 +90981,6 @@ data.Map.Nonempty.internal.balanceR k x l r =
                       (regular_identifier))
                     (var_or_nullary_ctor
                       (regular_identifier))
-                    (at_token)
                     (parenthesized_or_tuple_pattern
                       (pattern
                         (var_or_nullary_ctor
@@ -91108,7 +91072,6 @@ data.Map.Nonempty.internal.balanceR k x l r =
                       (regular_identifier))
                     (var_or_nullary_ctor
                       (regular_identifier))
-                    (at_token)
                     (parenthesized_or_tuple_pattern
                       (pattern
                         (var_or_nullary_ctor
@@ -91126,7 +91089,6 @@ data.Map.Nonempty.internal.balanceR k x l r =
                           (regular_identifier))))
                     (var_or_nullary_ctor
                       (regular_identifier))
-                    (at_token)
                     (parenthesized_or_tuple_pattern
                       (pattern
                         (var_or_nullary_ctor
@@ -91495,7 +91457,6 @@ data.Map.Nonempty.internal.link kx x = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -91514,7 +91475,6 @@ data.Map.Nonempty.internal.link kx x = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -116589,7 +116549,6 @@ data.NatMap.Nonempty.adjustWithKey f k = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -116651,7 +116610,6 @@ data.NatMap.Nonempty.adjustWithKey f k = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -116913,7 +116871,6 @@ data.NatMap.Nonempty.alterWithKey f k = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -117008,7 +116965,6 @@ data.NatMap.Nonempty.alterWithKey f k = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -117214,7 +117170,6 @@ data.NatMap.Nonempty.breakOffMax = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -117412,7 +117367,6 @@ data.NatMap.Nonempty.breakOffMin = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -117715,7 +117669,6 @@ data.NatMap.Nonempty.compareBy f m1 m2 =
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier))
-                  (at_token)
                   (parenthesized_or_tuple_pattern
                     (pattern
                       (var_or_nullary_ctor
@@ -117733,7 +117686,6 @@ data.NatMap.Nonempty.compareBy f m1 m2 =
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier))
-                  (at_token)
                   (parenthesized_or_tuple_pattern
                     (pattern
                       (var_or_nullary_ctor
@@ -118037,7 +117989,6 @@ data.NatMap.Nonempty.compareBy f m1 m2 =
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier))
-                  (at_token)
                   (parenthesized_or_tuple_pattern
                     (pattern
                       (var_or_nullary_ctor
@@ -118070,7 +118021,6 @@ data.NatMap.Nonempty.compareBy f m1 m2 =
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier))
-                  (at_token)
                   (parenthesized_or_tuple_pattern
                     (pattern
                       (var_or_nullary_ctor
@@ -118357,7 +118307,6 @@ data.NatMap.Nonempty.delete k = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -118423,7 +118372,6 @@ data.NatMap.Nonempty.delete k = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -118916,7 +118864,6 @@ data.NatMap.Nonempty.differenceWithKey f = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -118935,7 +118882,6 @@ data.NatMap.Nonempty.differenceWithKey f = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -119085,7 +119031,6 @@ data.NatMap.Nonempty.differenceWithKey f = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -121843,7 +121788,6 @@ data.NatMap.Nonempty.insert k v = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -121915,7 +121859,6 @@ data.NatMap.Nonempty.insert k v = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -122068,7 +122011,6 @@ data.NatMap.Nonempty.insertGetWithKey f k v = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -122166,7 +122108,6 @@ data.NatMap.Nonempty.insertGetWithKey f k v = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -122464,7 +122405,6 @@ data.NatMap.Nonempty.insertWithKey f k v = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -122538,7 +122478,6 @@ data.NatMap.Nonempty.insertWithKey f k v = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -122912,7 +122851,6 @@ data.NatMap.Nonempty.intersectWithKey f = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -122931,7 +122869,6 @@ data.NatMap.Nonempty.intersectWithKey f = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -123065,7 +123002,6 @@ data.NatMap.Nonempty.intersectWithKey f = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -123115,7 +123051,6 @@ data.NatMap.Nonempty.intersectWithKey f = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -125632,7 +125567,6 @@ data.NatMap.Nonempty.split k = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -125745,7 +125679,6 @@ data.NatMap.Nonempty.split k = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -125903,7 +125836,6 @@ data.NatMap.Nonempty.submapCompareBy f = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -125922,7 +125854,6 @@ data.NatMap.Nonempty.submapCompareBy f = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -127395,7 +127326,6 @@ data.NatMap.Nonempty.unionWithKey f = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -127414,7 +127344,6 @@ data.NatMap.Nonempty.unionWithKey f = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -127846,7 +127775,6 @@ data.NatMap.Nonempty.updateGetWithKey f k = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -127938,7 +127866,6 @@ data.NatMap.Nonempty.updateGetWithKey f k = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -128180,7 +128107,6 @@ data.NatMap.Nonempty.updateMaxWithKey f = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -128462,7 +128388,6 @@ data.NatMap.Nonempty.updateMinWithKey f = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -128664,7 +128589,6 @@ data.NatMap.Nonempty.updateWithKey f k = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -128732,7 +128656,6 @@ data.NatMap.Nonempty.updateWithKey f k = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -136723,7 +136646,6 @@ data.NatSet.internal.intersectBitmap p m = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -136772,7 +136694,6 @@ data.NatSet.internal.intersectBitmap p m = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -139045,7 +138966,6 @@ data.NatSet.Nonempty.difference = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -139063,7 +138983,6 @@ data.NatSet.Nonempty.difference = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -139210,7 +139129,6 @@ data.NatSet.Nonempty.difference = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -139238,7 +139156,6 @@ data.NatSet.Nonempty.difference = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -139300,7 +139217,6 @@ data.NatSet.Nonempty.difference = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -142782,7 +142698,6 @@ data.NatSet.Nonempty.internal.deleteBitmap prefix bitmap = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -142852,7 +142767,6 @@ data.NatSet.Nonempty.internal.deleteBitmap prefix bitmap = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -142954,7 +142868,6 @@ data.NatSet.Nonempty.internal.insertBitmap prefix bitmap = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -143022,7 +142935,6 @@ data.NatSet.Nonempty.internal.insertBitmap prefix bitmap = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -143134,7 +143046,6 @@ data.NatSet.Nonempty.intersect = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -143152,7 +143063,6 @@ data.NatSet.Nonempty.intersect = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -143273,7 +143183,6 @@ data.NatSet.Nonempty.intersect = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -143926,7 +143835,6 @@ data.NatSet.Nonempty.ordering m1 m2 =
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier))
-                  (at_token)
                   (parenthesized_or_tuple_pattern
                     (pattern
                       (var_or_nullary_ctor
@@ -143944,7 +143852,6 @@ data.NatSet.Nonempty.ordering m1 m2 =
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier))
-                  (at_token)
                   (parenthesized_or_tuple_pattern
                     (pattern
                       (var_or_nullary_ctor
@@ -144232,7 +144139,6 @@ data.NatSet.Nonempty.ordering m1 m2 =
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier))
-                  (at_token)
                   (parenthesized_or_tuple_pattern
                     (pattern
                       (var_or_nullary_ctor
@@ -144272,7 +144178,6 @@ data.NatSet.Nonempty.ordering m1 m2 =
                 (pattern
                   (var_or_nullary_ctor
                     (regular_identifier))
-                  (at_token)
                   (parenthesized_or_tuple_pattern
                     (pattern
                       (var_or_nullary_ctor
@@ -144831,7 +144736,6 @@ data.NatSet.Nonempty.split x = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -144944,7 +144848,6 @@ data.NatSet.Nonempty.split x = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -145127,7 +145030,6 @@ data.NatSet.Nonempty.splitContains x = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -145250,7 +145152,6 @@ data.NatSet.Nonempty.splitContains x = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -145615,7 +145516,6 @@ data.NatSet.Nonempty.subsetCompare = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -145633,7 +145533,6 @@ data.NatSet.Nonempty.subsetCompare = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -146041,7 +145940,6 @@ data.NatSet.Nonempty.subsetCompare = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -146141,7 +146039,6 @@ data.NatSet.Nonempty.subsetCompare = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -146155,7 +146052,6 @@ data.NatSet.Nonempty.subsetCompare = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -146381,7 +146277,6 @@ data.NatSet.Nonempty.tips = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -146702,7 +146597,6 @@ data.NatSet.Nonempty.union = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -146720,7 +146614,6 @@ data.NatSet.Nonempty.union = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -146877,7 +146770,6 @@ data.NatSet.Nonempty.union = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -192545,7 +192437,6 @@ IO.concurrent.STM.TMap.delete b tm =
                           (regular_identifier))
                         (var_or_nullary_ctor
                           (regular_identifier))
-                        (at_token)
                         (parenthesized_or_tuple_pattern
                           (pattern
                             (var_or_nullary_ctor
@@ -220652,7 +220543,6 @@ mutable.ByteArray.write16be = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -220762,7 +220652,6 @@ mutable.ByteArray.write32be = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -220872,7 +220761,6 @@ mutable.ByteArray.write64be = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -229574,7 +229462,6 @@ Optional.filter p = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -235403,7 +235290,6 @@ reflection.Rewrites.examples.eitherToOptional e a =
           (rewrite_type
             (regular_identifier)
             (regular_identifier)
-            (dot)
             (regular_identifier)
             (regular_identifier)
             (regular_identifier)
@@ -235631,7 +235517,6 @@ reflection.Rewrites.examples.optionalToEither _e a =
           (rewrite_type
             (regular_identifier)
             (regular_identifier)
-            (dot)
             (regular_identifier)
             (regular_identifier)
             (regular_identifier)
@@ -272506,7 +272391,6 @@ time.OffsetDateTime.convertOffset = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor

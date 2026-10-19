@@ -860,7 +860,6 @@ a = cases
             (pattern
               (var_or_nullary_ctor
                 (regular_identifier))
-              (at_token)
               (parenthesized_or_tuple_pattern
                 (pattern
                   (var_or_nullary_ctor
@@ -1378,7 +1377,6 @@ IO.concurrent.STM.TMap.delete b tm =
                           (regular_identifier))
                         (var_or_nullary_ctor
                           (regular_identifier))
-                        (at_token)
                         (parenthesized_or_tuple_pattern
                           (pattern
                             (var_or_nullary_ctor
